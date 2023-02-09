@@ -35,7 +35,6 @@ class Portal extends BaseController
                         delete_cookie('jwt');
                         return redirect()->to(base_url('auth'));
                     }
-
                     $data['user'] = $user->data;
 
                     $data['title'] = "Portal Layanan";
