@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript:actionEdit('<?= $data->nama ?>');" class="btn btn-primary btn-rounded waves-effect waves-light">Ubah Data PTK</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:actionEdit('<?= str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) ?>');" class="btn btn-primary btn-rounded waves-effect waves-light">Ubah Data PTK</a></li>
                         </ol>
                     </div>
 
