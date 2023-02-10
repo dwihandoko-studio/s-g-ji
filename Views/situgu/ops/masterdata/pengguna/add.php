@@ -187,7 +187,6 @@
         const nip = document.getElementsByName('_nip')[0].value;
         const email = document.getElementsByName('_email')[0].value;
         const nohp = document.getElementsByName('_nohp')[0].value;
-        const alamat = document.getElementsByName('_alamat')[0].value;
         const fileName = document.getElementsByName('_file')[0].value;
         const id_ptk = document.getElementsByName('_ptk')[0].value;
 
