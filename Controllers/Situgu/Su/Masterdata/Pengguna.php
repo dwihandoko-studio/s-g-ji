@@ -7,6 +7,9 @@ use App\Models\Situgu\Su\PenggunaModel;
 use Config\Services;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
+use App\Libraries\Uuid;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Pengguna extends BaseController
 {
@@ -552,6 +555,235 @@ class Pengguna extends BaseController
                 $response->message = "Gagal mengupate data";
                 return json_encode($response);
             }
+        }
+    }
+
+    public function import()
+    {
+        $data['title'] = 'Import Data PTK';
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            session()->destroy();
+            return redirect()->to(base_url('auth'));
+        }
+        $data['user'] = $user->data;
+        return view('situgu/su/masterdata/pengguna/import', $data);
+    }
+
+    public function uploadData()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = [
+                'code' => 400,
+                'error' => "Hanya request post yang diperbolehkan."
+            ];
+        } else {
+
+            $rules = [
+                'file' => [
+                    'rules' => 'uploaded[file]|max_size[file, 5120]|mime_in[file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip]',
+                    'errors' => [
+                        'uploaded' => 'File import gagal di upload',
+                        'max_size' => 'Ukuran file melebihi batas file max file upload.',
+                        'mime_in' => 'Ekstensi file tidak diizinkan untuk di upload.',
+                    ]
+                ]
+                // 'file' => 'uploaded[file]|max_size[file, 5120]|mime_in[file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip]'
+            ];
+
+            if (!$this->validate($rules)) {
+                $response = [
+                    'code' => 400,
+                    'error' => $this->validator->getError('file')
+                ];
+            } else {
+
+                // if (!file_exists('./upload/' . $this->folderImage)) {
+                //     mkdir('./upload/' . $this->folderImage, 0755);
+                //     $dir = './upload/' . $this->folderImage;
+                // } else {
+                //     $dir = './upload/' . $this->folderImage;
+                // }
+
+                $lampiran = $this->request->getFile('file');
+                $extension = $lampiran->getClientExtension();
+                $filesNamelampiran = $lampiran->getName();
+                $fileLocation = $lampiran->getTempName();
+                // $newNamelampiran = _create_name_import($filesNamelampiran);
+
+                // if ($lampiran->isValid() && !$lampiran->hasMoved()) {
+                //     $movedFile = $lampiran->move($dir, $newNamelampiran);
+                //     if($movedFile != false) {
+
+                //         $fileLocation = FCPATH . $dir . '/' . $newNamelampiran;
+
+                if ('xls' == $extension) {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+                } else {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                }
+
+                $spreadsheet = $reader->load($fileLocation);
+                $sheet = $spreadsheet->getActiveSheet()->toArray();
+
+                $total_line = (count($sheet) > 0) ? count($sheet) - 1 : 0;
+
+                $dataImport = [];
+
+                unset($sheet[0]);
+
+                foreach ($sheet as $key => $data) {
+                    $dataInsert = [
+                        'fullname' => $data[0],
+                        'email' => $data[1],
+                        'kecamatan' => $data[2],
+                        'sekolah' => $data[3],
+                        'npsn' => $data[4],
+                        'kode_kecamatan' => $data[5],
+                        'koreg' => $data[6],
+                    ];
+
+                    $dataImport[] = $dataInsert;
+                }
+
+                $response = [
+                    'code' => 200,
+                    'success' => true,
+                    'total_line' => $total_line,
+                    'data' => $dataImport,
+                ];
+                //     } else {
+                //         $response =[
+                //             'code' => 400,
+                //             'error' => "Gagal upload file."
+                //         ];
+                //     }
+                // } else {
+                //     $response =[
+                //         'code' => 400,
+                //         'error' => "Gagal upload file."
+                //     ];
+                // }
+            }
+        }
+
+        echo json_encode($response);
+    }
+
+    public function importData()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->code = 500;
+            $response->message = "Request not allowed";
+            return json_encode($response);
+        }
+
+        $fullname = htmlspecialchars($this->request->getVar('fullname'), true);
+        $email = htmlspecialchars($this->request->getVar('email'), true);
+        $kecamatan = htmlspecialchars($this->request->getVar('kecamatan'), true);
+        $sekolah = htmlspecialchars($this->request->getVar('sekolah'), true);
+        $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
+        $koreg = htmlspecialchars($this->request->getVar('koreg'), true);
+        $kode_kecamatan = htmlspecialchars($this->request->getVar('kode_kecamatan'), true);
+
+        $currentDataOnDB = $this->_db->table('_users_tb')->where('email', $email)->get()->getRowObject();
+
+        if ($currentDataOnDB) {
+            $response = new \stdClass;
+            $response->code = 200;
+            $response->message = "Berhasil mengimport data. data sudah ada.";
+            $response->url = base_url('');
+            return json_encode($response);
+        } else {
+
+            $uuidLib = new Uuid();
+
+            // try {
+
+            $data = [
+                'id' => $uuidLib->v4(),
+                'email' => $email,
+                'fullname' => $fullname,
+                'npsn' => $npsn,
+                'jabatan' => 'Admin',
+                'kecamatan' => $kode_kecamatan,
+                'role_user' => 5,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $koregs = ($koreg === NULL || $koreg === "" || strlen($koreg) < 5) ? $npsn : $koreg;
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('_users_tb')->insert([
+                    'id' => $data['id'],
+                    'email' => $data['email'],
+                    'password' => password_hash($koregs, PASSWORD_DEFAULT),
+                    'scope' => 'app',
+                    'is_active' => 0,
+                    'wa_verified' => 0,
+                    'email_verified' => 0,
+                    'email_tertaut' => 0,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->code = 400;
+                $response->message = "Gagal menyimpan data";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                try {
+                    $this->_db->table('_profil_users_tb')->insert($data);
+                } catch (\Exception $e) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->code = 400;
+                    $response->message = "Gagal menyimpan data";
+                    return json_encode($response);
+                }
+                if ($this->_db->affectedRows() > 0) {
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->code = 200;
+                    $response->message = "Berhasil mengimport data";
+                    $response->url = base_url('');
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->code = 400;
+                    $response->message = "Gagal menyimpan data";
+                    return json_encode($response);
+                }
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->code = 400;
+                $response->message = "Gagal menyimpan data";
+                return json_encode($response);
+            }
+
+            // if ($this->_db->affectedRows() > 0) {
+            //     $this->_db->transCommit();
+            //     $response = new \stdClass;
+            //     $response->code = 200;
+            //     $response->message = "Berhasil mengimport data";
+            //     $response->url = base_url('');
+            //     return json_encode($response);
+            // } else {
+
+            //     $this->_db->transRollback();
+            //     // } catch (\Throwable $e) {
+            //     $response = new \stdClass;
+            //     $response->code = 400;
+            //     $response->message = "Gagal menyimpan data";
+            //     return json_encode($response);
+            // }
         }
     }
 }

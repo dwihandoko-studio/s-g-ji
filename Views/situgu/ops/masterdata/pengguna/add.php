@@ -80,7 +80,7 @@
             </div>
         </div>
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary waves-effect waves-light">Update</button>
+        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
     </div>
 </form>
 
