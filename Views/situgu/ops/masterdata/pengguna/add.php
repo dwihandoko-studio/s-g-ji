@@ -258,7 +258,6 @@
         const formUpload = new FormData();
         const file = document.getElementsByName('_file')[0].files[0];
         formUpload.append('file', file);
-        formUpload.append('id', id);
         formUpload.append('nama', fullname);
         formUpload.append('nip', nip);
         formUpload.append('email', email);
