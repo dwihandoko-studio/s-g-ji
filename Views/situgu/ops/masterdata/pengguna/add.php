@@ -5,7 +5,7 @@
                 <p><code>*)</code>Jika data PTK tidak ada dalam daftar dibawah ini, Silahkan untuk melakukan Tarik Data terlebih dahulu. <a href="<?= base_url('situgu/ops/masterdata/ptk') ?>"><i class="bx bx-log-in-circle"></i></a></p>
                 <div class="mb-3">
                     <label for="_ptk" class="col-form-label">Pilih PTK:</label>
-                    <select class="form-control ptk" id="_ptk" name="_ptk" style="width: 100%" onchange="changePtk(this)">
+                    <select class="form-control select2 ptk" id="_ptk" name="_ptk" style="width: 100%" onchange="changePtk(this)">
                         <option value="">&nbsp;</option>
                         <?php if (isset($data)) {
                             if (count($data) > 0) {
