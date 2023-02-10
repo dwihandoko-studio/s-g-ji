@@ -1165,12 +1165,6 @@ class Pengguna extends BaseController
         }
 
         $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id buku tidak boleh kosong. ',
-                ]
-            ],
             'nama' => [
                 'rules' => 'required|trim',
                 'errors' => [
@@ -1228,7 +1222,6 @@ class Pengguna extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('nama')
-                . $this->validator->getError('id')
                 . $this->validator->getError('email')
                 . $this->validator->getError('nohp')
                 . $this->validator->getError('nip')
@@ -1248,7 +1241,6 @@ class Pengguna extends BaseController
                 return json_encode($response);
             }
 
-            $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $email = htmlspecialchars($this->request->getVar('email'), true);
             $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
