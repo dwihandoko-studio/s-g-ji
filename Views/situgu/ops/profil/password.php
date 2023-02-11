@@ -8,7 +8,6 @@
                     <input type="password" class="form-control password-lama" id="_password_lama" name="_password_lama" placeholder="Kata sandi lama" aria-label="Kata Sandi Lama" aria-describedby="password-addon-old">
                     <button class="btn btn-light " onclick="showPassword('.password-lama')" type="button" id="password-addon-old"><i class="mdi mdi-eye-outline"></i></button>
                 </div>
-                <!-- <input type="password" class="form-control password-lama" id="_password_lama" name="_password_lama" placeholder="Kata sandi lama..." onfocusin="inputFocus(this);"> -->
                 <div class="help-block _password_lama"></div>
             </div>
             <div class="mb-3">
@@ -17,16 +16,14 @@
                     <input type="password" class="form-control password-baru" id="_password_baru" name="_password_baru" placeholder="Kata sandi baru" aria-label="Kata Sandi Baru" aria-describedby="password-addon-new">
                     <button class="btn btn-light " onclick="showPassword('.password-baru')" type="button" id="password-addon-new"><i class="mdi mdi-eye-outline"></i></button>
                 </div>
-                <!-- <input type="password" class="form-control password-baru" id="_password_baru" name="_password_baru" placeholder="Kata sandi baru..." onfocusin="inputFocus(this);"> -->
                 <div class="help-block _password_baru"></div>
             </div>
             <div class="mb-3">
                 <label for="_ulangi_password_baru" class="form-label">Ulangi Kata Sandi Baru</label>
                 <div class="input-group auth-pass-inputgroup">
-                    <input type="password" class="form-control ulangi-password-new" id="_ulangi_password_baru" name="_ulangi_password_baru" placeholder="Ulangi kata sandi baru" aria-label="Ulangi Kata Sandi Baru" aria-describedby="password-addon-re-new">
-                    <button class="btn btn-light " onclick="showPassword('.ulangi-password-new')" type="button" id="password-addon-re-new"><i class="mdi mdi-eye-outline"></i></button>
+                    <input type="password" class="form-control ulangi-password-baru" id="_ulangi_password_baru" name="_ulangi_password_baru" placeholder="Ulangi kata sandi baru" aria-label="Ulangi Kata Sandi Baru" aria-describedby="password-addon-re-new">
+                    <button class="btn btn-light " onclick="showPassword('.ulangi-password-baru')" type="button" id="password-addon-re-new"><i class="mdi mdi-eye-outline"></i></button>
                 </div>
-                <!-- <input type="password" class="form-control ulangi-password-baru" id="_ulangi_password_baru" name="_ulangi_password_baru" placeholder="Ulangi kata sandi baru..." onfocusin="inputFocus(this);"> -->
                 <div class="help-block _ulangi_password_baru"></div>
             </div>
         </div>
