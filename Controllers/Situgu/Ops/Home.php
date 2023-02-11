@@ -36,6 +36,7 @@ class Home extends BaseController
         }
 
         $data['user'] = $user->data;
+        $data['registered'] = $this->_db->table('_profil_users_tb')->select('surat_tugas')->where('id', $user->data->id)->get()->getRowObject();
         $data['title'] = 'Dashboard';
         $data['admin'] = true;
         $data['jumlah'] = $this->_db->table('_ptk_tb a')
@@ -47,5 +48,204 @@ class Home extends BaseController
         $data['informasis'] = $this->_db->table('_tb_infopop')->select("*, (SELECT count(*) FROM _tb_infopop WHERE tampil = 1 AND tujuan_role LIKE '%OPS%') as jumlah_all")->where("tampil = 1 AND tujuan_role LIKE '%OPS%'")->orderBy('created_at', 'DESC')->limit(5)->get()->getResult();
 
         return view('situgu/ops/home/index', $data);
+    }
+
+    public function getAktivasi()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+
+            if (!$user || $user->status !== 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session expired.";
+                return json_encode($response);
+            }
+
+            if ($id == "admin") {
+                $x['user'] = $user->data;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ops/home/aktivasi/admin', $x);
+                return json_encode($response);
+            } else if ($id == "email") {
+                $x['user'] = $user->data;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ops/home/aktivasi/email', $x);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function kirimAktivasi()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'jk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis kelamin tidak boleh kosong. ',
+                ]
+            ],
+            'nohp' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No handphone tidak boleh kosong. ',
+                ]
+            ],
+            'nip' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'NIP tidak boleh kosong. ',
+                ]
+            ],
+            'file' => [
+                'rules' => 'uploaded[file]|max_size[file,512]|is_image[file]',
+                'errors' => [
+                    'uploaded' => 'Pilih gambar profil terlebih dahulu. ',
+                    'max_size' => 'Ukuran gambar profil terlalu besar. ',
+                    'is_image' => 'Ekstensi yang anda upload harus berekstensi gambar. '
+                ]
+            ],
+            'surat_tugas' => [
+                'rules' => 'uploaded[surat_tugas]|max_size[surat_tugas,2048]|mime_in[surat_tugas,image/jpeg,image/jpg,image/png,application/pdf]',
+                'errors' => [
+                    'uploaded' => 'Pilih gambar profil terlebih dahulu. ',
+                    'max_size' => 'Ukuran gambar profil terlalu besar. ',
+                    'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar atau pdf. '
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('jk')
+                . $this->validator->getError('nohp')
+                . $this->validator->getError('nip')
+                . $this->validator->getError('surat_tugas')
+                . $this->validator->getError('file');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $jk = htmlspecialchars($this->request->getVar('jk'), true);
+            $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
+            $nip = htmlspecialchars($this->request->getVar('nip'), true);
+
+            $data = [
+                'jenis_kelamin' => $jk,
+                'no_hp' => $nohp,
+                'nip' => $nip,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $dir = FCPATH . "upload/user";
+            $dirSurat = FCPATH . "upload/surat-tugas";
+
+            $lampiran = $this->request->getFile('file');
+            $filesNamelampiran = $lampiran->getName();
+            $newNamelampiran = _create_name_foto($filesNamelampiran);
+
+            if ($lampiran->isValid() && !$lampiran->hasMoved()) {
+                $lampiran->move($dir, $newNamelampiran);
+                $data['profile_picture'] = $newNamelampiran;
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupload gambar.";
+                return json_encode($response);
+            }
+
+            $lampiranSurat = $this->request->getFile('surat_tugas');
+            $filesNamelampiranSurat = $lampiranSurat->getName();
+            $newNamelampiranSurat = _create_name_foto($filesNamelampiranSurat);
+
+            if ($lampiranSurat->isValid() && !$lampiranSurat->hasMoved()) {
+                $lampiranSurat->move($dirSurat, $newNamelampiranSurat);
+                $data['surat_tugas'] = $newNamelampiranSurat;
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupload file.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+
+            try {
+                $this->_db->table('_profil_users_tb')->where('id', $user->data->id)->update($data);
+            } catch (\Exception $e) {
+                unlink($dir . '/' . $newNamelampiran);
+                unlink($dirSurat . '/' . $newNamelampiranSurat);
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengajukan verifikasi.";
+                return json_encode($response);
+            }
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Akun berhasil diajukan untuk diverifikasi.";
+                return json_encode($response);
+            } else {
+                unlink($dir . '/' . $newNamelampiran);
+                unlink($dirSurat . '/' . $newNamelampiranSurat);
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengajukan verifikasi.";
+                return json_encode($response);
+            }
+        }
     }
 }

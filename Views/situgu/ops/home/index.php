@@ -275,101 +275,232 @@
         </div>
     </div>
 </div>
-<!-- End Page-content -->
 
-<!-- Modal -->
-<div class="modal fade transaction-detailModal" tabindex="-1" role="dialog" aria-labelledby="transaction-detailModalLabel" aria-hidden="true">
+<div id="content-aktivasiModal" class="modal fade content-aktivasiModal" tabindex="-1" role="dialog" aria-labelledby="content-aktivasiModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content modal-content-loading">
             <div class="modal-header">
-                <h5 class="modal-title" id="transaction-detailModalLabel">Order Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="content-aktivasiModalLabel">Aktivasi</h5>
             </div>
-            <div class="modal-body">
-                <p class="mb-2">Product id: <span class="text-primary">#SK2540</span></p>
-                <p class="mb-4">Billing Name: <span class="text-primary">Neal Matthews</span></p>
-
-                <div class="table-responsive">
-                    <table class="table align-middle table-nowrap">
-                        <thead>
-                            <tr>
-                                <th scope="col">Product</th>
-                                <th scope="col">Product Name</th>
-                                <th scope="col">Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <div>
-                                        <img src="<?= base_url() ?>/assets/images/product/img-7.png" alt="" class="avatar-sm">
-                                    </div>
-                                </th>
-                                <td>
-                                    <div>
-                                        <h5 class="text-truncate font-size-14">Wireless Headphone (Black)</h5>
-                                        <p class="text-muted mb-0">$ 225 x 1</p>
-                                    </div>
-                                </td>
-                                <td>$ 255</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div>
-                                        <img src="<?= base_url() ?>/assets/images/product/img-4.png" alt="" class="avatar-sm">
-                                    </div>
-                                </th>
-                                <td>
-                                    <div>
-                                        <h5 class="text-truncate font-size-14">Phone patterned cases</h5>
-                                        <p class="text-muted mb-0">$ 145 x 1</p>
-                                    </div>
-                                </td>
-                                <td>$ 145</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h6 class="m-0 text-right">Sub Total:</h6>
-                                </td>
-                                <td>
-                                    $ 400
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h6 class="m-0 text-right">Shipping:</h6>
-                                </td>
-                                <td>
-                                    Free
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <h6 class="m-0 text-right">Total:</h6>
-                                </td>
-                                <td>
-                                    $ 400
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <div class="contentAktivasiBodyModal">
             </div>
         </div>
     </div>
 </div>
-<!-- end modal -->
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptBottom'); ?>
 <script src="<?= base_url() ?>/assets/libs/jquery-countdown/jquery.countdown.min.js"></script>
 <script src="<?= base_url() ?>/assets/js/pages/coming-soon.init.js"></script>
-<!-- <script src="<?= base_url() ?>/assets/libs/apexcharts/apexcharts.min.js"></script> -->
-<!-- <script src="<?= base_url() ?>/assets/js/pages/dashboard-blog.init.js"></script> -->
+<script>
+    $(document).ready(function() {
+        <?php if (!$registered || $registered->surat_tugas === NULL) { ?>
+            $('#content-aktivasiModalLabel').html('PERINGATAN AKUN BELUM MELAKUKAN AKTIVASI');
+            let aktivasiWa = '';
+            aktivasiWa += '<div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">';
+            aktivasiWa += '<div class="alert alert-danger" role="alert">';
+            aktivasiWa += 'Akun anda terdeteksi belum melakukan aktivasi.\nSilahkan untuk melakukan aktivasi Admin Sekolah terlebih dahulu.';
+            aktivasiWa += '</div>';
+            aktivasiWa += '</div>';
+            aktivasiWa += '<div class="modal-footer">';
+            aktivasiWa += '<button type="button" onclick="aksiLogout(this);" class="btn btn-secondary waves-effect waves-light">Keluar</button>';
+            aktivasiWa += '<button type="button" onclick="aksiAktivasiWa(this);" id="aktivasi-button-wa" class="btn btn-primary waves-effect waves-light aktivasi-button-wa">Aktivasi Sekarang</button>';
+            aktivasiWa += '</div>';
+            $('.contentAktivasiBodyModal').html(aktivasiWa);
+            $('.content-aktivasiModal').modal({
+                backdrop: 'static',
+                keyboard: false,
+            });
+            $('.content-aktivasiModal').modal('show');
+
+        <?php } ?>
+    });
+
+    function aksiAktivasiWa(event) {
+        $.ajax({
+            url: './home/getAktivasi',
+            type: 'POST',
+            data: {
+                id: 'admin',
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                $('.aktivasi-button-wa').attr('disabled', true);
+                $('div.modal-content-loading').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.modal-content-loading').unblock();
+                if (resul.status == 200) {
+                    $('.contentAktivasiBodyModal').html(resul.data);
+                } else {
+                    if (resul.status == 404) {
+                        Swal.fire(
+                            'PERINGATAN!',
+                            resul.message,
+                            'warning'
+                        ).then((valRes) => {
+                            reloadPage(resul.redirrect);
+                        })
+                    } else {
+                        if (resul.status == 401) {
+                            Swal.fire(
+                                'PERINGATAN!',
+                                resul.message,
+                                'warning'
+                            ).then((valRes) => {
+                                reloadPage();
+                            })
+                        } else {
+                            $('.aktivasi-button-wa').attr('disabled', false);
+                            Swal.fire(
+                                'PERINGATAN!!!',
+                                resul.message,
+                                'warning'
+                            );
+                        }
+                    }
+                }
+            },
+            error: function(data) {
+                $('.aktivasi-button-wa').attr('disabled', false);
+                $('div.modal-content-loading').unblock();
+                Swal.fire(
+                    'PERINGATAN!',
+                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
+            }
+        });
+    }
+
+    function changeValidation(event) {
+        $('.' + event).css('display', 'none');
+    };
+
+    function inputFocus(id) {
+        const color = $(id).attr('id');
+        $(id).removeAttr('style');
+        $('.' + color).html('');
+    }
+
+    function inputChange(event) {
+        console.log(event.value);
+        if (event.value === null || (event.value.length > 0 && event.value !== "")) {
+            $(event).removeAttr('style');
+        } else {
+            $(event).css("color", "#dc3545");
+            $(event).css("border-color", "#dc3545");
+            // $('.nama_instansi').html('<ul role="alert" style="color: #dc3545;"><li style="color: #dc3545;">Isian tidak boleh kosong.</li></ul>');
+        }
+    }
+
+    function ambilId(id) {
+        return document.getElementById(id);
+    }
+
+    $('#content-aktivasiModal').on('click', '.btn-remove-preview-image', function(event) {
+        $('.imagePreviewUpload').removeAttr('src');
+        document.getElementsByName("_file")[0].value = "";
+    });
+
+    $('#content-aktivasiModal').on('click', '.btn-remove-preview-image-file', function(event) {
+        $('.imagePreviewUploadFile').removeAttr('src');
+        document.getElementsByName("_surat_tugas")[0].value = "";
+    });
+</script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptTop'); ?>
+
+<style>
+    .preview-image-upload {
+        position: relative;
+    }
+
+    .preview-image-upload .imagePreviewUpload {
+        max-width: 200px;
+        max-height: 200px;
+        cursor: pointer;
+    }
+
+    .preview-image-upload .btn-remove-preview-image {
+        display: none;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        background-color: #555;
+        color: white;
+        font-size: 16px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .imagePreviewUpload:hover+.btn-remove-preview-image,
+    .btn-remove-preview-image:hover {
+        display: block;
+    }
+
+    .preview-image-upload-file {
+        position: relative;
+    }
+
+    .preview-image-upload-file .imagePreviewUploadFile {
+        max-width: 200px;
+        max-height: 200px;
+        cursor: pointer;
+    }
+
+    .preview-image-upload-file .btn-remove-preview-image-file {
+        display: none;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        background-color: #555;
+        color: white;
+        font-size: 16px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+    }
+
+    .imagePreviewUploadFile:hover+.btn-remove-preview-image-file,
+    .btn-remove-preview-image-file:hover {
+        display: block;
+    }
+
+    .ul-custom-style-sub-menu-action {
+        list-style: none;
+        padding-left: 0.5rem;
+        border: 1px solid #ffffff2e;
+        padding-top: 0.5rem;
+        padding-right: 0.5rem;
+        border-radius: 1.5rem;
+    }
+
+    .li-custom-style-sub-menu-action {
+        border: 1px solid white;
+        display: inline-block !important;
+        padding: 0.3rem 0.5rem 0rem 0.3rem;
+        margin-right: 0.3rem;
+        margin-bottom: 0.5rem;
+        border-radius: 2rem;
+    }
+
+    .custom-style-sub-menu-action {
+        font-size: 1em;
+        line-height: 1;
+        height: 24px;
+        color: #f6f6f6;
+        display: inline-block;
+        position: relative;
+        text-align: center;
+        font-weight: 500;
+        box-sizing: border-box;
+        margin-top: -15px;
+        vertical-align: -webkit-baseline-middle;
+    }
+</style>
 <?= $this->endSection(); ?>
