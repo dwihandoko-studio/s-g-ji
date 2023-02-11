@@ -44,6 +44,7 @@ class Profil extends BaseController
         $data['user'] = $user->data;
 
         $data['data'] = $user->data;
+        $data['role'] = $this->_db->table('_role_user')->select('role')->where('id', $user->data->role_user)->get()->getRowObject();
 
         return view('situgu/ops/profil/index', $data);
         // return view('situgu/ops/404', $data);

@@ -46,7 +46,7 @@
                                 <h5 class="font-size-15 text-truncate"><?= $data->fullname ?></h5>
                                 <p class="text-muted mb-0 text-truncate">E-mail: <?= $data->email ?></p>
                                 <p class="text-muted mb-0 text-truncate">No HP: <?= $data->no_hp ?></p>
-                                <p class="text-muted mb-0 text-truncate">Role User: <?= $data->role ?></p>
+                                <p class="text-muted mb-0 text-truncate">Role User: <?= $role->role ?></p>
                             </div>
 
                             <div class="col-sm-6">
