@@ -66,7 +66,7 @@
 
             Swal.fire({
                 title: 'Apakah anda yakin ingin mengupdate password akun ini?',
-                text: "Update Password Akun: <?= $data->nama ?>",
+                text: "Update Password Akun: <?= $data->fullname ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
