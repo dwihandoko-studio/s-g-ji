@@ -119,14 +119,14 @@ class Ajukan extends BaseController
             if (!$oldDataAbsen) {
                 $response = new \stdClass;
                 $response->status = 201;
-                $response->message = "Operator Sekolah belum menginputkan data absensi anda, silahkan menghubungi operator Dapodik untuk melengkapi data kehadiran di Aplikasi UTPG.";
+                $response->message = "Anda tidak dapat mengajukan Usulan Tujangan, dikarenakan Admin Sekolah belum melengkapi/mengunggah dokumen Absensi Kehadiran. Silahkan Hubungi Admin Sekolah.";
                 return json_encode($response);
             }
 
             if (((int)$oldDataAbsen->bulan_1 + (int)$oldDataAbsen->bulan_2 + (int)$oldDataAbsen->bulan_3) < 1) {
                 $response = new \stdClass;
                 $response->status = 201;
-                $response->message = "Operator Sekolah belum menginputkan data absensi anda, silahkan menghubungi operator Dapodik untuk melengkapi data kehadiran di Aplikasi UTPG.";
+                $response->message = "Anda tidak dapat mengajukan Usulan Tujangan, dikarenakan Admin Sekolah belum melengkapi/mengunggah dokumen Absensi Kehadiran. Silahkan Hubungi Admin Sekolah.";
                 return json_encode($response);
             }
             if (!$oldDataAbsen->lampiran_absen1 || !$oldDataAbsen->lampiran_absen2 || !$oldDataAbsen->lampiran_absen3 || !$oldDataAbsen->pembagian_tugas || !$oldDataAbsen->slip_gaji) {
