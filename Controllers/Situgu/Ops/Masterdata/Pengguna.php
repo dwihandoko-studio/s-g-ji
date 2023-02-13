@@ -1265,6 +1265,7 @@ class Pengguna extends BaseController
                 'fullname' => $nama,
                 'no_hp' => $nohp,
                 'nip' => $nip,
+                'npsn' => $user->data->npsn,
                 'ptk_id' => $id_ptk,
                 'role_user' => 7,
                 'created_at' => date('Y-m-d H:i:s'),
