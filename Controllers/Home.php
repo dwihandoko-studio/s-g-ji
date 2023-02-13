@@ -12,7 +12,7 @@ class Home extends BaseController
 
     function __construct()
     {
-        helper(['text', 'file', 'form', 'session', 'array', 'imageurl', 'web', 'filesystem']);
+        helper(['text', 'file', 'form', 'session', 'cookie', 'array', 'imageurl', 'web', 'filesystem']);
         $this->_db      = \Config\Database::connect();
     }
     public function index()
