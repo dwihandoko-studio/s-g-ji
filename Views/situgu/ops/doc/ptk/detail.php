@@ -74,8 +74,8 @@
                                     <th>KTP</th>
                                     <th>NRG</th>
                                     <th>NUPTK</th>
-                                    <th>Serdik</th>
                                     <th>NPWP</th>
+                                    <th>Serdik</th>
                                     <th>Buku Rekening</th>
                                     <th>Ijazah</th>
                                     <th>Inpassing</th>
