@@ -40,8 +40,8 @@
                                     <th data-orderable="false">KTP</th>
                                     <th data-orderable="false">NRG</th>
                                     <th data-orderable="false">NUPTK</th>
-                                    <th data-orderable="false">Serdik</th>
                                     <th data-orderable="false">NPWP</th>
+                                    <th data-orderable="false">Serdik</th>
                                     <th data-orderable="false">Buku Rekening</th>
                                     <th data-orderable="false">Ijazah</th>
                                     <th data-orderable="false">Inpassing</th>
