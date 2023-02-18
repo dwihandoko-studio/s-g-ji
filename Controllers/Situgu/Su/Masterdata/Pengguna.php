@@ -112,6 +112,11 @@ class Pengguna extends BaseController
 
     public function index()
     {
+        return redirect()->to(base_url('situgu/su/masterdata/pengguna/data'));
+    }
+
+    public function data()
+    {
         $data['title'] = 'PENGGUNA';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
@@ -166,6 +171,241 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function add()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'action' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('action');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('action'), true);
+
+            $roles = $this->_db->table('_role_user')->whereNotIn('id', [1, 6, 7])->get()->getResult();
+
+            if (count($roles) > 0) {
+                $data['roles'] = $roles;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/su/masterdata/pengguna/add', $data);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function addSave()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'email' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong. ',
+                ]
+            ],
+            'nohp' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No handphone tidak boleh kosong. ',
+                ]
+            ],
+            'nip' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'NIP tidak boleh kosong. ',
+                ]
+            ],
+            'role' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Role tidak boleh kosong. ',
+                ]
+            ],
+            'status' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Status tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        $filenamelampiran = dot_array_search('file.name', $_FILES);
+        if ($filenamelampiran != '') {
+            $lampiranVal = [
+                'file' => [
+                    'rules' => 'uploaded[file]|max_size[file,512]|is_image[file]',
+                    'errors' => [
+                        'uploaded' => 'Pilih gambar profil terlebih dahulu. ',
+                        'max_size' => 'Ukuran gambar profil terlalu besar. ',
+                        'is_image' => 'Ekstensi yang anda upload harus berekstensi gambar. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranVal);
+        }
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('nama')
+                . $this->validator->getError('email')
+                . $this->validator->getError('nohp')
+                . $this->validator->getError('nip')
+                . $this->validator->getError('role')
+                . $this->validator->getError('status')
+                . $this->validator->getError('file');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $email = htmlspecialchars($this->request->getVar('email'), true);
+            $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
+            $nip = htmlspecialchars($this->request->getVar('nip'), true);
+            $role = htmlspecialchars($this->request->getVar('role'), true);
+            $status = htmlspecialchars($this->request->getVar('status'), true);
+
+            $oldData =  $this->_db->table('_profil_users_tb')->where('email', $email)->get()->getRowObject();
+
+            if ($oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Email sudah terdaftar.";
+                return json_encode($response);
+            }
+
+            $uuidLib = new Uuid();
+
+            $data = [
+                'id' => $uuidLib->v4(),
+                'email' => $email,
+                'fullname' => $nama,
+                'no_hp' => $nohp,
+                'nip' => $nip,
+                'npsn' => $user->data->npsn,
+                'role_user' => $role,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $dir = FCPATH . "upload/user";
+
+            if ($filenamelampiran != '') {
+                $lampiran = $this->request->getFile('file');
+                $filesNamelampiran = $lampiran->getName();
+                $newNamelampiran = _create_name_foto($filesNamelampiran);
+
+                if ($lampiran->isValid() && !$lampiran->hasMoved()) {
+                    $lampiran->move($dir, $newNamelampiran);
+                    $data['profile_picture'] = $newNamelampiran;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload gambar.";
+                    return json_encode($response);
+                }
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('_users_tb')->insert([
+                    'id' => $data['id'],
+                    'email' => $data['email'],
+                    'password' => password_hash('123456', PASSWORD_DEFAULT),
+                    'scope' => 'app',
+                    'is_active' => $status,
+                    'wa_verified' => 0,
+                    'email_verified' => 0,
+                    'email_tertaut' => 0,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            } catch (\Exception $e) {
+                unlink($dir . '/' . $newNamelampiran);
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan data baru.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                try {
+                    $this->_db->table('_profil_users_tb')->insert($data);
+                } catch (\Exception $e) {
+                    unlink($dir . '/' . $newNamelampiran);
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menyimpan data baru.";
+                    return json_encode($response);
+                }
+                if ($this->_db->affectedRows() > 0) {
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Data berhasil disimpan. Password Default Akun: 123456";
+                    return json_encode($response);
+                } else {
+                    unlink($dir . '/' . $newNamelampiran);
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menyimpan data baru";
+                    return json_encode($response);
+                }
+            } else {
+                unlink($dir . '/' . $newNamelampiran);
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan data baru";
                 return json_encode($response);
             }
         }

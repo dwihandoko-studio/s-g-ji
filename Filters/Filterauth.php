@@ -137,47 +137,46 @@ class Filterauth implements FilterInterface
                                             }
                                         }
                                     } else if ($level == 3) { //Kecamatan
-                                        if ($uriMain != "c") {
-                                            return redirect()->to(base_url('c/home'));
-                                        } else {
-                                            $uriMainMenu = $uri->getSegment(2);
-                                            if ($uriMain == "a" && $uriMainMenu == "home") {
-                                            } else {
-
-                                                $dataAccess = listHakAksesAllow();
-                                                if (!$dataAccess) {
-                                                    return redirect()->to(base_url('a/home'));
-                                                }
-
-                                                if (!(menu_showed_access($dataAccess, $uriMainMenu))) {
-                                                    return redirect()->to(base_url('a/home'));
-                                                }
-
-                                                $uriMainSubMenu = $uri->getSegment(3);
-
-                                                if (!(submenu_showed_access($dataAccess, $uriMainMenu, $uriMainSubMenu))) {
-                                                    return redirect()->to(base_url('a/notallow'));
-                                                    // return redirect()->to(base_url('a/home'));
-                                                }
-
-                                                $uriMainSubMenuAksi = $uri->getSegment(4);
-
-                                                if (!(access_allowed_new($dataAccess, $uriMainMenu, $uriMainSubMenu, $uriMainSubMenuAksi))) {
-                                                    if ($uriMainSubMenuAksi == "" || $uriMainSubMenuAksi == "data") {
-                                                        return redirect()->to(base_url('a/notallow'));
-                                                    } else {
-                                                        $response = new \stdClass;
-                                                        $response->status = 400;
-                                                        $response->message = "Akses tidak diizinkan.";
-                                                        return json_encode($response);
-                                                    }
-                                                }
-
-                                                // if (!(access_allowed($dataAccess, $uriMainMenu, $uriMainSubMenu))) {
-                                                //     return redirect()->to(base_url('a/notallow'));
-                                                // }
-                                            }
+                                        if ($uriLevel === "" || $uriLevel === "index") {
+                                            return redirect()->to(base_url('situgu/opk/home'));
                                         }
+                                        if ($uriLevel != "opk") {
+                                            return redirect()->to(base_url('situgu/opk/home'));
+                                        }
+                                        // else {
+                                        //     $uriMainMenu = $uri->getSegment(3);
+                                        //     if ($uriLevel == "opk" && $uriMainMenu == "home") {
+                                        //     } else {
+                                        //         $dataAccess = listHakAksesAllow();
+                                        //         if (!$dataAccess) {
+                                        //             return redirect()->to(base_url('situgu/opk/home'));
+                                        //         }
+
+                                        //         if (!(menu_showed_access($dataAccess, $uriMainMenu))) {
+                                        //             return redirect()->to(base_url('situgu/opk/home'));
+                                        //         }
+
+                                        //         $uriMainSubMenu = $uri->getSegment(4);
+
+                                        //         if (!(submenu_showed_access($dataAccess, $uriMainMenu, $uriMainSubMenu))) {
+                                        //             return redirect()->to(base_url('situgu/opk/notallow'));
+                                        //             // return redirect()->to(base_url('a/home'));
+                                        //         }
+
+                                        //         $uriMainSubMenuAksi = $uri->getSegment(5);
+
+                                        //         if (!(access_allowed_new($dataAccess, $uriMainMenu, $uriMainSubMenu, $uriMainSubMenuAksi))) {
+                                        //             if ($uriMainSubMenuAksi == "" || $uriMainSubMenuAksi == "data") {
+                                        //                 return redirect()->to(base_url('situgu/opk/notallow'));
+                                        //             } else {
+                                        //                 $response = new \stdClass;
+                                        //                 $response->status = 400;
+                                        //                 $response->message = "Akses tidak diizinkan.";
+                                        //                 return json_encode($response);
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // }
                                     } else if ($level == 4) { //SubRayon
                                         if ($uriMain != "d") {
                                             return redirect()->to(base_url('d/home'));

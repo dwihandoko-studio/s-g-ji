@@ -10,12 +10,11 @@
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0 font-size-18">PENGGUNA</h4>
 
-                    <!-- <div class="page-title-right">
+                    <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Layouts</a></li>
-                            <li class="breadcrumb-item active">Horizontal Boxed Width</li>
+                            <li class="breadcrumb-item"><a href="javascript:actionAdd(this);" class="btn btn-primary btn-rounded waves-effect waves-light">Tambah Akun</a></li>
                         </ol>
-                    </div> -->
+                    </div>
 
                 </div>
             </div>
@@ -97,6 +96,48 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
+    function actionAdd(event) {
+        $.ajax({
+            url: "./add",
+            type: 'POST',
+            data: {
+                action: 'add',
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                $('div.main-content').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.main-content').unblock();
+                if (resul.status !== 200) {
+                    Swal.fire(
+                        'Failed!',
+                        resul.message,
+                        'warning'
+                    );
+                } else {
+                    $('#content-detailModalLabel').html('TAMBAH AKUN');
+                    $('.contentBodyModal').html(resul.data);
+                    $('.content-detailModal').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                    });
+                    $('.content-detailModal').modal('show');
+                }
+            },
+            error: function() {
+                $('div.main-content').unblock();
+                Swal.fire(
+                    'Failed!',
+                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
+            }
+        });
+    }
+
     function actionSync(id, ptkId, nama, nuptk, npsn) {
         Swal.fire({
             title: 'Apakah anda yakin ingin pembaharuan data ptk ini dari backbone dapodik?',
