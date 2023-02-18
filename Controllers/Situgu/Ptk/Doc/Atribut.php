@@ -238,7 +238,7 @@ class Atribut extends BaseController
         }
 
         $data['user'] = $user->data;
-        $id = $this->_helpLib->getPtkId($user->data->id);
+        $id = $this->_helpLib->getPtkId($user->data->ptk_id);
         $ptk = $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
 
         if ($ptk) {
