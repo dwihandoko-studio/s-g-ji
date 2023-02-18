@@ -200,7 +200,7 @@
     function actionHapus(id, nama, nuptk) {
         Swal.fire({
             title: 'Apakah anda yakin ingin menghapus data ini?',
-            text: "Hapus PTK : " + nama + " ( " + nuptk + " )",
+            text: "Hapus Akun : " + nama + " ( " + nuptk + " )",
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
@@ -209,7 +209,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('situgu/su/masterdata/ptk/delete') ?>",
+                    url: "./delete",
                     type: 'POST',
                     data: {
                         id: id,

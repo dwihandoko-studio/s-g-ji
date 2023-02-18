@@ -203,9 +203,11 @@ class Pengguna extends BaseController
             $id = htmlspecialchars($this->request->getVar('action'), true);
 
             $roles = $this->_db->table('_role_user')->whereNotIn('id', [1, 6, 7])->get()->getResult();
+            $wilayahs = $this->_db->table('ref_kecamatan')->orderBy('nama_kecamatan', 'ASC')->get()->getResult();
 
-            if (count($roles) > 0) {
+            if (count($roles) > 0 && count($wilayahs) > 0) {
                 $data['roles'] = $roles;
+                $data['wilayahs'] = $wilayahs;
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
@@ -260,6 +262,12 @@ class Pengguna extends BaseController
                     'required' => 'Role tidak boleh kosong. ',
                 ]
             ],
+            'wilayah' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Wilayah tidak boleh kosong. ',
+                ]
+            ],
             'status' => [
                 'rules' => 'required',
                 'errors' => [
@@ -291,6 +299,7 @@ class Pengguna extends BaseController
                 . $this->validator->getError('nohp')
                 . $this->validator->getError('nip')
                 . $this->validator->getError('role')
+                . $this->validator->getError('wilayah')
                 . $this->validator->getError('status')
                 . $this->validator->getError('file');
             return json_encode($response);
@@ -311,6 +320,7 @@ class Pengguna extends BaseController
             $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
             $nip = htmlspecialchars($this->request->getVar('nip'), true);
             $role = htmlspecialchars($this->request->getVar('role'), true);
+            $wilayah = htmlspecialchars($this->request->getVar('wilayah'), true);
             $status = htmlspecialchars($this->request->getVar('status'), true);
 
             $oldData =  $this->_db->table('_profil_users_tb')->where('email', $email)->get()->getRowObject();
@@ -332,6 +342,7 @@ class Pengguna extends BaseController
                 'nip' => $nip,
                 'npsn' => $user->data->npsn,
                 'role_user' => $role,
+                'kecamatan' => $wilayah,
                 'created_at' => date('Y-m-d H:i:s'),
             ];
 
@@ -564,7 +575,7 @@ class Pengguna extends BaseController
             if ($current) {
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('_users_tb')->where('uid', $id)->delete();
+                    $this->_db->table('_users_tb')->where('id', $id)->delete();
 
                     if ($this->_db->affectedRows() > 0) {
                         try {

@@ -1,7 +1,7 @@
 <form id="formAddModalData" action="./addSave" method="post" enctype="multipart/form-data">
     <div class="modal-body loading-get-data">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="mb-3">
                     <label for="_role" class="col-form-label">Pilih Role:</label>
                     <select class="form-control select2 ptk" id="_role" name="_role" style="width: 100%">
@@ -15,6 +15,22 @@
                         } ?>
                     </select>
                     <div class="help-block _role"></div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    <label for="_wilayah" class="col-form-label">Pilih Wilayah:</label>
+                    <select class="form-control select2 ptk" id="_wilayah" name="_wilayah" style="width: 100%">
+                        <option value="">&nbsp;</option>
+                        <?php if (isset($wilayahs)) {
+                            if (count($wilayahs) > 0) {
+                                foreach ($wilayahs as $key => $value) { ?>
+                                    <option value="<?= $value->kode_kecamatan ?>"><?= $value->nama_kecamatan ?></option>
+                        <?php }
+                            }
+                        } ?>
+                    </select>
+                    <div class="help-block _wilayah"></div>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -188,6 +204,7 @@
         const nohp = document.getElementsByName('_nohp')[0].value;
         const fileName = document.getElementsByName('_file')[0].value;
         const role = document.getElementsByName('_role')[0].value;
+        const wilayah = document.getElementsByName('_wilayah')[0].value;
 
         let status;
         if ($('#status_publikasi').is(":checked")) {
@@ -200,6 +217,13 @@
             $("select#_role").css("color", "#dc3545");
             $("select#_role").css("border-color", "#dc3545");
             $('._role').html('<ul role="alert" style="color: #dc3545; list-style-type:none; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih Role Pengguna terlebih dahulu.</li></ul>');
+            return false;
+        }
+
+        if (wilayah === "") {
+            $("select#_wilayah").css("color", "#dc3545");
+            $("select#_wilayah").css("border-color", "#dc3545");
+            $('._wilayah').html('<ul role="alert" style="color: #dc3545; list-style-type:none; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih Wilayah Pengguna terlebih dahulu.</li></ul>');
             return false;
         }
 
@@ -263,6 +287,7 @@
         formUpload.append('nohp', nohp);
         formUpload.append('status', status);
         formUpload.append('role', role);
+        formUpload.append('wilayah', wilayah);
 
         $.ajax({
             xhr: function() {
