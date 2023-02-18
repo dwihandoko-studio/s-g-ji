@@ -570,7 +570,7 @@ class Pengguna extends BaseController
                 return json_encode($response);
             }
             $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
+                ->where('id', $id)->get()->getRowObject();
 
             if ($current) {
                 $this->_db->transBegin();
