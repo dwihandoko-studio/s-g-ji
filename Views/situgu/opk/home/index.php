@@ -299,7 +299,7 @@
             let aktivasiWa = '';
             aktivasiWa += '<div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">';
             aktivasiWa += '<div class="alert alert-danger" role="alert">';
-            aktivasiWa += 'Akun anda terdeteksi belum melakukan aktivasi.\nSilahkan untuk melakukan aktivasi Admin Sekolah terlebih dahulu.';
+            aktivasiWa += 'Akun anda terdeteksi belum melakukan aktivasi.\nSilahkan untuk melakukan aktivasi Admin Kecamatan terlebih dahulu.';
             aktivasiWa += '</div>';
             aktivasiWa += '</div>';
             aktivasiWa += '<div class="modal-footer">';
