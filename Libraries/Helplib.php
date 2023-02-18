@@ -26,6 +26,21 @@ class Helplib
         return false;
     }
 
+    public function getKecamatan($userId)
+    {
+
+        $user = $this->_db->table('_profil_users_tb')
+            ->select("kecamatan")
+            ->where('id', $userId)
+            ->get()->getRowObject();
+
+        if ($user) {
+            return $user->kecamatan;
+        }
+
+        return false;
+    }
+
     public function getPtkId($userId)
     {
 

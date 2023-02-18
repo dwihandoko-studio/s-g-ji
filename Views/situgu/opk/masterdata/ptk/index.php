@@ -114,7 +114,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('situgu/ops/masterdata/ptk/syncAll') ?>",
+                    url: "./syncAll",
                     type: 'POST',
                     data: {
                         npsn: '<?= $user->npsn ?>',
@@ -236,7 +236,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('situgu/ops/masterdata/ptk/sync') ?>",
+                    url: "./sync",
                     type: 'POST',
                     data: {
                         id: id,
@@ -285,7 +285,7 @@
 
     function actionDetail(event, title) {
         $.ajax({
-            url: "<?= base_url('situgu/ops/masterdata/ptk/detail') ?>",
+            url: "./detail",
             type: 'POST',
             data: {
                 id: event,

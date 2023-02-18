@@ -47,25 +47,25 @@ class PtkModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables($npsn)
+    function get_datatables($kecamatan)
     {
-        $this->dt->where('npsn', $npsn);
+        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5)");
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered($npsn)
+    function count_filtered($kecamatan)
     {
-        $this->dt->where('npsn', $npsn);
+        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5)");
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all($npsn)
+    public function count_all($kecamatan)
     {
-        $this->dt->where('npsn', $npsn);
+        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5)");
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();

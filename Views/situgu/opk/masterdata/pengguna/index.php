@@ -440,7 +440,7 @@
 
     function actionDetail(event, title) {
         $.ajax({
-            url: "<?= base_url('situgu/ops/masterdata/pengguna/detail') ?>",
+            url: "./detail",
             type: 'POST',
             data: {
                 id: event,
@@ -565,7 +565,7 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "<?= base_url('situgu/ops/masterdata/pengguna/getAll') ?>",
+                "url": "/getAll",
                 "type": "POST",
 
             },
