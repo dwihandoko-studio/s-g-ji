@@ -65,7 +65,7 @@ class VerifikasiptkModel extends Model
 
         return $this->dt->countAllResults();
     }
-    public function count_all($kecamatan, $jenis)
+    public function count_all($kecamatan)
     {
         $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5)");
         $this->dt->where('status_ajuan', 0);
