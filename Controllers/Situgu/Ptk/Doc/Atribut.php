@@ -241,7 +241,7 @@ class Atribut extends BaseController
         $id = $this->_helpLib->getPtkId($user->data->ptk_id);
         $ptk = $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
 
-        if ($ptk) {
+        if (!$ptk) {
             return view('404', $data);
         }
 
