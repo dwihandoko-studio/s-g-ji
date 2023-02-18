@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">DOKUMEN PTK</h4>
+                    <h4 class="mb-sm-0 font-size-18">VERIFIKASI USULAN</h4>
 
                     <!-- <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -27,8 +27,20 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">Data Ptk</h4>
+                                <h4 class="card-title">Data Usulan</h4>
                             </div>
+                            <!-- <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="_status" class="col-form-label">Filter Status:</label>
+                                    <select class="form-control" id="_status" name="_status" required>
+                                        <option value="">--Pilih--</option>
+                                        <option value="0">Antrian</option>
+                                        <option value="1">Ditolak</option>
+                                        <option value="pghm">PGHM</option>
+                                    </select>
+                                    <div class="help-block _status"></div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="card-body">
@@ -39,9 +51,9 @@
                                     <th data-orderable="false">Aksi</th>
                                     <th>NAMA</th>
                                     <th>NIK</th>
-                                    <th>NIP</th>
                                     <th>NUPTK</th>
                                     <th>JENIS PTK</th>
+                                    <th>TANGGAL USULAN</th>
                                 </tr>
                             </thead>
                         </table>
@@ -62,6 +74,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="contentBodyModal">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="content-tolakModal" class="modal fade content-tolakModal" tabindex="-1" role="dialog" aria-labelledby="content-tolakModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-loading-tolak">
+            <div class="modal-header">
+                <h5 class="modal-title" id="content-tolakModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="contentTolakBodyModal">
             </div>
         </div>
     </div>
@@ -88,8 +112,49 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionDetail(event, title) {
-        reloadPage("<?= base_url('situgu/ops/doc/ptk/detail') . '?id=' ?>" + event);
+    function actionDetail(id, id_ptk, tw, nama) {
+        $.ajax({
+            url: "./detail",
+            type: 'POST',
+            data: {
+                id: id,
+                id_ptk: id_ptk,
+                tw: tw,
+                nama: nama,
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                $('div.main-content').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.main-content').unblock();
+                if (resul.status !== 200) {
+                    Swal.fire(
+                        'Failed!',
+                        resul.message,
+                        'warning'
+                    );
+                } else {
+                    $('#content-detailModalLabel').html('DETAIL USULAN PTK ' + nama);
+                    $('.contentBodyModal').html(resul.data);
+                    $('.content-detailModal').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                    });
+                    $('.content-detailModal').modal('show');
+                }
+            },
+            error: function() {
+                $('div.main-content').unblock();
+                Swal.fire(
+                    'Failed!',
+                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
+            }
+        });
     }
 
     function changeValidation(event) {
@@ -137,7 +202,9 @@
             "ajax": {
                 "url": "./getAll",
                 "type": "POST",
-
+                "data": function(data) {
+                    data.tw = '<?= $tw->id ?>';
+                }
             },
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',

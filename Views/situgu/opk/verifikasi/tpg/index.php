@@ -8,13 +8,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">ABSEN</h4>
+                    <h4 class="mb-sm-0 font-size-18">VERIFIKASI USULAN TPG</h4>
 
-                    <div class="page-title-right">
+                    <!-- <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="./add" class="btn btn-primary btn-rounded waves-effect waves-light">Tambah/Edit Absen Semua PTK</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:actionSyncAll(this);" class="btn btn-primary btn-rounded waves-effect waves-light">Syncrone Semua Data PTK</a></li>
                         </ol>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -27,41 +27,33 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">Data Absen</h4>
+                                <h4 class="card-title">Data Usulan TPG</h4>
                             </div>
-                            <div class="col-3">
-                                <label for="filter_tw" class="col-form-label">Pilih TW:</label>
-                                <select class="form-control tw" id="filter_tw" name="filter_tw" style="width: 100%">
-                                    <option value="">&nbsp;</option>
-                                    <?php if (isset($data)) {
-                                        if (count($data) > 0) {
-                                            foreach ($data as $key => $value) { ?>
-                                                <option value="<?= $value->id ?>"><?= $value->tahun ?> - (<?= $value->tw ?>)</option>
-                                    <?php }
-                                        }
-                                    } ?>
-                                </select>
-                            </div>
+                            <!-- <div class="col-6">
+                                <div class="mb-3">
+                                    <label for="_status" class="col-form-label">Filter Status:</label>
+                                    <select class="form-control" id="_status" name="_status" required>
+                                        <option value="">--Pilih--</option>
+                                        <option value="0">Antrian</option>
+                                        <option value="1">Ditolak</option>
+                                        <option value="pghm">PGHM</option>
+                                    </select>
+                                    <div class="help-block _status"></div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="card-body">
                         <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" data-orderable="false">#</th>
-                                    <th rowspan="2" data-orderable="false">Aksi</th>
-                                    <th colspan="3" data-orderable="false">
-                                        <div class="text-center">TAHUN TW</div>
-                                    </th>
-                                    <th rowspan="2">NAMA</th>
-                                    <th rowspan="2">NUPTK</th>
-                                    <th rowspan="2">NIK</th>
-                                    <th rowspan="2">STATUS</th>
-                                </tr>
-                                <tr>
-                                    <th>Tahun</th>
-                                    <th>TW</th>
-                                    <th>Smt</th>
+                                    <th data-orderable="false">#</th>
+                                    <th data-orderable="false">Aksi</th>
+                                    <th>NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NUPTK</th>
+                                    <th>JENIS PTK</th>
+                                    <th>TANGGAL USULAN</th>
                                 </tr>
                             </thead>
                         </table>
@@ -75,13 +67,25 @@
 
 <!-- Modal -->
 <div id="content-detailModal" class="modal fade content-detailModal" tabindex="-1" role="dialog" aria-labelledby="content-detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content modal-content-loading">
             <div class="modal-header">
                 <h5 class="modal-title" id="content-detailModalLabel">Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="contentBodyModal">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="content-tolakModal" class="modal fade content-tolakModal" tabindex="-1" role="dialog" aria-labelledby="content-tolakModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-loading-tolak">
+            <div class="modal-header">
+                <h5 class="modal-title" id="content-tolakModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="contentTolakBodyModal">
             </div>
         </div>
     </div>
@@ -108,67 +112,15 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionHapus(id, nama, email, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin menghapus data ini?',
-            text: "Hapus Pengguna : " + nama + " ( " + email + " )",
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./delete",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
-
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
-
-    function actionDetail(event, title) {
+    function actionDetail(id, id_ptk, tw, nama) {
         $.ajax({
             url: "./detail",
             type: 'POST',
             data: {
-                id: event,
+                id: id,
+                id_ptk: id_ptk,
+                tw: tw,
+                nama: nama,
             },
             dataType: 'JSON',
             beforeSend: function() {
@@ -185,7 +137,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-detailModalLabel').html('DETAIL ABSEN PTK ' + title);
+                    $('#content-detailModalLabel').html('DETAIL USULAN PTK ' + nama);
                     $('.contentBodyModal').html(resul.data);
                     $('.content-detailModal').modal({
                         backdrop: 'static',
@@ -242,7 +194,7 @@
     }
 
     $(document).ready(function() {
-        initSelect2("filter_tw", ".main-content");
+
         let tableDatatables = $('#data-datatables').DataTable({
             "processing": true,
             "serverSide": true,
@@ -251,7 +203,7 @@
                 "url": "./getAll",
                 "type": "POST",
                 "data": function(data) {
-                    data.tw = $('#filter_tw').val();
+                    data.tw = '<?= $tw->id ?>';
                 }
             },
             language: {
@@ -263,9 +215,6 @@
             }],
         });
 
-        $('#filter_tw').change(function() {
-            tableDatatables.draw();
-        });
     });
 </script>
 <?= $this->endSection(); ?>

@@ -20,19 +20,17 @@
                                 <a href="<?= base_url('situgu/opk/masterdata/pengguna') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "pengguna") ? ' active-menu-href' : '' ?>" key="t-masterdata-pengguna">Pengguna</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "absen") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "absen") ? 'javascript:;' : base_url('situgu/opk/absen') ?>">
-                                <i class="bx bx-fingerprint me-2"></i><span key="t-absen">Absen</span>
-                            </a>
-                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "doc") ? ' active-menu-href' : '' ?>" href="javascript:;" id="topnav-updokument" role="button">
-                                <i class="bx bx-receipt me-2"></i><span key="t-updokument">DOKUMEN</span>
+                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "verifikasi") ? ' active-menu-href' : '' ?>" href="#" id="topnav-verifikasi" role="button">
+                                <i class="bx bx-rename me-2"></i><span key="t-verifikasi">VERIFIKASI</span>
                                 <div class="arrow-down"></div>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="topnav-updokument">
-                                <a href="<?= base_url('situgu/opk/doc/upkelengkapan') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "doc" && $uri->getSegment(4) == "upkelengkapan") ? ' active-menu-href' : '' ?>" key="t-updokument-upkelengkapan">Upload Kelengkapan</a>
-                                <a href="<?= base_url('situgu/opk/doc/ptk') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "doc" && $uri->getSegment(4) == "ptk") ? ' active-menu-href' : '' ?>" key="t-updokument-ptk">PTK</a>
+                            <div class="dropdown-menu" aria-labelledby="topnav-verifikasi">
+                                <a href="<?= base_url('situgu/opk/verifikasi/pengguna') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pengguna") ? ' active-menu-href' : '' ?>" key="t-verifikasi-pengguna">Pengguna Admin Sekolah</a>
+                                <a href="<?= base_url('situgu/opk/verifikasi/ptk') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "ptk") ? ' active-menu-href' : '' ?>" key="t-verifikasi-ptk">Penghapusan PTK</a>
+                                <a href="<?= base_url('situgu/opk/verifikasi/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tpg">Tunjangan Profesi Guru</a>
+                                <a href="<?= base_url('situgu/opk/verifikasi/tamsil') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tamsil") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tamsil">Tamsil</a>
+                                <a href="<?= base_url('situgu/opk/verifikasi/pghm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opk" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pghm") ? ' active-menu-href' : '' ?>" key="t-verifikasi-pghm">PGHM</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
