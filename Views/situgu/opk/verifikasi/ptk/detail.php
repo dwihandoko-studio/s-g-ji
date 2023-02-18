@@ -281,7 +281,7 @@
         }
 
         function simpanTolak(e) {
-            const id = '<?= $data->id_usulan ?>';
+            const id = '<?= $data->id ?>';
             const nama = '<?= $data->nama ?>';
             const keterangan = document.getElementsByName('_keterangan_tolak')[0].value;
 
