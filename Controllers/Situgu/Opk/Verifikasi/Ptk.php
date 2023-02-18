@@ -238,7 +238,7 @@ class Ptk extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_ptk_tb_hapus')->where('id', $oldData->id)->update(['status_usulan' => 2, 'updated_ajuan' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_ptk_tb_hapus')->where('id', $oldData->id)->update(['status_ajuan' => 2, 'updated_ajuan' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
@@ -383,7 +383,7 @@ class Ptk extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_ptk_tb_hapus')->where('id', $oldData->id)->update(['status_usulan' => 1, 'keterangan_penghapusan' => $keterangan, 'updated_ajuan' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_ptk_tb_hapus')->where('id', $oldData->id)->update(['status_ajuan' => 1, 'keterangan_penghapusan' => $keterangan, 'updated_ajuan' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
