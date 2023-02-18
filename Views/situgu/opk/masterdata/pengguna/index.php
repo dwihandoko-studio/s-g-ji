@@ -565,7 +565,7 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "/getAll",
+                "url": "./getAll",
                 "type": "POST",
 
             },
