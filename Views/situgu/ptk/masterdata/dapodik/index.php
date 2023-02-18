@@ -240,20 +240,32 @@
                         <div class="row">
                             <h2>DATA KEPEGAWAIAN</h2>
                             <div class="col-lg-6">
+                                <label class="col-form-label">Jenis Pangkat/KGB:</label>
+                                <div><?= ($data->tmt_sk_kgb > $data->tmt_pangkat) ? 'KGB' : 'PANGKAT' ?></div>
+                            </div>
+                            <div class="col-lg-6">
                                 <label class="col-form-label">Pangkat/Golongan:</label>
                                 <div><?= $data->pangkat_golongan ?></div>
                             </div>
                             <div class="col-lg-6">
-                                <label class="col-form-label">TMT Pangkat:</label>
-                                <div><?= $data->tmt_pangkat ?></div>
+                                <label class="col-form-label">Nomor SK:</label>
+                                <div><?= ($data->tmt_sk_kgb > $data->tmt_pangkat) ? $data->sk_kgb : $data->nomor_sk_pangkat ?></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="col-form-label">Tanggal SK:</label>
+                                <div><?= ($data->tmt_sk_kgb > $data->tmt_pangkat) ? $data->tgl_sk_kgb : $data->tgl_sk_pangkat ?></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="col-form-label">TMT:</label>
+                                <div><?= ($data->tmt_sk_kgb > $data->tmt_pangkat) ? $data->tmt_sk_kgb : $data->tmt_pangkat ?></div>
                             </div>
                             <div class="col-lg-3">
                                 <label class="col-form-label">Masa Kerja Tahun:</label>
-                                <div><?= $data->masa_kerja_tahun ?></div>
+                                <div><?= ($data->tmt_sk_kgb > $data->tmt_pangkat) ? ($data->masa_kerja_tahun_kgb !== null ? $data->masa_kerja_tahun_kgb : 0) : ($data->masa_kerja_tahun !== null ? $data->masa_kerja_tahun : 0) ?></div>
                             </div>
                             <div class="col-lg-3">
                                 <label class="col-form-label">Masa Kerja Bulan:</label>
-                                <div><?= $data->masa_kerja_bulan ?></div>
+                                <div><?= ($data->tmt_sk_kgb > $data->tmt_pangkat) ? ($data->masa_kerja_bulan_kgb !== null ? $data->masa_kerja_bulan_kgb : 0) : ($data->masa_kerja_bulan !== null ? $data->masa_kerja_bulan : 0) ?></div>
                             </div>
                         </div>
                     </div>
