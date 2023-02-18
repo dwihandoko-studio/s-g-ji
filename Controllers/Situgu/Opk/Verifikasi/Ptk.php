@@ -223,11 +223,7 @@ class Ptk extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canUsulTamsil();
 
-            if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
-                return json_encode($canUsulTamsil);
-            }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
@@ -309,11 +305,6 @@ class Ptk extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canUsulTamsil();
-
-            if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
-                return json_encode($canUsulTamsil);
-            }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
@@ -376,11 +367,6 @@ class Ptk extends BaseController
                 $response->message = "Session telah habis";
                 $response->redirect = base_url('auth');
                 return json_encode($response);
-            }
-            $canUsulTamsil = canUsulTamsil();
-
-            if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
-                return json_encode($canUsulTamsil);
             }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
