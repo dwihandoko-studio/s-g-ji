@@ -144,12 +144,6 @@ class Ptk extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
-            'id_ptk' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id PTK tidak boleh kosong. ',
-                ]
-            ],
             'nama' => [
                 'rules' => 'required|trim',
                 'errors' => [
@@ -162,12 +156,10 @@ class Ptk extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('id')
-                . $this->validator->getError('id_ptk')
                 . $this->validator->getError('nama');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
             $current = $this->_db->table('_ptk_tb_hapus')
