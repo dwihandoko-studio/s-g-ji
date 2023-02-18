@@ -329,7 +329,7 @@ class Ptk extends BaseController
                 } else {
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal Tarik Data";
+                    $response->message = "Gagal Tarik Data.";
                     return json_encode($response);
                 }
             } else {
