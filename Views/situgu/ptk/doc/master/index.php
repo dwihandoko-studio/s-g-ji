@@ -273,6 +273,7 @@
             url: "./editformupload",
             type: 'POST',
             data: {
+                title: title,
                 bulan: bulan,
                 old: old,
                 id_ptk: '<?= $ptk->id ?>',
