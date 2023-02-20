@@ -37,6 +37,7 @@ class Home extends BaseController
 
         $data['user'] = $user->data;
         $id = $this->_helpLib->getPtkId($user->data->id);
+        $data['ptk'] = $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
         $data['title'] = 'Dashboard';
         $data['verified_wa'] = $user->data->wa_verified == 1 ? true : false;
         $data['verified_email'] = $user->data->email_verified == 1 ? true : false;

@@ -514,8 +514,11 @@ class Ptk extends BaseController
         $data['user'] = $user->data;
         $data['id'] = htmlspecialchars($this->request->getGet('id'), true);
 
-        $data['ptk'] = $this->_db->table('_ptk_tb')->select('nama, nip, nik, nuptk')->where('id', $data['id'])->get()->getRowObject();
-
+        $ptk = $this->_db->table('_ptk_tb')->select('nama, nip, nik, nuptk')->where('id', $data['id'])->get()->getRowObject();
+        if (!$ptk) {
+            return view('404', $data);
+        }
+        $data['ptk'] = $ptk;
         return view('situgu/ops/doc/ptk/detail', $data);
     }
 
