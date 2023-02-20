@@ -119,15 +119,6 @@
                                                 '<a href="javascript:actionUpload(\'NUPTK\',\'nuptk\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                                             </a>';
-                                            $row[] = $ptk->lampiran_serdik ? '<a target="_blank" href="' . base_url('upload/ptk/serdik') . '/' . $ptk->lampiran_serdik . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                                            </a>
-                                            <a href="javascript:actionEditFile(\'Sertifikat Pendidik\',\'serdik\',\'' . $ptk->lampiran_serdik . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                                            </a>' :
-                                                '<a href="javascript:actionUpload(\'Sertifikat Pendidik\',\'serdik\')" class="btn btn-primary waves-effect waves-light">
-                                                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                                            </a>';
                                             $row[] = $ptk->lampiran_npwp ? '<a target="_blank" href="' . base_url('upload/ptk/npwp') . '/' . $ptk->lampiran_npwp . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                                                 <i class="bx bxs-show font-size-16 align-middle"></i></button>
                                             </a>
@@ -135,6 +126,15 @@
                                                 <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                                             </a>' :
                                                 '<a href="javascript:actionUpload(\'NPWP\',\'npwp\')" class="btn btn-primary waves-effect waves-light">
+                                                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                                            </a>';
+                                            $row[] = $ptk->lampiran_serdik ? '<a target="_blank" href="' . base_url('upload/ptk/serdik') . '/' . $ptk->lampiran_serdik . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                                            </a>
+                                            <a href="javascript:actionEditFile(\'Sertifikat Pendidik\',\'serdik\',\'' . $ptk->lampiran_serdik . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                                            </a>' :
+                                                '<a href="javascript:actionUpload(\'Sertifikat Pendidik\',\'serdik\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                                             </a>';
                                             $row[] = $ptk->lampiran_buku_rekening ? '<a target="_blank" href="' . base_url('upload/ptk/bukurekening') . '/' . $ptk->lampiran_buku_rekening . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">

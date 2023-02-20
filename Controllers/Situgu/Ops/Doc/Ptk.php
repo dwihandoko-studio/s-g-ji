@@ -413,15 +413,6 @@ class Ptk extends BaseController
                         '<a href="javascript:actionUpload(\'NUPTK\',\'nuptk\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                    $row[] = $list->lampiran_serdik ? '<a target="_blank" href="' . base_url('upload/ptk/serdik') . '/' . $list->lampiran_serdik . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Sertifikat Pendidik\',\'serdik\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->lampiran_serdik . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
-                        '<a href="javascript:actionUpload(\'Sertifikat Pendidik\',\'serdik\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
                     $row[] = $list->lampiran_npwp ? '<a target="_blank" href="' . base_url('upload/ptk/npwp') . '/' . $list->lampiran_npwp . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
@@ -429,6 +420,15 @@ class Ptk extends BaseController
                         <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                     </a>' :
                         '<a href="javascript:actionUpload(\'NPWP\',\'npwp\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
+                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                    </a>';
+                    $row[] = $list->lampiran_serdik ? '<a target="_blank" href="' . base_url('upload/ptk/serdik') . '/' . $list->lampiran_serdik . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    </a>
+                    <a href="javascript:actionEditFile(\'Sertifikat Pendidik\',\'serdik\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\',\'' . $list->lampiran_serdik . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                    </a>' :
+                        '<a href="javascript:actionUpload(\'Sertifikat Pendidik\',\'serdik\',\'' . $list->id_tahun_tw . '\',\'' . $list->npsn . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
                     $row[] = $list->lampiran_buku_rekening ? '<a target="_blank" href="' . base_url('upload/ptk/bukurekening') . '/' . $list->lampiran_buku_rekening . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
