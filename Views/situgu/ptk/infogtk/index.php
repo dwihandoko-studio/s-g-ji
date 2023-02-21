@@ -93,7 +93,7 @@
         // preload shutter audio clip
         var shutter = new Audio();
         shutter.autoplay = true;
-        shutter.src = navigator.userAgent.match(/Firefox/) ? 'shutter.ogg' : 'shutter.mp3';
+        shutter.src = navigator.userAgent.match(/Firefox/) ? '<?= base_url() ?>/assets/shutter.ogg' : '<?= base_url() ?>/assets/shutter.mp3';
 
 
         // SELESAI-----Configure a few settings and attach camera
