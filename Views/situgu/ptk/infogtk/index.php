@@ -113,10 +113,10 @@
                 let sekarang = Date.now();
                 let random = angka_random + sekarang;
 
-                if (a.includes("https://opstore.id/url/")) {
+                if (data14.includes("https://opstore.id/url/")) {
                     Swal.fire(
                         'PERINGATAN!!!',
-                        "Hasil Scan : " + a,
+                        "Hasil Scan : " + data14,
                         'warning'
                     );
                 } else {
