@@ -37,7 +37,7 @@
                             <!-- <video id="camera_preview"></video> -->
 
                             <div id="result_preview"></div>
-                            <video id="v_preview" autoplay></video>
+                            <!-- <video id="v_preview" autoplay></video> -->
                             <div class="selector" id="webcamimg" onclick="setwebcam()" align="left"></div>
                             <div class="selector" id="qrimg" onclick="setimg()" align="right"></div>
                             <center id="mainbody">
@@ -199,7 +199,7 @@
             '</div>' +
             '</div>';
 
-        var vidhtml = '<video id="v" autoplay></video>';
+        var vidhtml = '<video id="v_preview" autoplay></video>';
 
         function dragenter(e) {
             e.stopPropagation();
@@ -340,6 +340,7 @@
         }
 
         function error(error) {
+            console.log(error);
             gUM = false;
             return;
         }
@@ -399,7 +400,7 @@
         }
 
         function setimg() {
-            document.getElementById("result").innerHTML = "";
+            document.getElementById("result_preview").innerHTML = "";
             if (stype == 2)
                 return;
             document.getElementById("outdiv").innerHTML = imghtml;
