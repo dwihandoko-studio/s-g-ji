@@ -59,6 +59,25 @@
 <?= $this->section('scriptBottom'); ?>
 
 <!-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> -->
+<?php if (!isset($infogtk)) { ?>
+    <script type="text/javascript">
+        let scanner = new Instascan.Scanner({
+            video: document.getElementById('camera_preview')
+        });
+        scanner.addListener('scan', function(content) {
+            console.log(content);
+        });
+        Instascan.Camera.getCameras().then(function(cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+            }
+        }).catch(function(e) {
+            console.error(e);
+        });
+    </script>
+<?php } ?>
 <script>
     $(document).ready(function() {
         <?php if (!isset($infogtk)) { ?>
@@ -79,23 +98,23 @@
             // });
             // $('.content-aktivasiModal').modal('show');
 
-            let scanner = new Instascan.Scanner({
-                video: document.getElementById('camera_preview')
-            });
-            scanner.addListener('scan', function(content) {
-                console.log(content);
-                // alert(content);
-                // Lakukan pengolahan data QR Code di sini, misalnya dengan mengirim data ke server
-            });
-            Instascan.Camera.getCameras().then(function(cameras) {
-                if (cameras.length > 0) {
-                    scanner.start(cameras[0]);
-                } else {
-                    console.error('Tidak ditemukan kamera pada perangkat Anda');
-                }
-            }).catch(function(e) {
-                console.error(e);
-            });
+            // let scanner = new Instascan.Scanner({
+            //     video: document.getElementById('camera_preview')
+            // });
+            // scanner.addListener('scan', function(content) {
+            //     console.log(content);
+            //     // alert(content);
+            //     // Lakukan pengolahan data QR Code di sini, misalnya dengan mengirim data ke server
+            // });
+            // Instascan.Camera.getCameras().then(function(cameras) {
+            //     if (cameras.length > 0) {
+            //         scanner.start(cameras[0]);
+            //     } else {
+            //         console.error('Tidak ditemukan kamera pada perangkat Anda');
+            //     }
+            // }).catch(function(e) {
+            //     console.error(e);
+            // });
         <?php } ?>
     });
 
