@@ -151,7 +151,7 @@
             if (result.value) {
                 Swal.fire({
                     title: "Masukkan password baru (Khusus untuk Akun OPS, masukkan kode registrasi sekolah)",
-                    input: "password",
+                    input: "text",
                     showCancelButton: !0,
                     confirmButtonText: "Kirim",
                     showLoaderOnConfirm: !0,
@@ -166,7 +166,50 @@
                     },
                     allowOutsideClick: !1
                 }).then(function(t) {
-                    console.log(t);
+                    $.ajax({
+                        url: "./resetPassword",
+                        type: 'POST',
+                        data: {
+                            id: id,
+                            nama: nama,
+                            email: email,
+                            npsn: npsn,
+                            password: t.value,
+                        },
+                        dataType: 'JSON',
+                        beforeSend: function() {
+                            $('div.main-content').block({
+                                message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                            });
+                        },
+                        success: function(resul) {
+                            $('div.main-content').unblock();
+
+                            if (resul.status !== 200) {
+                                Swal.fire(
+                                    'Failed!',
+                                    resul.message,
+                                    'warning'
+                                );
+                            } else {
+                                Swal.fire(
+                                    'SELAMAT!',
+                                    resul.message,
+                                    'success'
+                                ).then((valRes) => {
+                                    reloadPage();
+                                })
+                            }
+                        },
+                        error: function() {
+                            $('div.main-content').unblock();
+                            Swal.fire(
+                                'Failed!',
+                                "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                                'warning'
+                            );
+                        }
+                    });
                     // Swal.fire({
                     //     icon: "success",
                     //     title: "Ajax request finished!",
@@ -174,50 +217,6 @@
                     //     confirmButtonColor: "#556ee6"
                     // })
                 })
-
-                // $.ajax({
-                //     url: "./resetPassword",
-                //     type: 'POST',
-                //     data: {
-                //         id: id,
-                //         nama: nama,
-                //         email: email,
-                //         npsn: npsn,
-                //     },
-                //     dataType: 'JSON',
-                //     beforeSend: function() {
-                //         $('div.main-content').block({
-                //             message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                //         });
-                //     },
-                //     success: function(resul) {
-                //         $('div.main-content').unblock();
-
-                //         if (resul.status !== 200) {
-                //             Swal.fire(
-                //                 'Failed!',
-                //                 resul.message,
-                //                 'warning'
-                //             );
-                //         } else {
-                //             Swal.fire(
-                //                 'SELAMAT!',
-                //                 resul.message,
-                //                 'success'
-                //             ).then((valRes) => {
-                //                 reloadPage();
-                //             })
-                //         }
-                //     },
-                //     error: function() {
-                //         $('div.main-content').unblock();
-                //         Swal.fire(
-                //             'Failed!',
-                //             "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                //             'warning'
-                //         );
-                //     }
-                // });
             }
         })
     }
