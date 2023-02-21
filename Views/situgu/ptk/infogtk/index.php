@@ -34,7 +34,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">Tautkan Kartu NUPTK QRCode Geisa Anda.</h4>
-                            <div id="camera"></div>
+                            <video id="camera_preview"></video>
                         </div>
                     </div>
                 <?php } ?>
@@ -80,7 +80,7 @@
             // $('.content-aktivasiModal').modal('show');
 
             let scanner = new Instascan.Scanner({
-                video: document.getElementById('camera')
+                video: document.getElementById('camera_preview')
             });
             scanner.addListener('scan', function(content) {
                 console.log(content);
