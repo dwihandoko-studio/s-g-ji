@@ -141,16 +141,21 @@ class Pengguna extends BaseController
             $row[] = $list->email;
             $row[] = $list->no_hp;
             $row[] = $list->role_name;
-            switch ($list->is_active) {
-                case 1:
+            switch ($list->ptk_id) {
+                case null:
                     $row[] = '<div class="text-center">
-                            <span class="badge rounded-pill badge-soft-success font-size-11">Aktif</span>
-                        </div>';
+                    <span class="badge rounded-pill badge-soft-danger font-size-11">Belum Tertaut</span>
+                    </div>';
+                    break;
+                case "":
+                    $row[] = '<div class="text-center">
+                    <span class="badge rounded-pill badge-soft-danger font-size-11">Belum Tertaut</span>
+                    </div>';
                     break;
                 default:
                     $row[] = '<div class="text-center">
-                        <span class="badge rounded-pill badge-soft-danger font-size-11">Non Aktif</span>
-                    </div>';
+                            <span class="badge rounded-pill badge-soft-success font-size-11">Tertaut</span>
+                        </div>';
                     break;
             }
             switch ($list->email_verified) {
