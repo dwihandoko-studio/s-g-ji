@@ -224,14 +224,14 @@
             });
 
             //ini vanilla js
-            const pdf_button = document.getElementById('id_data')
-            pdf_button.addEventListener("click", function() {
-                const pdf_value = document.getElementById('id_data').value
-                if (pdf_value !== "") {
-                    location.href = 'data_dompdf_perorangan.php?id=' + pdf_value
-                }
+            // const pdf_button = document.getElementById('id_data')
+            // pdf_button.addEventListener("click", function() {
+            //     const pdf_value = document.getElementById('id_data').value
+            //     if (pdf_value !== "") {
+            //         location.href = 'data_dompdf_perorangan.php?id=' + pdf_value
+            //     }
 
-            })
+            // })
 
             //ini jquery
             /*  $("#id_data").on("click", function() {
