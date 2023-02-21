@@ -36,7 +36,8 @@
                             <h4 class="card-title mb-4">Tautkan Kartu NUPTK QRCode Geisa Anda.</h4>
                             <!-- <video id="camera_preview"></video> -->
 
-                            <div style="display:none" id="result"></div>
+                            <div id="result_preview"></div>
+                            <video id="v_preview" autoplay></video>
                             <div class="selector" id="webcamimg" onclick="setwebcam()" align="left"></div>
                             <div class="selector" id="qrimg" onclick="setimg()" align="right"></div>
                             <center id="mainbody">
@@ -275,42 +276,48 @@
         }
 
         function read(a) {
-            var html = "<br>";
-            if (a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
-                html += "<a target='_blank' href='" + a + "'>" + a + "</a><br>";
-            html += "<b>" + htmlEntities(a) + "</b><br><br>";
-            document.getElementById("result").innerHTML = html;
+            if (a.includes("https://opstore.id/url/")) {
+                console.log(a);
+            } else {
+                console.log("Lakukan Scanning");
+            }
 
-            var dataString = {
-                send: true,
-                credential: htmlEntities(a)
-            };
+            // var html = "<br>";
+            // if (a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
+            //     html += "<a target='_blank' href='" + a + "'>" + a + "</a><br>";
+            // html += "<b>" + htmlEntities(a) + "</b><br><br>";
+            // document.getElementById("result").innerHTML = html;
 
-            $.ajax({
+            // var dataString = {
+            //     send: true,
+            //     credential: htmlEntities(a)
+            // };
 
-                type: "POST",
-                url: "authenticate.php",
-                data: dataString,
-                dataType: "json",
-                cache: false,
-                success: function(data) {
+            // $.ajax({
 
-                    if (data.success == true) {
-                        alert("You have successfully logged in!");
-                        self.location.replace('home.php');
-                    } else {
-                        alert("The credentials not match!");
-                        self.location.replace('index.php');
-                    }
+            //     type: "POST",
+            //     url: "authenticate.php",
+            //     data: dataString,
+            //     dataType: "json",
+            //     cache: false,
+            //     success: function(data) {
 
-                    setwebcam();
+            //         if (data.success == true) {
+            //             alert("You have successfully logged in!");
+            //             self.location.replace('home.php');
+            //         } else {
+            //             alert("The credentials not match!");
+            //             self.location.replace('index.php');
+            //         }
+
+            //         setwebcam();
 
 
-                },
-                error: function(xhr, status, error) {
-                    alert(error);
-                },
-            });
+            //     },
+            //     error: function(xhr, status, error) {
+            //         alert(error);
+            //     },
+            // });
 
         }
 
@@ -352,14 +359,14 @@
         }
 
         function setwebcam() {
-            document.getElementById("result").innerHTML = "- scanning -";
+            document.getElementById("result_preview").innerHTML = "- scanning -";
             if (stype == 1) {
                 setTimeout(captureToCanvas, 500);
                 return;
             }
             var n = navigator;
-            document.getElementById("outdiv").innerHTML = vidhtml;
-            v = document.getElementById("v");
+            // document.getElementById("outdiv").innerHTML = vidhtml;
+            v = document.getElementById("v_preview");
 
             if (n.getUserMedia)
                 n.getUserMedia({
