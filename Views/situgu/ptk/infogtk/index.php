@@ -253,8 +253,10 @@
 
 
         function captureToCanvas() {
-            if (stype != 1)
+            if (stype != 1) {
+                console.log(stype);
                 return;
+            }
             if (gUM) {
                 try {
                     gCtx.drawImage(v, 0, 0);
@@ -366,9 +368,11 @@
                 return;
             }
             var n = navigator;
-            console.log(n);
+            // console.log(n);
             document.getElementById("outdiv").innerHTML = vidhtml;
             v = document.getElementById("v_preview");
+
+            console.log(v);
 
             if (n.mediaDevices && n.mediaDevices.getUserMedia)
 
