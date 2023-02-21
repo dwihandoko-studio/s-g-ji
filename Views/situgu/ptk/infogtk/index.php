@@ -372,21 +372,21 @@
 
             if (n.mediaDevices && n.mediaDevices.getUserMedia)
 
-                n.getUserMedia({
+                n.mediaDevices.getUserMedia({
                     video: true,
                     audio: false
                 }, success, error);
             else
             if (n.mediaDevices && n.mediaDevices.webkitGetUserMedia) {
                 webkit = true;
-                n.webkitGetUserMedia({
+                n.mediaDevices.webkitGetUserMedia({
                     video: true,
                     audio: false
                 }, success, error);
             } else
             if (n.mediaDevices && n.mediaDevices.mozGetUserMedia) {
                 moz = true;
-                n.mozGetUserMedia({
+                n.mediaDevices.mozGetUserMedia({
                     video: true,
                     audio: false
                 }, success, error);
