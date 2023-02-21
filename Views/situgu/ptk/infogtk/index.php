@@ -57,7 +57,7 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptBottom'); ?>
-<script type="text/javascript" src="<?= base_url() ?>/assets/js/instascan.min.js"></script>
+
 <!-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> -->
 <script>
     $(document).ready(function() {
@@ -161,5 +161,6 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptTop'); ?>
+<script type="text/javascript" src="<?= base_url() ?>/assets/js/instascan.min.js"></script>
 <link href="<?= base_url() ?>/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
 <?= $this->endSection(); ?>
