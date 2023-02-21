@@ -113,7 +113,17 @@
                 let sekarang = Date.now();
                 let random = angka_random + sekarang;
 
-                console.log(data14);
+                if (a.includes("https://opstore.id/url/")) {
+                    Swal.fire(
+                        'PERINGATAN!!!',
+                        "Hasil Scan : " + a,
+                        'warning'
+                    );
+                } else {
+                    console.log("Lakukan Scanning");
+                }
+
+                // console.log(data14);
 
                 // $.ajax({
                 //     type: 'POST',
@@ -222,23 +232,6 @@
                 console.error(e);
                 alert(e);
             });
-
-            //ini vanilla js
-            // const pdf_button = document.getElementById('id_data')
-            // pdf_button.addEventListener("click", function() {
-            //     const pdf_value = document.getElementById('id_data').value
-            //     if (pdf_value !== "") {
-            //         location.href = 'data_dompdf_perorangan.php?id=' + pdf_value
-            //     }
-
-            // })
-
-            //ini jquery
-            /*  $("#id_data").on("click", function() {
-                 const dataid = $("#id_data").val()
-                 location.href = 'data_dompdf_perorangan.php?id=' + dataid
-             }) */
-
         });
     </script>
 <?php } ?>
