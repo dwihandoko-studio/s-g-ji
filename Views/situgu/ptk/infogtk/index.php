@@ -114,69 +114,72 @@
                 let random = angka_random + sekarang;
 
                 if (data14.includes("https://opstore.id/url/")) {
-                    Swal.fire(
-                        'PERINGATAN!!!',
-                        "Hasil Scan : " + data14,
-                        'warning'
-                    );
+                    const linkInfoGtk = data14.replace("https://opstore.id/url/", "https://bridge.opstore.id/?id=");
+
+                    $.ajax({
+                        url: '/taut',
+                        type: 'POST',
+                        data: {
+                            id: linkInfoGtk,
+                        },
+                        dataType: 'JSON',
+                        beforeSend: function() {
+                            $('div.modal-content-loading').block({
+                                message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                            });
+                        },
+                        success: function(resul) {
+                            $('div.main-content').unblock();
+                            if (resul.status == 200) {
+                                Swal.fire(
+                                    'SELAMAT!',
+                                    resul.message,
+                                    'success'
+                                ).then((valRes) => {
+                                    reloadPage();
+                                })
+                            } else {
+                                if (resul.status == 404) {
+                                    Swal.fire(
+                                        'PERINGATAN!',
+                                        resul.message,
+                                        'warning'
+                                    ).then((valRes) => {
+                                        reloadPage(resul.redirrect);
+                                    })
+                                } else {
+                                    if (resul.status == 401) {
+                                        Swal.fire(
+                                            'PERINGATAN!',
+                                            resul.message,
+                                            'warning'
+                                        ).then((valRes) => {
+                                            reloadPage();
+                                        })
+                                    } else {
+                                        Swal.fire(
+                                            'PERINGATAN!!!',
+                                            resul.message,
+                                            'warning'
+                                        );
+                                    }
+                                }
+                            }
+                        },
+                        error: function(data) {
+                            $('div.main-content').unblock();
+                            Swal.fire(
+                                'Failed!',
+                                "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                                'warning'
+                            );
+                        }
+                    });
                 } else {
                     console.log("Lakukan Scanning");
                 }
 
                 // console.log(data14);
-
-                // $.ajax({
-                //     type: 'POST',
-                //     url: "index_webcam_action.php",
-                //     data: {
-                //         qrcode: data14
-                //     },
-                //     success: function(response) {
-                //         if (response != null && response != "") {
-                //             response = JSON.parse(response);
-                //             console.log(response)
-                //             //amibl data JSON
-                //             $('#no_daftar').html(response.no_daftar);
-                //             $('#giat_penerimaan').html(response.giat_penerimaan);
-                //             $('#nama').html(response.nama_calon);
-                //             $('#ttl').html(response.ttl);
-                //             $('#hasil').html(response.hasil);
-                //             $('#karena').html(response.karena);
-                //             $('#id_data').val(response.id_data);
-                //             $('#results').load('index_webcam_action.php')
-                //             const Toast = Swal.mixin({
-                //                 toast: true,
-                //                 position: 'top-end',
-                //                 showConfirmButton: false,
-                //                 timer: 3000,
-                //                 timerProgressBar: true,
-                //                 didOpen: (toast) => {
-                //                     toast.addEventListener('mouseenter', Swal.stopTimer)
-                //                     toast.addEventListener('mouseleave', Swal
-                //                         .resumeTimer)
-                //                 }
-                //             })
-
-                //             Toast.fire({
-                //                 icon: 'success',
-                //                 title: 'Surat terdaftar, cek isi surat!'
-                //             })
-
-                //             if (response == 1) {
-
-                //                 Swal.fire({
-                //                     icon: 'error',
-                //                     title: 'Oops...',
-                //                     text: 'Surat tidak terdaftar!',
-                //                 })
-
-                //             }
-
-                //         }
-
-                //     }
-
-                // });
 
 
             });
