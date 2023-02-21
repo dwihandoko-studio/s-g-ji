@@ -117,7 +117,7 @@
                     const linkInfoGtk = data14.replace("https://opstore.id/url/", "https://bridge.opstore.id/?id=");
 
                     $.ajax({
-                        url: '/taut',
+                        url: './taut',
                         type: 'POST',
                         data: {
                             id: linkInfoGtk,
