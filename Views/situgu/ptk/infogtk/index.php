@@ -370,20 +370,21 @@
             // document.getElementById("outdiv").innerHTML = vidhtml;
             v = document.getElementById("v_preview");
 
-            if (n.getUserMedia)
+            if (n.mediaDevices && n.mediaDevices.getUserMedia)
+
                 n.getUserMedia({
                     video: true,
                     audio: false
                 }, success, error);
             else
-            if (n.webkitGetUserMedia) {
+            if (n.mediaDevices && n.mediaDevices.webkitGetUserMedia) {
                 webkit = true;
                 n.webkitGetUserMedia({
                     video: true,
                     audio: false
                 }, success, error);
             } else
-            if (n.mozGetUserMedia) {
+            if (n.mediaDevices && n.mediaDevices.mozGetUserMedia) {
                 moz = true;
                 n.mozGetUserMedia({
                     video: true,
