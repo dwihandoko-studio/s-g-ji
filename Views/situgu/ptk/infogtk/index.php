@@ -26,7 +26,7 @@
             <div class="col-lg-12">
                 <?php if (isset($infogtk)) { ?>
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body iframe-maximal-view">
                             <h4 class="card-title mb-4">INFO GTK DIGITAL</h4>
                             <iframe src="<?= $infogtk->qrcode ?>"></iframe>
                         </div>
@@ -236,13 +236,33 @@
             });
         });
     </script>
+<?php } else { ?>
+    <script>
+        const cardBodyIframe = document.querySelector(".iframe-maximal-view");
+        const iframeView = cardBodyIframe.querySelector("iframe");
+        const aspectRatioIframe = 9 / 16; // ubah sesuai aspek rasio video yang ditampilkan
+
+        function resizeIframeView() {
+            const width = cardBodyIframe.clientWidth;
+            const height = width * aspectRatioIframe;
+            iframeView.style.height = `${height}px`;
+        }
+
+        window.addEventListener("resize", resizeIframeView);
+        resizeIframeView();
+    </script>
 <?php } ?>
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptTop'); ?>
 <style>
     /* Style untuk membuat full page iFrame */
-    iframe {
+    .iframe-maximal-view {
+        position: relative;
+        padding: 0;
+    }
+
+    .iframe-maximal-view iframe {
         position: absolute;
         top: 0;
         left: 0;
