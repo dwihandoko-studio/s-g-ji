@@ -366,6 +366,7 @@
                 return;
             }
             var n = navigator;
+            console.log(n);
             // document.getElementById("outdiv").innerHTML = vidhtml;
             v = document.getElementById("v_preview");
 
