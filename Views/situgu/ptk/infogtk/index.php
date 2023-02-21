@@ -34,16 +34,24 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">Tautkan Kartu NUPTK QRCode Geisa Anda.</h4>
-                            <!-- <video id="camera_preview"></video> -->
-
-                            <div id="result_preview"></div>
-                            <!-- <video id="v_preview" autoplay></video> -->
-                            <div class="selector" id="webcamimg" onclick="setwebcam()" align="left"></div>
-                            <div class="selector" id="qrimg" onclick="setimg()" align="right"></div>
-                            <center id="mainbody">
-                                <div id="outdiv"></div>
+                            <center>
+                                <p style="color:red;font-weight:bold;margin-top:10px"><i class="fas fa-video"></i> Camera
+                                </p>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <video id="my_camera" class="solid"></video>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="btn-group btn-group-toggle mb-5" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" value="1" autocomplete="off" checked> 1st Camera
+                                    </label>
+                                    <label class="btn btn-secondary">
+                                        <input type="radio" name="options" value="2" autocomplete="off"> 2nd Camera
+                                    </label>
+                                </div>
                             </center>
-                            <canvas id="qr-canvas" width="800" height="600"></canvas>
 
 
                         </div>
@@ -70,11 +78,174 @@
 <?= $this->section('scriptBottom'); ?>
 
 <!-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> -->
+<?php if (!isset($infogtk)) { ?>
+    <script type="text/javascript">
+        // Configure a few settings and attach camera
 
+        Webcam.set({
+            width: 560,
+            height: 340,
+            image_format: 'jpeg',
+            jpeg_quality: 100
+        });
+        Webcam.attach('#my_camera');
+
+        // preload shutter audio clip
+        var shutter = new Audio();
+        shutter.autoplay = true;
+        shutter.src = navigator.userAgent.match(/Firefox/) ? 'shutter.ogg' : 'shutter.mp3';
+
+
+        // SELESAI-----Configure a few settings and attach camera
+        //===========================================ajax
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            let scanner = new Instascan.Scanner({
+                video: document.getElementById('my_camera'),
+                mirror: false
+            });
+            scanner.addListener('scan', function(content) {
+                let data14 = content;
+                // play sound effect
+                shutter.play();
+                let angka_random = Math.floor(Math.random() * 1000000) + 1000;
+                let sekarang = Date.now();
+                let random = angka_random + sekarang;
+
+                console.log(data14);
+
+                // $.ajax({
+                //     type: 'POST',
+                //     url: "index_webcam_action.php",
+                //     data: {
+                //         qrcode: data14
+                //     },
+                //     success: function(response) {
+                //         if (response != null && response != "") {
+                //             response = JSON.parse(response);
+                //             console.log(response)
+                //             //amibl data JSON
+                //             $('#no_daftar').html(response.no_daftar);
+                //             $('#giat_penerimaan').html(response.giat_penerimaan);
+                //             $('#nama').html(response.nama_calon);
+                //             $('#ttl').html(response.ttl);
+                //             $('#hasil').html(response.hasil);
+                //             $('#karena').html(response.karena);
+                //             $('#id_data').val(response.id_data);
+                //             $('#results').load('index_webcam_action.php')
+                //             const Toast = Swal.mixin({
+                //                 toast: true,
+                //                 position: 'top-end',
+                //                 showConfirmButton: false,
+                //                 timer: 3000,
+                //                 timerProgressBar: true,
+                //                 didOpen: (toast) => {
+                //                     toast.addEventListener('mouseenter', Swal.stopTimer)
+                //                     toast.addEventListener('mouseleave', Swal
+                //                         .resumeTimer)
+                //                 }
+                //             })
+
+                //             Toast.fire({
+                //                 icon: 'success',
+                //                 title: 'Surat terdaftar, cek isi surat!'
+                //             })
+
+                //             if (response == 1) {
+
+                //                 Swal.fire({
+                //                     icon: 'error',
+                //                     title: 'Oops...',
+                //                     text: 'Surat tidak terdaftar!',
+                //                 })
+
+                //             }
+
+                //         }
+
+                //     }
+
+                // });
+
+
+            });
+
+            Instascan.Camera.getCameras().then(function(cameras) {
+                if (cameras.length > 0) {
+                    scanner.start(cameras[0]);
+
+                    //ini pakai vanilla js
+                    if (document.querySelector('input[name="options"]')) {
+                        document.querySelectorAll('input[name="options"]').forEach((element) => {
+                            element.addEventListener("change", function(event) {
+                                var item = event.target.value;
+                                //console.log(item);
+                                if (item == 1) {
+                                    if (cameras[0] != "") {
+                                        scanner.start(cameras[0]);
+                                    } else {
+                                        alert('No Front camera found!');
+                                    }
+                                } else if (item == 2) {
+                                    if (cameras[1] != "") {
+                                        scanner.start(cameras[1]);
+                                    } else {
+                                        alert('No Back camera found!');
+                                    }
+                                }
+                            });
+                        });
+                    }
+
+                    //Ini kalau pakai JQUERY
+                    /* $('[name="options"]').on('change', function() {
+                        if ($(this).val() == 1) {
+                            if (cameras[0] != "") {
+                                scanner.start(cameras[0]);
+                            } else {
+                                alert('No Front camera found!');
+                            }
+                        } else if ($(this).val() == 2) {
+                            if (cameras[1] != "") {
+                                scanner.start(cameras[1]);
+                            } else {
+                                alert('No Back camera found!');
+                            }
+                        }
+                    }); */
+                } else {
+                    console.error('No cameras found.');
+                    alert('No cameras found.');
+                }
+            }).catch(function(e) {
+                console.error(e);
+                alert(e);
+            });
+
+            //ini vanilla js
+            const pdf_button = document.getElementById('id_data')
+            pdf_button.addEventListener("click", function() {
+                const pdf_value = document.getElementById('id_data').value
+                if (pdf_value !== "") {
+                    location.href = 'data_dompdf_perorangan.php?id=' + pdf_value
+                }
+
+            })
+
+            //ini jquery
+            /*  $("#id_data").on("click", function() {
+                 const dataid = $("#id_data").val()
+                 location.href = 'data_dompdf_perorangan.php?id=' + dataid
+             }) */
+
+        });
+    </script>
+<?php } ?>
 <script>
     $(document).ready(function() {
         <?php if (!isset($infogtk)) { ?>
-            load();
+            // load();
             // $('#content-aktivasiModalLabel').html('INFO GTK DIGITAL BELUM TERKAIT KE DATA PTK');
             // let akuntertautNya = '';
             // akuntertautNya += '<div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">';
@@ -178,6 +349,13 @@
 <link href="<?= base_url() ?>/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
 
 <?php if (!isset($infogtk)) { ?>
+    <!--Instascan -->
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <!-- <script src="<?= base_url() ?>/assets/js/instascan.min.js"></script> -->
+    <!-- Webcam -->
+    <script type="text/javascript" src="<?= base_url() ?>/assets/js/webcam.min.js"></script>
+<?php } ?>
+<?php if (!isset($infogtks)) { ?>
     <script type="text/javascript" src="<?= base_url() ?>/assets/js/llqrcode.js"></script>
     <script>
         // QRCODE reader Copyright 2011 Lazar Laszlo
