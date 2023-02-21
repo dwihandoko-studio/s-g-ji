@@ -367,7 +367,7 @@
             }
             var n = navigator;
             console.log(n);
-            // document.getElementById("outdiv").innerHTML = vidhtml;
+            document.getElementById("outdiv").innerHTML = vidhtml;
             v = document.getElementById("v_preview");
 
             if (n.mediaDevices && n.mediaDevices.getUserMedia)
