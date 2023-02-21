@@ -57,7 +57,8 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptBottom'); ?>
-<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script type="text/javascript" src="<?= base_url() ?>/assets/js/instascan.min.js"></script>
+<!-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> -->
 <script>
     $(document).ready(function() {
         <?php if (!isset($infogtk)) { ?>
