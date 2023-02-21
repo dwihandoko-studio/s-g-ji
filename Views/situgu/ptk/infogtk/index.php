@@ -253,6 +253,7 @@
 
 
         function captureToCanvas() {
+            console.log(gUM);
             if (stype != 1) {
                 console.log(stype);
                 return;
