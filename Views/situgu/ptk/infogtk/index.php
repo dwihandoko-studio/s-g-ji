@@ -372,7 +372,7 @@
             document.getElementById("outdiv").innerHTML = vidhtml;
             v = document.getElementById("v_preview");
 
-            console.log(v);
+            console.log(n.mediaDevices.getUserMedia);
 
             if (n.mediaDevices && n.mediaDevices.getUserMedia)
 
