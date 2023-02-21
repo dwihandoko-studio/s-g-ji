@@ -26,8 +26,8 @@
             <div class="col-lg-12">
                 <?php if (isset($infogtk)) { ?>
                     <div class="card">
-                        <div class="card-body iframe-maximal-view" style="height: 900px;">
-                            <h4 class="card-title mb-4">INFO GTK DIGITAL</h4>
+                        <div class="card-body iframe-maximal-view" style="height: 750px;">
+                            <!-- <h4 class="card-title mb-4">INFO GTK DIGITAL</h4> -->
                             <iframe src="<?= $infogtk->qrcode ?>"></iframe>
                         </div>
                     </div>
