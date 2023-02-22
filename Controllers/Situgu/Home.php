@@ -35,7 +35,7 @@ class Home extends BaseController
                         case 3:
                             return redirect()->to(base_url('situgu/opk/home'));
                         case 4:
-                            return redirect()->to(base_url('situgu/opr/home'));
+                            return redirect()->to(base_url('situgu/opsr/home'));
                         case 5:
                             return redirect()->to(base_url('situgu/ops/home'));
                         case 6:
