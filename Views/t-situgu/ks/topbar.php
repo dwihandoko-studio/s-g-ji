@@ -48,7 +48,7 @@
                             <div class="dropdown-menu" aria-labelledby="topnav-verifikasi">
                                 <a href="<?= base_url('situgu/ks/verifikasi/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tpg">Tunjangan Profesi Guru</a>
                                 <a href="<?= base_url('situgu/ks/verifikasi/tamsil') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tamsil") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tamsil">Tamsil</a>
-                                <a href="<?= base_url('situgu/ks/verifikasi/pghm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pghm") ? ' active-menu-href' : '' ?>" key="t-verifikasi-pghm">PGHM</a>
+                                <!-- <a href="<?= base_url('situgu/ks/verifikasi/pghm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pghm") ? ' active-menu-href' : '' ?>" key="t-verifikasi-pghm">PGHM</a> -->
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -59,7 +59,7 @@
                             <div class="dropdown-menu" aria-labelledby="topnav-sptjm">
                                 <a href="<?= base_url('situgu/ks/sptjm/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-sptjm-tpg">Tunjangan Profesi Guru</a>
                                 <a href="<?= base_url('situgu/ks/sptjm/tamsil') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "tamsil") ? ' active-menu-href' : '' ?>" key="t-sptjm-tamsil">Tamsil</a>
-                                <a href="<?= base_url('situgu/ks/sptjm/pghm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "pghm") ? ' active-menu-href' : '' ?>" key="t-sptjm-pghm">PGHM</a>
+                                <!-- <a href="<?= base_url('situgu/ks/sptjm/pghm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "pghm") ? ' active-menu-href' : '' ?>" key="t-sptjm-pghm">PGHM</a> -->
                             </div>
                         </li>
                         <li class="nav-item dropdown">

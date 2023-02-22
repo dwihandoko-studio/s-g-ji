@@ -694,6 +694,136 @@ class Master extends BaseController
         }
     }
 
+    public function hapusfile()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'bulan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Bulan tidak boleh kosong. ',
+                ]
+            ],
+            'title' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Title tidak boleh kosong. ',
+                ]
+            ],
+            'old' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Old tidak boleh kosong. ',
+                ]
+            ],
+            'id_ptk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('bulan')
+                . $this->validator->getError('title')
+                . $this->validator->getError('old')
+                . $this->validator->getError('id_ptk');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $bulan = htmlspecialchars($this->request->getVar('bulan'), true);
+            $title = htmlspecialchars($this->request->getVar('title'), true);
+            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
+
+            switch ($bulan) {
+                case 'nrg':
+                    $dir = FCPATH . "upload/ptk/nrg";
+                    $field_db = 'lampiran_nrg';
+                    $table_db = '_ptk_tb';
+                    break;
+                case 'nuptk':
+                    $dir = FCPATH . "upload/ptk/nuptk";
+                    $field_db = 'lampiran_nuptk';
+                    $table_db = '_ptk_tb';
+                    break;
+                case 'serdik':
+                    $dir = FCPATH . "upload/ptk/serdik";
+                    $field_db = 'lampiran_serdik';
+                    $table_db = '_ptk_tb';
+                    break;
+                case 'inpassing':
+                    $dir = FCPATH . "upload/ptk/impassing";
+                    $field_db = 'lampiran_impassing';
+                    $table_db = '_ptk_tb';
+                    break;
+                default:
+                    $dir = "";
+                    $field_db = '';
+                    $table_db = '';
+                    break;
+            }
+
+            $currentFile = $this->_db->table($table_db)->where(['id' => $id_ptk, 'is_locked' => 0])->get()->getRowObject();
+            if (!$currentFile) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menghapus file. Data tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table($table_db)->select("$field_db AS file, id")->where(['id' => $id_ptk, 'is_locked' => 0])->update([$field_db => null, 'updated_at' => date('Y-m-d H:i:s')]);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($e);
+                $response->message = "Gagal menghapus file lampiran $title.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                try {
+                    unlink($dir . '/' . $currentFile->file);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "File lampiran $title berhasil dihapus.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menghapus file lampiran $title";
+                return json_encode($response);
+            }
+        }
+    }
+
 
 
 

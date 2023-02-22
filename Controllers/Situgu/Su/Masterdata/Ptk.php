@@ -42,6 +42,7 @@ class Ptk extends BaseController
                             <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="javascript:actionUnlockSpj(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-lock-open-alt font-size-16 align-middle"></i> &nbsp;Unlock SPJ</i></a>
+                            <a class="dropdown-item" href="javascript:actionDetailBackbone(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');"><i class="mdi mdi-bullseye font-size-16 align-middle"></i> &nbsp;Detail Data Backbone</i></a>
                         </div>
                     </div>';
             // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -87,6 +88,77 @@ class Ptk extends BaseController
         $data['user'] = $user->data;
 
         return view('situgu/su/masterdata/ptk/index', $data);
+    }
+
+    public function detailbackbone()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'nuptk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NUPTK tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('nuptk');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nuptk = htmlspecialchars($this->request->getVar('nuptk'), true);
+
+            $current = $this->_db->table('_ptk_tb')->select("id_ptk, nuptk")
+                ->where('id', $id)->get()->getRowObject();
+
+            if ($current) {
+                $apiLib = new Apilib();
+                if ($current->id_ptk !== null) {
+                    $result = $apiLib->getPtkById($current->id_ptk);
+
+                    $ptk = $result;
+                } else {
+                    $result = $apiLib->getPtkByNuptk($current->nuptk);
+
+                    $ptk = $result;
+                }
+
+                $data['data'] = $ptk;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/su/masterdata/ptk/get_detail_backbone', $data);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
     }
 
     public function detail()

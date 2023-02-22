@@ -106,6 +106,9 @@
                                             </a>
                                             <a href="javascript:actionEditFile(\'NRG\',\'nrg\',\'' . $ptk->lampiran_nrg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                                                 <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                                            </a>
+                                            <a href="javascript:actionHapusFile(\'NRG\',\'nrg\',\'' . $ptk->lampiran_nrg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
                                             </a>' :
                                                 '<a href="javascript:actionUpload(\'NRG\',\'nrg\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
@@ -118,6 +121,9 @@
                                             </a>' :
                                                 '<a href="javascript:actionUpload(\'NUPTK\',\'nuptk\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                                            </a>
+                                            <a href="javascript:actionHapusFile(\'NUPTK\',\'nuptk\',\'' . $ptk->lampiran_nuptk . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
                                             </a>';
                                             $row[] = $ptk->lampiran_npwp ? '<a target="_blank" href="' . base_url('upload/ptk/npwp') . '/' . $ptk->lampiran_npwp . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                                                 <i class="bx bxs-show font-size-16 align-middle"></i></button>
@@ -133,6 +139,9 @@
                                             </a>
                                             <a href="javascript:actionEditFile(\'Sertifikat Pendidik\',\'serdik\',\'' . $ptk->lampiran_serdik . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                                                 <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                                            </a>
+                                            <a href="javascript:actionHapusFile(\'Sertifikat Pendidik\',\'serdik\',\'' . $ptk->lampiran_serdik . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
                                             </a>' :
                                                 '<a href="javascript:actionUpload(\'Sertifikat Pendidik\',\'serdik\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
@@ -163,6 +172,9 @@
                                             </a>
                                             <a href="javascript:actionEditFile(\'Inpassing\',\'inpassing\',\'' . $ptk->lampiran_impassing . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                                                 <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                                            </a>
+                                            <a href="javascript:actionHapusFile(\'Inpassing\',\'inpassing\',\'' . $ptk->lampiran_impassing . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
                                             </a>' :
                                                     '<a href="javascript:actionUpload(\'Inpassing\',\'inpassing\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
@@ -268,12 +280,92 @@
         });
     }
 
+    function actionHapusFile(title, bulan, old) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin menghapus lampiran file ini?',
+            text: "Hapus Lampiran File: " + title,
+            showCancelButton: true,
+            icon: 'question',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Tidak',
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./hapusfile",
+                    type: 'POST',
+                    data: {
+                        title: title,
+                        bulan: bulan,
+                        old: old,
+                        id_ptk: '<?= $ptk->id ?>',
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('div.main-content').block({
+                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+                    },
+                    success: function(resul) {
+                        $('div.main-content').unblock();
+                        if (resul.status !== 200) {
+                            if (resul.status !== 201) {
+                                if (resul.status === 401) {
+                                    Swal.fire(
+                                        'Failed!',
+                                        resul.message,
+                                        'warning'
+                                    ).then((valRes) => {
+                                        reloadPage();
+                                    });
+                                } else {
+                                    e.disabled = false;
+                                    Swal.fire(
+                                        'GAGAL!',
+                                        resul.message,
+                                        'warning'
+                                    );
+                                }
+                            } else {
+                                Swal.fire(
+                                    'Peringatan!',
+                                    resul.message,
+                                    'success'
+                                ).then((valRes) => {
+                                    reloadPage();
+                                })
+                            }
+                        } else {
+                            Swal.fire(
+                                'SELAMAT!',
+                                resul.message,
+                                'success'
+                            ).then((valRes) => {
+                                reloadPage();
+                            })
+                        }
+                    },
+                    error: function() {
+                        $('div.main-content').unblock();
+                        Swal.fire(
+                            'Failed!',
+                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                            'warning'
+                        );
+                    }
+                });
+            }
+        })
+    }
+
     function actionEditFile(title, bulan, old) {
         $.ajax({
             url: "./editformupload",
             type: 'POST',
             data: {
                 bulan: bulan,
+                title: title,
                 old: old,
                 id_ptk: '<?= $ptk->id ?>',
             },

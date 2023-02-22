@@ -161,4 +161,58 @@ class Apilib
             return false;
         }
     }
+
+    public function getPtkById($idPtk)
+    {
+        $jwt = get_cookie('jwt');
+        if ($jwt) {
+            $data = [
+                'id' => $idPtk,
+            ];
+            $add         = $this->_send_post($data, 'getptkid', $jwt);
+            $send_data         = curl_exec($add);
+
+            $result = json_decode($send_data);
+
+
+            if (isset($result->error)) {
+                return false;
+            }
+
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function getPtkByNuptk($idPtk)
+    {
+        $jwt = get_cookie('jwt');
+        if ($jwt) {
+            $data = [
+                'nuptk' => $idPtk,
+            ];
+            $add         = $this->_send_post($data, 'getptknuptk', $jwt);
+            $send_data         = curl_exec($add);
+
+            $result = json_decode($send_data);
+
+
+            if (isset($result->error)) {
+                return false;
+            }
+
+            if ($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

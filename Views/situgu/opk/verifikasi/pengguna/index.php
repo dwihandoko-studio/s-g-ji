@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">VERIFIKASI USULAN</h4>
+                    <h4 class="mb-sm-0 font-size-18">VERIFIKASI PENGGUNA ADMIN SEKOLAH</h4>
 
                     <!-- <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -27,7 +27,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">Data Usulan</h4>
+                                <h4 class="card-title">Data Pengguna Admin Sekolah</h4>
                             </div>
                             <!-- <div class="col-6">
                                 <div class="mb-3">
@@ -51,9 +51,9 @@
                                     <th data-orderable="false">Aksi</th>
                                     <th>NAMA</th>
                                     <th>NIK</th>
-                                    <th>NUPTK</th>
-                                    <th>JENIS PTK</th>
-                                    <th>TANGGAL USULAN</th>
+                                    <th>EMAIL</th>
+                                    <th>NO HP</th>
+                                    <th>NPSN</th>
                                 </tr>
                             </thead>
                         </table>
@@ -112,14 +112,13 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionDetail(id, id_ptk, tw, nama) {
+    function actionDetail(id, id_ptk, nama) {
         $.ajax({
             url: "./detail",
             type: 'POST',
             data: {
                 id: id,
                 id_ptk: id_ptk,
-                tw: tw,
                 nama: nama,
             },
             dataType: 'JSON',
@@ -137,7 +136,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-detailModalLabel').html('DETAIL USULAN PTK ' + nama);
+                    $('#content-detailModalLabel').html('DETAIL DATA PENGGUNA ADMIN SEKOLAH ' + nama);
                     $('.contentBodyModal').html(resul.data);
                     $('.content-detailModal').modal({
                         backdrop: 'static',

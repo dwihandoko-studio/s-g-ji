@@ -3,7 +3,7 @@
 namespace App\Controllers\Situgu\Opk\Verifikasi;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Opk\VerifikasiptkModel;
+use App\Models\Situgu\Opk\VerifikasipenggunaModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -13,7 +13,7 @@ use App\Libraries\Helplib;
 use App\Libraries\Situgu\Kehadiranptklib;
 use App\Libraries\Uuid;
 
-class Ptk extends BaseController
+class Pengguna extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -30,7 +30,7 @@ class Ptk extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new VerifikasiptkModel($request);
+        $datamodel = new VerifikasipenggunaModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -80,7 +80,7 @@ class Ptk extends BaseController
             //                 <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Sync Dapodik</a>
             //             </div>
             //         </div>';
-            $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->ptk_id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->fullname)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                 <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
                 </a>';
             //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -90,11 +90,11 @@ class Ptk extends BaseController
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
             $row[] = $action;
-            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
+            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->fullname));
             $row[] = $list->nik;
-            $row[] = $list->nuptk;
-            $row[] = $list->jenis_ptk;
-            $row[] = $list->created_at;
+            $row[] = $list->email;
+            $row[] = $list->no_hp;
+            $row[] = $list->npsn;
 
             $data[] = $row;
         }
@@ -109,12 +109,12 @@ class Ptk extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/opk/verifikasi/ptk/data'));
+        return redirect()->to(base_url('situgu/opk/verifikasi/pengguna/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'VERIFIKASI PENGHAPUSAN DATA PTK';
+        $data['title'] = 'VERIFIKASI PENGGUNA ADMIN SEKOLAH';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -125,7 +125,7 @@ class Ptk extends BaseController
         $id = $this->_helpLib->getPtkId($user->data->id);
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        return view('situgu/opk/verifikasi/ptk/index', $data);
+        return view('situgu/opk/verifikasi/pengguna/index', $data);
     }
 
     public function detail()
@@ -162,7 +162,7 @@ class Ptk extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $current = $this->_db->table('_ptk_tb_hapus')
+            $current = $this->_db->table('_profil_users_tb')
                 ->where(['id' => $id])->get()->getRowObject();
 
             if ($current) {
@@ -170,7 +170,7 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/opk/verifikasi/ptk/detail', $data);
+                $response->data = view('situgu/opk/verifikasi/pengguna/detail', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -228,7 +228,7 @@ class Ptk extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('_ptk_tb_hapus')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('v_user')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -238,18 +238,18 @@ class Ptk extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_ptk_tb_hapus')->where('id', $oldData->id)->update(['status_ajuan' => 2, 'updated_ajuan' => date('Y-m-d H:i:s')]);
+                $this->_db->table('v_user')->where('id', $oldData->id)->update(['last_active' => date('Y-m-d H:i:s'), 'jabatan' => 'Admin Sekolah']);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->message = "Usulan penghapusan PTK $nama berhasil diverifikasi dan disetujui.";
+                    $response->message = "Pengguna admin sekolah $nama berhasil diverifikasi dan disetujui.";
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal memverifikasi usulan penghapusan PTK $nama.";
+                    $response->message = "Gagal memverifikasi pengguna admin sekolah $nama.";
                     return json_encode($response);
                 }
             } catch (\Throwable $th) {
@@ -257,7 +257,7 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->error = var_dump($th);
-                $response->message = "Gagal memverifikasi usulan penghapusan PTK $nama.";
+                $response->message = "Gagal memverifikasi pengguna admin sekolah $nama.";
                 return json_encode($response);
             }
         }
@@ -314,7 +314,7 @@ class Ptk extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/opk/verifikasi/ptk/tolak', $data);
+            $response->data = view('situgu/opk/verifikasi/pengguna/tolak', $data);
             return json_encode($response);
         }
     }
@@ -373,7 +373,7 @@ class Ptk extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
 
-            $oldData = $this->_db->table('_ptk_tb_hapus')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('v_user')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -383,18 +383,18 @@ class Ptk extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_ptk_tb_hapus')->where('id', $oldData->id)->update(['status_ajuan' => 1, 'keterangan_penghapusan' => $keterangan, 'updated_ajuan' => date('Y-m-d H:i:s')]);
+                $this->_db->table('v_user')->where('id', $oldData->id)->update(['surat_tugas' => null, 'jabatan' => null, 'last_active' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->message = "Usulan penghapusan PTK $nama berhasil diverifikasi dan ditolak.";
+                    $response->message = "Pengguna admin sekolah $nama berhasil diverifikasi dan ditolak.";
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal memverifikasi usulan penghapusan PTK $nama.";
+                    $response->message = "Gagal memverifikasi pengguna admin sekolah $nama.";
                     return json_encode($response);
                 }
             } catch (\Throwable $th) {
@@ -402,7 +402,7 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->error = var_dump($th);
-                $response->message = "Gagal memverifikasi usulan penghapusan PTK $nama.";
+                $response->message = "Gagal memverifikasi pengguna admin sekolah $nama.";
                 return json_encode($response);
             }
         }

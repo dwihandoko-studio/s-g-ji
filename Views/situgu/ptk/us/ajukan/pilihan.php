@@ -9,7 +9,7 @@
                     <option value="">--Pilih--</option>
                     <option value="tpg">TPG</option>
                     <option value="tamsil">TAMSIL</option>
-                    <option value="pghm">PGHM</option>
+                    <!-- <option value="pghm">PGHM</option> -->
                 </select>
                 <div class="help-block _jenis"></div>
             </div>
