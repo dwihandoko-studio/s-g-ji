@@ -63,8 +63,8 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
 
-        <?= $this->include('t-situgu/opk/header'); ?>
-        <?= $this->include('t-situgu/opk/topbar'); ?>
+        <?= $this->include('t-situgu/opsr/header'); ?>
+        <?= $this->include('t-situgu/opsr/topbar'); ?>
 
 
 
@@ -74,7 +74,7 @@
         <div class="main-content">
             <?= $this->renderSection('content'); ?>
 
-            <?= $this->include('t-situgu/opk/footer'); ?>
+            <?= $this->include('t-situgu/opsr/footer'); ?>
         </div>
         <!-- end main content-->
 
