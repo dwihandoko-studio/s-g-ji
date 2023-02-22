@@ -50,6 +50,7 @@ class SekolahModel extends Model
     function get_datatables($kecamatan)
     {
         $this->dt->where('kode_kecamatan', $kecamatan);
+        $this->dt->whereIn('bentuk_pendidikan_id', [5]);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -59,6 +60,7 @@ class SekolahModel extends Model
     function count_filtered($kecamatan)
     {
         $this->dt->where('kode_kecamatan', $kecamatan);
+        $this->dt->whereIn('bentuk_pendidikan_id', [5]);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
@@ -66,6 +68,7 @@ class SekolahModel extends Model
     public function count_all($kecamatan)
     {
         $this->dt->where('kode_kecamatan', $kecamatan);
+        $this->dt->whereIn('bentuk_pendidikan_id', [5]);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
