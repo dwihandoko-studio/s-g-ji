@@ -92,7 +92,7 @@ class Infogtk extends BaseController
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $oldData = $this->_db->table('_info_gtk')->where('ptk_id', $id)->get()->getRowObject();
+            $oldData = $this->_db->table('_info_gtk')->where('ptk_id', $user->data->ptk_id)->get()->getRowObject();
 
             if ($oldData) {
                 $data = [
