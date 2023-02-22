@@ -38,8 +38,8 @@
             <div class="col-lg-4">
                 <label class="col-form-label">Lampiran Surat Tugas:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" aria-describedby="absen_1" aria-label="ABSEN 1" value="Surat Tugas Admin Sekolah <?= $npsn ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen1 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/kehadiran') . '/' . $data->lampiran_absen1 ?>" id="nik">Lampiran Absen 1</a>
+                    <input type="text" class="form-control" aria-describedby="absen_1" aria-label="ABSEN 1" value="Surat Tugas Admin Sekolah <?= $data->npsn ?>" readonly />
+                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/surat-tugas') . '/' . $data->surat_tugas ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/surat-tugas') . '/' . $data->surat_tugas ?>" id="nik">Lampiran Surat Tugas</a>
                 </div>
             </div>
         </div>
