@@ -49,9 +49,9 @@
                                     <label class="btn btn-primary active">
                                         <input type="radio" name="options" value="1" autocomplete="off" checked> 1st Camera
                                     </label>
-                                    <label class="btn btn-secondary">
+                                    <!-- <label class="btn btn-secondary">
                                         <input type="radio" name="options" value="2" autocomplete="off"> 2nd Camera
-                                    </label>
+                                    </label> -->
                                 </div>
                             </center>
 
