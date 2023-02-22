@@ -228,7 +228,7 @@ class Pengguna extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('v_user')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_profil_users_tb')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -238,7 +238,7 @@ class Pengguna extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('v_user')->where('id', $oldData->id)->update(['last_active' => date('Y-m-d H:i:s'), 'jabatan' => 'Admin Sekolah']);
+                $this->_db->table('_profil_users_tb')->where('id', $oldData->id)->update(['last_active' => date('Y-m-d H:i:s'), 'jabatan' => 'Admin Sekolah']);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
@@ -373,7 +373,7 @@ class Pengguna extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
 
-            $oldData = $this->_db->table('v_user')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_profil_users_tb')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -383,7 +383,7 @@ class Pengguna extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('v_user')->where('id', $oldData->id)->update(['surat_tugas' => null, 'jabatan' => null, 'last_active' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_profil_users_tb')->where('id', $oldData->id)->update(['surat_tugas' => null, 'jabatan' => null, 'last_active' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
