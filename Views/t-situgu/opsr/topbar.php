@@ -30,7 +30,7 @@
                                 <a href="<?= base_url('situgu/opsr/verifikasi/ptk') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "ptk") ? ' active-menu-href' : '' ?>" key="t-verifikasi-ptk">Penghapusan PTK</a>
                                 <a href="<?= base_url('situgu/opsr/verifikasi/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tpg">Tunjangan Profesi Guru</a>
                                 <a href="<?= base_url('situgu/opsr/verifikasi/tamsil') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tamsil") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tamsil">Tamsil</a>
-                                <a href="<?= base_url('situgu/opsr/verifikasi/pghm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pghm") ? ' active-menu-href' : '' ?>" key="t-verifikasi-pghm">PGHM</a>
+                                <!-- <a href="<?= base_url('situgu/opsr/verifikasi/pghm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pghm") ? ' active-menu-href' : '' ?>" key="t-verifikasi-pghm">PGHM</a> -->
                             </div>
                         </li>
                         <li class="nav-item dropdown">
