@@ -107,8 +107,8 @@
         }
 
         function simpanTolak(e) {
-            const id = '<?= $data->id_usulan ?>';
-            const nama = '<?= $data->nama ?>';
+            const id = '<?= $data->id ?>';
+            const nama = '<?= $data->fullname ?>';
             const keterangan = document.getElementsByName('_keterangan_tolak')[0].value;
 
             $.ajax({
