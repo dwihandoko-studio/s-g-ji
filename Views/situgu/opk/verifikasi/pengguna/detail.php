@@ -11,8 +11,8 @@
                 <input type="text" class="form-control" value="<?= $data->email ?>" readonly />
             </div>
             <div class="col-lg-6">
-                <label class="col-form-label">NIK:</label>
-                <input type="text" class="form-control" value="<?= $data->nik ?>" readonly />
+                <label class="col-form-label">NIP/NIK:</label>
+                <input type="text" class="form-control" value="<?= $data->nip ?>" readonly />
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">No HP:</label>

@@ -8,8 +8,8 @@ use CodeIgniter\Model;
 class VerifikasipenggunaModel extends Model
 {
     protected $table = "_profil_users_tb";
-    protected $column_order = array(null, null, 'fullname', 'nik', 'email', 'no_hp', 'npsn');
-    protected $column_search = array('nik', 'fullname', 'email', 'npsn');
+    protected $column_order = array(null, null, 'fullname', 'nip', 'email', 'no_hp', 'npsn');
+    protected $column_search = array('nip', 'fullname', 'email', 'npsn');
     protected $order = array('fullname' => 'asc');
     protected $request;
     protected $db;

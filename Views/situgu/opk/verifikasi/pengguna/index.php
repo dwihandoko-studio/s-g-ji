@@ -50,7 +50,7 @@
                                     <th data-orderable="false">#</th>
                                     <th data-orderable="false">Aksi</th>
                                     <th>NAMA</th>
-                                    <th>NIK</th>
+                                    <th>NIP/NIK</th>
                                     <th>EMAIL</th>
                                     <th>NO HP</th>
                                     <th>NPSN</th>

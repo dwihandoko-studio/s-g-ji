@@ -91,7 +91,7 @@ class Pengguna extends BaseController
             //     </a>';
             $row[] = $action;
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->fullname));
-            $row[] = $list->nik;
+            $row[] = $list->nip;
             $row[] = $list->email;
             $row[] = $list->no_hp;
             $row[] = $list->npsn;
