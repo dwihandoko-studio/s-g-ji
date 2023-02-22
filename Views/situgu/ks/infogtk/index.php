@@ -1,4 +1,4 @@
-<?= $this->extend('t-situgu/ptk/index'); ?>
+<?= $this->extend('t-situgu/ks/index'); ?>
 
 <?= $this->section('content'); ?>
 <div class="page-content">

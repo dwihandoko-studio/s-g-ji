@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Situgu\Ptk;
+namespace App\Controllers\Situgu\Ks;
 
 use App\Controllers\BaseController;
 use Config\Services;
@@ -27,12 +27,12 @@ class Infogtk extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/ptk/infogtk/data'));
+        return redirect()->to(base_url('situgu/ks/infogtk/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'Info GTK';
+        $data['title'] = 'Info GTK Digital';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -45,7 +45,7 @@ class Infogtk extends BaseController
         if ($user->data->ptk_id !== NULL) {
             $data['infogtk'] = $this->_db->table('_info_gtk')->where('ptk_id', $user->data->ptk_id)->get()->getRowObject();
         }
-        return view('situgu/ptk/infogtk/index', $data);
+        return view('situgu/ks/infogtk/index', $data);
     }
 
     public function taut()

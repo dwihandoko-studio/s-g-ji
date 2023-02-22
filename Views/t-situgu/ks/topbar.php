@@ -25,6 +25,11 @@
                                 <i class="bx bx-fingerprint me-2"></i><span key="t-absen">Absen</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "infogtk") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "infogtk") ? 'javascript:;' : base_url('situgu/ks/infogtk') ?>">
+                                <i class="mdi mdi-bus-stop-covered me-2"></i><span key="t-absen">Info GTK Digital</span>
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "doc") ? ' active-menu-href' : '' ?>" href="#" id="topnav-updokument" role="button">
                                 <i class="bx bx-receipt me-2"></i><span key="t-updokument">DOKUMEN</span>
