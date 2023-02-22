@@ -49,7 +49,7 @@ class VerifikasipenggunaModel extends Model
     }
     function get_datatables($kecamatan)
     {
-        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5) AND last_active IS NULL");
+        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5) AND last_active IS NULL AND surat_tugas IS NOT NULL");
         $this->dt->where('role_user', 5);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
@@ -59,7 +59,7 @@ class VerifikasipenggunaModel extends Model
     }
     function count_filtered($kecamatan)
     {
-        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5) AND last_active IS NULL");
+        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5) AND last_active IS NULL AND surat_tugas IS NOT NULL");
         $this->dt->where('role_user', 5);
         $this->_get_datatables_query();
 
@@ -67,7 +67,7 @@ class VerifikasipenggunaModel extends Model
     }
     public function count_all($kecamatan)
     {
-        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5) AND last_active IS NULL");
+        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 5) AND last_active IS NULL AND surat_tugas IS NOT NULL");
         $this->dt->where('role_user', 5);
         $this->_get_datatables_query();
 
