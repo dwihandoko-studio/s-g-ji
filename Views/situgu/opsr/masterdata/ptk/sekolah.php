@@ -1,4 +1,4 @@
-<?= $this->extend('t-situgu/opk/index'); ?>
+<?= $this->extend('t-situgu/opsr/index'); ?>
 
 <?= $this->section('content'); ?>
 <div class="page-content">
@@ -8,13 +8,14 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">PENGGUNA</h4>
+                    <h4 class="mb-sm-0 font-size-18">PTK</h4>
 
-                    <!-- <div class="page-title-right">
+                    <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript:actionAdd(this);" class="btn btn-primary btn-rounded waves-effect waves-light">Tambah Akun PTK</a></li>
+                            <li class="breadcrumb-item"><a href="./data" class="btn btn-primary btn-rounded waves-effect waves-light">Kembali</a></li>
+                            <!-- <li class="breadcrumb-item"><a href="javascript:actionSyncAll(this);" class="btn btn-primary btn-rounded waves-effect waves-light">Tarik Semua Data PTK Dari Dapodik</a></li> -->
                         </ol>
-                    </div> -->
+                    </div>
 
                 </div>
             </div>
@@ -27,7 +28,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">Data Pengguna</h4>
+                                <h4 class="card-title">Data Ptk</h4>
                             </div>
                         </div>
                     </div>
@@ -35,21 +36,14 @@
                         <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" data-orderable="false">#</th>
-                                    <th rowspan="2" data-orderable="false">Aksi</th>
-                                    <th rowspan="2">NPSN</th>
-                                    <th rowspan="2">NAMA</th>
-                                    <th rowspan="2">EMAIL</th>
-                                    <th rowspan="2">NO HP</th>
-                                    <th rowspan="2">ROLE</th>
-                                    <th rowspan="2">STATUS</th>
-                                    <th colspan="2" data-orderable="false">
-                                        <div class="text-center">VERIFIED</div>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>EMAIL</th>
-                                    <th>WA</th>
+                                    <th data-orderable="false">#</th>
+                                    <th data-orderable="false">Aksi</th>
+                                    <th>NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NIP</th>
+                                    <th>NUPTK</th>
+                                    <th>JENIS PTK</th>
+                                    <th>TERAKHIR TARIK DATA</th>
                                 </tr>
                             </thead>
                         </table>
@@ -63,13 +57,25 @@
 
 <!-- Modal -->
 <div id="content-detailModal" class="modal fade content-detailModal" tabindex="-1" role="dialog" aria-labelledby="content-detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content modal-content-loading">
             <div class="modal-header">
                 <h5 class="modal-title" id="content-detailModalLabel">Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="contentBodyModal">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="content-tolakModal" class="modal fade content-tolakModal" tabindex="-1" role="dialog" aria-labelledby="content-tolakModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-loading-tolak">
+            <div class="modal-header">
+                <h5 class="modal-title" id="content-tolakModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="contentTolakBodyModal">
             </div>
         </div>
     </div>
@@ -96,80 +102,23 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionTautkanAkun(id, nama, email, npsn) {
-        $.ajax({
-            url: "./taut",
-            type: 'POST',
-            data: {
-                id: id,
-                nama: nama,
-                email: email,
-                npsn: npsn,
-            },
-            dataType: 'JSON',
-            beforeSend: function() {
-                $('div.main-content').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.main-content').unblock();
-                if (resul.status !== 200) {
-                    if (resul.status === 404) {
-                        Swal.fire(
-                            'PERINGATAN!',
-                            resul.message,
-                            'warning'
-                        ).then((valRes) => {
-                            reloadPage(resul.redirrect);
-                        })
-                    } else {
-                        Swal.fire(
-                            'Failed!',
-                            resul.message,
-                            'warning'
-                        );
-                    }
-                } else {
-                    $('#content-detailModalLabel').html('TAUTKAN AKUN ' + nama);
-                    $('.contentBodyModal').html(resul.data);
-                    $('.content-detailModal').modal({
-                        backdrop: 'static',
-                        keyboard: false,
-                    });
-                    $('.content-detailModal').modal('show');
-                }
-            },
-            error: function() {
-                $('div.main-content').unblock();
-                Swal.fire(
-                    'Failed!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
-    }
-
-    function actionJadikanKs(id, nama, email, npsn) {
+    function actionSyncAll(event) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin PTK ini untuk menjadi KS?',
-            text: "Jadikan KS untuk PTK : " + nama,
+            title: 'Apakah anda yakin akan melakukan pembaharuan data semua PTK dari server Dapodik Kemdikbud?',
+            text: "Tarik Data Dari Server Dapodik Kemdikbud Untuk Semua PTK : ",
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Jadikan KS!'
+            confirmButtonText: 'Ya, Tarik Semua Data PTK!',
+            cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "./aproveKs",
+                    url: "./syncAll",
                     type: 'POST',
                     data: {
-                        id: id,
-                        nama: nama,
-                        email: email,
-                        npsn: npsn,
+                        npsn: '<?= $user->npsn ?>',
                     },
                     dataType: 'JSON',
                     beforeSend: function() {
@@ -209,24 +158,25 @@
         })
     }
 
-    function actionBatalKs(id, nama, email, npsn) {
+    function actionHapus(id, ptkId, nama, nuptk, npsn) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin membatalkan PTK ini untuk menjadi KS?',
-            text: "Batalkan KS untuk PTK : " + nama,
+            title: 'Apakah anda yakin ingin mengajukan hapus data ptk ini?',
+            text: "Hapus Data Untuk PTK : " + nama,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Batalkan Jadi KS!'
+            confirmButtonText: 'Ya, Hapus Data!'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "./batalKs",
+                    url: "./formhapus",
                     type: 'POST',
                     data: {
                         id: id,
+                        ptk_id: ptkId,
                         nama: nama,
-                        email: email,
+                        nuptk: nuptk,
                         npsn: npsn,
                     },
                     dataType: 'JSON',
@@ -245,13 +195,21 @@
                                 'warning'
                             );
                         } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
+                            if (resul.status !== 200) {
+                                Swal.fire(
+                                    'Failed!',
+                                    resul.message,
+                                    'warning'
+                                );
+                            } else {
+                                $('#content-tolakModalLabel').html('PENGHAPUSAN DATA PTK ' + nama);
+                                $('.contentTolakBodyModal').html(resul.data);
+                                $('.content-tolakModal').modal({
+                                    backdrop: 'static',
+                                    keyboard: false,
+                                });
+                                $('.content-tolakModal').modal('show');
+                            }
                         }
                     },
                     error: function() {
@@ -267,138 +225,26 @@
         })
     }
 
-    function actionResetAkun(id, nama, email, npsn) {
+    function actionSync(id, ptkId, nama, nuptk, npsn) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin mereset Akun PTK ini?',
-            text: "Reset Akun PTK : " + nama,
+            title: 'Apakah anda yakin ingin pembaharuan data ptk ini dari backbone dapodik?',
+            text: "Tarik Data Dari Backbone Untuk PTK : " + nama,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Reset Akun!'
+            confirmButtonText: 'Ya, Syncrone Data!'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "./resetAkun",
+                    url: "./sync",
                     type: 'POST',
                     data: {
                         id: id,
+                        ptk_id: ptkId,
                         nama: nama,
-                        email: email,
+                        nuptk: nuptk,
                         npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
-
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
-
-    function actionResetPassword(id, nama, email, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin mereset password Akun PTK ini?',
-            text: "Reset Password Akun PTK : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Reset Password!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./resetPassword",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        nama: nama,
-                        email: email,
-                        npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
-
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
-
-    function actionHapus(id, nama, email, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin menghapus data ini?',
-            text: "Hapus Pengguna : " + nama + " ( " + email + " )",
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./delete",
-                    type: 'POST',
-                    data: {
-                        id: id,
                     },
                     dataType: 'JSON',
                     beforeSend: function() {
@@ -480,48 +326,6 @@
         });
     }
 
-    function actionAdd(event) {
-        $.ajax({
-            url: "./add",
-            type: 'POST',
-            data: {
-                action: 'add',
-            },
-            dataType: 'JSON',
-            beforeSend: function() {
-                $('div.main-content').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.main-content').unblock();
-                if (resul.status !== 200) {
-                    Swal.fire(
-                        'Failed!',
-                        resul.message,
-                        'warning'
-                    );
-                } else {
-                    $('#content-detailModalLabel').html('TAMBAH AKUN PTK');
-                    $('.contentBodyModal').html(resul.data);
-                    $('.content-detailModal').modal({
-                        backdrop: 'static',
-                        keyboard: false,
-                    });
-                    $('.content-detailModal').modal('show');
-                }
-            },
-            error: function() {
-                $('div.main-content').unblock();
-                Swal.fire(
-                    'Failed!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
-    }
-
     function changeValidation(event) {
         $('.' + event).css('display', 'none');
     };
@@ -565,9 +369,12 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "./getAll",
+                "url": "./getAllPtk",
                 "type": "POST",
-
+                "data": function(data) {
+                    data.npsn = '<?= $sekolah->npsn ?>';
+                    // data.npsn = $('#filter_kecamatan').val();
+                }
             },
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
