@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 
 class VerifikasipenggunaModel extends Model
 {
-    protected $table = "v_user";
+    protected $table = "_profil_users_tb";
     protected $column_order = array(null, null, 'fullname', 'nik', 'email', 'no_hp', 'npsn');
     protected $column_search = array('nik', 'fullname', 'email', 'npsn');
     protected $order = array('fullname' => 'asc');
