@@ -4,6 +4,7 @@ namespace App\Controllers\Situgu\Opk\Masterdata;
 
 use App\Controllers\BaseController;
 use App\Models\Situgu\Opk\PtkModel;
+use App\Models\Situgu\Opk\SekolahModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -25,10 +26,89 @@ class Ptk extends BaseController
         $this->_helpLib = new Helplib();
     }
 
-    public function getAll()
+    public function getAllPtk()
     {
         $request = Services::request();
         $datamodel = new PtkModel($request);
+
+        $jwt = get_cookie('jwt');
+        $token_jwt = getenv('token_jwt.default.key');
+        if ($jwt) {
+            try {
+                $decoded = JWT::decode($jwt, new Key($token_jwt, 'HS256'));
+                if ($decoded) {
+                    $userId = $decoded->id;
+                    $level = $decoded->level;
+                } else {
+                    $output = [
+                        "draw" => $request->getPost('draw'),
+                        "recordsTotal" => 0,
+                        "recordsFiltered" => 0,
+                        "data" => []
+                    ];
+                    echo json_encode($output);
+                    return;
+                }
+            } catch (\Exception $e) {
+                $output = [
+                    "draw" => $request->getPost('draw'),
+                    "recordsTotal" => 0,
+                    "recordsFiltered" => 0,
+                    "data" => []
+                ];
+                echo json_encode($output);
+                return;
+            }
+        }
+
+        $lists = $datamodel->get_datatables();
+        $data = [];
+        $no = $request->getPost("start");
+        foreach ($lists as $list) {
+            $no++;
+            $row = [];
+
+            $row[] = $no;
+            $action = '<div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
+                        <div class="dropdown-menu" style="">
+                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+                            <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
+                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Ajukan Hapus Data</a>
+                        </div>
+                    </div>';
+            // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <i class="bx bxs-show font-size-16 align-middle"></i></button>
+            //     </a>
+            //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <i class="bx bx-transfer-alt font-size-16 align-middle"></i></button>
+            //     </a>
+            //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
+            //     </a>';
+            $row[] = $action;
+            $row[] = $list->nama;
+            $row[] = $list->nik;
+            $row[] = $list->nip;
+            $row[] = $list->nuptk;
+            $row[] = $list->jenis_ptk;
+            $row[] = $list->last_sync;
+
+            $data[] = $row;
+        }
+        $output = [
+            "draw" => $request->getPost('draw'),
+            "recordsTotal" => $datamodel->count_all(),
+            "recordsFiltered" => $datamodel->count_filtered(),
+            "data" => $data
+        ];
+        echo json_encode($output);
+    }
+
+    public function getAll()
+    {
+        $request = Services::request();
+        $datamodel = new SekolahModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -71,30 +151,16 @@ class Ptk extends BaseController
             $row = [];
 
             $row[] = $no;
-            $action = '<div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
-                        <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                            <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
-                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Ajukan Hapus Data</a>
-                        </div>
-                    </div>';
-            // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-            //     <i class="bx bxs-show font-size-16 align-middle"></i></button>
-            //     </a>
-            //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-            //     <i class="bx bx-transfer-alt font-size-16 align-middle"></i></button>
-            //     </a>
-            //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-            //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
-            //     </a>';
+
+            $action = '<a href="./sekolah?n=' . $list->id . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="bx bxs-show font-size-16 align-middle"> Detail</i></button>
+                </a>';
             $row[] = $action;
             $row[] = $list->nama;
-            $row[] = $list->nik;
-            $row[] = $list->nip;
-            $row[] = $list->nuptk;
-            $row[] = $list->jenis_ptk;
-            $row[] = $list->last_sync;
+            $row[] = $list->npsn;
+            $row[] = $list->bentuk_pendidikan;
+            $row[] = $list->status_sekolah;
+            $row[] = $list->kecamatan;
 
             $data[] = $row;
         }
@@ -114,7 +180,7 @@ class Ptk extends BaseController
 
     public function data()
     {
-        $data['title'] = 'PTK';
+        $data['title'] = 'SEKOLAH';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -126,6 +192,29 @@ class Ptk extends BaseController
         $data['user'] = $user->data;
 
         return view('situgu/opk/masterdata/ptk/index', $data);
+    }
+
+    public function sekolah()
+    {
+        $data['title'] = 'DATA PTK SEKOLAH';
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            delete_cookie('jwt');
+            session()->destroy();
+            return redirect()->to(base_url('auth'));
+        }
+
+        $id = htmlspecialchars($this->request->getGet('n'), true);
+
+        $data['user'] = $user->data;
+        $data['redirect'] = base_url('situgu/opk/masterdata/ptk');
+        $sekolah = $this->_db->table('ref_sekolah')->where('id', $id)->get()->getRowObject();
+        if (!$sekolah) {
+            return view('404', $data);
+        }
+        $data['sekolah'] = $sekolah;
+        return view('situgu/opk/masterdata/ptk/sekolah', $data);
     }
 
     public function detail()

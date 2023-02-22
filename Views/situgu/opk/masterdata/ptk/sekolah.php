@@ -37,11 +37,12 @@
                                 <tr>
                                     <th data-orderable="false">#</th>
                                     <th data-orderable="false">Aksi</th>
-                                    <th>Nama</th>
-                                    <th>NPSN</th>
-                                    <th>Bentuk Pendidikan</th>
-                                    <th>Status Sekolah</th>
-                                    <th>Kecamatan</th>
+                                    <th>NAMA</th>
+                                    <th>NIK</th>
+                                    <th>NIP</th>
+                                    <th>NUPTK</th>
+                                    <th>JENIS PTK</th>
+                                    <th>TERAKHIR TARIK DATA</th>
                                 </tr>
                             </thead>
                         </table>
@@ -367,9 +368,12 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "./getAll",
+                "url": "./getAllPtk",
                 "type": "POST",
-
+                "data": function(data) {
+                    data.npsn = '<?= $sekolah->npsn ?>';
+                    // data.npsn = $('#filter_kecamatan').val();
+                }
             },
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',

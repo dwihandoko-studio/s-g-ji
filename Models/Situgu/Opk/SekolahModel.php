@@ -5,11 +5,11 @@ namespace App\Models\Situgu\Opk;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class PtkModel extends Model
+class SekolahModel extends Model
 {
-    protected $table = "_ptk_tb";
-    protected $column_order = array(null, null, 'nama', 'nik', 'nip', 'nuptk', 'jenis_ptk', 'last_sync');
-    protected $column_search = array('nik', 'nuptk', 'nama');
+    protected $table = "ref_sekolah";
+    protected $column_order = array(null, null, 'nama', 'npsn', 'bentuk_pendidikan', 'status_sekolah', 'kecamatan');
+    protected $column_search = array('nama', 'npsn');
     protected $order = array('nama' => 'asc');
     protected $request;
     protected $db;
@@ -47,28 +47,25 @@ class PtkModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables()
+    function get_datatables($kecamatan)
     {
-        $id = $this->request->getPost('npsn');
-        $this->dt->where('npsn', $id);
+        $this->dt->where('kode_kecamatan', $kecamatan);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered()
+    function count_filtered($kecamatan)
     {
-        $id = $this->request->getPost('npsn');
-        $this->dt->where('npsn', $id);
+        $this->dt->where('kode_kecamatan', $kecamatan);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all()
+    public function count_all($kecamatan)
     {
-        $id = $this->request->getPost('npsn');
-        $this->dt->where('npsn', $id);
+        $this->dt->where('kode_kecamatan', $kecamatan);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
