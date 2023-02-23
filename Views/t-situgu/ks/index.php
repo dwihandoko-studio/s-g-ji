@@ -58,7 +58,7 @@
     <?= $this->renderSection('scriptTop'); ?>
 </head>
 
-<body data-topbar="dark" data-layout="light" class="loading-logout">
+<body data-topbar="dark" data-layout="horizontal" data-layout-size="boxed" class="loading-logout">
 
     <!-- Begin page -->
     <div id="layout-wrapper">
