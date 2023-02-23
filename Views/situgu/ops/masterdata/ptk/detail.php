@@ -88,7 +88,7 @@
             <div class="col-lg-4 mt-4">
 
                 <?php if ($data->image !== null) { ?>
-                    <img class="imagePreviewUpload" src="<?= base_url('upload/user') . '/' . $data->image ?>" id="imagePreviewUpload" />
+                    <img style="max-width: 70px; max-height: 80px;" class="imagePreviewUpload" src="<?= base_url('upload/user') . '/' . $data->image ?>" id="imagePreviewUpload" />
                 <?php } ?>
 
             </div>
