@@ -8,7 +8,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        <button type="button" onclick="simpanTolak(this)" class="btn btn-primary waves-effect waves-light">Tolak Usulan Tamsil</button>
+        <button type="button" onclick="simpanTolak(this)" class="btn btn-primary waves-effect waves-light">Tolak Verifikasi Pengguna</button>
     </div>
     <script>
         function simpanTolak(e) {
