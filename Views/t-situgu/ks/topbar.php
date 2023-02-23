@@ -1,11 +1,9 @@
 <?php $uri = current_url(true); ?>
+<!--
 <div class="vertical-menu">
 
     <div data-simplebar class="h-100">
-
-        <!--- Sidemenu -->
         <div id="sidebar-menu">
-            <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <?php if (isset($user)) { ?>
                 <?php } ?>
@@ -55,7 +53,6 @@
                     <ul class="sub-menu" aria-expanded="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi") ? 'true' : 'false' ?>">
                         <li><a href="<?= base_url('situgu/ks/verifikasi/tpg') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tpg") ? 'active' : '' ?>" key="t-verifikasi-tpg">Tunjangan Profesi Guru</a></li>
                         <li><a href="<?= base_url('situgu/ks/verifikasi/tamsil') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tamsil") ? 'active' : '' ?>" key="t-verifikasi-tamsil">Tamsil</a></li>
-                        <!-- <li><a href="<?= base_url('situgu/ks/verifikasi/pghm') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pghm") ? 'active' : '' ?>" key="t-verifikasi-pghm">PGHM</a></li> -->
                     </ul>
                 </li>
                 <li>
@@ -66,7 +63,6 @@
                     <ul class="sub-menu" aria-expanded="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spjtm") ? 'true' : 'false' ?>">
                         <li><a href="<?= base_url('situgu/ks/spjtm/tpg') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spjtm" && $uri->getSegment(4) == "tpg") ? 'active' : '' ?>" key="t-spjtm-tpg">Tunjangan Profesi Guru</a></li>
                         <li><a href="<?= base_url('situgu/ks/spjtm/tamsil') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spjtm" && $uri->getSegment(4) == "tamsil") ? 'active' : '' ?>" key="t-spjtm-tamsil">Tamsil</a></li>
-                        <!-- <li><a href="<?= base_url('situgu/ks/spjtm/pghm') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spjtm" && $uri->getSegment(4) == "pghm") ? 'active' : '' ?>" key="t-spjtm-pghm">PGHM</a></li> -->
                     </ul>
                 </li>
                 <li>
@@ -96,15 +92,6 @@
                                 <li><a href="<?= base_url('situgu/ks/us/tamsil/prosestransfer') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "prosestransfer") ? ' active' : '' ?>" key="t-us-tamsil-prosestransfer">Proses Transfer</a></li>
                             </ul>
                         </li>
-                        <!-- <li class="">
-                            <a href="javascript: void(0);" class="has-arrow" key="t-us-pghm" aria-expanded="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "pghm") ? 'tru' : 'false' ?>">PGHM</a>
-                            <ul class="sub-menu" aria-expanded="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "pghm") ? 'tru' : 'false' ?>" style="height: 0px;">
-                                <li><a href="<?= base_url('situgu/ks/us/pghm/antrian') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "pghm"  && $uri->getSegment(5) == "antrian") ? ' active' : '' ?>" key="t-us-pghm-antrian">Antrian</a></li>
-                                <li><a href="<?= base_url('situgu/ks/us/pghm/ditolak') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "pghm"  && $uri->getSegment(5) == "ditolak") ? ' active' : '' ?>" key="t-us-pghm-ditolak">Ditolak</a></li>
-                                <li><a href="<?= base_url('situgu/ks/us/pghm/lolosberkas') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "pghm"  && $uri->getSegment(5) == "lolosberkas") ? ' active' : '' ?>" key="t-us-pghm-loloberkas">Lolos Verifikasi</a></li>
-                                <li><a href="<?= base_url('situgu/ks/us/pghm/prosestransfer') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "pghm"  && $uri->getSegment(5) == "prosestransfer") ? ' active' : '' ?>" key="t-us-pghm-prosestransfer">Proses Transfer</a></li>
-                            </ul>
-                        </li> -->
                     </ul>
                 </li>
                 <li>
@@ -129,14 +116,6 @@
                                 <li><a href="<?= base_url('situgu/ks/spj/tamsil/lolosberkas') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "lolosberkas") ? ' active' : '' ?>" key="t-spj-tamsil-loloberkas">Lolos Verifikasi</a></li>
                             </ul>
                         </li>
-                        <!-- <li class="">
-                            <a href="javascript: void(0);" class="has-arrow" key="t-spj-pghm" aria-expanded="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "pghm") ? 'tru' : 'false' ?>">PGHM</a>
-                            <ul class="sub-menu" aria-expanded="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "pghm") ? 'tru' : 'false' ?>" style="height: 0px;">
-                                <li><a href="<?= base_url('situgu/ks/spj/pghm/antrian') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "pghm"  && $uri->getSegment(5) == "antrian") ? ' active' : '' ?>" key="t-spj-pghm-antrian">Antrian</a></li>
-                                <li><a href="<?= base_url('situgu/ks/spj/pghm/ditolak') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "pghm"  && $uri->getSegment(5) == "ditolak") ? ' active' : '' ?>" key="t-spj-pghm-ditolak">Ditolak</a></li>
-                                <li><a href="<?= base_url('situgu/ks/spj/pghm/lolosberkas') ?>" class="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "pghm"  && $uri->getSegment(5) == "lolosberkas") ? ' active' : '' ?>" key="t-spj-pghm-loloberkas">Lolos Verifikasi</a></li>
-                            </ul>
-                        </li> -->
                     </ul>
                 </li>
                 <li>
@@ -147,10 +126,9 @@
                 </li>
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
-</div>
-<!--
+</div> -->
+
 <div class="topnav">
     <div class="container-fluid">
         <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
@@ -288,4 +266,4 @@
             </div>
         </nav>
     </div>
-</div> -->
+</div>
