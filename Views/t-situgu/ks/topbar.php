@@ -137,12 +137,12 @@
                     <?php if (isset($user)) { ?>
                         <li class="nav-item">
                             <a class="nav-link <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "home") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situgu/ks/home') ?>">
-                                <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Dashboards</span>
+                                <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Home</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "masterdata") ? ' active-menu-href' : '' ?>" href="#" id="topnav-masterdata" role="button">
-                                <i class="bx bx-layout me-2"></i><span key="t-masterdata">MASTER DATA</span>
+                                <i class="bx bx-layout me-2"></i><span key="t-masterdata">Master Data</span>
                                 <div class="arrow-down"></div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-masterdata">
@@ -157,7 +157,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "infogtk") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "infogtk") ? 'javascript:;' : base_url('situgu/ks/infogtk') ?>">
-                                <i class="mdi mdi-bus-stop-covered me-2"></i><span key="t-absen">Info GTK Digital</span>
+                                <i class="mdi mdi-bus-stop-covered me-2"></i><span key="t-absen">IGD</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -172,7 +172,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "verifikasi") ? ' active-menu-href' : '' ?>" href="#" id="topnav-verifikasi" role="button">
-                                <i class="bx bx-rename me-2"></i><span key="t-verifikasi">VERIFIKASI</span>
+                                <i class="bx bx-rename me-2"></i><span key="t-verifikasi">Verifikasi</span>
                                 <div class="arrow-down"></div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-verifikasi">
@@ -182,7 +182,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "ks" && $uri->getSegment(3) == "sptjm") ? ' active-menu-href' : '' ?>" href="#" id="topnav-sptjm" role="button">
-                                <i class="bx bx-spreadsheet me-2"></i><span key="t-sptjm">SPTJM USULAN</span>
+                                <i class="bx bx-spreadsheet me-2"></i><span key="t-sptjm">SPTJM</span>
                                 <div class="arrow-down"></div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-sptjm">
@@ -256,11 +256,11 @@
 
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="javascript:aksiLogout(this);">
                                 <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i><span key="t-logout">Logout</span>
                             </a>
-                        </li>
+                        </li> -->
                     <?php } ?>
                 </ul>
             </div>
