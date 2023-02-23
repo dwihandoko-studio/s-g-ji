@@ -4,7 +4,7 @@
             <div class="col-lg-6">
                 <div class="mb-3">
                     <label for="_role" class="col-form-label">Pilih Role:</label>
-                    <select class="form-control select2 ptk" id="_role" name="_role" style="width: 100%">
+                    <select class="form-control select2 ptk" id="_role" name="_role" onchange="changeRole(this)" style="width: 100%">
                         <option value="">&nbsp;</option>
                         <?php if (isset($roles)) {
                             if (count($roles) > 0) {
@@ -17,7 +17,7 @@
                     <div class="help-block _role"></div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 wilayah-role">
                 <div class="mb-3">
                     <label for="_wilayah" class="col-form-label">Pilih Wilayah:</label>
                     <select class="form-control select2 ptk" id="_wilayah" name="_wilayah" style="width: 100%">
@@ -138,6 +138,58 @@
             reader.readAsDataURL(input.files[0]);
         } else {
             console.log("failed Load");
+        }
+    }
+
+    function changeRole(event) {
+        const color = $(event).attr('name');
+        $(event).removeAttr('style');
+        $('.' + color).html('');
+
+        if (event.value !== "") {
+            $.ajax({
+                url: './getWilayahShow',
+                type: 'POST',
+                data: {
+                    id: event.value,
+                },
+                dataType: 'JSON',
+                beforeSend: function() {
+                    $('div.wilayah-role').block({
+                        message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                    });
+                },
+                success: function(resul) {
+                    $('div.wilayah-role').unblock();
+                    if (resul.status == 200) {
+                        $('.wilayah-role').html(resul.data);
+                    } else {
+                        if (resul.status == 404) {
+                            Swal.fire(
+                                'PERINGATAN!',
+                                resul.message,
+                                'warning'
+                            ).then((valRes) => {
+                                reloadPage(resul.redirrect);
+                            })
+                        } else {
+                            Swal.fire(
+                                'PERINGATAN!!!',
+                                resul.message,
+                                'warning'
+                            );
+                        }
+                    }
+                },
+                error: function(data) {
+                    $('div.wilayah-role').unblock();
+                    Swal.fire(
+                        'PERINGATAN!',
+                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                        'warning'
+                    );
+                }
+            });
         }
     }
 
