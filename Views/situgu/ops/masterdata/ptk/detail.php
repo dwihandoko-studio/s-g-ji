@@ -93,7 +93,7 @@
 
             </div>
         </div>
-        <div class="row mt-2">
+        <div class="row mt-4">
             <h2>DATA PENUGASAN</h2>
 
             <?php switch ($data->bidang_studi_sertifikasi) {
@@ -204,7 +204,7 @@
                 <div><?= $data->jam_mengajar_perminggu ?> Jam</div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
             <h2>DATA KEPEGAWAIAN</h2>
             <div class="col-lg-6">
                 <label class="col-form-label">Jenis Pangkat/KGB:</label>
