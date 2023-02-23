@@ -118,7 +118,7 @@
 
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <h2>DATA PENUGASAN</h2>
                             <div class="col-lg-6">
                                 <label class="col-form-label">NPSN:</label>
@@ -237,7 +237,7 @@
                                                                                 } ?>" readonly />
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-2">
                             <h2>DATA KEPEGAWAIAN</h2>
                             <div class="col-lg-6">
                                 <label class="col-form-label">Jenis Pangkat/KGB:</label>
