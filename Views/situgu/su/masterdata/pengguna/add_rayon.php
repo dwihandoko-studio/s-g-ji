@@ -5,9 +5,9 @@
                 <div class="mb-3">
                     <label for="_sekolah" class="col-form-label">Pilih Wilayah:</label>
                     <select class="form-control select2 sekolah select2-multiple" id="_sekolah" name="_sekolah[]" style="width: 100%" multiple="multiple" data-placeholder="Pilih PTK ...">
-                        <?php if (isset($sekolas)) {
-                            if (count($sekolas) > 0) {
-                                foreach ($sekolas as $key => $value) { ?>
+                        <?php if (isset($sekolahs)) {
+                            if (count($sekolahs) > 0) {
+                                foreach ($sekolahs as $key => $value) { ?>
                                     <option value="<?= $value->npsn ?>" <?= (in_array($value->npsn, $npsns)) ? 'selected' : '' ?>><?= $value->nama ?> - <?= $value->npsn ?> (<?= $value->kecamatan ?>)</option>
                         <?php }
                             }
