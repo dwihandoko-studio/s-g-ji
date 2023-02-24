@@ -287,6 +287,8 @@ class Cs extends BaseController
             $jenis = htmlspecialchars($this->request->getVar('jenis'), true);
             $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
             $ptks = $this->request->getVar('ptks');
+            var_dump($ptks);
+            die;
             $isi = htmlspecialchars($this->request->getVar('isi'), true);
             $status = htmlspecialchars($this->request->getVar('status'), true);
 
