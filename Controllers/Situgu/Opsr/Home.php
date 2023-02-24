@@ -35,7 +35,7 @@ class Home extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
-        $npsns = $this->_helpLib->getSekolahNaungan($userId);
+        $npsns = $this->_helpLib->getSekolahNaungan($user->data->id);
 
         $data['user'] = $user->data;
         $data['registered'] = $this->_db->table('_profil_users_tb')->select('surat_tugas')->where('id', $user->data->id)->get()->getRowObject();
