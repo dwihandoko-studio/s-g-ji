@@ -290,17 +290,17 @@ class Cs extends BaseController
             $isi = htmlspecialchars($this->request->getVar('isi'), true);
             $status = htmlspecialchars($this->request->getVar('status'), true);
 
-            if (count($ptks) < 1) {
-                $id_ptks = null;
-            } else {
-                $id_ptks = implode(",", $ptks);
-            }
+            // if (count($ptks) < 1) {
+            //     $id_ptks = null;
+            // } else {
+            //     $id_ptks = implode(",", $ptks);
+            // }
 
             $data = [
                 'user_id' => $user->data->id,
                 'jenis' => $jenis,
                 'npsn' => $npsn,
-                'ptks' => $id_ptks,
+                'ptks' => $ptks,
                 'isi' => $isi,
                 'status' => $status,
                 'created_at' => date('Y-m-d H:i:s'),
