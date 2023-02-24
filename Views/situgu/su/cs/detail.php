@@ -16,7 +16,7 @@
             </div>
             <div class="col-lg-12">
                 <label class="col-form-label">Konten Aduan:</label>
-                <input type="text" class="form-control" value="<?= $data->isi ?>" readonly />
+                <textarea rows="15" class="form-control" readonly><?= $data->isi ?></textarea>
             </div>
             <div class="col-lg-12 mt-4">
                 <h4>Data PTK:</h4>
