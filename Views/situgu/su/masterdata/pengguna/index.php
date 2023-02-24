@@ -432,7 +432,9 @@
                 "orderable": false,
             }],
         });
-
+        $('#filter_role').change(function() {
+            tableDatatables.draw();
+        });
     });
 </script>
 <?= $this->endSection(); ?>
