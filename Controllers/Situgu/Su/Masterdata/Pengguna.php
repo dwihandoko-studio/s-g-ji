@@ -510,7 +510,7 @@ class Pengguna extends BaseController
                     return json_encode($response);
                 }
             } else {
-                $data['id'] = $user->data->id;
+                $data['user_id'] = $user->data->id;
                 $data['created_at'] = date('Y-m-d H:i:s');
 
                 try {
