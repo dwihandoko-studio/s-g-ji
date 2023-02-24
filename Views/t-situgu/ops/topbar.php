@@ -98,6 +98,11 @@
                             </div>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link <?= ($uri->getSegment(2) == "ops" && $uri->getSegment(3) == "cs") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "ops" && $uri->getSegment(3) == "cs") ? 'javascript:;' : base_url('situgu/ops/cs') ?>">
+                                <i class="bx bx-user-voice me-2"></i><span key="t-absen">Pengaduan</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="javascript:aksiLogout(this);">
                                 <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i><span key="t-logout">Logout</span>
                             </a>
