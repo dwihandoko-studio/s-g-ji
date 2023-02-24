@@ -150,7 +150,7 @@
         const isi = document.getElementsByName('_isi')[0].value;
         const fileName = document.getElementsByName('_file')[0].value;
 
-        console.log(ptks);
+        // console.log(ptks);
 
         var selectedPtks = [];
 
