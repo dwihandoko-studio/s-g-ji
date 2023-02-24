@@ -103,7 +103,7 @@ class Cs extends BaseController
             }
             $row[] = $list->created_at;
             $row[] = $list->jenis;
-            $row[] = $list->deskripsi;
+            $row[] = $list->isi;
             switch ($list->status) {
                 case 1:
                     $row[] = '<div class="text-center">

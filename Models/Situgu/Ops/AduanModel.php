@@ -8,8 +8,8 @@ use CodeIgniter\Model;
 class AduanModel extends Model
 {
     protected $table = "aduan_tb";
-    protected $column_order = array(null, 'status_ajuan', 'created_at', 'jenis', 'deskripsi', 'status');
-    protected $column_search = array('created_at', 'jenis', 'deskripsi');
+    protected $column_order = array(null, 'status_ajuan', 'created_at', 'jenis', 'isi', 'status');
+    protected $column_search = array('created_at', 'jenis', 'isi');
     protected $order = array('created_at' => 'desc');
     protected $request;
     protected $db;
