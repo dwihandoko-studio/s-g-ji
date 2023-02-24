@@ -26,6 +26,21 @@ class Helplib
         return [];
     }
 
+    public function getSekolahNaunganString($userId)
+    {
+
+        $user = $this->_db->table('sekolah_naungan')
+            ->select("npsn")
+            ->where('user_id', $userId)
+            ->get()->getRowObject();
+
+        if ($user) {
+            return $user->npsn;
+        }
+
+        return [];
+    }
+
     public function getNpsn($userId)
     {
 
