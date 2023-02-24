@@ -16,15 +16,15 @@
                 </div>
                 <div class="help-block _jenis" for="_jenis"></div>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-6">
                 <label for="_npsn" class="col-form-label">NPSN:</label>
                 <input type="text" class="form-control npsn" id="_npsn" name="_npsn" placeholder="NPSN Sekolah..." onfocusin="inputFocus(this);">
                 <div class="help-block _npsn"></div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-10">
                 <div class="mb-3">
                     <label class="form-label">Pilih PTK: </label>
-                    <select class="select2 form-control select2-multiple" id="_ptks" name="_ptks" multiple="multiple" data-placeholder="Pilih PTK ...">
+                    <select class="select2 form-control select2-multiple" style="width: 100%" id="_ptks" name="_ptks" multiple="multiple" data-placeholder="Pilih PTK ...">
                         <?php
                         if (isset($ptks)) {
                             if (count($ptks) > 0) {
