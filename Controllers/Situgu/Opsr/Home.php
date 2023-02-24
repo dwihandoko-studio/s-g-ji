@@ -48,17 +48,18 @@ class Home extends BaseController
         (SELECT count(id) FROM _ptk_tb WHERE no_peserta IS NOT NULL AND npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '$npsns') > 0)) as jumlah_ptk_tpg,
         (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '$npsns') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('PNS', 'PPPK', 'CPNS', 'PNS Depag', 'PNS Diperbantukan'))) as jumlah_ptk_tamsil,
         (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '$npsns') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('Guru Honor Sekolah', 'Honor Daerah TK.I Provinsi', 'Honor Daerah TK.II Kab/Kota','GTY/PTY'))) as jumlah_ptk_pghm FROM _ptk_tb LIMIT 1");
-        var_dump($jumlah->getResult());
-        die;
-        $data['jumlah'] = $this->_db->table('_ptk_tb')
-            ->select("(SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0)) as jumlah_ptk,
-            (SELECT count(id) FROM _ptk_tb WHERE no_peserta IS NOT NULL AND npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0)) as jumlah_ptk_tpg,
-            (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('PNS', 'PPPK', 'CPNS', 'PNS Depag', 'PNS Diperbantukan'))) as jumlah_ptk_tamsil,
-            (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('Guru Honor Sekolah', 'Honor Daerah TK.I Provinsi', 'Honor Daerah TK.II Kab/Kota','GTY/PTY'))) as jumlah_ptk_pghm")
-            // ->select("(SELECT count(b.id) FROM _ptk_tb b  WHERE b.npsn IN (select c.npsn from ref_sekolah c  WHERE FIND_IN_SET(c.npsn, '$npsns') > 0)) as jumlah_ptk, (SELECT count(d.id) FROM _ptk_tb d WHERE d.no_peserta IS NOT NULL AND d.npsn IN (select e.npsn from ref_sekolah e WHERE FIND_IN_SET(e.npsn, '$npsns') > 0)) as jumlah_ptk_tpg, (SELECT count(f.id) FROM _ptk_tb f WHERE f.npsn IN (select g.npsn from ref_sekolah g WHERE FIND_IN_SET(g.npsn, '$npsns') > 0) AND f.no_peserta IS NULL AND f.nuptk IS NOT NULL AND (f.status_kepegawaian IN ('PNS', 'PPPK', 'CPNS', 'PNS Depag', 'PNS Diperbantukan')) ) as jumlah_ptk_tamsil, (SELECT count(h.id) FROM _ptk_tb h WHERE h.npsn IN (select i.npsn from ref_sekolah i WHERE FIND_IN_SET(i.npsn, '$npsns') > 0) AND h.no_peserta IS NULL AND h.nuptk IS NOT NULL AND (h.status_kepegawaian IN ('Guru Honor Sekolah', 'Honor Daerah TK.I Provinsi', 'Honor Daerah TK.II Kab/Kota','GTY/PTY')) ) as jumlah_ptk_pghm")
-            // ->where('a.id_kecamatan', $user->data->kecamatan)
-            ->limit(1)
-            ->get()->getRowObject();
+        // var_dump($jumlah->getResult());
+        // die;
+        // $data['jumlah'] = $this->_db->table('_ptk_tb')
+        //     ->select("(SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0)) as jumlah_ptk,
+        //     (SELECT count(id) FROM _ptk_tb WHERE no_peserta IS NOT NULL AND npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0)) as jumlah_ptk_tpg,
+        //     (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('PNS', 'PPPK', 'CPNS', 'PNS Depag', 'PNS Diperbantukan'))) as jumlah_ptk_tamsil,
+        //     (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('Guru Honor Sekolah', 'Honor Daerah TK.I Provinsi', 'Honor Daerah TK.II Kab/Kota','GTY/PTY'))) as jumlah_ptk_pghm")
+        //     // ->select("(SELECT count(b.id) FROM _ptk_tb b  WHERE b.npsn IN (select c.npsn from ref_sekolah c  WHERE FIND_IN_SET(c.npsn, '$npsns') > 0)) as jumlah_ptk, (SELECT count(d.id) FROM _ptk_tb d WHERE d.no_peserta IS NOT NULL AND d.npsn IN (select e.npsn from ref_sekolah e WHERE FIND_IN_SET(e.npsn, '$npsns') > 0)) as jumlah_ptk_tpg, (SELECT count(f.id) FROM _ptk_tb f WHERE f.npsn IN (select g.npsn from ref_sekolah g WHERE FIND_IN_SET(g.npsn, '$npsns') > 0) AND f.no_peserta IS NULL AND f.nuptk IS NOT NULL AND (f.status_kepegawaian IN ('PNS', 'PPPK', 'CPNS', 'PNS Depag', 'PNS Diperbantukan')) ) as jumlah_ptk_tamsil, (SELECT count(h.id) FROM _ptk_tb h WHERE h.npsn IN (select i.npsn from ref_sekolah i WHERE FIND_IN_SET(i.npsn, '$npsns') > 0) AND h.no_peserta IS NULL AND h.nuptk IS NOT NULL AND (h.status_kepegawaian IN ('Guru Honor Sekolah', 'Honor Daerah TK.I Provinsi', 'Honor Daerah TK.II Kab/Kota','GTY/PTY')) ) as jumlah_ptk_pghm")
+        //     // ->where('a.id_kecamatan', $user->data->kecamatan)
+        //     ->limit(1)
+        //     ->get()->getRowObject();
+        $data['jumlah'] = $jumlah->getResultObject()[0];
         $data['cut_off_pengajuan'] = $this->_db->table('_setting_sptjm_tb')->get()->getResult();
         $data['cut_off_spj'] = $this->_db->table('_setting_upspj_tb')->get()->getResult();
         $data['informasis'] = $this->_db->table('_tb_infopop')->select("*, (SELECT count(*) FROM _tb_infopop WHERE tampil = 1 AND tujuan_role LIKE '%OPS%') as jumlah_all")->where("tampil = 1 AND tujuan_role LIKE '%OPS%'")->orderBy('created_at', 'DESC')->limit(5)->get()->getResult();
