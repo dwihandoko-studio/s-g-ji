@@ -62,6 +62,7 @@
 
         const formUpload = new FormData();
         formUpload.append('sekolahs', selectedSekolah);
+        formUpload.append('id', '<?= $id ?>');
 
         $.ajax({
             xhr: function() {

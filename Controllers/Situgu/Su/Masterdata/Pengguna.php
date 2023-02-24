@@ -412,7 +412,7 @@ class Pengguna extends BaseController
                 return json_encode($response);
             }
 
-            $id = htmlspecialchars($this->request->getVar('action'), true);
+            $id = htmlspecialchars($this->request->getVar('id'), true);
             $oldData =  $this->_db->table('sekolah_naungan')->where('user_id', $user->data->id)->get()->getRowObject();
 
             $sekolahs = $this->_db->table('ref_sekolah')->whereIn('bentuk_pendidikan_id', [6])->get()->getResult();
@@ -423,6 +423,7 @@ class Pengguna extends BaseController
                 } else {
                     $data['npsns'] = [];
                 }
+                $data['id'] = $id;
                 $data['sekolahs'] = $sekolahs;
                 $response = new \stdClass;
                 $response->status = 200;
@@ -454,12 +455,19 @@ class Pengguna extends BaseController
                     'required' => 'Sekolahs tidak boleh kosong. ',
                 ]
             ],
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
         ];
 
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('sekolahs');
+            $response->message = $this->validator->getError('sekolahs')
+                . $this->validator->getError('id');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -474,8 +482,9 @@ class Pengguna extends BaseController
             }
 
             $sekolahs = $this->request->getVar('sekolahs');
+            $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $oldData =  $this->_db->table('sekolah_naungan')->where('user_id', $user->data->id)->get()->getRowObject();
+            $oldData =  $this->_db->table('sekolah_naungan')->where('user_id', $id)->get()->getRowObject();
 
             $data = [
                 'npsn' => $sekolahs,
@@ -510,7 +519,7 @@ class Pengguna extends BaseController
                     return json_encode($response);
                 }
             } else {
-                $data['user_id'] = $user->data->id;
+                $data['user_id'] = $id;
                 $data['created_at'] = date('Y-m-d H:i:s');
 
                 try {
