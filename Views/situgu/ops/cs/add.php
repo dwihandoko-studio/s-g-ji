@@ -209,6 +209,8 @@
         formUpload.append('isi', isi);
         formUpload.append('status', status);
 
+        var form_data = new FormData(this);
+
         $.ajax({
             xhr: function() {
                 let xhr = new window.XMLHttpRequest();
@@ -224,7 +226,8 @@
             },
             url: "./addSave",
             type: 'POST',
-            data: formUpload,
+            data: form_data,
+            // data: formUpload,
             contentType: false,
             cache: false,
             processData: false,
