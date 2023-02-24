@@ -91,6 +91,7 @@
 </form>
 
 <script>
+    initSelect2('_ptks', '#content-detailModal');
     // let editorAdd;
 
     // ClassicEditor.create(document.querySelector('#_isi'), {}).then(editors => {
