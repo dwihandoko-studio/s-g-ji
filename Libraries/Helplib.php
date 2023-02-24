@@ -47,6 +47,7 @@ class Helplib
         $user = $this->_db->table('ref_sekolah')
             ->select("npsn")
             ->where('kode_kecamatan', $kecamatan)
+            ->whereIn('bentuk_pendidikan_id', [5])
             ->get()->getResult();
 
         if (count($user) > 0) {
