@@ -25,9 +25,22 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
+                    <div class="row">
                             <div class="col-6">
                                 <h4 class="card-title">Data Pengguna</h4>
+                            </div>
+                            <div class="col-3">
+                                <label for="filter_tw" class="col-form-label">Pilih TW:</label>
+                                <select class="form-control tw" id="filter_tw" name="filter_tw" style="width: 100%">
+                                    <option value="">&nbsp;</option>
+                                    <?php if (isset($data)) {
+                                        if (count($data) > 0) {
+                                            foreach ($data as $key => $value) { ?>
+                                                <option value="<?= $value->id ?>"><?= $value->tahun ?> - (<?= $value->tw ?>)</option>
+                                    <?php }
+                                        }
+                                    } ?>
+                                </select>
                             </div>
                         </div>
                     </div>

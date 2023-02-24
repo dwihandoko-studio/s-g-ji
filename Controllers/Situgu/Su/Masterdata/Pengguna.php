@@ -143,6 +143,7 @@ class Pengguna extends BaseController
         }
 
         $data['user'] = $user->data;
+        $data['roles'] = $this->_db->table('_role_user')->whereNotIn('id', [2, 3, 4, 5, 6, 7])->get()->getResult();
 
         return view('situgu/su/masterdata/pengguna/index', $data);
     }

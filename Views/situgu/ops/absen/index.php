@@ -30,13 +30,13 @@
                                 <h4 class="card-title">Data Absen</h4>
                             </div>
                             <div class="col-3">
-                                <label for="filter_tw" class="col-form-label">Pilih TW:</label>
-                                <select class="form-control tw" id="filter_tw" name="filter_tw" style="width: 100%">
+                                <label for="filter_role" class="col-form-label">Pilih Role:</label>
+                                <select class="form-control filter-role" id="filter_role" name="filter_role" style="width: 100%">
                                     <option value="">&nbsp;</option>
-                                    <?php if (isset($data)) {
-                                        if (count($data) > 0) {
-                                            foreach ($data as $key => $value) { ?>
-                                                <option value="<?= $value->id ?>"><?= $value->tahun ?> - (<?= $value->tw ?>)</option>
+                                    <?php if (isset($roles)) {
+                                        if (count($roles) > 0) {
+                                            foreach ($roles as $key => $value) { ?>
+                                                <option value="<?= $value->id ?>"><?= $value->role ?></option>
                                     <?php }
                                         }
                                     } ?>
@@ -251,7 +251,7 @@
                 "url": "./getAll",
                 "type": "POST",
                 "data": function(data) {
-                    data.tw = $('#filter_tw').val();
+                    data.role = $('#filter_role').val();
                 }
             },
             language: {

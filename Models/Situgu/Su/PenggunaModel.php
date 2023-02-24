@@ -49,6 +49,9 @@ class PenggunaModel extends Model
     }
     function get_datatables()
     {
+        if ($this->request->getPost('role')) {
+            $this->dt->where('role_user', $this->request->getPost('role'));
+        }
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -57,14 +60,18 @@ class PenggunaModel extends Model
     }
     function count_filtered()
     {
+        if ($this->request->getPost('role')) {
+            $this->dt->where('role_user', $this->request->getPost('role'));
+        }
         $this->_get_datatables_query();
-
         return $this->dt->countAllResults();
     }
     public function count_all()
     {
+        if ($this->request->getPost('role')) {
+            $this->dt->where('role_user', $this->request->getPost('role'));
+        }
         $this->_get_datatables_query();
-
         return $this->dt->countAllResults();
     }
 }
