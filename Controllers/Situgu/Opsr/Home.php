@@ -35,6 +35,7 @@ class Home extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
+        $npsnss = $this->_helpLib->getSekolahNaungan($user->data->id);
         $npsns = $this->_helpLib->getSekolahNaunganString($user->data->id);
 
         // var_dump($npsns);
@@ -46,7 +47,7 @@ class Home extends BaseController
         $data['admin'] = true;
         $data['jumlah'] = $this->_db->table('_ptk_tb a')
             ->select("a.id, (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '$npsns') > 0)) as jumlah_ptk, (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '$npsns') > 0) AND no_peserta IS NOT NULL) as jumlah_ptk_tpg, (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '$npsns') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('PNS', 'PPPK', 'CPNS', 'PNS Depag', 'PNS Diperbantukan')) ) as jumlah_ptk_tamsil, (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '$npsns') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('Guru Honor Sekolah', 'Honor Daerah TK.I Provinsi', 'Honor Daerah TK.II Kab/Kota','GTY/PTY')) ) as jumlah_ptk_pghm")
-            ->where('a.id_kecamatan', $user->data->kecamatan)
+            ->whereIn('a.npsn', $npsnss)
             ->get()->getRowObject();
         $data['cut_off_pengajuan'] = $this->_db->table('_setting_sptjm_tb')->get()->getResult();
         $data['cut_off_spj'] = $this->_db->table('_setting_upspj_tb')->get()->getResult();
