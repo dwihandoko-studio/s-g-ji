@@ -488,6 +488,7 @@ class Profil extends BaseController
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
                 $response->data = view('situgu/su/profil/email', $x);
+                return json_encode($response);
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
