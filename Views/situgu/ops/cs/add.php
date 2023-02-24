@@ -22,7 +22,7 @@
                 <div class="help-block _npsn"></div>
             </div>
             <div class="col-lg-10">
-                <div class="mb-3">
+                <div class="mt-3">
                     <label class="form-label">Pilih PTK: </label>
                     <select class="select2 form-control select2-multiple" style="width: 100%" id="_ptks" name="_ptks" multiple="multiple" data-placeholder="Pilih PTK ...">
                         <?php
