@@ -2,18 +2,18 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-lg-6">
-                <div class="mb-3">
-                    <label class="form-label">Jenis Aduan: </label>
-                    <select class="form-control select2" name="_jenis" id="_jenis" style="width: 100%" required>
-                        <option value="">-- Pilih --</option>
-                        <option value="tarik-data">Tarik Data</option>
-                        <option value="riwayat-sertifikasi">Riwayat Sertifikasi</option>
-                        <option value="riwayat-pangkat">Riwayat Pangkat / Berkala</option>
-                        <option value="akun-ptk">Akun PTK</option>
-                        <option value="jumlah-ptk">Jumlah PTK</option>
-                        <option value="lainnya">Lainnya</option>
-                    </select>
-                </div>
+                <!-- <div class="mb-3"> -->
+                <label class="form-label">Jenis Aduan: </label>
+                <select class="form-control select2" name="_jenis" id="_jenis" style="width: 100%" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="tarik-data">Tarik Data</option>
+                    <option value="riwayat-sertifikasi">Riwayat Sertifikasi</option>
+                    <option value="riwayat-pangkat">Riwayat Pangkat / Berkala</option>
+                    <option value="akun-ptk">Akun PTK</option>
+                    <option value="jumlah-ptk">Jumlah PTK</option>
+                    <option value="lainnya">Lainnya</option>
+                </select>
+                <!-- </div> -->
                 <div class="help-block _jenis" for="_jenis"></div>
             </div>
             <div class="col-lg-6">
