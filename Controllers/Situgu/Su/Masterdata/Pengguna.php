@@ -413,7 +413,7 @@ class Pengguna extends BaseController
             }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $oldData =  $this->_db->table('sekolah_naungan')->where('user_id', $user->data->id)->get()->getRowObject();
+            $oldData =  $this->_db->table('sekolah_naungan')->where('user_id', $id)->get()->getRowObject();
 
             $sekolahs = $this->_db->table('ref_sekolah')->whereIn('bentuk_pendidikan_id', [6])->get()->getResult();
 
