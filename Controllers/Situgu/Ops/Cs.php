@@ -277,9 +277,19 @@ class Cs extends BaseController
 
             $jenis = htmlspecialchars($this->request->getVar('jenis'), true);
             $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
-            $ptks = htmlspecialchars($this->request->getVar('ptks'), true);
+            $ptks = $this->request->getPost('ptks');
             $isi = htmlspecialchars($this->request->getVar('isi'), true);
             $status = htmlspecialchars($this->request->getVar('status'), true);
+
+            if ($ptks && $ptks !== "") {
+                if (count($ptks) > 0) {
+                    $ptks = json_encode($ptks);
+                } else {
+                    $ptks = NULL;
+                }
+            } else {
+                $ptks = NULL;
+            }
 
             $data = [
                 'user_id' => $user->data->id,

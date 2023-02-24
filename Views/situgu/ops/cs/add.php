@@ -21,10 +21,10 @@
                 <input type="text" class="form-control npsn" id="_npsn" name="_npsn" placeholder="NPSN Sekolah..." onfocusin="inputFocus(this);">
                 <div class="help-block _npsn"></div>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-12">
                 <div class="mt-3">
                     <label class="form-label">Pilih PTK: </label>
-                    <select class="select2 form-control select2-multiple" style="width: 100%" id="_ptks" name="_ptks" multiple="multiple" data-placeholder="Pilih PTK ...">
+                    <select class="select2 form-control select2-multiple" style="width: 100%" id="_ptks" name="_ptks[]" multiple="multiple" data-placeholder="Pilih PTK ...">
                         <?php
                         if (isset($ptks)) {
                             if (count($ptks) > 0) {
@@ -145,10 +145,18 @@
         e.preventDefault();
         const jenis = document.getElementsByName('_jenis')[0].value;
         const npsn = document.getElementsByName('_npsn')[0].value;
-        const ptks = document.getElementsByName('_ptks')[0].value;
+        const ptks = document.getElementsByName('_ptks[]');
         // const isi = editorAdd.getData();
         const isi = document.getElementsByName('_isi')[0].value;
         const fileName = document.getElementsByName('_file')[0].value;
+
+        var selectedPtks = [];
+
+        for (var i = 0; i < ptks.length; i++) {
+            if (ptks[i].selected) {
+                selectedPtks.push(ptks[i].value);
+            }
+        }
 
         let status;
         if ($('#status_urgent').is(":checked")) {
@@ -194,7 +202,7 @@
         }
         formUpload.append('jenis', jenis);
         formUpload.append('npsn', npsn);
-        formUpload.append('ptks', ptks);
+        formUpload.append('ptks', selectedPtks);
         formUpload.append('isi', isi);
         formUpload.append('status', status);
 
