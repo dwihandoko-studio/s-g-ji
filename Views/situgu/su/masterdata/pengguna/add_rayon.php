@@ -4,7 +4,7 @@
             <div class="col-lg-12 sekolah-role">
                 <div class="mb-3">
                     <label for="_sekolah" class="col-form-label">Pilih Wilayah:</label>
-                    <select class="form-control select2 sekolah select2-multiple" id="_sekolah" name="_sekolah[]" style="width: 100%" multiple="multiple" data-placeholder="Pilih PTK ...">
+                    <select class="select2 form-control select2-multiple" id="_sekolah" name="_sekolah[]" style="width: 100%" multiple="multiple" data-placeholder="Pilih PTK ...">
                         <?php if (isset($sekolahs)) {
                             if (count($sekolahs) > 0) {
                                 foreach ($sekolahs as $key => $value) { ?>
@@ -36,6 +36,8 @@
 </form>
 
 <script>
+    initSelect2('_sekolah', '#content-detailModal');
+
     $("#formAddModalData").on("submit", function(e) {
         e.preventDefault();
         const sekolahs = document.getElementById('_sekolah');
