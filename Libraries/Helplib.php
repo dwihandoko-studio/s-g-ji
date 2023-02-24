@@ -16,7 +16,7 @@ class Helplib
 
         $user = $this->_db->table('sekolah_naungan')
             ->select("npsn")
-            ->where('id', $userId)
+            ->where('user_id', $userId)
             ->get()->getRowObject();
 
         if ($user) {
