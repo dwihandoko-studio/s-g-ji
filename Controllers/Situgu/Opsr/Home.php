@@ -37,8 +37,8 @@ class Home extends BaseController
 
         $npsns = $this->_helpLib->getSekolahNaunganString($user->data->id);
 
-        var_dump($user->data->id);
-        die;
+        // var_dump($user->data->id);
+        // die;
 
         $data['user'] = $user->data;
         $data['registered'] = $this->_db->table('_profil_users_tb')->select('surat_tugas')->where('id', $user->data->id)->get()->getRowObject();
