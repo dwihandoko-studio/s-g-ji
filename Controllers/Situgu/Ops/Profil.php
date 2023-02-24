@@ -101,6 +101,9 @@ class Profil extends BaseController
                 case 'foto':
                     $response->data = view('situgu/ops/profil/foto', $data);
                     break;
+                case 'aktivasi_wa':
+                    $response->data = view('situgu/ops/profil/aktivasi_wa', $data);
+                    break;
 
                 default:
                     $response->data = view('situgu/ops/profil/edit', $data);
@@ -427,6 +430,275 @@ class Profil extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal menyimpan data";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function getAktivasiWa()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+
+            if (!$user || $user->status !== 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session expired.";
+                return json_encode($response);
+            }
+
+            if ($id == "wa") {
+                $x['user'] = $user->data;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ops/profil/wa', $x);
+                return json_encode($response);
+            } else if ($id == "email") {
+                $x['user'] = $user->data;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ops/profil/email', $x);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function kirimAktivasiWa()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'nomor' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nomor tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('nomor');
+            return json_encode($response);
+        } else {
+            $nomor = htmlspecialchars($this->request->getVar('nomor'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+
+            if (!$user || $user->status !== 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session expired.";
+                return json_encode($response);
+            }
+
+            if (substr($nomor, 0, 1) == 0) {
+                $nomor = "+62" . substr($nomor, 1);
+            }
+
+            if (substr($nomor, 0, 1) == 8) {
+                $nomor = "+62" . substr($nomor, 0);
+            }
+
+            if (substr($nomor, 0, 2) == 62) {
+                $nomor = "+62" . substr($nomor, 2);
+            }
+
+            $kode = rand(1000, 9999);
+            $nama = $user->data->fullname;
+            $message = "Hallo *$nama*....!!!\n______________________________________________________\n\n*KODE AKTIVASI* untuk akun *SI-TUGU* anda adalah : \n*$kode*\n\n\nPesan otomatis dari *SI-TUGU Kab. Lampung Tengah*\n_________________________________________________";
+
+            $dataReq = [
+                'number' => (string)$nomor,
+                'message' => $message,
+            ];
+
+            $ch = curl_init("https://whapi.kntechline.id/send-message");
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataReq));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json'
+            ));
+            curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
+
+            $server_output = curl_exec($ch);
+            if (curl_errno($ch)) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = curl_error($ch);
+                $response->message = "Gagal mengirim kode aktivasi.";
+                return json_encode($response);
+            }
+            curl_close($ch);
+            $sended = json_decode($server_output, true);
+
+            if ($sended) {
+                $x['user'] = $user->data;
+                $x['nomor'] = $nomor;
+                $x['kode_aktivasi'] = $kode;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ops/profil/kode', $x);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengirim kode aktivasi.";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function verifiAktivasiWa()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nomor' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nomor tidak boleh kosong. ',
+                ]
+            ],
+            'kode' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kode tidak boleh kosong. ',
+                ]
+            ],
+            'fth' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kode tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nomor')
+                . $this->validator->getError('kode')
+                . $this->validator->getError('fth');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nomor = htmlspecialchars($this->request->getVar('nomor'), true);
+            $kode = htmlspecialchars($this->request->getVar('kode'), true);
+            $fth = htmlspecialchars($this->request->getVar('fth'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+
+            if (!$user || $user->status !== 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session expired.";
+                return json_encode($response);
+            }
+
+            if ($kode === $fth) {
+                $this->_db->transBegin();
+                try {
+                    $date = date('Y-m-d H:i:s');
+                    $this->_db->table('_profil_users_tb')->where('id', $user->data->id)->update([
+                        'no_hp' => $nomor,
+                        'updated_at' => $date
+                    ]);
+
+                    if ($this->_db->affectedRows() > 0) {
+                        $this->_db->table('_users_tb')->where('id', $user->data->id)->update([
+                            'wa_verified' => 1,
+                            'updated_at' => $date
+                        ]);
+                        if ($this->_db->affectedRows() > 0) {
+                            $this->_db->transCommit();
+                            $response = new \stdClass;
+                            $response->status = 200;
+                            $response->message = "Berhasil memverifikasi nomor whatsapp.";
+                            return json_encode($response);
+                        } else {
+                            $this->_db->transRollback();
+                            $response = new \stdClass;
+                            $response->status = 400;
+                            $response->message = "Gagal menautkan nomor whatsapp.";
+                            return json_encode($response);
+                        }
+                    } else {
+                        $this->_db->transRollback();
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = "Gagal menautkan nomor whatsapp.";
+                        return json_encode($response);
+                    }
+                } catch (\Throwable $th) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menautkan nomor whatsapp.";
+                    return json_encode($response);
+                }
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Kode verifikasi salah.";
                 return json_encode($response);
             }
         }
