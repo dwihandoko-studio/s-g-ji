@@ -44,6 +44,12 @@ class Home extends BaseController
         $data['registered'] = $this->_db->table('_profil_users_tb')->select('surat_tugas')->where('id', $user->data->id)->get()->getRowObject();
         $data['title'] = 'Dashboard';
         $data['admin'] = true;
+        $jumlah = $this->_db->query("SELECT (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0)) as jumlah_ptk,
+        (SELECT count(id) FROM _ptk_tb WHERE no_peserta IS NOT NULL AND npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0)) as jumlah_ptk_tpg,
+        (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('PNS', 'PPPK', 'CPNS', 'PNS Depag', 'PNS Diperbantukan'))) as jumlah_ptk_tamsil,
+        (SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0) AND no_peserta IS NULL AND nuptk IS NOT NULL AND (status_kepegawaian IN ('Guru Honor Sekolah', 'Honor Daerah TK.I Provinsi', 'Honor Daerah TK.II Kab/Kota','GTY/PTY'))) as jumlah_ptk_pghm FROM _ptk_tb LIMIT 0");
+        var_dump($jumlah);
+        die;
         $data['jumlah'] = $this->_db->table('_ptk_tb')
             ->select("(SELECT count(id) FROM _ptk_tb WHERE npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0)) as jumlah_ptk,
             (SELECT count(id) FROM _ptk_tb WHERE no_peserta IS NOT NULL AND npsn IN (select npsn from ref_sekolah WHERE FIND_IN_SET(npsn, '" . $npsns . "') > 0)) as jumlah_ptk_tpg,
