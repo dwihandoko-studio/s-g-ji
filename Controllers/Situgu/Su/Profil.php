@@ -497,6 +497,7 @@ class Profil extends BaseController
             }
         }
     }
+    
     public function kirimAktivasiEmail()
     {
         if ($this->request->getMethod() != 'post') {

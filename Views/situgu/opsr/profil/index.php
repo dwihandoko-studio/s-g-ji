@@ -55,7 +55,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <h5 class="font-size-15">Email Verified</h5>
-                                            <p class="text-muted mb-0"><?= $data->email_verified == 1 ? '<span class="badge rounded-pill badge-soft-success">Ya</span>' : '<span class="badge rounded-pill badge-soft-danger">Tidak</span>' ?></p>
+                                            <p class="text-muted mb-0"><?= $data->email_verified == 1 ? '<span class="badge rounded-pill badge-soft-success">Ya</span>' : '<a href="javascript:actionAktivasi(\'Email\', \'aktivasi_email\');"><span class="badge rounded-pill badge-soft-danger">Tidak</span></a>' ?></p>
                                         </div>
                                         <div class="col-6">
                                             <h5 class="font-size-15">WA Verified</h5>

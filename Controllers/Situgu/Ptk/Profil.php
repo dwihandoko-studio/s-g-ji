@@ -8,7 +8,7 @@ use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use App\Libraries\Profilelib;
-use App\Libraries\Apilib;
+use App\Libraries\Emaillib;
 use App\Libraries\Helplib;
 
 class Profil extends BaseController
@@ -108,6 +108,9 @@ class Profil extends BaseController
                         break;
                     case 'foto':
                         $response->data = view('situgu/ptk/profil/foto', $data);
+                        break;
+                    case 'aktivasi_email':
+                        $response->data = view('situgu/ptk/profil/aktivasi_email', $data);
                         break;
 
                     default:
@@ -480,6 +483,240 @@ class Profil extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal menyimpan data";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function getAktivasiEmail()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+
+            if (!$user || $user->status !== 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session expired.";
+                return json_encode($response);
+            }
+
+            if ($id == "wa") {
+                $x['user'] = $user->data;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ptk/profil/wa', $x);
+                return json_encode($response);
+            } else if ($id == "email") {
+                $x['user'] = $user->data;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ptk/profil/email', $x);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function kirimAktivasiEmail()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'email' => [
+                'rules' => 'required|valid_email|trim',
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong. ',
+                    'valid_email' => 'Email tidak valid. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('email');
+            return json_encode($response);
+        } else {
+            $email = htmlspecialchars($this->request->getVar('email'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+
+            if (!$user || $user->status !== 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session expired.";
+                return json_encode($response);
+            }
+
+            $kode = rand(1000, 9999);
+
+            $emailLib = new Emaillib();
+            $sendEmail = $emailLib->sendActivation($email, $kode);
+
+            if ($sendEmail->code == 200) {
+                $x['user'] = $user->data;
+                $x['email'] = $email;
+                $x['kode_aktivasi'] = $kode;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/ptk/profil/kode_email', $x);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengirim kode aktivasi.";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function verifiAktivasiEmail()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'email' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong. ',
+                ]
+            ],
+            'kode' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kode tidak boleh kosong. ',
+                ]
+            ],
+            'fth' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kode tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('email')
+                . $this->validator->getError('kode')
+                . $this->validator->getError('fth');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $email = htmlspecialchars($this->request->getVar('email'), true);
+            $kode = htmlspecialchars($this->request->getVar('kode'), true);
+            $fth = htmlspecialchars($this->request->getVar('fth'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+
+            if (!$user || $user->status !== 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session expired.";
+                return json_encode($response);
+            }
+
+            if ($kode === $fth) {
+                $this->_db->transBegin();
+                try {
+                    $date = date('Y-m-d H:i:s');
+                    $this->_db->table('_profil_users_tb')->where('id', $user->data->id)->update([
+                        'email' => $email,
+                        'updated_at' => $date
+                    ]);
+
+                    if ($this->_db->affectedRows() > 0) {
+                        $this->_db->table('_users_tb')->where('id', $user->data->id)->update([
+                            'email_verified' => 1,
+                            'updated_at' => $date
+                        ]);
+                        if ($this->_db->affectedRows() > 0) {
+                            $this->_db->transCommit();
+                            $response = new \stdClass;
+                            $response->status = 200;
+                            $response->message = "Berhasil memverifikasi email.";
+                            return json_encode($response);
+                        } else {
+                            $this->_db->transRollback();
+                            $response = new \stdClass;
+                            $response->status = 400;
+                            $response->message = "Gagal menautkan email.";
+                            return json_encode($response);
+                        }
+                    } else {
+                        $this->_db->transRollback();
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = "Gagal menautkan email.";
+                        return json_encode($response);
+                    }
+                } catch (\Throwable $th) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menautkan email.";
+                    return json_encode($response);
+                }
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Kode verifikasi salah.";
                 return json_encode($response);
             }
         }
