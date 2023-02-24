@@ -161,7 +161,7 @@ class Cs extends BaseController
         // return view('situgu/ops/404', $data);
     }
 
-    public function add()
+    public function detail()
     {
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -197,18 +197,259 @@ class Cs extends BaseController
                 $response->message = "Session telah habis";
             }
 
-            $current = $this->_db->table('_ptk_tb')
-                ->select("id, nama, nuptk, npsn")
-                ->where('npsn', $user->data->npsn)->get()->getResult();
+            $current = $this->_db->table('aduan_tb a')
+                ->select("a.*, b.fullname, c.nama")
+                ->join('v_user b', 'a.user_id = b.id')
+                ->join('ref_sekolah c', 'a.npsn = c.npsn')
+                ->where('a.id', $id)->get()->getRowObject();
 
-            $data['ptks'] = $current;
+            if (!$current) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Aduan tidak ditemukan.";
+            }
+            $ptks = explode(",", $current->ptks);
+            if (count($ptks) > 0) {
+                $data['ptks'] = $this->_db->table('_ptk_tb')
+                    ->select("id, nuptk, nama, nip, status_kepegawaian")
+                    ->whereIn('id', $ptks)
+                    ->get()->getResult();
+            }
+            $data['data'] = $current;
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
 
-            $response->data = view('situgu/ops/cs/add', $data);
+            $response->data = view('situgu/su/cs/detail', $data);
 
             return json_encode($response);
+        }
+    }
+
+    public function approve()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                $response->redirect = base_url('auth');
+                return json_encode($response);
+            }
+
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+
+            $oldData = $this->_db->table('aduan_tb')->where(['id' => $id])->get()->getRowObject();
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 201;
+                $response->message = "Aduan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['date_approve' => date('Y-m-d H:i:s'), 'status_ajuan' => 2, 'admin_approve' => $user->data->id]);
+                if ($this->_db->affectedRows() > 0) {
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Aduan admin sekolah $nama berhasil diproses.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal memproses aduan admin sekolah $nama.";
+                    return json_encode($response);
+                }
+            } catch (\Throwable $th) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($th);
+                $response->message = "Gagal memproses aduan admin sekolah $nama.";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function formtolak()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                $response->redirect = base_url('auth');
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+
+            $data['id'] = $id;
+            $data['nama'] = $nama;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situgu/su/cs/tolak', $data);
+            return json_encode($response);
+        }
+    }
+
+    public function tolak()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'keterangan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Keterangan tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('keterangan');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                $response->redirect = base_url('auth');
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
+
+            $oldData = $this->_db->table('aduan_tb')->where(['id' => $id])->get()->getRowObject();
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 201;
+                $response->message = "Aduan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['status_ajuan' => 1, 'keterangan' => $keterangan, 'admin_approve' => $user->data->id, 'date_reject' => date('Y-m-d H:i:s')]);
+                if ($this->_db->affectedRows() > 0) {
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Aduan admin sekolah $nama berhasil ditolak.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menolak aduan admin sekolah $nama.";
+                    return json_encode($response);
+                }
+            } catch (\Throwable $th) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($th);
+                $response->message = "Gagal menolak aduan admin sekolah $nama.";
+                return json_encode($response);
+            }
         }
     }
 
