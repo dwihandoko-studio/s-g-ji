@@ -41,6 +41,29 @@ class Helplib
         return '';
     }
 
+    public function getSekolahKecamatanString($kecamatan)
+    {
+
+        $user = $this->_db->table('ref_sekolah')
+            ->select("npsn")
+            ->where('kode_kecamatan', $kecamatan)
+            ->get()->getResult();
+
+        if (count($user) > 0) {
+            $npsn = "";
+            foreach ($user as $key => $value) {
+                if ($key === 0) {
+                    $npsn .= $value->npsn;
+                } else {
+                    $npsn .= "," . $value->npsn;
+                }
+            }
+            return $npsn;
+        }
+
+        return '';
+    }
+
     public function getNpsn($userId)
     {
 
