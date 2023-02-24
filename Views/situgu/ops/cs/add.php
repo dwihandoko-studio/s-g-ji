@@ -150,6 +150,8 @@
         const isi = document.getElementsByName('_isi')[0].value;
         const fileName = document.getElementsByName('_file')[0].value;
 
+        console.log(ptks);
+
         var selectedPtks = [];
 
         for (var i = 0; i < ptks.length; i++) {
@@ -284,7 +286,7 @@
                 }
             },
             error: function(erro) {
-                console.log(erro);
+                // console.log(erro);
                 // ambilId("status").innerHTML = "Upload Failed";
                 ambilId("status").style.color = "red";
                 $('div.modal-content-loading').unblock();
