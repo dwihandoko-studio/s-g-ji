@@ -74,7 +74,7 @@ class Cs extends BaseController
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
                             <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . $list->npsn . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
+                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
                         </div>
                     </div>';
             // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -342,6 +342,88 @@ class Cs extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal mengirim data";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function delete()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $current = $this->_db->table('aduan_tb')
+                ->where('id', $id)->get()->getRowObject();
+
+            if ($current) {
+                $this->_db->transBegin();
+                try {
+                    $this->_db->table('aduan_tb')->where('id', $id)->delete();
+
+                    if ($this->_db->affectedRows() > 0) {
+                        if ($current->lampiran !== null) {
+
+                            try {
+                                $dir = FCPATH . "uploads/aduan";
+                                unlink($dir . '/' . $current->lampiran);
+                            } catch (\Throwable $err) {
+                            }
+                        }
+                        $this->_db->transCommit();
+                        $response = new \stdClass;
+                        $response->status = 200;
+                        $response->message = "Data berhasil dihapus.";
+                        return json_encode($response);
+                    } else {
+                        $this->_db->transRollback();
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = "Data gagal dihapus.";
+                        return json_encode($response);
+                    }
+                } catch (\Throwable $th) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Data gagal dihapus.";
+                    return json_encode($response);
+                }
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
                 return json_encode($response);
             }
         }
