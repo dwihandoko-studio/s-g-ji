@@ -145,7 +145,7 @@
         e.preventDefault();
         const jenis = document.getElementsByName('_jenis')[0].value;
         const npsn = document.getElementsByName('_npsn')[0].value;
-        const ptks = document.getElementsByName('_ptks[]');
+        const ptks = document.getElementById('_ptks');
         // const isi = editorAdd.getData();
         const isi = document.getElementsByName('_isi')[0].value;
         const fileName = document.getElementsByName('_file')[0].value;
@@ -209,8 +209,6 @@
         formUpload.append('isi', isi);
         formUpload.append('status', status);
 
-        var form_data = new FormData(this);
-
         $.ajax({
             xhr: function() {
                 let xhr = new window.XMLHttpRequest();
@@ -226,8 +224,7 @@
             },
             url: "./addSave",
             type: 'POST',
-            data: form_data,
-            // data: formUpload,
+            data: formUpload,
             contentType: false,
             cache: false,
             processData: false,
