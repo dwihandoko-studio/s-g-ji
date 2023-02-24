@@ -55,7 +55,7 @@ class ProsestransferModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsn);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -70,7 +70,7 @@ class ProsestransferModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsn);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
@@ -83,7 +83,7 @@ class ProsestransferModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsn);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();

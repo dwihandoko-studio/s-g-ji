@@ -63,9 +63,9 @@ class Antrian extends BaseController
         }
 
 
-        $npsn = $this->_helpLib->getNpsn($userId);
+        $npsns = $this->_helpLib->getSekolahNaungan($userId);
 
-        $lists = $datamodel->get_datatables($npsn);
+        $lists = $datamodel->get_datatables($npsns);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -101,8 +101,8 @@ class Antrian extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsn),
-            "recordsFiltered" => $datamodel->count_filtered($npsn),
+            "recordsTotal" => $datamodel->count_all($npsns),
+            "recordsFiltered" => $datamodel->count_filtered($npsns),
             "data" => $data
         ];
         echo json_encode($output);

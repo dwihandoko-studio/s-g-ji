@@ -11,6 +11,21 @@ class Helplib
         $this->_db      = \Config\Database::connect();
     }
 
+    public function getSekolahNaungan($userId)
+    {
+
+        $user = $this->_db->table('sekolah_naungan')
+            ->select("npsn")
+            ->where('id', $userId)
+            ->get()->getRowObject();
+
+        if ($user) {
+            return explode(",", $user->npsn);
+        }
+
+        return [];
+    }
+
     public function getNpsn($userId)
     {
 

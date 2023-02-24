@@ -62,10 +62,9 @@ class Siapsk extends BaseController
             }
         }
 
+        $npsns = $this->_helpLib->getSekolahNaungan($userId);
 
-        $npsn = $this->_helpLib->getNpsn($userId);
-
-        $lists = $datamodel->get_datatables($npsn);
+        $lists = $datamodel->get_datatables($npsns);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -100,8 +99,8 @@ class Siapsk extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsn),
-            "recordsFiltered" => $datamodel->count_filtered($npsn),
+            "recordsTotal" => $datamodel->count_all($npsns),
+            "recordsFiltered" => $datamodel->count_filtered($npsns),
             "data" => $data
         ];
         echo json_encode($output);

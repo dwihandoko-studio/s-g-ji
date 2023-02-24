@@ -62,10 +62,9 @@ class Tpg extends BaseController
             }
         }
 
+        $npsns = $this->_helpLib->getSekolahNaungan($userId);
 
-        $kecamatan = $this->_helpLib->getKecamatan($userId);
-
-        $lists = $datamodel->get_datatables($kecamatan, 'tpg');
+        $lists = $datamodel->get_datatables($npsns, 'tpg');
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -100,8 +99,8 @@ class Tpg extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($kecamatan, 'tpg'),
-            "recordsFiltered" => $datamodel->count_filtered($kecamatan, 'tpg'),
+            "recordsTotal" => $datamodel->count_all($npsns, 'tpg'),
+            "recordsFiltered" => $datamodel->count_filtered($npsns, 'tpg'),
             "data" => $data
         ];
         echo json_encode($output);

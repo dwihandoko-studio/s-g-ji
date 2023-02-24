@@ -49,7 +49,7 @@ class PenggunaModel extends Model
     }
     function get_datatables($kecamatan)
     {
-        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 6)");
+        $this->dt->whereIn('npsn', $kecamatan);
         // $this->dt->whereIn('npsn', $npsn);
         $this->dt->where("role_user != 5");
         $this->_get_datatables_query();
@@ -60,7 +60,7 @@ class PenggunaModel extends Model
     }
     function count_filtered($kecamatan)
     {
-        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 6)");
+        $this->dt->whereIn('npsn', $kecamatan);
         $this->dt->where("role_user != 5");
         $this->_get_datatables_query();
 
@@ -68,7 +68,7 @@ class PenggunaModel extends Model
     }
     public function count_all($kecamatan)
     {
-        $this->dt->where("npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 6)");
+        $this->dt->whereIn('npsn', $kecamatan);
         $this->dt->where("role_user != 5");
         $this->_get_datatables_query();
 

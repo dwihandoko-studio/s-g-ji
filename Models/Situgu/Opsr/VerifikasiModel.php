@@ -47,14 +47,14 @@ class VerifikasiModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables($kecamatan, $jenis)
+    function get_datatables($npsns, $jenis)
     {
         $this->dt->select("a.*, b.nama, b.nuptk, b.nik, b.npsn, b.jenis_ptk");
         $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->where("b.npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 6)");
+        $this->dt->whereIn('bnpsn', $npsns);
         // $this->dt->where('b.npsn', $npsn);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
@@ -62,26 +62,26 @@ class VerifikasiModel extends Model
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered($kecamatan, $jenis)
+    function count_filtered($npsns, $jenis)
     {
         $this->dt->select("a.*, b.nama, b.nuptk, b.nik");
         $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->where("b.npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 6)");
+        $this->dt->whereIn('b.npsn', $npsns);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all($kecamatan, $jenis)
+    public function count_all($npsns, $jenis)
     {
         $this->dt->select("a.*, b.nama, b.nuptk, b.nik");
         $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->where("b.npsn IN (select npsn from ref_sekolah where kode_kecamatan = '$kecamatan' AND bentuk_pendidikan_id = 6)");
+        $this->dt->whereIn('b.npsn', $npsns);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();

@@ -62,10 +62,9 @@ class Pengguna extends BaseController
             }
         }
 
+        $npsns = $this->_helpLib->getSekolahNaungan($userId);
 
-        $kecamatan = $this->_helpLib->getKecamatan($userId);
-
-        $lists = $datamodel->get_datatables($kecamatan);
+        $lists = $datamodel->get_datatables($npsns);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -100,8 +99,8 @@ class Pengguna extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($kecamatan),
-            "recordsFiltered" => $datamodel->count_filtered($kecamatan),
+            "recordsTotal" => $datamodel->count_all($npsns),
+            "recordsFiltered" => $datamodel->count_filtered($npsns),
             "data" => $data
         ];
         echo json_encode($output);

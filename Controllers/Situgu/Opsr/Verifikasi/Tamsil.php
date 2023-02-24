@@ -62,10 +62,9 @@ class Tamsil extends BaseController
             }
         }
 
+        $npsns = $this->_helpLib->getSekolahNaungan($userId);
 
-        $npsn = $this->_helpLib->getNpsn($userId);
-
-        $lists = $datamodel->get_datatables($npsn, 'tamsil');
+        $lists = $datamodel->get_datatables($npsns, 'tamsil');
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -100,8 +99,8 @@ class Tamsil extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsn, 'tamsil'),
-            "recordsFiltered" => $datamodel->count_filtered($npsn, 'tamsil'),
+            "recordsTotal" => $datamodel->count_all($npsns, 'tamsil'),
+            "recordsFiltered" => $datamodel->count_filtered($npsns, 'tamsil'),
             "data" => $data
         ];
         echo json_encode($output);

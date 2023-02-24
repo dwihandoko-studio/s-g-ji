@@ -49,7 +49,7 @@ class AbsenModel extends Model
     }
     function get_datatables($npsn)
     {
-        $this->dt->where('npsn_sekolah', $npsn);
+        $this->dt->whereIn('npsn_sekolah', $npsn);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
@@ -64,7 +64,7 @@ class AbsenModel extends Model
     }
     function count_filtered($npsn)
     {
-        $this->dt->where('npsn_sekolah', $npsn);
+        $this->dt->whereIn('npsn_sekolah', $npsn);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
@@ -77,7 +77,7 @@ class AbsenModel extends Model
     }
     public function count_all($npsn)
     {
-        $this->dt->where('npsn_sekolah', $npsn);
+        $this->dt->whereIn('npsn_sekolah', $npsn);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 

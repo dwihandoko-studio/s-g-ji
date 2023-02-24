@@ -53,7 +53,7 @@ class UpkelengkapanModel extends Model
 
         $this->dt->select($select);
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id', 'LEFT');
-        $this->dt->where('a.npsn', $npsn);
+        $this->dt->whereIn('a.npsn', $npsn);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
@@ -73,7 +73,7 @@ class UpkelengkapanModel extends Model
 
         $this->dt->select($select);
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id', 'LEFT');
-        $this->dt->where('a.npsn', $npsn);
+        $this->dt->whereIn('a.npsn', $npsn);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
@@ -91,7 +91,7 @@ class UpkelengkapanModel extends Model
 
         $this->dt->select($select);
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id', 'LEFT');
-        $this->dt->where('a.npsn', $npsn);
+        $this->dt->whereIn('a.npsn', $npsn);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
