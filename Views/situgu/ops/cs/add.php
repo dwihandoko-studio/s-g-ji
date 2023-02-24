@@ -155,6 +155,7 @@
         for (var i = 0; i < ptks.length; i++) {
             if (ptks[i].selected) {
                 selectedPtks.push(ptks[i].value);
+                console.log(selectedPtks);
             }
         }
 
