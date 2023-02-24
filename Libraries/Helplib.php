@@ -38,7 +38,7 @@ class Helplib
             return $user->npsn;
         }
 
-        return [];
+        return '';
     }
 
     public function getNpsn($userId)
