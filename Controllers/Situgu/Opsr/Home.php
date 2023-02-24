@@ -35,8 +35,8 @@ class Home extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
-        $npsnss = $this->_helpLib->getSekolahNaungan($user->data->id);
-        $npsns = $this->_helpLib->getSekolahNaunganString($user->data->id);
+        $npsnss = $this->_helpLib->getSekolahNaungan($user->data->ptk_id);
+        $npsns = $this->_helpLib->getSekolahNaunganString($user->data->ptk_id);
 
         // var_dump($npsns);
         // die;
