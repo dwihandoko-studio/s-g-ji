@@ -22,7 +22,7 @@
                 return;
             }
             $.ajax({
-                url: "./solved",
+                url: "./approve",
                 type: 'POST',
                 data: {
                     id: '<?= $id ?>',
