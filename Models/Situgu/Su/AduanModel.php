@@ -50,6 +50,9 @@ class AduanModel extends Model
     function get_datatables($status)
     {
         $this->dt->where('status_ajuan', $status);
+        if ($this->request->getPost('jenis')) {
+            $this->dt->where('jenis', $this->request->getPost('jenis'));
+        }
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -59,6 +62,9 @@ class AduanModel extends Model
     function count_filtered($status)
     {
         $this->dt->where('status_ajuan', $status);
+        if ($this->request->getPost('jenis')) {
+            $this->dt->where('jenis', $this->request->getPost('jenis'));
+        }
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
@@ -66,6 +72,9 @@ class AduanModel extends Model
     public function count_all($status)
     {
         $this->dt->where('status_ajuan', $status);
+        if ($this->request->getPost('jenis')) {
+            $this->dt->where('jenis', $this->request->getPost('jenis'));
+        }
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();

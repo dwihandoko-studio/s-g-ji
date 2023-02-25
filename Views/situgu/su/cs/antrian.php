@@ -29,6 +29,21 @@
                             <div class="col-6">
                                 <h4 class="card-title">Data Pengaduan</h4>
                             </div>
+                            <div class="col-6">
+                                <!-- <div class="mb-3"> -->
+                                <label class="col-form-label">Jenis Aduan: </label>
+                                <select class="form-control select2" name="filter_jenis" id="filter_jenis" style="width: 100%" required>
+                                    <option value="">-- Pilih --</option>
+                                    <option value="tarik-data">Tarik Data</option>
+                                    <option value="riwayat-sertifikasi">Riwayat Sertifikasi</option>
+                                    <option value="riwayat-pangkat">Riwayat Pangkat / Berkala</option>
+                                    <option value="akun-ptk">Akun PTK</option>
+                                    <option value="jumlah-ptk">Jumlah PTK</option>
+                                    <option value="lainnya">Lainnya</option>
+                                </select>
+                                <!-- </div> -->
+                                <div class="help-block filter_jenis" for="filter_jenis"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -285,7 +300,9 @@
             "ajax": {
                 "url": "./getAllAntrian",
                 "type": "POST",
-
+                "data": function(data) {
+                    data.jenis = $('#filter_jenis').val();
+                }
             },
             language: {
                 processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
@@ -295,7 +312,9 @@
                 "orderable": false,
             }],
         });
-
+        $('#filter_jenis').change(function() {
+            tableDatatables.draw();
+        });
     });
 </script>
 <?= $this->endSection(); ?>
