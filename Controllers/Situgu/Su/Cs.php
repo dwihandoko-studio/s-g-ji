@@ -248,6 +248,139 @@ class Cs extends BaseController
                     'required' => 'Nama tidak boleh kosong. ',
                 ]
             ],
+            'keterangan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Keterangan tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('keterangan');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                $response->redirect = base_url('auth');
+                return json_encode($response);
+            }
+
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
+
+            $oldData = $this->_db->table('aduan_tb')->where(['id' => $id])->get()->getRowObject();
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 201;
+                $response->message = "Aduan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['keterangan' => $keterangan, 'date_approve' => date('Y-m-d H:i:s'), 'status_ajuan' => 2, 'admin_approve' => $user->data->id]);
+                if ($this->_db->affectedRows() > 0) {
+
+                    $pengadu = $this->_db->table('v_user')->where('id', $oldData->user_id)->get()->getRowObject();
+                    if ($pengadu) {
+                        if ($pengadu->wa_verified == 1) {
+                            try {
+                                $nomor = $pengadu->no_hp;
+                                if (substr($nomor, 0, 1) == 0) {
+                                    $nomor = "+62" . substr($nomor, 1);
+                                }
+
+                                if (substr($nomor, 0, 1) == 8) {
+                                    $nomor = "+62" . substr($nomor, 0);
+                                }
+
+                                if (substr($nomor, 0, 2) == 62) {
+                                    $nomor = "+62" . substr($nomor, 2);
+                                }
+
+                                $nama = $user->data->fullname;
+                                $message = "Hallo *$nama*....!!!\n______________________________________________________\n\n*PENGADUAN ANDA* pada *SI-TUGU* mengenai : \n$oldData->isi\nBerhasil diproses dengan keterangan:\n*$keterangan*\n\n\nPesan otomatis dari *SI-TUGU Kab. Lampung Tengah*\n_________________________________________________";
+
+                                $dataReq = [
+                                    'number' => (string)$nomor,
+                                    'message' => $message,
+                                ];
+
+                                $ch = curl_init("https://whapi.kntechline.id/send-message");
+                                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataReq));
+                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                    'Content-Type: application/json'
+                                ));
+                                curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+                                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
+
+                                $server_output = curl_exec($ch);
+                                curl_close($ch);
+                            } catch (\Throwable $th) {
+                                //throw $th;
+                            }
+                        }
+                    }
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Aduan admin sekolah $nama berhasil diproses.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal memproses aduan admin sekolah $nama.";
+                    return json_encode($response);
+                }
+            } catch (\Throwable $th) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($th);
+                $response->message = "Gagal memproses aduan admin sekolah $nama.";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function formapprove()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -269,42 +402,16 @@ class Cs extends BaseController
                 return json_encode($response);
             }
 
-
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('aduan_tb')->where(['id' => $id])->get()->getRowObject();
-            if (!$oldData) {
-                $response = new \stdClass;
-                $response->status = 201;
-                $response->message = "Aduan tidak ditemukan.";
-                return json_encode($response);
-            }
-
-            $this->_db->transBegin();
-            try {
-                $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['date_approve' => date('Y-m-d H:i:s'), 'status_ajuan' => 2, 'admin_approve' => $user->data->id]);
-                if ($this->_db->affectedRows() > 0) {
-                    $this->_db->transCommit();
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Aduan admin sekolah $nama berhasil diproses.";
-                    return json_encode($response);
-                } else {
-                    $this->_db->transRollback();
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal memproses aduan admin sekolah $nama.";
-                    return json_encode($response);
-                }
-            } catch (\Throwable $th) {
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->error = var_dump($th);
-                $response->message = "Gagal memproses aduan admin sekolah $nama.";
-                return json_encode($response);
-            }
+            $data['id'] = $id;
+            $data['nama'] = $nama;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situgu/su/cs/solved', $data);
+            return json_encode($response);
         }
     }
 
@@ -430,6 +537,48 @@ class Cs extends BaseController
             try {
                 $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['status_ajuan' => 1, 'keterangan' => $keterangan, 'admin_approve' => $user->data->id, 'date_reject' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
+                    $pengadu = $this->_db->table('v_user')->where('id', $oldData->user_id)->get()->getRowObject();
+                    if ($pengadu) {
+                        if ($pengadu->wa_verified == 1) {
+                            try {
+                                $nomor = $pengadu->no_hp;
+                                if (substr($nomor, 0, 1) == 0) {
+                                    $nomor = "+62" . substr($nomor, 1);
+                                }
+
+                                if (substr($nomor, 0, 1) == 8) {
+                                    $nomor = "+62" . substr($nomor, 0);
+                                }
+
+                                if (substr($nomor, 0, 2) == 62) {
+                                    $nomor = "+62" . substr($nomor, 2);
+                                }
+
+                                $nama = $user->data->fullname;
+                                $message = "Hallo *$nama*....!!!\n______________________________________________________\n\n*PENGADUAN ANDA* pada *SI-TUGU* mengenai : \n$oldData->isi\nDitolak dengan keterangan:\n*$keterangan*\n\n\nPesan otomatis dari *SI-TUGU Kab. Lampung Tengah*\n_________________________________________________";
+
+                                $dataReq = [
+                                    'number' => (string)$nomor,
+                                    'message' => $message,
+                                ];
+
+                                $ch = curl_init("https://whapi.kntechline.id/send-message");
+                                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dataReq));
+                                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                                curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                    'Content-Type: application/json'
+                                ));
+                                curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+                                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 20);
+
+                                $server_output = curl_exec($ch);
+                                curl_close($ch);
+                            } catch (\Throwable $th) {
+                                //throw $th;
+                            }
+                        }
+                    }
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;

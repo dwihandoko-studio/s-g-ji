@@ -134,6 +134,62 @@
             })
         }
 
+        function actionApprove(e) {
+            const nama = '<?= $data->fullname ?>';
+            Swal.fire({
+                title: 'Apakah anda yakin ingin memproses aduan admin sekolah ini?',
+                text: "Proses Aduan Admin Sekolah: <?= $data->fullname ?>",
+                showCancelButton: true,
+                icon: 'question',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Proses!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "./formapprove",
+                        type: 'POST',
+                        data: {
+                            id: '<?= $data->id ?>',
+                            nama: nama,
+                        },
+                        dataType: 'JSON',
+                        beforeSend: function() {
+                            $('div.modal-content-loading').block({
+                                message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                            });
+                        },
+                        success: function(resul) {
+                            $('div.modal-content-loading').unblock();
+                            if (resul.status !== 200) {
+                                Swal.fire(
+                                    'Failed!',
+                                    resul.message,
+                                    'warning'
+                                );
+                            } else {
+                                $('#content-tolakModalLabel').html('PROSES ADUAN ADMIN SEKOLAH ' + nama);
+                                $('.contentTolakBodyModal').html(resul.data);
+                                $('.content-tolakModal').modal({
+                                    backdrop: 'static',
+                                    keyboard: false,
+                                });
+                                $('.content-tolakModal').modal('show');
+                            }
+                        },
+                        error: function() {
+                            $('div.modal-content-loading').unblock();
+                            Swal.fire(
+                                'Failed!',
+                                "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                                'warning'
+                            );
+                        }
+                    });
+                }
+            })
+        }
+
         function simpanTolak(e) {
             const id = '<?= $data->id ?>';
             const nama = '<?= $data->fullname ?>';
@@ -146,78 +202,6 @@
                     id: id,
                     nama: nama,
                     keterangan: keterangan,
-                },
-                dataType: 'JSON',
-                beforeSend: function() {
-                    e.disabled = true;
-                    $('div.modal-content-loading').block({
-                        message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                    });
-                },
-                success: function(resul) {
-                    $('div.modal-content-loading').unblock();
-
-                    if (resul.status !== 200) {
-                        if (resul.status !== 201) {
-                            if (resul.status === 401) {
-                                Swal.fire(
-                                    'Failed!',
-                                    resul.message,
-                                    'warning'
-                                ).then((valRes) => {
-                                    reloadPage();
-                                });
-                            } else {
-                                e.disabled = false;
-                                Swal.fire(
-                                    'GAGAL!',
-                                    resul.message,
-                                    'warning'
-                                );
-                            }
-                        } else {
-                            Swal.fire(
-                                'Peringatan!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    } else {
-                        Swal.fire(
-                            'SELAMAT!',
-                            resul.message,
-                            'success'
-                        ).then((valRes) => {
-                            reloadPage();
-                        })
-                    }
-                },
-                error: function(erro) {
-                    console.log(erro);
-                    // e.attr('disabled', false);
-                    e.disabled = false
-                    $('div.modal-content-loading').unblock();
-                    Swal.fire(
-                        'PERINGATAN!',
-                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                        'warning'
-                    );
-                }
-            });
-        };
-
-        function actionApprove(e) {
-            const id = '<?= $data->id ?>';
-            const nama = '<?= $data->fullname ?>';
-
-            $.ajax({
-                url: "./approve",
-                type: 'POST',
-                data: {
-                    id: id,
-                    nama: nama,
                 },
                 dataType: 'JSON',
                 beforeSend: function() {
