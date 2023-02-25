@@ -36,6 +36,11 @@
                             </div>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "cs") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "cs") ? 'javascript:;' : base_url('situgu/su/cs') ?>">
+                                <i class="bx bx-help-circle me-2"></i><span key="t-dashboards">ADUAN</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="javascript:aksiLogout(this);">
                                 <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i><span key="t-logout">Logout</span>
                             </a>
