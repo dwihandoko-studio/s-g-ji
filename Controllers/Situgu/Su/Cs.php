@@ -291,7 +291,7 @@ class Cs extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['keterangan' => $keterangan, 'date_approve' => date('Y-m-d H:i:s'), 'status_ajuan' => 2, 'admin_approve' => $user->data->id]);
+                $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['keterangan' => $keterangan, 'date_approve' => date('Y-m-d H:i:s'), 'status_ajuan' => 2, 'admin_eksekusi' => $user->data->id]);
                 if ($this->_db->affectedRows() > 0) {
 
                     $pengadu = $this->_db->table('v_user')->where('id', $oldData->user_id)->get()->getRowObject();
@@ -535,7 +535,7 @@ class Cs extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['status_ajuan' => 1, 'keterangan' => $keterangan, 'admin_approve' => $user->data->id, 'date_reject' => date('Y-m-d H:i:s')]);
+                $this->_db->table('aduan_tb')->where('id', $oldData->id)->update(['status_ajuan' => 1, 'keterangan' => $keterangan, 'admin_eksekusi' => $user->data->id, 'date_reject' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $pengadu = $this->_db->table('v_user')->where('id', $oldData->user_id)->get()->getRowObject();
                     if ($pengadu) {
