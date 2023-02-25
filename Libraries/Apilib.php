@@ -107,12 +107,13 @@ class Apilib
         }
     }
 
-    public function syncPtk($npsn)
+    public function syncPtk($npsn, $tw)
     {
         $jwt = get_cookie('jwt');
         if ($jwt) {
             $data = [
                 'npsn' => $npsn,
+                'tw' => $tw,
             ];
             $add         = $this->_send_post($data, 'syncptk', $jwt);
             $send_data         = curl_exec($add);
@@ -134,13 +135,14 @@ class Apilib
         }
     }
 
-    public function syncPtkId($idPtk, $npsn)
+    public function syncPtkId($idPtk, $npsn, $tw)
     {
         $jwt = get_cookie('jwt');
         if ($jwt) {
             $data = [
                 'id_ptk' => $idPtk,
                 'npsn' => $npsn,
+                'tw' => $tw,
             ];
             $add         = $this->_send_post($data, 'syncptkid', $jwt);
             $send_data         = curl_exec($add);

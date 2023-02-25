@@ -65,6 +65,21 @@ class Helplib
         return '';
     }
 
+    public function getCurrentTw()
+    {
+
+        $user = $this->_db->table('_ref_tahun_tw')
+            ->select("id")
+            ->where('is_current', 1)
+            ->get()->getRowObject();
+
+        if ($user) {
+            return $user->id;
+        }
+
+        return false;
+    }
+
     public function getNpsn($userId)
     {
 

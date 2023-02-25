@@ -251,8 +251,16 @@ class Ptk extends BaseController
         } else {
             $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
 
+            $tw = $this->_helpLib->getCurrentTw();
+            if (!$tw) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Tahun Triwulan Active tidak ditemukan.";
+                return json_encode($response);
+            }
+
             $apiLib = new Apilib();
-            $result = $apiLib->syncPtk($npsn);
+            $result = $apiLib->syncPtk($npsn, $tw);
 
             if ($result) {
                 if ($result->status == 200) {
@@ -317,8 +325,16 @@ class Ptk extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
 
+            $tw = $this->_helpLib->getCurrentTw();
+            if (!$tw) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Tahun Triwulan Active tidak ditemukan.";
+                return json_encode($response);
+            }
+
             $apiLib = new Apilib();
-            $result = $apiLib->syncPtkId($idPtk, $npsn);
+            $result = $apiLib->syncPtkId($idPtk, $npsn, $tw);
 
             if ($result) {
                 if ($result->status == 200) {
