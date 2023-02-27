@@ -75,7 +75,7 @@
                         <h3 class="mt-5">Site is Under Maintenance</h3>
                         <p>Please check back in sometime.</p>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4">
                                 <div class="card mt-4 maintenance-box">
                                     <div class="card-body">
@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- end row -->
                     </div>
                 </div>
