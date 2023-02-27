@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>KIP Digital - SIPMA | Program Indonesia Pintar Madrasah</title>
+  <meta charset="utf-8" />
+  <meta name="description" content="SIPMA merupakan situs layanan pemantauan, pelaporan dan pengaduan pelaksanaan Program Indonesia Pintar (PIP) berbasis elektronik siswa madrasah Kementerian Agama Republik Indonesia" />
+  <meta name="keywords" content="pip, program indonesia pintar, dashboard, kskk, madrasah, kesiswaan, kemenag, kementerian agama" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="https://pipmadrasah.kemenag.go.id/assets/public/media/logos/favicon.ico" />
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pipmadrasah.kemenag.go.id/assets/plugins/custom/datatables/datatables.bundle.css">
+  <link rel="stylesheet" id="switcher-plugins" href="https://pipmadrasah.kemenag.go.id/assets/plugins/global/plugins.bundle.css">
+  <link rel="stylesheet" id="switcher-style" href="https://pipmadrasah.kemenag.go.id/assets/css/style.bundle.css">
+</head>
+<style>
+  :root {
+    --bs-font-sans-serif: "Poppins", sans-serif;
+  }
+</style>
+
+<body id="kt_body" class="page-loading-enabled page-loading header-fixed header-tablet-and-mobile-fixed aside-enabled aside-fixed " style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+  <!--<div class="page-loader flex-column"> <span class="spinner-border text-primary" role="status"></span> <span class="text-muted fs-6 fw-bold mt-5">Sedang memuat...</span> </div>-->
+  <div class="d-flex flex-column flex-root">
+    <div class="page d-flex flex-row flex-column-fluid">
+      <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
+        <div class="aside-logo flex-column-auto" id="kt_aside_logo"> <a href="https://pipmadrasah.kemenag.go.id/"> <img alt="Logo" src="https://pipmadrasah.kemenag.go.id/assets/public/media/logos/logo.png" class="h-25px logo" /> </a>
+          <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="aside-minimize"> <span class="svg-icon svg-icon-1 rotate-180"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path opacity="0.5" d="M14.2657 11.4343L18.45 7.25C18.8642 6.83579 18.8642 6.16421 18.45 5.75C18.0358 5.33579 17.3642 5.33579 16.95 5.75L11.4071 11.2929C11.0166 11.6834 11.0166 12.3166 11.4071 12.7071L16.95 18.25C17.3642 18.6642 18.0358 18.6642 18.45 18.25C18.8642 17.8358 18.8642 17.1642 18.45 16.75L14.2657 12.5657C13.9533 12.2533 13.9533 11.7467 14.2657 11.4343Z" fill="currentColor" />
+                <path d="M8.2657 11.4343L12.45 7.25C12.8642 6.83579 12.8642 6.16421 12.45 5.75C12.0358 5.33579 11.3642 5.33579 10.95 5.75L5.40712 11.2929C5.01659 11.6834 5.01659 12.3166 5.40712 12.7071L10.95 18.25C11.3642 18.6642 12.0358 18.6642 12.45 18.25C12.8642 17.8358 12.8642 17.1642 12.45 16.75L8.2657 12.5657C7.95328 12.2533 7.95328 11.7467 8.2657 11.4343Z" fill="currentColor" />
+              </svg> </span> </div>
+        </div>
+        <div class="aside-menu flex-column-fluid">
+          <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
+            <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M11 2.375L2 9.575V20.575C2 21.175 2.4 21.575 3 21.575H9C9.6 21.575 10 21.175 10 20.575V14.575C10 13.975 10.4 13.575 11 13.575H13C13.6 13.575 14 13.975 14 14.575V20.575C14 21.175 14.4 21.575 15 21.575H21C21.6 21.575 22 21.175 22 20.575V9.575L13 2.375C12.4 1.875 11.6 1.875 11 2.375Z" fill="currentColor" />
+                      </svg> </span> </span> <span class="menu-title">Beranda</span> </a> </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/admin/dashboard"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor" />
+                        <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor" />
+                        <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor" />
+                        <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor" />
+                      </svg> </span> </span> <span class="menu-title">Dashboard</span> </a> </div>
+              <div class="menu-item">
+                <div class="menu-content pt-8 pb-3"> <span class="text-muted text-uppercase fs-8 ls-1">Penyaluran</span> </div>
+              </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/admin/siswa/sch"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path opacity="0.3" d="M21 18.3V4H20H5C4.4 4 4 4.4 4 5V20C10.9 20 16.7 15.6 19 9.5V18.3C18.4 18.6 18 19.3 18 20C18 21.1 18.9 22 20 22C21.1 22 22 21.1 22 20C22 19.3 21.6 18.6 21 18.3Z" fill="currentColor"></path>
+                        <path d="M22 4C22 2.9 21.1 2 20 2C18.9 2 18 2.9 18 4C18 4.7 18.4 5.29995 18.9 5.69995C18.1 12.6 12.6 18.2 5.70001 18.9C5.30001 18.4 4.7 18 4 18C2.9 18 2 18.9 2 20C2 21.1 2.9 22 4 22C4.8 22 5.39999 21.6 5.79999 20.9C13.8 20.1 20.1 13.7 20.9 5.80005C21.6 5.40005 22 4.8 22 4Z" fill="currentColor"></path>
+                      </svg> </span> </span> <span class="menu-title">Data Penyaluran</span> </a> </div>
+              <div class="menu-item"> <a class="menu-link active" href="https://pipmadrasah.kemenag.go.id/admin/siswa/kip"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 14H18V10H20C20.6 10 21 10.4 21 11V13C21 13.6 20.6 14 20 14ZM21 19V17C21 16.4 20.6 16 20 16H18V20H20C20.6 20 21 19.6 21 19ZM21 7V5C21 4.4 20.6 4 20 4H18V8H20C20.6 8 21 7.6 21 7Z" fill="currentColor" />
+                        <path opacity="0.3" d="M17 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H17C17.6 2 18 2.4 18 3V21C18 21.6 17.6 22 17 22ZM10 7C8.9 7 8 7.9 8 9C8 10.1 8.9 11 10 11C11.1 11 12 10.1 12 9C12 7.9 11.1 7 10 7ZM13.3 16C14 16 14.5 15.3 14.3 14.7C13.7 13.2 12 12 10.1 12C8.10001 12 6.49999 13.1 5.89999 14.7C5.59999 15.3 6.19999 16 7.39999 16H13.3Z" fill="currentColor" />
+                      </svg></span> </span> <span class="menu-title">KIP Digital</span> </a> </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/admin/setor/sch"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path opacity="0.3" d="M3.20001 5.91897L16.9 3.01895C17.4 2.91895 18 3.219 18.1 3.819L19.2 9.01895L3.20001 5.91897Z" fill="currentColor" />
+                        <path opacity="0.3" d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21C21.6 10.9189 22 11.3189 22 11.9189V15.9189C22 16.5189 21.6 16.9189 21 16.9189H16C14.3 16.9189 13 15.6189 13 13.9189ZM16 12.4189C15.2 12.4189 14.5 13.1189 14.5 13.9189C14.5 14.7189 15.2 15.4189 16 15.4189C16.8 15.4189 17.5 14.7189 17.5 13.9189C17.5 13.1189 16.8 12.4189 16 12.4189Z" fill="currentColor" />
+                        <path d="M13 13.9189C13 12.2189 14.3 10.9189 16 10.9189H21V7.91895C21 6.81895 20.1 5.91895 19 5.91895H3C2.4 5.91895 2 6.31895 2 6.91895V20.9189C2 21.5189 2.4 21.9189 3 21.9189H19C20.1 21.9189 21 21.0189 21 19.9189V16.9189H16C14.3 16.9189 13 15.6189 13 13.9189Z" fill="currentColor" />
+                      </svg> </span> </span> <span class="menu-title">Pengembalian Negara</span> </a> </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/admin/pengaduan"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path opacity="0.3" d="M21 18H3C2.4 18 2 17.6 2 17V7C2 6.4 2.4 6 3 6H21C21.6 6 22 6.4 22 7V17C22 17.6 21.6 18 21 18Z" fill="currentColor" />
+                        <path d="M11.4 13.5C11.8 13.8 12.3 13.8 12.6 13.5L21.6 6.30005C21.4 6.10005 21.2 6 20.9 6H2.99998C2.69998 6 2.49999 6.10005 2.29999 6.30005L11.4 13.5Z" fill="currentColor" />
+                      </svg> </span> </span> <span class="menu-title">Pengaduan</span> </a> </div>
+              <div class="menu-item">
+                <div class="menu-content pt-8 pb-3"> <span class="text-muted text-uppercase fs-8 ls-1">Verval Tahap 1</span> </div>
+              </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/admin/verval/dashboard"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.3" d="M20 8L12.5 5L5 14V19H20V8Z" fill="currentColor" />
+                        <path d="M21 18H6V3C6 2.4 5.6 2 5 2C4.4 2 4 2.4 4 3V18H3C2.4 18 2 18.4 2 19C2 19.6 2.4 20 3 20H4V21C4 21.6 4.4 22 5 22C5.6 22 6 21.6 6 21V20H21C21.6 20 22 19.6 22 19C22 18.4 21.6 18 21 18Z" fill="currentColor" />
+                      </svg> </span> </span> <span class="menu-title">Rekapitulasi</span> </a> </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/admin/verval/siswa"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.28548 15.0861C7.34369 13.1814 9.35142 12 11.5304 12H12.4696C14.6486 12 16.6563 13.1814 17.7145 15.0861L19.3493 18.0287C20.0899 19.3618 19.1259 21 17.601 21H6.39903C4.87406 21 3.91012 19.3618 4.65071 18.0287L6.28548 15.0861Z" fill="currentColor" />
+                        <rect opacity="0.3" x="8" y="3" width="8" height="8" rx="4" fill="currentColor" />
+                      </svg> </span> </span> <span class="menu-title">Siswa</span> </a> </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/admin/confirm"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.3" d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM11.7 17.7L16 14C16.4 13.6 16.4 12.9 16 12.5C15.6 12.1 15.4 12.6 15 13L11 16L9 15C8.6 14.6 8.4 14.1 8 14.5C7.6 14.9 8.1 15.6 8.5 16L10.3 17.7C10.5 17.9 10.8 18 11 18C11.2 18 11.5 17.9 11.7 17.7Z" fill="currentColor" />
+                        <path d="M10.4343 15.4343L9.25 14.25C8.83579 13.8358 8.16421 13.8358 7.75 14.25C7.33579 14.6642 7.33579 15.3358 7.75 15.75L10.2929 18.2929C10.6834 18.6834 11.3166 18.6834 11.7071 18.2929L16.25 13.75C16.6642 13.3358 16.6642 12.6642 16.25 12.25C15.8358 11.8358 15.1642 11.8358 14.75 12.25L11.5657 15.4343C11.2533 15.7467 10.7467 15.7467 10.4343 15.4343Z" fill="currentColor" />
+                        <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
+                      </svg> </span> </span> <span class="menu-title">Konfirmasi</span> </a> </div>
+              <div class="menu-item">
+                <div class="menu-content pt-8 pb-3"> <span class="text-muted text-uppercase fs-8 ls-1">Akun</span> </div>
+              </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/admin/change_password"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path opacity="0.3" d="M21 10.7192H3C2.4 10.7192 2 11.1192 2 11.7192C2 12.3192 2.4 12.7192 3 12.7192H6V14.7192C6 18.0192 8.7 20.7192 12 20.7192C15.3 20.7192 18 18.0192 18 14.7192V12.7192H21C21.6 12.7192 22 12.3192 22 11.7192C22 11.1192 21.6 10.7192 21 10.7192Z" fill="currentColor" />
+                        <path d="M11.6 21.9192C11.4 21.9192 11.2 21.8192 11 21.7192C10.6 21.4192 10.5 20.7191 10.8 20.3191C11.7 19.1191 12.3 17.8191 12.7 16.3191C12.8 15.8191 13.4 15.4192 13.9 15.6192C14.4 15.7192 14.8 16.3191 14.6 16.8191C14.2 18.5191 13.4 20.1192 12.4 21.5192C12.2 21.7192 11.9 21.9192 11.6 21.9192ZM8.7 19.7192C10.2 18.1192 11 15.9192 11 13.7192V8.71917C11 8.11917 11.4 7.71917 12 7.71917C12.6 7.71917 13 8.11917 13 8.71917V13.0192C13 13.6192 13.4 14.0192 14 14.0192C14.6 14.0192 15 13.6192 15 13.0192V8.71917C15 7.01917 13.7 5.71917 12 5.71917C10.3 5.71917 9 7.01917 9 8.71917V13.7192C9 15.4192 8.4 17.1191 7.2 18.3191C6.8 18.7191 6.9 19.3192 7.3 19.7192C7.5 19.9192 7.7 20.0192 8 20.0192C8.3 20.0192 8.5 19.9192 8.7 19.7192ZM6 16.7192C6.5 16.7192 7 16.2192 7 15.7192V8.71917C7 8.11917 7.1 7.51918 7.3 6.91918C7.5 6.41918 7.2 5.8192 6.7 5.6192C6.2 5.4192 5.59999 5.71917 5.39999 6.21917C5.09999 7.01917 5 7.81917 5 8.71917V15.7192V15.8191C5 16.3191 5.5 16.7192 6 16.7192ZM9 4.71917C9.5 4.31917 10.1 4.11918 10.7 3.91918C11.2 3.81918 11.5 3.21917 11.4 2.71917C11.3 2.21917 10.7 1.91916 10.2 2.01916C9.4 2.21916 8.59999 2.6192 7.89999 3.1192C7.49999 3.4192 7.4 4.11916 7.7 4.51916C7.9 4.81916 8.2 4.91918 8.5 4.91918C8.6 4.91918 8.8 4.81917 9 4.71917ZM18.2 18.9192C18.7 17.2192 19 15.5192 19 13.7192V8.71917C19 5.71917 17.1 3.1192 14.3 2.1192C13.8 1.9192 13.2 2.21917 13 2.71917C12.8 3.21917 13.1 3.81916 13.6 4.01916C15.6 4.71916 17 6.61917 17 8.71917V13.7192C17 15.3192 16.8 16.8191 16.3 18.3191C16.1 18.8191 16.4 19.4192 16.9 19.6192C17 19.6192 17.1 19.6192 17.2 19.6192C17.7 19.6192 18 19.3192 18.2 18.9192Z" fill="currentColor" />
+                      </svg> </span> </span> <span class="menu-title">Ganti Password</span> </a> </div>
+              <div class="menu-item"> <a class="menu-link" href="https://pipmadrasah.kemenag.go.id/logout"> <span class="menu-icon"> <span class="svg-icon svg-icon-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect opacity="0.3" width="12" height="2" rx="1" transform="matrix(-1 0 0 1 15.5 11)" fill="currentColor" />
+                        <path d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z" fill="currentColor" />
+                        <path d="M8 5V6C8 6.55228 8.44772 7 9 7C9.55228 7 10 6.55228 10 6C10 5.44772 10.4477 5 11 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H11C10.4477 19 10 18.5523 10 18C10 17.4477 9.55228 17 9 17C8.44772 17 8 17.4477 8 18V19C8 20.1046 8.89543 21 10 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H10C8.89543 3 8 3.89543 8 5Z" fill="currentColor" />
+                      </svg></span> </span> <span class="menu-title">Log Out</span> </a> </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+        <div id="kt_header" style="" class="header align-items-stretch">
+          <div class="container-fluid d-flex align-items-stretch justify-content-between">
+            <div class="d-flex align-items-center d-lg-none ms-n3 me-1" title="Show aside menu">
+              <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_toggle"> <span class="svg-icon svg-icon-2x mt-1"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor" />
+                    <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="currentColor" />
+                  </svg> </span> </div>
+            </div>
+            <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0"> <a href="" class="d-lg-none"> <img alt="Logo" src="https://pipmadrasah.kemenag.go.id/assets/public/media/logos/logo.png" class="h-30px me-3" /> </a> </div>
+            <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+              <div class="d-flex align-items-center" id="kt_header_nav">
+                <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_header_nav'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+                  <h1 class="d-flex align-items-center text-dark fw-bold fs-3 my-1">KIP Digital</h1> <span class="h-20px border-gray-300 border-start mx-4"></span>
+                  <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+                    <li class="breadcrumb-item"><a class="text-muted text-hover-primary" href="https://pipmadrasah.kemenag.go.id/admin/dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item"> <span class="bullet bg-gray-300 w-5px h-2px"></span> </li>
+                    <li class="breadcrumb-item text-dark">KIP Digital</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="d-flex align-items-stretch flex-shrink-0">
+                <div class="d-flex align-items-center ms-1 ms-lg-3" id="topbar_notifications">
+                  <div class="btn btn-icon btn-icon-muted btn-active-light btn-active-color-primary position-relative w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end"> <span class="svg-icon svg-icon-1"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.3" d="M12 22C13.6569 22 15 20.6569 15 19C15 17.3431 13.6569 16 12 16C10.3431 16 9 17.3431 9 19C9 20.6569 10.3431 22 12 22Z" fill="currentColor" />
+                        <path d="M19 15V18C19 18.6 18.6 19 18 19H6C5.4 19 5 18.6 5 18V15C6.1 15 7 14.1 7 13V10C7 7.6 8.7 5.6 11 5.1V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V5.1C15.3 5.6 17 7.6 17 10V13C17 14.1 17.9 15 19 15ZM11 10C11 9.4 11.4 9 12 9C12.6 9 13 8.6 13 8C13 7.4 12.6 7 12 7C10.3 7 9 8.3 9 10C9 10.6 9.4 11 10 11C10.6 11 11 10.6 11 10Z" fill="currentColor" />
+                      </svg> </span> </div>
+                  <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true">
+                    <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('https://pipmadrasah.kemenag.go.id/assets/media/misc/pattern-1.jpg')">
+                      <h3 class="text-white fw-bold px-9 mt-10 mb-6">Notifikasi <span class="fs-8 opacity-75 ps-3">0 laporan</span> </h3>
+                      <ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-bold px-9">
+                        <li class="nav-item"> <a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active" data-bs-toggle="tab" href="#kt_topbar_notifications_1">Pengaduan</a> </li>
+                      </ul>
+                    </div>
+                    <div class="tab-content">
+                      <div class="tab-pane fade active show" id="kt_topbar_notifications_1" role="tabpanel">
+                        <div class="scroll-y mh-325px my-5 px-8">
+                          <div class="d-flex flex-column px-9">
+                            <div class="py-10">
+                              <div class="text-center text-gray-600 fw-bold pt-1">Tidak ada pengaduan</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
+                  <div class="btn btn-active-light d-flex align-items-center bg-hover-light py-2 px-2 px-md-3" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                    <div class="d-none d-md-flex flex-column align-items-end justify-content-center me-2"> <span class="text-dark fs-base fw-bold lh-1">MAS MA'ARIF 1 PUNGGUR</span> </div>
+                    <div class="symbol symbol-30px symbol-md-40px"> <span class="svg-icon svg-icon-primary svg-icon-2hx"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <path opacity="0.3" d="M22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2C17.5 2 22 6.5 22 12ZM12 7C10.3 7 9 8.3 9 10C9 11.7 10.3 13 12 13C13.7 13 15 11.7 15 10C15 8.3 13.7 7 12 7Z" fill="currentColor" />
+                          <path d="M12 22C14.6 22 17 21 18.7 19.4C17.9 16.9 15.2 15 12 15C8.8 15 6.09999 16.9 5.29999 19.4C6.99999 21 9.4 22 12 22Z" fill="currentColor" />
+                        </svg> </span> </div>
+                  </div>
+                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
+                    <div class="menu-item px-3">
+                      <div class="menu-content d-flex align-items-center px-3">
+                        <div class="symbol symbol-50px me-5"> <img alt="Logo" src="https://pipmadrasah.kemenag.go.id/assets/public/media/logos/logo.png" /> </div>
+                        <div class="d-flex flex-column">
+                          <div class="fw-bolder d-flex align-items-center fs-5">MAS MA'ARIF 1 PUNGGUR</div> <a href="#" class="fw-bold text-muted text-hover-primary fs-7">Admin Madrasah</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="menu-item px-5 my-1"> <a href="https://pipmadrasah.kemenag.go.id/admin/change_password" class="menu-link px-5">Ganti Password</a> </div>
+                    <div class="menu-item px-5"> <a href="https://pipmadrasah.kemenag.go.id/logout" class="menu-link px-5">Log Out</a> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+          <div class="post d-flex flex-column-fluid" id="kt_post">
+            <div id="kt_content_container" class="container-xxl">
+              <style>
+                #qr-canvas {
+                  width: calc(100% - 20px);
+                  max-width: 400px;
+                }
+              </style>
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title"> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scanQRCode"> <i class="fas fa-qrcode"></i>Verifikasi KIP </button> </div>
+                  <div class="card-toolbar">
+                    <form action="https://pipmadrasah.kemenag.go.id/admin/siswa/kip" id="form_filter" class="mb-5" method="post" accept-charset="utf-8">
+                      <div class="row align-items-center pt-md-4">
+                        <div class="col-lg-7 my-1">
+                          <div class="form-group"> <select name="year" id="year" class="form-select form-select-solid" data-control="select2" data-hide-search="true">
+                              <option value="2022" selected="selected">2022</option>
+                              <option value="2021">2021</option>
+                            </select> </div>
+                        </div>
+                        <div class="col-lg-5 my-1">
+                          <div class="form-group"> <button type="button" id="btn-filter" class="btn btn-primary" title="Filter"><i class="fas fa-filter"></i></button> </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="alert alert-primary d-flex align-items-center p-5"> <span class="svg-icon svg-icon-2hx svg-icon-primary me-3"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path opacity="0.3" d="M20.5543 4.37824L12.1798 2.02473C12.0626 1.99176 11.9376 1.99176 11.8203 2.02473L3.44572 4.37824C3.18118 4.45258 3 4.6807 3 4.93945V13.569C3 14.6914 3.48509 15.8404 4.4417 16.984C5.17231 17.8575 6.18314 18.7345 7.446 19.5909C9.56752 21.0295 11.6566 21.912 11.7445 21.9488C11.8258 21.9829 11.9129 22 12.0001 22C12.0872 22 12.1744 21.983 12.2557 21.9488C12.3435 21.912 14.4326 21.0295 16.5541 19.5909C17.8169 18.7345 18.8277 17.8575 19.5584 16.984C20.515 15.8404 21 14.6914 21 13.569V4.93945C21 4.6807 20.8189 4.45258 20.5543 4.37824Z" fill="currentColor"></path>
+                        <path d="M10.5606 11.3042L9.57283 10.3018C9.28174 10.0065 8.80522 10.0065 8.51412 10.3018C8.22897 10.5912 8.22897 11.0559 8.51412 11.3452L10.4182 13.2773C10.8099 13.6747 11.451 13.6747 11.8427 13.2773L15.4859 9.58051C15.771 9.29117 15.771 8.82648 15.4859 8.53714C15.1948 8.24176 14.7183 8.24176 14.4272 8.53714L11.7002 11.3042C11.3869 11.6221 10.874 11.6221 10.5606 11.3042Z" fill="currentColor"></path>
+                      </svg> </span>
+                    <div class="d-flex flex-column">
+                      <h4 class="mb-1 text-primary">Verifikasi KIP</h4> <span>Untuk memastikan kevalidan KIP dapat dilihat dengan cara memindai QR Code yang terdapat pada kartu menggunakan ponsel pintar (smartphone) atau klik tombol Verifikasi KIP</span>
+                    </div>
+                  </div>
+                  <table class="table table-striped table-row-bordered gy-5 gs-7 border rounded table-hover" id="mytable">
+                    <thead>
+                      <tr class="fw-bold border-bottom-2 border-gray-200">
+                        <th>No</th>
+                        <th>NSM</th>
+                        <th>Nama Madrasah</th>
+                        <th>NISN</th>
+                        <th>Nama Siswa</th>
+                        <th>Kelas</th>
+                        <th>No. KIP</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody> </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body p-0"> </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="scanQRCode" tabindex="-1" role="dialog" aria-labelledby="scanQRCodeLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Verifikasi KIP Digital</h5>
+                      <div class="modal-toolbar">
+                        <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
+                          <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#scanQR" role="tab" aria-controls="scanQR" aria-selected="true">Pindai QR Code</a> </li>
+                          <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#fileScan" role="tab" aria-selected="false">Upload KIP</a> </li>
+                        </ul>
+                      </div>
+                      <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close"> <span class="svg-icon svg-icon-2x"></span> </div>
+                    </div>
+                    <div class="modal-body">
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="scanQR" role="tabpanel">
+                          <div id="qr-canvas" class="text-center"></div>
+                        </div>
+                        <div class="tab-pane fade" id="fileScan" role="tabpanel">
+                          <div id="reader" style="width: 100%; min-height: 10px; display: inline-block;"></div> <input type="file" id="qr-input-file" accept="image/*" class="form-control mb-5">
+                          <div class="alert alert-dismissible bg-light-primary d-flex flex-column flex-sm-row p-3"> <span class="svg-icon svg-icon-2hx svg-icon-primary me-4 mb-5 mb-sm-0"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path opacity="0.3" d="M18.4 5.59998C18.7766 5.9772 18.9881 6.48846 18.9881 7.02148C18.9881 7.55451 18.7766 8.06577 18.4 8.44299L14.843 12C14.466 12.377 13.9547 12.5887 13.4215 12.5887C12.8883 12.5887 12.377 12.377 12 12C11.623 11.623 11.4112 11.1117 11.4112 10.5785C11.4112 10.0453 11.623 9.53399 12 9.15698L15.553 5.604C15.9302 5.22741 16.4415 5.01587 16.9745 5.01587C17.5075 5.01587 18.0188 5.22741 18.396 5.604L18.4 5.59998ZM20.528 3.47205C20.0614 3.00535 19.5074 2.63503 18.8977 2.38245C18.288 2.12987 17.6344 1.99988 16.9745 1.99988C16.3145 1.99988 15.661 2.12987 15.0513 2.38245C14.4416 2.63503 13.8876 3.00535 13.421 3.47205L9.86801 7.02502C9.40136 7.49168 9.03118 8.04568 8.77863 8.6554C8.52608 9.26511 8.39609 9.91855 8.39609 10.5785C8.39609 11.2384 8.52608 11.8919 8.77863 12.5016C9.03118 13.1113 9.40136 13.6653 9.86801 14.132C10.3347 14.5986 10.8886 14.9688 11.4984 15.2213C12.1081 15.4739 12.7616 15.6039 13.4215 15.6039C14.0815 15.6039 14.7349 15.4739 15.3446 15.2213C15.9543 14.9688 16.5084 14.5986 16.975 14.132L20.528 10.579C20.9947 10.1124 21.3649 9.55844 21.6175 8.94873C21.8701 8.33902 22.0001 7.68547 22.0001 7.02551C22.0001 6.36555 21.8701 5.71201 21.6175 5.10229C21.3649 4.49258 20.9947 3.93867 20.528 3.47205Z" fill="currentColor" />
+                                <path d="M14.132 9.86804C13.6421 9.37931 13.0561 8.99749 12.411 8.74695L12 9.15698C11.6234 9.53421 11.4119 10.0455 11.4119 10.5785C11.4119 11.1115 11.6234 11.6228 12 12C12.3766 12.3772 12.5881 12.8885 12.5881 13.4215C12.5881 13.9545 12.3766 14.4658 12 14.843L8.44699 18.396C8.06999 18.773 7.55868 18.9849 7.02551 18.9849C6.49235 18.9849 5.98101 18.773 5.604 18.396C5.227 18.019 5.0152 17.5077 5.0152 16.9745C5.0152 16.4413 5.227 15.93 5.604 15.553L8.74701 12.411C8.28705 11.233 8.28705 9.92498 8.74701 8.74695C8.10159 8.99737 7.5152 9.37919 7.02499 9.86804L3.47198 13.421C2.52954 14.3635 2.00009 15.6417 2.00009 16.9745C2.00009 18.3073 2.52957 19.5855 3.47202 20.528C4.41446 21.4704 5.69269 21.9999 7.02551 21.9999C8.35833 21.9999 9.63656 21.4704 10.579 20.528L14.132 16.975C14.5987 16.5084 14.9689 15.9544 15.2215 15.3447C15.4741 14.735 15.6041 14.0815 15.6041 13.4215C15.6041 12.7615 15.4741 12.108 15.2215 11.4983C14.9689 10.8886 14.5987 10.3347 14.132 9.86804Z" fill="currentColor" />
+                              </svg></span>
+                            <div class="d-flex flex-column pe-0 pe-sm-10"><span id="qr-result"></span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer"> <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+          <div class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+            <div class="text-dark order-2 order-md-1"> <span class="text-muted fw-bold me-1">2023 ©</span> <a href="" target="_blank" class="text-gray-800 text-hover-primary">Direktorat KSKK Madrasah</a> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true"> <span class="svg-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1" transform="rotate(90 13 6)" fill="currentColor" />
+        <path d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z" fill="currentColor" />
+      </svg> </span> </div>
+  <script>
+    var hostUrl = "https://pipmadrasah.kemenag.go.id/";
+    var Env = {};
+
+    Env.BASE_URL = hostUrl;
+    Env.CURRENT_USER = "131218020001";
+    Env.SCH = 1;
+    Env.SUCCESS = "";
+    Env.ERROR = "";
+    Env.END_DATE = "2023-02-16 23:59:59";
+  </script>
+  <script src="https://pipmadrasah.kemenag.go.id/assets/js/custom/html5-qrcode.min.js"></script>
+  <script src="https://pipmadrasah.kemenag.go.id/assets/plugins/global/plugins.bundle.js"></script>
+  <!-- <script src="https://pipmadrasah.kemenag.go.id/assets/js/custom/countup-custom.js"></script> -->
+  <script src="https://pipmadrasah.kemenag.go.id/assets/js/scripts.bundle.js"></script>
+  <!-- <script src="https://pipmadrasah.kemenag.go.id/assets/plugins/custom/datatables/datatables.bundle.js"></script> -->
+  <script src="https://pipmadrasah.kemenag.go.id/assets/js/custom/general.min.js"></script>
+  <!-- <script src="https://pipmadrasah.kemenag.go.id/assets/vendor/jquery.countdown/jquery.countdown.min.js"></script> -->
+  <!-- <script src="https://pipmadrasah.kemenag.go.id/assets/vendor/moment/moment-timezone-with-data.min.js"></script> -->
+  <script>
+    $(document).ready(function() {
+      var cameras, cameraId;
+      var html5QrCode = new Html5Qrcode("qr-canvas");
+      var imageQrCode = new Html5Qrcode("reader");
+      var fileScanInput = document.getElementById('qr-input-file');
+
+      function startQrReader() {
+        var lastResult, countResults = 0;
+        html5QrCode.start(
+          cameraId, {
+            fps: 10,
+            qrbox: 250,
+            aspectRatio: 1
+          },
+          qrCodeMessage => {
+            if (qrCodeMessage !== lastResult) {
+              ++countResults;
+              lastResult = qrCodeMessage;
+              $.ajax({
+                url: Env.BASE_URL + 'admin/siswa/doValidation',
+                type: "POST",
+                async: false,
+                dataType: "JSON",
+                data: {
+                  qrResult: qrCodeMessage
+                },
+                success: function(data) {
+                  if (data.success == true) {
+                    Swal.fire({
+                      title: 'KIP Valid',
+                      text: data.message,
+                      icon: "success",
+                      buttonsStyling: false,
+                      confirmButtonText: "OK",
+                      customClass: {
+                        confirmButton: "btn btn-primary"
+                      }
+                    });
+                  } else {
+                    Swal.fire({
+                      title: 'KIP Tidak Valid',
+                      text: data.message,
+                      icon: "error",
+                      buttonsStyling: false,
+                      confirmButtonText: "OK",
+                      customClass: {
+                        confirmButton: "btn btn-primary"
+                      }
+                    });
+                  }
+                  //html5QrCode.clear();
+                }
+              });
+
+            }
+
+          },
+          errorMessage => {
+            // parse error, ideally ignore it
+          }
+        ).catch(err => {
+          console.log('Unable to start scanning, error: ' + err);
+        });
+      }
+
+      var scanQRCode = Html5Qrcode.getCameras().then(devices => {
+        cameras = devices;
+        if (cameras && cameras.length) {
+
+          var currentCamera;
+          if (cameras.length == 1) {
+            currentCamera = cameras[0];
+          } else {
+            currentCamera = cameras[1];
+          }
+          cameraId = currentCamera.id;
+          startQrReader();
+        }
+      }).catch(err => {
+        console.log('Error: ' + err);
+      });
+
+      $("#scanQRCode").on('show.bs.modal', function(e) {
+        scanQRCode;
+        $('a[data-bs-toggle="tab"]').on("show.bs.tab", function(e) {
+          if (e.target.hash == '#scanQR') {
+            scanQRCode;
+          } else if (e.target.hash == '#fileScan') {
+            fileScanInput.value = "";
+            fileScanInput.addEventListener('change', e => {
+              if (e.target.files.length == 0) {
+                return;
+              }
+
+              var imageFile = e.target.files[0];
+              imageQrCode.scanFile(imageFile, true)
+                .then(decodedText => {
+                  $("#qr-result").empty().append('<a href="' + decodedText + '" target="_blank">' + decodedText + '</a>');
+                })
+                .catch(err => {
+                  console.log('Error scanning file. Reason: ' + err)
+                });
+            });
+          }
+        });
+      });
+
+      $('#scanQRCode').on('hide.bs.modal', function(e) {
+        fileScanInput.value = "";
+        $("#qr-result").empty();
+        imageQrCode.clear();
+      })
+
+
+      //   var table = $("#mytable").DataTable({
+      //     "dom": "<'row'" +
+      //       "<'col-sm-6 d-flex align-items-center justify-conten-start'l>" +
+      //       "<'col-sm-6 d-flex align-items-center justify-content-end'f>" +
+      //       ">" +
+
+      //       "<'table-responsive'tr>" +
+
+      //       "<'row'" +
+      //       "<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'i>" +
+      //       "<'col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>" +
+      //       ">",
+      //     language: {
+      //       "loadingRecords": "Loading...",
+      //       "processing": '<i class="fas fa-spinner fa-spin fa-2x fa-fw"></i> Sedang memproses...',
+      //       search: "_INPUT_",
+      //       searchPlaceholder: "Cari",
+      //       "zeroRecords": "Data belum tersedia",
+      //       "info": "_START_ - _END_ dari _TOTAL_ data",
+      //       "infoEmpty": "0 - 0 dari 0 data",
+      //       "infoFiltered": "(disaring dari _MAX_ data keseluruhan)",
+      //       "thousands": ".",
+      //       "decimal": ",",
+      //       "buttons": {
+      //         pageLength: {
+      //           _: "Tampilkan %d data",
+      //           '-1': "Semua"
+      //         }
+      //       }
+      //     },
+      //     processing: true,
+      //     serverSide: true,
+      //     deferRender: true,
+      //     ajax: {
+      //       url: Env.BASE_URL + 'admin/siswa/json_kip',
+      //       type: "POST",
+      //       data: function(data) {
+      //         data.year = $('#year').val();
+      //       }
+      //     },
+      //     "columns": [{
+      //         "data": "ID",
+      //         "searchable": false,
+      //         "render": function(data, type, row, meta) {
+      //           return meta.row + meta.settings._iDisplayStart + 1;
+      //         }
+      //       },
+      //       {
+      //         "data": "NSM"
+      //       },
+      //       {
+      //         "data": "NAMA_LBG",
+      //         "orderable": false,
+      //         "render": function(data, type, row) {
+      //           return data.toUpperCase();
+      //         }
+      //       },
+      //       {
+      //         "data": "NISN",
+      //         "orderable": false
+      //       },
+      //       {
+      //         "data": "NAMA_SISWA",
+      //         "render": function(data, type, row) {
+      //           return data.toUpperCase();
+      //         }
+      //       },
+      //       {
+      //         "data": "KELAS",
+      //         "orderable": false
+      //       },
+      //       {
+      //         "data": "NO_KIP",
+      //         "orderable": false
+      //       },
+      //       {
+      //         data: "PIP_ID",
+      //         className: "text-center",
+      //         orderable: false,
+      //         searchable: false,
+      //         render: function(data, type, row) {
+      //           return '<a class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-id="' + data + '" data-bs-toggle="tooltip" title="Download KIP Digital"><i class="fas fa-cloud-download-alt"></i>Download</a>';
+      //         }
+      //       }
+      //     ]
+      //   });
+
+      //   $('#btn-filter').click(function() {
+      //     table.ajax.reload(null, false);
+      //   });
+
+      //   $('div.dataTables_filter').addClass("d-flex align-items-center position-relative my-1");
+      //   $('div.dataTables_filter input').removeClass("form-control-sm").addClass("w-250px ps-14");
+      //   $('div.dataTables_filter label').prepend('<span class="svg-icon svg-icon-1 position-absolute mt-3 ms-4 px-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor"/><path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor"/></svg></span>');
+
+      $('#myModal').on('show.bs.modal', function(e) {
+        var id = $(e.relatedTarget).data('id');
+        $("#myModal .modal-body").load(Env.BASE_URL + 'admin/siswa/view_kip/' + id, function() {
+          $('#myModal').modal('show');
+        });
+      });
+
+    });
+  </script>
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-0VCJY06209"></script> -->
+  <!-- <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-0VCJY06209');
+  </script>
+  <script>
+    var closing = moment.tz(Env.END_DATE, "Asia/Jakarta");
+    $(".page-title h1").countdown(closing.toDate(), {
+      elapse: true
+    }).on("update.countdown", (function(event) {
+      event.elapsed ? '' : $(this).html(event.strftime('<span class="text-danger">%D Hari %H:%M:%S</span>'))
+    }))
+
+    window.addEventListener('offline', () => {
+      Swal.fire({
+        text: "Terjadi kesalahan di Jaringan, silahkan periksa koneksi internet Anda!",
+        icon: "error",
+        buttonsStyling: false,
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      });
+    });
+
+    $('.notifications_1').on('click', function(e) {
+      let notifications_id = $(this).data("id");
+      console.log(notifications_id)
+      $.ajax({
+        method: "POST",
+        url: Env.BASE_URL + 'admin/dashboard/read_notification',
+        data: {
+          id: notifications_id
+        },
+        success: function(response) {}
+      })
+    })
+  </script> -->
+</body>
+
+</html>
