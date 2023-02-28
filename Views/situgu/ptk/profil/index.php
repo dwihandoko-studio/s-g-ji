@@ -59,7 +59,7 @@
                                         </div>
                                         <div class="col-6">
                                             <h5 class="font-size-15">WA Verified</h5>
-                                            <p class="text-muted mb-0"><?= $data->wa_verified == 1 ? '<span class="badge rounded-pill badge-soft-success">Ya</span>' : '<span class="badge rounded-pill badge-soft-danger">Tidak</span>' ?></p>
+                                            <p class="text-muted mb-0"><?= $data->wa_verified == 1 ? '<span class="badge rounded-pill badge-soft-success">Ya</span>' : '<a href="javascript:actionAktivasi(\'WA\', \'aktivasi_wa\');"><span class="badge rounded-pill badge-soft-danger">Tidak</span></a>' ?></p>
                                         </div>
                                     </div>
                                     <div class="mt-4">

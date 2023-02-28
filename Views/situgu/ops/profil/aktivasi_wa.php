@@ -2,12 +2,15 @@
 
     <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
         <div class="alert alert-danger" role="alert">
-            Akun anda terdeteksi belum melakukan aktivasi Nomor Whatsapp.\nSilahkan untuk melakukan aktivasi Nomor Whatsapp terlebih dahulu.
+            Untuk saat ini, aktivasi Nomor Whatsapps masih dalam perbaikan.
         </div>
+        <!-- <div class="alert alert-danger" role="alert">
+            Akun anda terdeteksi belum melakukan aktivasi Nomor Whatsapp.\nSilahkan untuk melakukan aktivasi Nomor Whatsapp terlebih dahulu.
+        </div> -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        <button type="button" onclick="aksiAktivasiWa(this);" id="aktivasi-button-wa" class="btn btn-primary waves-effect waves-light aktivasi-button-wa">Aktivasi Sekarang</button>
+        <!-- <button type="button" onclick="aksiAktivasiWa(this);" id="aktivasi-button-wa" class="btn btn-primary waves-effect waves-light aktivasi-button-wa">Aktivasi Sekarang</button> -->
     </div>
 
     <script>
