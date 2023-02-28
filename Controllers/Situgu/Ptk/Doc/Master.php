@@ -428,7 +428,7 @@ class Master extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table($table_db)->where("id = '$id_ptk' AND is_locked != 1")->update($data);
+                $this->_db->table($table_db)->where("id = '$id_ptk' AND (is_locked = 0 OR is_locked IS NULL)")->update($data);
             } catch (\Exception $e) {
                 unlink($dir . '/' . $newNamelampiran);
 
