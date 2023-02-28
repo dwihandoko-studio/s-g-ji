@@ -427,7 +427,8 @@ class Master extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table($table_db)->where(['id' => $id_ptk, 'is_locked' => 0])->update($data);
+                // $this->_db->table($table_db)->where(['id' => $id_ptk, 'is_locked' => 0])->update($data);
+                $this->_db->table($table_db)->where("id = '$id_ptk' AND is_locked != 1")->update($data);
             } catch (\Exception $e) {
                 unlink($dir . '/' . $newNamelampiran);
 
@@ -657,7 +658,8 @@ class Master extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table($table_db)->where(['id' => $id_ptk, 'is_locked' => 0])->update($data);
+                // $this->_db->table($table_db)->where(['id' => $id_ptk, 'is_locked' => 0])->update($data);
+                $this->_db->table($table_db)->where("id = '$id_ptk' AND is_locked != 1")->update($data);
             } catch (\Exception $e) {
                 unlink($dir . '/' . $newNamelampiran);
 
