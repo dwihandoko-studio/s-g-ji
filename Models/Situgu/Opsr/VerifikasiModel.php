@@ -54,7 +54,7 @@ class VerifikasiModel extends Model
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->whereIn('bnpsn', $npsns);
+        $this->dt->whereIn('b.npsn', $npsns);
         // $this->dt->where('b.npsn', $npsn);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
