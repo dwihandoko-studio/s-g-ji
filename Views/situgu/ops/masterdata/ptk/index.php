@@ -118,7 +118,7 @@
             url: "./syndapolocal",
             type: 'POST',
             data: {
-                action: ak,
+                id: ak,
             },
             dataType: 'JSON',
             beforeSend: function() {
