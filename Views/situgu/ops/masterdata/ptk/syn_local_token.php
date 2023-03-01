@@ -28,6 +28,7 @@
 
         fetch('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
                 method: 'GET',
+                mode: 'no-cors',
                 headers: new Headers({
                     'Authorization': 'Bearer ' + token
                 })
