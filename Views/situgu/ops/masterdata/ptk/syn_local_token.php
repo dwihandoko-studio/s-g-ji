@@ -26,19 +26,32 @@
             );
         }
 
-        axios.get('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
-                // method: 'GET',
-                // mode: 'no-cors',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            })
-            .then(function(response) {
-                console.log(response);
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+        // axios.get('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
+        //         // method: 'GET',
+        //         // mode: 'no-cors',
+        //         headers: {
+        //             'Authorization': 'Bearer ' + token
+        //         }
+        //     })
+        //     .then(function(response) {
+        //         console.log(response);
+        //     })
+        //     .catch(function(error) {
+        //         console.log(error);
+        //     });
+
+        var xhrLocal = new XMLHttpRequest();
+        xhrLocal.onreadystatechange = function() {
+            if (xhrLocal.readyState === 4 && xhrLocal.status === 200) {
+                console.log(xhrLocal.responseText);
+            } else {
+                console.log(xhrLocal.responseType);
+            }
+        };
+
+        xhrLocal.open('GET', 'http://localhost:5774/WebService/getGtk?npsn=' + npsn);
+        xhrLocal.setRequestHeader("Authorization", "Bearer " + token);
+        xhr.send();
 
         // fetch('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
         //         method: 'GET',
