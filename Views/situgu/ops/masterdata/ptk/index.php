@@ -460,6 +460,8 @@
 <script src="<?= base_url() ?>/assets/libs/ckeditor5-custom/build/ckeditor.js"></script>
 <link href="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <style>
     .preview-image-upload {
         position: relative;

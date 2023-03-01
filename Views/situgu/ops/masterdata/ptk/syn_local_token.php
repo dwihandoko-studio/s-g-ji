@@ -26,20 +26,34 @@
             );
         }
 
-        fetch('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
-                method: 'GET',
-                mode: 'no-cors',
-                headers: new Headers({
+        axios.get('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
+                // method: 'GET',
+                // mode: 'no-cors',
+                headers: {
                     'Authorization': 'Bearer ' + token
-                })
+                }
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+            .then(function(response) {
+                console.log(response);
             })
-            .catch(error => {
+            .catch(function(error) {
                 console.log(error);
             });
+
+        // fetch('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
+        //         method: 'GET',
+        //         mode: 'no-cors',
+        //         headers: new Headers({
+        //             'Authorization': 'Bearer ' + token
+        //         })
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
 
         // $.ajax({
         //     url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn + "&callback=myFunctionCallBack",
