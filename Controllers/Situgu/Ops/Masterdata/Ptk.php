@@ -128,6 +128,63 @@ class Ptk extends BaseController
         return view('situgu/ops/masterdata/ptk/index', $data);
     }
 
+    public function syndapolocal()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah expired.";
+                return json_encode($response);
+            }
+
+            $current = $this->_db->table('token_sync_local')
+                ->where('npsn', $user->data->npsn)->get()->getRowObject();
+
+            // if ($current) {
+            $data['data'] = $current;
+            $data['sekolah'] = $user->data;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situgu/ops/masterdata/ptk/syn_local_token', $data);
+            return json_encode($response);
+            // } else {
+            //     $response = new \stdClass;
+            //     $response->status = 400;
+            //     $response->message = "Data tidak ditemukan";
+            //     return json_encode($response);
+            // }
+        }
+    }
+
     public function detail()
     {
         if ($this->request->getMethod() != 'post') {
