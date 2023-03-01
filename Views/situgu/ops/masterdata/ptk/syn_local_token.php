@@ -28,7 +28,8 @@
 
         $.ajax({
             url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
-            type: 'GET',
+            // type: 'GET',
+            method: 'GET',
             // headers: {
             //     'Authorization': "Bearer " + token,
             //     'Origin': "http://localhost:5774",
