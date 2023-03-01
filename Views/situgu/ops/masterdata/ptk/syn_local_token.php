@@ -26,62 +26,76 @@
             );
         }
 
-        $.ajax({
-            url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn + "&callback=myFunctionCallBack",
-            type: 'GET',
-            // method: 'GET',
-            headers: {
-                'Authorization': "Bearer " + token,
-                // 'Origin': "http://localhost:5774",
-            },
-            // beforeSend: function(xhr) {
-            //     xhr.setRequestHeader("Authorization", "Bearer " + token);
-            //     xhr.setRequestHeader("Origin", "http://localhost");
-            // },
-            dataType: 'jsonp',
-            jsonpCallback: 'myFunctionCallBack',
-            // crossDomain: true,
-            beforeSend: function(xhr) {
-                // xhr.setRequestHeader("Authorization", "Bearer " + token);
-                $('div.modal-content-loading-aktivasi').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.modal-content-loading-aktivasi').unblock();
+        fetch('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + token
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
 
-                console.log(resul);
+        // $.ajax({
+        //     url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn + "&callback=myFunctionCallBack",
+        //     type: 'GET',
+        //     // method: 'GET',
+        //     headers: {
+        //         'Authorization': "Bearer " + token,
+        //         // 'Origin': "http://localhost:5774",
+        //     },
+        //     // beforeSend: function(xhr) {
+        //     //     xhr.setRequestHeader("Authorization", "Bearer " + token);
+        //     //     xhr.setRequestHeader("Origin", "http://localhost");
+        //     // },
+        //     dataType: 'jsonp',
+        //     jsonpCallback: 'myFunctionCallBack',
+        //     // crossDomain: true,
+        //     beforeSend: function(xhr) {
+        //         // xhr.setRequestHeader("Authorization", "Bearer " + token);
+        //         $('div.modal-content-loading-aktivasi').block({
+        //             message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+        //         });
+        //     },
+        //     success: function(resul) {
+        //         $('div.modal-content-loading-aktivasi').unblock();
 
-                // if (resul.status !== 200) {
-                //     if (resul.status === 401) {
-                //         Swal.fire(
-                //             'Failed!',
-                //             resul.message,
-                //             'warning'
-                //         ).then((valRes) => {
-                //             reloadPage();
-                //         });
-                //     } else {
-                //         Swal.fire(
-                //             'PERINGATAN!',
-                //             resul.message,
-                //             'warning'
-                //         );
-                //     }
-                // } else {
-                //     $('.contentAktivasiBodyModal').html(resul.data);
-                // }
-            },
-            error: function(err) {
-                console.log(err);
-                $('div.modal-content-loading-aktivasi').unblock();
-                Swal.fire(
-                    'PERINGATAN!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
+        //         console.log(resul);
+
+        //         // if (resul.status !== 200) {
+        //         //     if (resul.status === 401) {
+        //         //         Swal.fire(
+        //         //             'Failed!',
+        //         //             resul.message,
+        //         //             'warning'
+        //         //         ).then((valRes) => {
+        //         //             reloadPage();
+        //         //         });
+        //         //     } else {
+        //         //         Swal.fire(
+        //         //             'PERINGATAN!',
+        //         //             resul.message,
+        //         //             'warning'
+        //         //         );
+        //         //     }
+        //         // } else {
+        //         //     $('.contentAktivasiBodyModal').html(resul.data);
+        //         // }
+        //     },
+        //     error: function(err) {
+        //         console.log(err);
+        //         $('div.modal-content-loading-aktivasi').unblock();
+        //         Swal.fire(
+        //             'PERINGATAN!',
+        //             "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+        //             'warning'
+        //         );
+        //     }
+        // });
 
     };
 
