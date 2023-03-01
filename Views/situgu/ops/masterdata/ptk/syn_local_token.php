@@ -29,11 +29,15 @@
         $.ajax({
             url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
             type: 'GET',
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader("Authorization", "Bearer " + token);
-                xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+            headers: {
+                'Authorization': "Bearer " + token,
             },
+            // beforeSend: function(xhr) {
+            //     xhr.setRequestHeader("Authorization", "Bearer " + token);
+            //     xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+            // },
             dataType: 'JSON',
+            crossDomain: true,
             beforeSend: function() {
                 $('div.modal-content-loading-aktivasi').block({
                     message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
