@@ -51,7 +51,7 @@
 
         xhrLocal.open('GET', 'http://localhost:5774/WebService/getGtk?npsn=' + npsn);
         xhrLocal.setRequestHeader("Authorization", "Bearer " + token);
-        xhr.send();
+        xhrLocal.send();
 
         // fetch('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
         //         method: 'GET',
