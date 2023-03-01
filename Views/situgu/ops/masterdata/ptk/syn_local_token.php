@@ -27,7 +27,7 @@
         }
 
         $.ajax({
-            url: "http://localhost:5774/WebService/getRiwayatGtk?npsn=" + npsn,
+            url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
             type: 'GET',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Authorization", "Bearer " + token);
