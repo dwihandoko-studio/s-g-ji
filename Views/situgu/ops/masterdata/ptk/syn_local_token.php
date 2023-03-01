@@ -29,14 +29,14 @@
         $.ajax({
             url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn,
             type: 'GET',
-            headers: {
-                'Authorization': "Bearer " + token,
-                'Origin': "http://localhost:5774",
-            },
-            // beforeSend: function(xhr) {
-            //     xhr.setRequestHeader("Authorization", "Bearer " + token);
-            //     xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+            // headers: {
+            //     'Authorization': "Bearer " + token,
+            //     'Origin': "http://localhost:5774",
             // },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + token);
+                xhr.setRequestHeader("Origin", "http://localhost");
+            },
             dataType: 'JSON',
             crossDomain: true,
             beforeSend: function() {
