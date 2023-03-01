@@ -50,7 +50,11 @@
         };
 
         xhrLocal.open('GET', 'http://localhost:5774/WebService/getGtk?npsn=' + npsn);
+        xhrLocal.setRequestHeader("Origin", "localhost");
         xhrLocal.setRequestHeader("Authorization", "Bearer " + token);
+        // xhrLocal.onload = function(data) {
+
+        // }
         xhrLocal.send();
 
         // fetch('http://localhost:5774/WebService/getGtk?npsn=' + npsn, {
