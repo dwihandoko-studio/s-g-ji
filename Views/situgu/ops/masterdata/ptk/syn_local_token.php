@@ -30,10 +30,10 @@
             url: "http://localhost:5774/WebService/getGtk?npsn=" + npsn + "&callback=myFunctionCallBack",
             type: 'GET',
             // method: 'GET',
-            // headers: {
-            //     'Authorization': "Bearer " + token,
-            //     // 'Origin': "http://localhost:5774",
-            // },
+            headers: {
+                'Authorization': "Bearer " + token,
+                // 'Origin': "http://localhost:5774",
+            },
             // beforeSend: function(xhr) {
             //     xhr.setRequestHeader("Authorization", "Bearer " + token);
             //     xhr.setRequestHeader("Origin", "http://localhost");
@@ -42,7 +42,7 @@
             jsonpCallback: 'myFunctionCallBack',
             // crossDomain: true,
             beforeSend: function(xhr) {
-                xhr.setRequestHeader("Authorization", "Bearer " + token);
+                // xhr.setRequestHeader("Authorization", "Bearer " + token);
                 $('div.modal-content-loading-aktivasi').block({
                     message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
                 });
