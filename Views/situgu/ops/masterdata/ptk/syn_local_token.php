@@ -31,6 +31,7 @@
             type: 'GET',
             headers: {
                 'Authorization': "Bearer " + token,
+                'Origin': "http://localhost:5774",
             },
             // beforeSend: function(xhr) {
             //     xhr.setRequestHeader("Authorization", "Bearer " + token);
