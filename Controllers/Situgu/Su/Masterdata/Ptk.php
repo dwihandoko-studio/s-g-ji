@@ -80,6 +80,11 @@ class Ptk extends BaseController
 
     public function index()
     {
+        return redirect()->to(base_url('situgu/su/masterdata/ptk/data'));
+    }
+
+    public function data()
+    {
         $data['title'] = 'PTK';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();

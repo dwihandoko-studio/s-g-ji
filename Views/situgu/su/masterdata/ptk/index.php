@@ -392,7 +392,7 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "<?= base_url('situgu/su/masterdata/ptk/getAll') ?>",
+                "url": "./getAll",
                 "type": "POST",
 
             },
