@@ -10,6 +10,7 @@ use Firebase\JWT\Key;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
+use App\Libraries\Emaillib;
 
 class Cs extends BaseController
 {
@@ -335,6 +336,20 @@ class Cs extends BaseController
                                 //throw $th;
                             }
                         }
+                        if ($pengadu->email_verified == 1) {
+                            try {
+                                $message = '<p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;text-align:left">Pengaduan anda mengenai ' . $oldData->isi . ' telah diproses admin dengan keterangan: ';
+                                $message .= $keterangan;
+                                $message .= '</p>';
+                                $emailLib = new Emaillib();
+                                $sendEmail = $emailLib->sendNotifikasi($pengadu->email, "Aduan mengenai " . $oldData->jenis . " diproses", $message);
+
+                                if ($sendEmail->code == 200) {
+                                }
+                            } catch (\Throwable $th) {
+                                //throw $th;
+                            }
+                        }
                     }
                     $this->_db->transCommit();
                     $response = new \stdClass;
@@ -574,6 +589,20 @@ class Cs extends BaseController
 
                                 $server_output = curl_exec($ch);
                                 curl_close($ch);
+                            } catch (\Throwable $th) {
+                                //throw $th;
+                            }
+                        }
+                        if ($pengadu->email_verified == 1) {
+                            try {
+                                $message = '<p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;text-align:left">Pengaduan anda mengenai ' . $oldData->isi . ' telah ditolak admin dengan keterangan: ';
+                                $message .= $keterangan;
+                                $message .= '</p>';
+                                $emailLib = new Emaillib();
+                                $sendEmail = $emailLib->sendNotifikasi($pengadu->email, "Aduan mengenai " . $oldData->jenis . " ditolak", $message);
+
+                                if ($sendEmail->code == 200) {
+                                }
                             } catch (\Throwable $th) {
                                 //throw $th;
                             }
