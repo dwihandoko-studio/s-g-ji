@@ -57,6 +57,80 @@ class Profil extends BaseController
         }
     }
 
+    public function act()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'action' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Action tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('action');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('action'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                return redirect()->to(base_url('auth'));
+            }
+
+            $current = $this->_db->table('_ptk_tb a')
+                ->select("b.*, a.lampiran_foto, a.nama, a.nuptk, a.nip, a.nik, a.email as email_dapodik, a.no_hp as nohp_dapodik, c.role")
+                ->join('v_user b', 'a.id_ptk = b.ptk_id', 'left')
+                ->join('_role_user c', 'b.role_user = c.id', 'left')
+                ->where('a.id_ptk', $user->data->ptk_id)->get()->getRowObject();
+
+            if ($current) {
+                $data['data'] = $current;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                switch ($id) {
+                    case 'password':
+                        $response->data = view('situgu/ptk/profil/password', $data);
+                        break;
+                    case 'foto':
+                        $response->data = view('situgu/ptk/profil/foto', $data);
+                        break;
+                    case 'aktivasi_email':
+                        $response->data = view('situgu/ptk/profil/aktivasi_email', $data);
+                        break;
+                    case 'aktivasi_wa':
+                        $response->data = view('situgu/ptk/profil/aktivasi_wa', $data);
+                        break;
+
+                    default:
+                        $response->data = view('situgu/ptk/profil/aktivasi_wa', $data);
+                        break;
+                }
+
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
     public function edit()
     {
         if ($this->request->getMethod() != 'post') {

@@ -207,7 +207,7 @@
 <script>
     function actionAktivasi(event, ak) {
         $.ajax({
-            url: "./edit",
+            url: "./act",
             type: 'POST',
             data: {
                 action: ak,
