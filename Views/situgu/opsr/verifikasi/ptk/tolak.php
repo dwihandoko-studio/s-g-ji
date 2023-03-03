@@ -26,7 +26,7 @@
                 type: 'POST',
                 data: {
                     id: '<?= $id ?>',
-                    nama: '<?= $nama ?>',
+                    nama: '<?= str_replace('&#039;', "`", str_replace("'", "`", $nama)) ?>',
                     keterangan: keterangan,
                 },
                 dataType: 'JSON',

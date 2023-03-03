@@ -4,7 +4,7 @@
             <h2>DATA INDIVIDU</h2>
             <div class="col-lg-6">
                 <label class="col-form-label">Nama Lengkap:</label>
-                <input type="text" class="form-control" value="<?= $data->nama ?>" readonly />
+                <input type="text" class="form-control" value="<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>" readonly />
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">NIK:</label>
@@ -317,10 +317,10 @@
     </div>
     <script>
         function actionTolak(e) {
-            const nama = '<?= $data->nama ?>';
+            const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
             Swal.fire({
                 title: 'Apakah anda yakin ingin menolak usulan Tamsil ini?',
-                text: "Tolak Usulan Tamsil PTK: <?= $data->nama ?>",
+                text: "Tolak Usulan Tamsil PTK: <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
@@ -374,7 +374,7 @@
 
         function simpanTolak(e) {
             const id = '<?= $data->id_usulan ?>';
-            const nama = '<?= $data->nama ?>';
+            const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
             const keterangan = document.getElementsByName('_keterangan_tolak')[0].value;
 
             $.ajax({
@@ -448,7 +448,7 @@
 
         function actionApprove(e) {
             const id = '<?= $data->id_usulan ?>';
-            const nama = '<?= $data->nama ?>';
+            const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
 
             $.ajax({
                 url: "./approve",

@@ -4,7 +4,7 @@
             <h2>DATA PENGGUNA</h2>
             <div class="col-lg-6">
                 <label class="col-form-label">Nama Lengkap:</label>
-                <input type="text" class="form-control" value="<?= $data->fullname ?>" readonly />
+                <input type="text" class="form-control" value="<?= str_replace('&#039;', "`", str_replace("'", "`", $data->fullname)) ?>" readonly />
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Email:</label>
@@ -51,10 +51,10 @@
     </div>
     <script>
         function actionTolak(e) {
-            const nama = '<?= $data->fullname ?>';
+            const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->fullname)) ?>';
             Swal.fire({
                 title: 'Apakah anda yakin ingin menolak verifikasi pengguna admin sekolah ini?',
-                text: "Tolak Verifikasi Pengguna Admin Sekolah: <?= $data->fullname ?>",
+                text: "Tolak Verifikasi Pengguna Admin Sekolah: <?= str_replace('&#039;', "`", str_replace("'", "`", $data->fullname)) ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
@@ -108,7 +108,7 @@
 
         function simpanTolak(e) {
             const id = '<?= $data->id ?>';
-            const nama = '<?= $data->fullname ?>';
+            const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->fullname)) ?>';
             const keterangan = document.getElementsByName('_keterangan_tolak')[0].value;
 
             $.ajax({
@@ -182,7 +182,7 @@
 
         function actionApprove(e) {
             const id = '<?= $data->id ?>';
-            const nama = '<?= $data->fullname ?>';
+            const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->fullname)) ?>';
 
             $.ajax({
                 url: "./approve",
