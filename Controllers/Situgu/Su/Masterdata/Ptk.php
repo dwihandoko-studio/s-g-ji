@@ -196,15 +196,22 @@ class Ptk extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
+            $current = $this->_db->table('_ptk_tb a')
+                ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.wa_verified, b.image")
+                ->join('v_user b', 'a.id_ptk = b.ptk_id', 'left')
+                ->where('a.id', $id)->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
+                $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
+                    ->select("a.*, b.npsn, b.nama as namaSekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
+                    ->join('ref_sekolah b', 'a.sekolah_id = b.id')
+                    ->where('a.ptk_id', $current->id_ptk)
+                    ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('a/setting/pengguna/detail', $data);
+                $response->data = view('situgu/su/masterdata/ptk/detail', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
