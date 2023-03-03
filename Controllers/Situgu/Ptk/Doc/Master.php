@@ -876,121 +876,121 @@ class Master extends BaseController
         }
     }
 
-    public function syncAll()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
+    // public function syncAll()
+    // {
+    //     if ($this->request->getMethod() != 'post') {
+    //         $response = new \stdClass;
+    //         $response->status = 400;
+    //         $response->message = "Permintaan tidak diizinkan";
+    //         return json_encode($response);
+    //     }
 
-        $rules = [
-            'npsn' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'NPSN tidak boleh kosong. ',
-                ]
-            ],
-        ];
+    //     $rules = [
+    //         'npsn' => [
+    //             'rules' => 'required|trim',
+    //             'errors' => [
+    //                 'required' => 'NPSN tidak boleh kosong. ',
+    //             ]
+    //         ],
+    //     ];
 
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('npsn');
-            return json_encode($response);
-        } else {
-            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
+    //     if (!$this->validate($rules)) {
+    //         $response = new \stdClass;
+    //         $response->status = 400;
+    //         $response->message = $this->validator->getError('npsn');
+    //         return json_encode($response);
+    //     } else {
+    //         $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
 
-            $apiLib = new Apilib();
-            $result = $apiLib->syncPtk($npsn);
+    //         $apiLib = new Apilib();
+    //         $result = $apiLib->syncPtk($npsn);
 
-            if ($result) {
-                if ($result->status == 200) {
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Syncrone Data Semua PTK Berhasil Dilakukan.";
-                    return json_encode($response);
-                } else {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal Syncrone Data";
-                    return json_encode($response);
-                }
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal Syncrone Data";
-                return json_encode($response);
-            }
-        }
-    }
+    //         if ($result) {
+    //             if ($result->status == 200) {
+    //                 $response = new \stdClass;
+    //                 $response->status = 200;
+    //                 $response->message = "Syncrone Data Semua PTK Berhasil Dilakukan.";
+    //                 return json_encode($response);
+    //             } else {
+    //                 $response = new \stdClass;
+    //                 $response->status = 400;
+    //                 $response->message = "Gagal Syncrone Data";
+    //                 return json_encode($response);
+    //             }
+    //         } else {
+    //             $response = new \stdClass;
+    //             $response->status = 400;
+    //             $response->message = "Gagal Syncrone Data";
+    //             return json_encode($response);
+    //         }
+    //     }
+    // }
 
-    public function sync()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
+    // public function sync()
+    // {
+    //     if ($this->request->getMethod() != 'post') {
+    //         $response = new \stdClass;
+    //         $response->status = 400;
+    //         $response->message = "Permintaan tidak diizinkan";
+    //         return json_encode($response);
+    //     }
 
-        $rules = [
-            'ptk_id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id PTK tidak boleh kosong. ',
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-            'npsn' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'NPSN tidak boleh kosong. ',
-                ]
-            ],
-        ];
+    //     $rules = [
+    //         'ptk_id' => [
+    //             'rules' => 'required|trim',
+    //             'errors' => [
+    //                 'required' => 'Id PTK tidak boleh kosong. ',
+    //             ]
+    //         ],
+    //         'nama' => [
+    //             'rules' => 'required|trim',
+    //             'errors' => [
+    //                 'required' => 'Nama tidak boleh kosong. ',
+    //             ]
+    //         ],
+    //         'npsn' => [
+    //             'rules' => 'required|trim',
+    //             'errors' => [
+    //                 'required' => 'NPSN tidak boleh kosong. ',
+    //             ]
+    //         ],
+    //     ];
 
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('ptk_id')
-                . $this->validator->getError('nama')
-                . $this->validator->getError('npsn');
-            return json_encode($response);
-        } else {
-            $idPtk = htmlspecialchars($this->request->getVar('ptk_id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
+    //     if (!$this->validate($rules)) {
+    //         $response = new \stdClass;
+    //         $response->status = 400;
+    //         $response->message = $this->validator->getError('ptk_id')
+    //             . $this->validator->getError('nama')
+    //             . $this->validator->getError('npsn');
+    //         return json_encode($response);
+    //     } else {
+    //         $idPtk = htmlspecialchars($this->request->getVar('ptk_id'), true);
+    //         $nama = htmlspecialchars($this->request->getVar('nama'), true);
+    //         $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
 
-            $apiLib = new Apilib();
-            $result = $apiLib->syncPtkId($idPtk, $npsn);
+    //         $apiLib = new Apilib();
+    //         $result = $apiLib->syncPtkId($idPtk, $npsn);
 
-            if ($result) {
-                if ($result->status == 200) {
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Syncrone Data PTK $nama Berhasil Dilakukan.";
-                    return json_encode($response);
-                } else {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal Syncrone Data";
-                    return json_encode($response);
-                }
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal Syncrone Data";
-                return json_encode($response);
-            }
-        }
-    }
+    //         if ($result) {
+    //             if ($result->status == 200) {
+    //                 $response = new \stdClass;
+    //                 $response->status = 200;
+    //                 $response->message = "Syncrone Data PTK $nama Berhasil Dilakukan.";
+    //                 return json_encode($response);
+    //             } else {
+    //                 $response = new \stdClass;
+    //                 $response->status = 400;
+    //                 $response->message = "Gagal Syncrone Data";
+    //                 return json_encode($response);
+    //             }
+    //         } else {
+    //             $response = new \stdClass;
+    //             $response->status = 400;
+    //             $response->message = "Gagal Syncrone Data";
+    //             return json_encode($response);
+    //         }
+    //     }
+    // }
 
     public function delete()
     {

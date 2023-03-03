@@ -115,7 +115,7 @@
         }).then((result) => {
             if (result.value) {
                 $.ajax({
-                    url: "<?= base_url('situgu/su/masterdata/ptk/sync') ?>",
+                    url: "./sync",
                     type: 'POST',
                     data: {
                         id: id,

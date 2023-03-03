@@ -7,17 +7,20 @@ use App\Models\Situgu\Su\PtkModel;
 use Config\Services;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
+use App\Libraries\Helplib;
 
 class Ptk extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
     private $model;
+    private $_helpLib;
 
     function __construct()
     {
         helper(['text', 'file', 'form', 'session', 'array', 'imageurl', 'web', 'filesystem']);
         $this->_db      = \Config\Database::connect();
+        $this->_helpLib = new Helplib();
     }
 
     public function getAll()
@@ -276,7 +279,7 @@ class Ptk extends BaseController
         }
     }
 
-    public function sync()
+    public function syncAll()
     {
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -337,6 +340,81 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal Syncrone Data";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function sync()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'ptk_id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'npsn' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NPSN tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('ptk_id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('npsn');
+            return json_encode($response);
+        } else {
+            $idPtk = htmlspecialchars($this->request->getVar('ptk_id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
+
+            $tw = $this->_helpLib->getCurrentTw();
+            if (!$tw) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Tahun Triwulan Active tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $apiLib = new Apilib();
+            $result = $apiLib->syncPtkId($idPtk, $npsn, $tw);
+
+            if ($result) {
+                if ($result->status == 200) {
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Tarik Data PTK $nama Berhasil Dilakukan.";
+                    return json_encode($response);
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->error = $result;
+                    $response->message = "Gagal Tarik Data.";
+                    return json_encode($response);
+                }
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal Tarik Data";
                 return json_encode($response);
             }
         }
