@@ -39,12 +39,12 @@
             </div>
             <div class="mb-3">
                 <label for="_mkt_pangkat" class="form-label">Masa Kerja Tahun Pangkat Terakhir</label>
-                <input type="date" class="form-control mkt-pangkat" value="<?= $data->masa_kerja_tahun ?>" id="_mkt_pangkat" name="_mkt_pangkat" onfocusin="inputFocus(this);">
+                <input type="number" class="form-control mkt-pangkat" value="<?= $data->masa_kerja_tahun ?>" id="_mkt_pangkat" name="_mkt_pangkat" onfocusin="inputFocus(this);">
                 <div class="help-block _mkt_pangkat"></div>
             </div>
             <div class="mb-3">
                 <label for="_mkb_pangkat" class="form-label">Masa Kerja Bulan Pangkat Terakhir</label>
-                <input type="date" class="form-control mkt-pangkat" value="<?= $data->masa_kerja_bulan ?>" id="_mkb_pangkat" name="_mkb_pangkat" onfocusin="inputFocus(this);">
+                <input type="number" class="form-control mkt-pangkat" value="<?= $data->masa_kerja_bulan ?>" id="_mkb_pangkat" name="_mkb_pangkat" onfocusin="inputFocus(this);">
                 <div class="help-block _mkb_pangkat"></div>
             </div>
             <div class="mb-3">
@@ -69,12 +69,12 @@
             </div>
             <div class="mb-3">
                 <label for="_mkt_kgb" class="form-label">Masa Kerja Tahun KGB Terakhir</label>
-                <input type="date" class="form-control mkt-kgb" value="<?= $data->masa_kerja_tahun_kgb ?>" id="_mkt_kgb" name="_mkt_kgb" onfocusin="inputFocus(this);">
+                <input type="number" class="form-control mkt-kgb" value="<?= $data->masa_kerja_tahun_kgb ?>" id="_mkt_kgb" name="_mkt_kgb" onfocusin="inputFocus(this);">
                 <div class="help-block _mkt_kgb"></div>
             </div>
             <div class="mb-3">
                 <label for="_mkb_kgb" class="form-label">Masa Kerja Bulan KGB Terakhir</label>
-                <input type="date" class="form-control mkt-kgb" value="<?= $data->masa_kerja_bulan_kgb ?>" id="_mkb_kgb" name="_mkb_kgb" onfocusin="inputFocus(this);">
+                <input type="number" class="form-control mkt-kgb" value="<?= $data->masa_kerja_bulan_kgb ?>" id="_mkb_kgb" name="_mkb_kgb" onfocusin="inputFocus(this);">
                 <div class="help-block _mkb_kgb"></div>
             </div>
 
