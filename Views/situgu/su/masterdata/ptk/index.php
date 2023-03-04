@@ -167,7 +167,7 @@
             url: "./edit",
             type: 'POST',
             data: {
-                id: event,
+                id: id,
                 nama: nama,
                 ptk_id: ptkId,
                 nuptk: nuptk,
@@ -188,7 +188,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-editModalLabel').html('UBAH DATA PTK ' + title);
+                    $('#content-editModalLabel').html('UBAH DATA PTK ' + nama);
                     $('.contentEditBodyModal').html(resul.data);
                     $('.content-editModal').modal({
                         backdrop: 'static',
