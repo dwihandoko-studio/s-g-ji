@@ -127,32 +127,32 @@
             <?php switch ($data->bidang_studi_sertifikasi) {
                 case '':
                     echo `<div class="col-lg-6">
-                            <label class="col-form-label">Sudah Sertifikasi:</label>
+                            <label class="col-form-label">Status Sertifikasi:</label>
                             <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
                         </div>`;
                     break;
                 case null:
                     echo `<div class="col-lg-6">
-                            <label class="col-form-label">Sudah Sertifikasi:</label>
+                            <label class="col-form-label">Status Sertifikasi:</label>
                             <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
                         </div>`;
                     break;
                 case '-':
                     echo `<div class="col-lg-6">
-                            <label class="col-form-label">Sudah Sertifikasi:</label>
+                            <label class="col-form-label">Status Sertifikasi:</label>
                             <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
                         </div>`;
                     break;
                 case ' ':
                     echo `<div class="col-lg-6">
-                            <label class="col-form-label">Sudah Sertifikasi:</label>
+                            <label class="col-form-label">Status Sertifikasi:</label>
                             <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
                         </div>`;
                     break;
 
                 default:
                     echo `<div class="col-lg-6">
-                        <label class="col-form-label">Sudah Sertifikasi:</label>
+                        <label class="col-form-label">Status Sertifikasi:</label>
                         <div><span class="badge badge-pill badge-soft-success">Sudah</span></div>
                     </div>
                     <div class="col-lg-6">
