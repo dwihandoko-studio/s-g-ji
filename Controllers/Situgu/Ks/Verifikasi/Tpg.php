@@ -188,6 +188,7 @@ class Tpg extends BaseController
                     ->join('ref_sekolah b', 'a.sekolah_id = b.id')
                     ->where('a.ptk_id', $current->id_ptk)
                     ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
+                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk);
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
