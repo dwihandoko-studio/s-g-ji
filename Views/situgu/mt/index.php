@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <h3 class="mt-5">Site is Under Maintenance</h3>
-                        <p>Please check back in sometime.</p>
+                        <p>Saat ini layanan SI-TUGU sedang dalam proses peningkatan sistem. Mohon maaf atas ketidaknyamanannya.<br>Terima Kasih.</p>
 
                         <!-- <div class="row">
                             <div class="col-md-4">

@@ -484,6 +484,15 @@ class Tamsil extends BaseController
             $template_processor->setValue('JABATAN_KS', $jabatan_ks);
             $template_processor->setValue('JUMLAH_PTK', $usulan->jumlah_ptk);
             $template_processor->setValue('TANGGAL_SPTJM', tgl_indo(date('Y-m-d')));
+            if ($ptks[0]->tw_tw == 1) {
+                $template_processor->setValue('BL_TO_BL', "Januari s/d Maret");
+            } else if ($ptks[0]->tw_tw == 2) {
+                $template_processor->setValue('BL_TO_BL', "Mei s/d Juni");
+            } else if ($ptks[0]->tw_tw == 3) {
+                $template_processor->setValue('BL_TO_BL', "Juli s/d September");
+            } else if ($ptks[0]->tw_tw == 4) {
+                $template_processor->setValue('BL_TO_BL', "Oktober s/d Desember");
+            }
             $nipKs = "";
             if ($ks->nip && ($ks->nip !== "" || $ks->nip !== "-")) {
                 $nipKs .= $ks->nip;
@@ -494,21 +503,35 @@ class Tamsil extends BaseController
 
             $dataPtnya = [];
             foreach ($ptks as $key => $v) {
+                $pph = "0%";
+                $pph21 = 1;
+                if ($v->us_pang_golongan == NULL || $v->us_pang_golongan == "") {
+                } else {
+                    $pang = explode("/", $v->us_pang_golongan);
+                    if ($pang[0] == "III") {
+                        $pph21 = 1 + (5 / 100);
+                        $pph = "5%";
+                    } else if ($pang[0] == "IV") {
+                        $pph21 = 1 + (15 / 100);
+                        $pph = "15%";
+                    } else {
+                        $pph21 = 1;
+                        $pph = "0%";
+                    }
+                }
+
                 $dataPtnya[] = [
                     'NO' => $key + 1,
-                    'NRG' => $v->nrg,
-                    'NOPES' => $v->no_peserta,
                     'NUPTK' => $v->nuptk,
                     'NIP' => $v->nip,
                     'NAMA' => $v->nama,
                     'GOL' => $v->us_pang_golongan,
                     'TH' => $v->us_pang_mk_tahun,
                     'BL' => $v->us_pang_mk_bulan,
-                    'GAPOK' => rpTanpaAwalan($v->us_gaji_pokok),
                     'JB' => 3,
                     'JU' => rpTanpaAwalan(($v->us_gaji_pokok * 3)),
-                    'PPH' => "15%",
-                    'JD' => rpTanpaAwalan(($v->us_gaji_pokok * 3)),
+                    'PPH' => $pph,
+                    'JD' => rpTanpaAwalan((($v->us_gaji_pokok * 3) * $pph21)),
                     'NPWP' => $v->npwp,
                     'NOREK' => $v->no_rekening,
                     'BANK' => $v->cabang_bank,
