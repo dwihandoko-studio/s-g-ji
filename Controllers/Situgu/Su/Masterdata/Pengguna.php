@@ -175,7 +175,7 @@ class Pengguna extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
             $wilayahs = $this->_db->table('ref_kecamatan')
-                ->get()->getRowObject();
+                ->get()->getResult();
 
             if ($wilayahs) {
                 $data['wilayahs'] = $wilayahs;
