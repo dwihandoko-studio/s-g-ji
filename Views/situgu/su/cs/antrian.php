@@ -55,6 +55,7 @@
                                     <th>STATUS</th>
                                     <th>DATE</th>
                                     <th>JENIS</th>
+                                    <th>NPSN</th>
                                     <th>DESKRIPSI</th>
                                     <th>URGENT</th>
                                 </tr>
