@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers\Situgu\Opk\Masterdata;
+namespace App\Controllers\Situgu\Adm\Masterdata;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Opk\PtkModel;
-use App\Models\Situgu\Opk\SekolahModel;
+use App\Models\Situgu\Adm\PtkModel;
+use App\Models\Situgu\Adm\SekolahModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -175,7 +175,7 @@ class Ptk extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/opk/masterdata/ptk/data'));
+        return redirect()->to(base_url('situgu/adm/masterdata/ptk/data'));
     }
 
     public function data()
@@ -191,7 +191,7 @@ class Ptk extends BaseController
 
         $data['user'] = $user->data;
 
-        return view('situgu/opk/masterdata/ptk/index', $data);
+        return view('situgu/adm/masterdata/ptk/index', $data);
     }
 
     public function sekolah()
@@ -208,13 +208,13 @@ class Ptk extends BaseController
         $id = htmlspecialchars($this->request->getGet('n'), true);
 
         $data['user'] = $user->data;
-        $data['redirect'] = base_url('situgu/opk/masterdata/ptk');
+        $data['redirect'] = base_url('situgu/adm/masterdata/ptk');
         $sekolah = $this->_db->table('ref_sekolah')->where('id', $id)->get()->getRowObject();
         if (!$sekolah) {
             return view('404', $data);
         }
         $data['sekolah'] = $sekolah;
-        return view('situgu/opk/masterdata/ptk/sekolah', $data);
+        return view('situgu/adm/masterdata/ptk/sekolah', $data);
     }
 
     public function detail()
@@ -260,7 +260,7 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/opk/masterdata/ptk/detail', $data);
+                $response->data = view('situgu/adm/masterdata/ptk/detail', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -488,7 +488,7 @@ class Ptk extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/opk/masterdata/ptk/hapus', $data);
+            $response->data = view('situgu/adm/masterdata/ptk/hapus', $data);
             return json_encode($response);
         }
     }

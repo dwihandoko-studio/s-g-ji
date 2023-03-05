@@ -174,15 +174,15 @@ class Pengguna extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_users_tb')
+            $wilayahs = $this->_db->table('ref_kecamatan')
                 ->where('uid', $id)->get()->getRowObject();
 
-            if ($current) {
-                $data['data'] = $current;
+            if ($wilayahs) {
+                $data['wilayahs'] = $wilayahs;
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('a/setting/pengguna/detail', $data);
+                $response->data = view('situgu/su/masterdata/pengguna/wilayahs', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
