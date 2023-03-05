@@ -205,7 +205,7 @@ class Ptk extends BaseController
             if ($current) {
                 $data['data'] = $current;
                 $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
-                    ->select("a.*, b.npsn, b.nama as namaSekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
+                    ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
                     ->join('ref_sekolah b', 'a.sekolah_id = b.id')
                     ->where('a.ptk_id', $current->id_ptk)
                     ->where("a.jenis_keluar IS NULL")

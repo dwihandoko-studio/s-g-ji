@@ -114,7 +114,7 @@
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Kecamatan:</label>
-                <input type="text" class="form-control" value="<?= $data->kecamatan ?>" readonly />
+                <input type="text" class="form-control" value="<?= $data->kecamatan_sekolah ?>" readonly />
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Status PTK:</label>

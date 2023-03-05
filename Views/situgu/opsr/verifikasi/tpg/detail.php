@@ -94,7 +94,7 @@
                 <input type="text" class="form-control" value="<?= $data->email ?>" readonly />
             </div>
             <div class="col-lg-6">
-                <label class="col-form-label">No Hanphone Dapodik:</label>
+                <label class="col-form-label">No Handphone Dapodik:</label>
                 <input type="text" class="form-control" value="<?= $data->no_hp ?>" readonly />
             </div>
         </div>

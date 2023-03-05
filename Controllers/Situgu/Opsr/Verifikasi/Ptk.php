@@ -161,8 +161,10 @@ class Ptk extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $current = $this->_db->table('_ptk_tb_hapus')
-                ->where(['id' => $id])->get()->getRowObject();
+            $current = $this->_db->table('_ptk_tb_hapus a')
+                ->select("a.*, b.kecamatan as kecamatan_sekolah")
+                ->join('ref_sekolah b', 'a.npsn = b.npsn')
+                ->where(['a.id' => $id])->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
