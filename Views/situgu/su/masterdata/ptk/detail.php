@@ -189,7 +189,7 @@
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Kecamatan:</label>
-                <div><?= $data->nip ?></div>
+                <div><?= $data->kecamatan ?></div>
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Status PTK:</label>
