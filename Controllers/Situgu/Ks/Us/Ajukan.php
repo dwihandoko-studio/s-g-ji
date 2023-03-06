@@ -276,7 +276,15 @@ class Ajukan extends BaseController
                 }
 
                 if ($ptk->status_kepegawaian === "PNS" || $ptk->status_kepegawaian === "PPPK" || $ptk->status_kepegawaian === "PNS Diperbantukan" || $ptk->status_kepegawaian === "PNS Depag" || $ptk->status_kepegawaian === "CPNS") {
+
+                    if ($ptk->pang_golongan == NULL || $ptk->pang_golongan == "") {
+                        $response->status = 400;
+                        $response->message = "Data attribut kepegawaian masih kosong.";
+                        return json_encode($response);
+                    }
+
                     if ($ptk->lampiran_pangkat === null || $ptk->lampiran_pangkat === "" || $ptk->lampiran_kgb === null || $ptk->lampiran_kgb === "") {
+
                         $response->status = 400;
                         $response->message = "Lampiran Dokumen Atribut Pangkat dan KGB tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
                         $response->redirrect = base_url("situgu/ks/doc/atribut");
@@ -324,6 +332,12 @@ class Ajukan extends BaseController
                 }
 
                 if ($ptk->status_kepegawaian === "PNS" || $ptk->status_kepegawaian === "PPPK" || $ptk->status_kepegawaian === "PNS Diperbantukan" || $ptk->status_kepegawaian === "PNS Depag") {
+
+                    if ($ptk->pang_golongan == NULL || $ptk->pang_golongan == "") {
+                        $response->status = 400;
+                        $response->message = "Data attribut kepegawaian masih kosong.";
+                        return json_encode($response);
+                    }
                     if ($ptk->lampiran_pangkat === null || $ptk->lampiran_pangkat === "" || $ptk->lampiran_kgb === null || $ptk->lampiran_kgb === "") {
                         $response->status = 404;
                         $response->message = "Lampiran Dokumen Atribut Pangkat dan KGB tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
