@@ -269,7 +269,7 @@ class Auth extends BaseController
             // );
 
             // $token = JWT::encode($token, $token_jwt, 'HS256');
-            set_cookie('jwt', $result->data->access_token, strval(3600 * 1));
+            set_cookie('jwt', $result->data->access_token, strval(3600 * 24 * 1));
 
             $response = new \stdClass;
             $response->status = 200;
