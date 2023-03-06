@@ -80,6 +80,18 @@
         </div>
     </div>
 </div>
+<div id="content-editModal" class="modal fade content-editModal" tabindex="-1" role="dialog" aria-labelledby="content-editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-loading">
+            <div class="modal-header">
+                <h5 class="modal-title" id="content-editModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="contentEditBodyModal">
+            </div>
+        </div>
+    </div>
+</div>
 <!-- end modal -->
 <?= $this->endSection(); ?>
 
@@ -313,6 +325,96 @@
                         keyboard: false,
                     });
                     $('.content-detailModal').modal('show');
+                }
+            },
+            error: function() {
+                $('div.main-content').unblock();
+                Swal.fire(
+                    'Failed!',
+                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
+            }
+        });
+    }
+
+    function actionDetailBackbone(id, nama, nuptk) {
+        $.ajax({
+            url: "./detailbackbone",
+            type: 'POST',
+            data: {
+                id: id,
+                nama: nama,
+                nuptk: nuptk,
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                $('div.main-content').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.main-content').unblock();
+                if (resul.status !== 200) {
+                    Swal.fire(
+                        'Failed!',
+                        resul.message,
+                        'warning'
+                    );
+                } else {
+                    $('#content-detailModalLabel').html('DETAIL DATA BACKBONE PTK ' + title);
+                    $('.contentBodyModal').html(resul.data);
+                    $('.content-detailModal').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                    });
+                    $('.content-detailModal').modal('show');
+                }
+            },
+            error: function() {
+                $('div.main-content').unblock();
+                Swal.fire(
+                    'Failed!',
+                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
+            }
+        });
+    }
+
+    function actionEdit(id, ptkId, nama, nuptk, npsn) {
+        $.ajax({
+            url: "./edit",
+            type: 'POST',
+            data: {
+                id: id,
+                nama: nama,
+                ptk_id: ptkId,
+                nuptk: nuptk,
+                npsn: npsn,
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                $('div.main-content').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.main-content').unblock();
+                if (resul.status !== 200) {
+                    Swal.fire(
+                        'Failed!',
+                        resul.message,
+                        'warning'
+                    );
+                } else {
+                    $('#content-editModalLabel').html('UBAH DATA PTK ' + nama);
+                    $('.contentEditBodyModal').html(resul.data);
+                    $('.content-editModal').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                    });
+                    $('.content-editModal').modal('show');
                 }
             },
             error: function() {
