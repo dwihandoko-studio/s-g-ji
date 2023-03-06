@@ -26,9 +26,9 @@ class Downloadlib
         return $mpdf->Output($name, 'D');
     }
 
-    public function downloaded($path, $name)
+    public function downloaded($path, $name, $jenis_sptjm = "tamsil")
     {
-        $dir = FCPATH . "upload/generate/sptjm/tamsil/pdf";
+        $dir = FCPATH . "upload/generate/sptjm/" . $jenis_sptjm . "/pdf";
         sleep(3);
         try {
             if (exec('libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir, $output, $retval)) {
@@ -37,19 +37,23 @@ class Downloadlib
                 // $this->response->setHeader('Content-Type', 'application/octet-stream');
                 // $this->response->setHeader('Content-Disposition', 'attachment; filename="' . $name . '"');
                 // $this->response->setHeader('Content-Length', filesize($file));
-                return $file;
-
+                // return $file;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Berhasil convert file.";
+                $response->file = $file;
+                return json_encode($response);
 
                 // return $this->response->sendFile($file);
             } else {
                 $response = new \stdClass;
-                $response->code = 400;
+                $response->status = 400;
                 $response->message = "Gagal convert file.";
                 return json_encode($response);
             }
         } catch (\Exception $err) {
             $response = new \stdClass;
-            $response->code = 400;
+            $response->status = 400;
             $response->error = var_dump($err);
             $response->message = "Gagal convert file.";
             return json_encode($response);
