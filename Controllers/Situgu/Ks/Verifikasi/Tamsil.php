@@ -191,7 +191,7 @@ class Tamsil extends BaseController
                     ->where('a.ptk_id', $current->id_ptk)
                     ->where("a.jenis_keluar IS NULL")
                     ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
-                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk);
+                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk)->get()->getRowObject();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
