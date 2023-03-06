@@ -47,28 +47,28 @@ class SekolahModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables($kecamatan)
+    function get_datatables()
     {
-        $this->dt->where('kode_kecamatan', $kecamatan);
-        $this->dt->whereIn('bentuk_pendidikan_id', [5]);
+        // $this->dt->where('kode_kecamatan', $kecamatan);
+        // $this->dt->whereIn('bentuk_pendidikan_id', [5]);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered($kecamatan)
+    function count_filtered()
     {
-        $this->dt->where('kode_kecamatan', $kecamatan);
-        $this->dt->whereIn('bentuk_pendidikan_id', [5]);
+        // $this->dt->where('kode_kecamatan', $kecamatan);
+        // $this->dt->whereIn('bentuk_pendidikan_id', [5]);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all($kecamatan)
+    public function count_all()
     {
-        $this->dt->where('kode_kecamatan', $kecamatan);
-        $this->dt->whereIn('bentuk_pendidikan_id', [5]);
+        // $this->dt->where('kode_kecamatan', $kecamatan);
+        // $this->dt->whereIn('bentuk_pendidikan_id', [5]);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
