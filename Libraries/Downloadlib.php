@@ -42,21 +42,21 @@ class Downloadlib
                 $response->status = 200;
                 $response->message = "Berhasil convert file.";
                 $response->file = $file;
-                return json_encode($response);
+                return $response;
 
                 // return $this->response->sendFile($file);
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal convert file.";
-                return json_encode($response);
+                return $response;
             }
         } catch (\Exception $err) {
             $response = new \stdClass;
             $response->status = 400;
             $response->error = var_dump($err);
             $response->message = "Gagal convert file.";
-            return json_encode($response);
+            return $response;
         }
     }
 }
