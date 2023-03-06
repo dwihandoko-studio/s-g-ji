@@ -307,11 +307,13 @@
                     </a>
                 <?php } ?>
                 <?php if (isset($igd)) {
-                    if ($igd->qrcode) { ?>
-                        <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= $igd->qrcode ?>','popup','width=600,height=600'); return false;" href="<?= $igd->qrcode ?>" id="nik">
-                            INFO GTK DIGITAL
-                        </a>
+                    if ($igd) {
+                        if ($igd->qrcode) { ?>
+                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= $igd->qrcode ?>','popup','width=600,height=600'); return false;" href="<?= $igd->qrcode ?>" id="nik">
+                                INFO GTK DIGITAL
+                            </a>
                 <?php }
+                    }
                 } ?>
             </div>
 
