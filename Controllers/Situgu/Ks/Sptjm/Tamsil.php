@@ -557,6 +557,7 @@ class Tamsil extends BaseController
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->error = $responseD;
                 $response->message = "Gagal mendownload SPTJM.";
                 return json_encode($response);
             }
