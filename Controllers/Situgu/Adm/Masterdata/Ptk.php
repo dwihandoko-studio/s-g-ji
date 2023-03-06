@@ -73,6 +73,7 @@ class Ptk extends BaseController
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
                             <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+                            <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>
                             <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
                             <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Ajukan Hapus Data</a>
                         </div>
@@ -271,6 +272,77 @@ class Ptk extends BaseController
         }
     }
 
+    public function detailbackbone()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'nuptk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NUPTK tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('nuptk');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nuptk = htmlspecialchars($this->request->getVar('nuptk'), true);
+
+            $current = $this->_db->table('_ptk_tb')->select("id_ptk, nuptk")
+                ->where('id', $id)->get()->getRowObject();
+
+            if ($current) {
+                $apiLib = new Apilib();
+                if ($current->id_ptk !== null) {
+                    $result = $apiLib->getPtkById($current->id_ptk);
+
+                    $ptk = $result;
+                } else {
+                    $result = $apiLib->getPtkByNuptk($current->nuptk);
+
+                    $ptk = $result;
+                }
+
+                $data['data'] = $ptk;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situgu/adm/masterdata/ptk/get_detail_backbone', $data);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
     public function edit()
     {
         if ($this->request->getMethod() != 'post') {
@@ -287,25 +359,49 @@ class Ptk extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
+            'ptk_id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'PTK Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'npsn' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NPSN tidak boleh kosong. ',
+                ]
+            ],
         ];
 
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('id');
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('npsn')
+                . $this->validator->getError('ptk_id');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
+            $ptk_id = htmlspecialchars($this->request->getVar('ptk_id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
 
-            $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
+            $current = $this->_db->table('_ptk_tb')
+                ->where(['id' => $id, 'id_ptk' => $ptk_id, 'npsn' => $npsn])->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('a/setting/pengguna/edit', $data);
+                $response->data = view('situgu/adm/masterdata/ptk/edit', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -599,73 +695,15 @@ class Ptk extends BaseController
             'id' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Id buku tidak boleh kosong. ',
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-            'email' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Email tidak boleh kosong. ',
-                ]
-            ],
-            'nohp' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'No handphone tidak boleh kosong. ',
-                ]
-            ],
-            'nip' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'NIP tidak boleh kosong. ',
-                ]
-            ],
-            'alamat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Alamat tidak boleh kosong. ',
-                ]
-            ],
-            'status' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Status tidak boleh kosong. ',
+                    'required' => 'Id PTK tidak boleh kosong. ',
                 ]
             ],
         ];
 
-        $filenamelampiran = dot_array_search('file.name', $_FILES);
-        if ($filenamelampiran != '') {
-            $lampiranVal = [
-                'file' => [
-                    'rules' => 'uploaded[file]|max_size[file,512]|is_image[file]',
-                    'errors' => [
-                        'uploaded' => 'Pilih gambar profil terlebih dahulu. ',
-                        'max_size' => 'Ukuran gambar profil terlalu besar. ',
-                        'is_image' => 'Ekstensi yang anda upload harus berekstensi gambar. '
-                    ]
-                ],
-            ];
-            $rules = array_merge($rules, $lampiranVal);
-        }
-
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('nama')
-                . $this->validator->getError('id')
-                . $this->validator->getError('email')
-                . $this->validator->getError('nohp')
-                . $this->validator->getError('nip')
-                . $this->validator->getError('alamat')
-                . $this->validator->getError('status')
-                . $this->validator->getError('file');
+            $response->message = $this->validator->getError('id');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -680,14 +718,23 @@ class Ptk extends BaseController
             }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-            $email = htmlspecialchars($this->request->getVar('email'), true);
-            $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
-            $nip = htmlspecialchars($this->request->getVar('nip'), true);
-            $alamat = htmlspecialchars($this->request->getVar('alamat'), true);
-            $status = htmlspecialchars($this->request->getVar('status'), true);
+            $nrg = htmlspecialchars($this->request->getVar('nrg'), true);
+            $no_peserta = htmlspecialchars($this->request->getVar('no_peserta'), true);
+            $bidang_studi_sertifikasi = htmlspecialchars($this->request->getVar('bidang_studi_sertifikasi'), true);
+            $pangkat = htmlspecialchars($this->request->getVar('pangkat'), true);
+            $no_sk_pangkat = htmlspecialchars($this->request->getVar('no_sk_pangkat'), true);
+            $tgl_pangkat = htmlspecialchars($this->request->getVar('tgl_pangkat'), true);
+            $tmt_pangkat = htmlspecialchars($this->request->getVar('tmt_pangkat'), true);
+            $mkt_pangkat = htmlspecialchars($this->request->getVar('mkt_pangkat'), true);
+            $mkb_pangkat = htmlspecialchars($this->request->getVar('mkb_pangkat'), true);
+            $kgb = htmlspecialchars($this->request->getVar('kgb'), true);
+            $no_sk_kgb = htmlspecialchars($this->request->getVar('no_sk_kgb'), true);
+            $tgl_kgb = htmlspecialchars($this->request->getVar('tgl_kgb'), true);
+            $tmt_kgb = htmlspecialchars($this->request->getVar('tmt_kgb'), true);
+            $mkt_kgb = htmlspecialchars($this->request->getVar('mkt_kgb'), true);
+            $mkb_kgb = htmlspecialchars($this->request->getVar('mkb_kgb'), true);
 
-            $oldData =  $this->_db->table('_users_tb')->where('uid', $id)->get()->getRowObject();
+            $oldData =  $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
 
             if (!$oldData) {
                 $response = new \stdClass;
@@ -696,65 +743,60 @@ class Ptk extends BaseController
                 return json_encode($response);
             }
 
-            if (
-                $nama === $oldData->fullname
-                && $email === $oldData->email
-                && $nohp === $oldData->no_hp
-                && $nip === $oldData->nip
-                && $alamat === $oldData->alamat
-                && (int)$status === (int)$oldData->is_active
-            ) {
-                if ($filenamelampiran == '') {
-                    $response = new \stdClass;
-                    $response->status = 201;
-                    $response->message = "Tidak ada perubahan data yang disimpan.";
-                    $response->redirect = base_url('a/setting/pengguna/data');
-                    return json_encode($response);
-                }
-            }
-
-            if ($email !== $oldData->email) {
-                $cekData = $this->_db->table('_users_tb')->where(['email' => $email])->get()->getRowObject();
-                if ($cekData) {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Email sudah terdaftar.";
-                    return json_encode($response);
-                }
-            }
-
             $data = [
-                'email' => $email,
-                'fullname' => $nama,
-                'no_hp' => $nohp,
-                'nip' => $nip,
-                'alamat' => $alamat,
-                'is_active' => $status,
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
-            $dir = FCPATH . "uploads/user";
 
-            if ($filenamelampiran != '') {
-                $lampiran = $this->request->getFile('file');
-                $filesNamelampiran = $lampiran->getName();
-                $newNamelampiran = _create_name_foto($filesNamelampiran);
-
-                if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                    $lampiran->move($dir, $newNamelampiran);
-                    $data['image'] = $newNamelampiran;
-                } else {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal mengupload gambar.";
-                    return json_encode($response);
-                }
+            if ($nrg !== "") {
+                $data['nrg'] = $nrg;
+            }
+            if ($no_peserta !== "") {
+                $data['no_peserta'] = $no_peserta;
+            }
+            if ($bidang_studi_sertifikasi !== "") {
+                $data['bidang_studi_sertifikasi'] = $bidang_studi_sertifikasi;
+            }
+            if ($pangkat !== "") {
+                $data['pangkat_golongan'] = $pangkat;
+            }
+            if ($no_sk_pangkat !== "") {
+                $data['nomor_sk_pangkat'] = $no_sk_pangkat;
+            }
+            if ($tgl_pangkat !== "") {
+                $data['tgl_sk_pangkat'] = $tgl_pangkat;
+            }
+            if ($tmt_pangkat !== "") {
+                $data['tmt_pangkat'] = $tmt_pangkat;
+            }
+            if ($mkt_pangkat !== "") {
+                $data['masa_kerja_tahun'] = $mkt_pangkat;
+            }
+            if ($mkb_pangkat !== "") {
+                $data['masa_kerja_bulan'] = $mkb_pangkat;
+            }
+            if ($kgb !== "") {
+                $data['pangkat_golongan_kgb'] = $kgb;
+            }
+            if ($no_sk_kgb !== "") {
+                $data['sk_kgb'] = $no_sk_kgb;
+            }
+            if ($tgl_kgb !== "") {
+                $data['tgl_sk_kgb'] = $tgl_kgb;
+            }
+            if ($tmt_kgb !== "") {
+                $data['tmt_sk_kgb'] = $tmt_kgb;
+            }
+            if ($mkt_kgb !== "") {
+                $data['masa_kerja_tahun_kgb'] = $mkt_kgb;
+            }
+            if ($mkb_kgb !== "") {
+                $data['masa_kerja_bulan_kgb'] = $mkb_kgb;
             }
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_users_tb')->where('uid', $oldData->uid)->update($data);
+                $this->_db->table('_ptk_tb')->where('id', $oldData->id)->update($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
@@ -763,18 +805,12 @@ class Ptk extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
-                try {
-                    unlink($dir . '/' . $oldData->image);
-                } catch (\Throwable $th) {
-                }
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Data berhasil diupdate.";
-                $response->redirect = base_url('a/setting/pengguna/data');
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $newNamelampiran);
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
