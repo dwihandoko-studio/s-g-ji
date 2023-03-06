@@ -55,7 +55,7 @@ class Downloadlib
             $response = new \stdClass;
             $response->status = 400;
             $response->error = var_dump($err);
-            $response->message = "Gagal convert file.";
+            $response->message = "Gagal convert filee.";
             return $response;
         }
     }
