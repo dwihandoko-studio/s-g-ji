@@ -46,11 +46,23 @@ class Downloadlib
 
             $process->start($loop);
 
+            $fileNya = $dir . '/' . $name;
+
             $process->on('exit', function ($exitCode, $termSignal) {
                 if ($exitCode === 0) {
-                    echo "Command executed successfully!";
+                    var_dump($termSignal);
+                    die;
+                    // $fileNya = $dir . '/' . $name;
+                    // $response = new \stdClass;
+                    // $response->status = 200;
+                    // $response->message = "Berhasil convert file.";
+                    // // $response->file = $fileNya;
+                    // return $response;
                 } else {
-                    echo "Command failed to execute.";
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal convert file.";
+                    return $response;
                 }
             });
 
