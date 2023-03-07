@@ -35,7 +35,7 @@ class Downloadlib
             // exec('libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir, $output, $retval);
 
             $command = 'libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir;
-            exec('echo "bejo123" | sudo bejo -S && "' . $command . '"', $output, $retval);
+            exec('echo "bejo123" | sudo -S -u bejo "' . $command . '"', $output, $retval);
             // ) {
             if ($retval === 0) {
                 $file = $dir . '/' . $name;
