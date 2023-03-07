@@ -6,7 +6,6 @@ use PhpOffice\PhpWord\PhpWord;
 use mPDF;
 use React\EventLoop\Factory;
 use React\ChildProcess\Process;
-use CodeIgniter\HTTP\ResponseInterface;
 
 class Downloadlib
 {
@@ -53,24 +52,23 @@ class Downloadlib
             // $response = new ResponseInterface();
             $process->on('exit', function ($exitCode, $termSignal) use ($fileNya) {
                 if ($exitCode === 0) {
-                    // $filePdf = $responseD->file;
-                    $this->response->setHeader('Content-Type', 'application/octet-stream');
-                    $this->response->setHeader('Content-Disposition', 'attachment; filename="' . basename($fileNya) . '"');
-                    $this->response->setHeader('Content-Length', filesize($fileNya));
-                    return $this->response->download($fileNya, null);
-                    // var_dump($termSignal);
-                    // die;
-                    // $fileNya = $dir . '/' . $name;
-                    // $response = new \stdClass;
-                    // $response->status = 200;
-                    // $response->message = "Berhasil convert file.";
-                    // $response->file = $fileNya;
-                    // return $response;
+                    if (file_exists($fileNya)) {
+                        header('Content-Type: application/pdf');
+                        header('Content-Disposition: attachment; filename="' . basename($fileNya) . '"');
+                        header('Content-Length: ' . filesize($fileNya));
+                        readfile($fileNya);
+                        exit;
+                    } else {
+                        $response = new \stdClass;
+                        $response->status = 404;
+                        $response->message = "Gagal download SPTJM.";
+                        echo json_encode($response);
+                    }
                 } else {
                     $response = new \stdClass;
                     $response->status = 400;
                     $response->message = "Gagal convert file.";
-                    return json_encode($response);
+                    echo json_encode($response);
                 }
             });
 
