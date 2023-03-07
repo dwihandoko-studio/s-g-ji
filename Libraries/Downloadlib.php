@@ -48,16 +48,16 @@ class Downloadlib
 
             $fileNya = $dir . '/' . $name;
 
-            $process->on('exit', function ($exitCode, $termSignal) {
+            $process->on('exit', function ($exitCode, $termSignal) use ($fileNya) {
                 if ($exitCode === 0) {
-                    var_dump($termSignal);
-                    die;
+                    // var_dump($termSignal);
+                    // die;
                     // $fileNya = $dir . '/' . $name;
-                    // $response = new \stdClass;
-                    // $response->status = 200;
-                    // $response->message = "Berhasil convert file.";
-                    // // $response->file = $fileNya;
-                    // return $response;
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Berhasil convert file.";
+                    $response->file = $fileNya;
+                    return $response;
                 } else {
                     $response = new \stdClass;
                     $response->status = 400;
