@@ -32,10 +32,10 @@ class Downloadlib
         sleep(3);
         try {
             // if (
-            exec('sudo libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir, $output, $retval);
+            // exec('libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir, $output, $retval);
 
-            // $command = 'libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir;
-            // exec('docker exec -u 0 new_disdik_php_fpm_layanan sh -c "' . $command . '"', $output, $retval);
+            $command = 'libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir;
+            exec('exec -u 0 new_disdik_php_fpm_layanan sh -c "' . $command . '"', $output, $retval);
             // ) {
             if ($retval === 0) {
                 $file = $dir . '/' . $name;
