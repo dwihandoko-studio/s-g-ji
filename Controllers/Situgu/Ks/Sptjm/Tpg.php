@@ -542,7 +542,7 @@ class Tpg extends BaseController
                 ];
             }
             $template_processor->cloneRowAndSetValues('NO', $dataPtnya);
-            $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.kntechline.id/verifiqrcode?token=' . $usulan->kode_usulan . '&choe=UTF-8', 'width' => 150, 'height' => 150, 'ratio' => false));
+            $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.lampungtengahkab.go.id/verifiqrcode?token=' . $usulan->kode_usulan . '&choe=UTF-8', 'width' => 150, 'height' => 150, 'ratio' => false));
 
             $filed = FCPATH . "upload/generate/sptjm/tpg/word/" . $usulan->kode_usulan . ".docx";
 

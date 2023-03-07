@@ -538,7 +538,7 @@ class Tamsil extends BaseController
                 ];
             }
             $template_processor->cloneRowAndSetValues('NO', $dataPtnya);
-            $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.kntechline.id/verifiqrcode?token=' . $usulan->kode_usulan . '&choe=UTF-8', 'width' => 150, 'height' => 150, 'ratio' => false));
+            $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.lampungtengahkab.go.id/verifiqrcode?token=' . $usulan->kode_usulan . '&choe=UTF-8', 'width' => 150, 'height' => 150, 'ratio' => false));
 
             $filed = FCPATH . "upload/generate/sptjm/tamsil/word/" . $usulan->kode_usulan . ".docx";
 
@@ -553,7 +553,7 @@ class Tamsil extends BaseController
             return $responseD;
             // if ($responseD->status == 200) {
             //     $filePdf = $responseD->file;
-                $this->response->setHeader('Content-Type', 'application/octet-stream');
+            $this->response->setHeader('Content-Type', 'application/octet-stream');
             //     $this->response->setHeader('Content-Disposition', 'attachment; filename="' . basename($filePdf) . '"');
             //     $this->response->setHeader('Content-Length', filesize($filePdf));
             //     return $this->response->download($filePdf, null);
