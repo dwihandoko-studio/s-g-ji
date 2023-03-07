@@ -67,7 +67,7 @@ class Downloadlib
             });
 
             $loop->run();
-            die;
+            // die;
             // ) {
             // if ($retval === 0) {
             //     $file = $dir . '/' . $name;
