@@ -47,6 +47,8 @@ class Downloadlib
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->var_dump = var_dump($output);
+                $response->retval = var_dump($retval);
                 $response->error = "Error converting file to PDF: " . implode("\n", $output);
                 $response->message = "Gagal convert file.";
                 return $response;
