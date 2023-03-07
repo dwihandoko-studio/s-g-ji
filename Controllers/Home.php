@@ -27,7 +27,7 @@ class Home extends BaseController
                     $level = $decoded->data->level;
 
                     // if ($level === 1) {
-                    return redirect()->to(base_url('a/home'));
+                    return redirect()->to(base_url('portal'));
                     // } else if ($level === 2) {
                     //     return redirect()->to(base_url('sp/home'));
                     // } else if ($level === 3) {

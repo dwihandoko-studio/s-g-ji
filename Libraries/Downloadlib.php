@@ -4,6 +4,8 @@ namespace App\Libraries;
 
 use PhpOffice\PhpWord\PhpWord;
 use mPDF;
+use React\EventLoop\Factory;
+use React\ChildProcess\Process;
 
 class Downloadlib
 {
@@ -34,14 +36,25 @@ class Downloadlib
             // if (
             // exec('libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir, $output, $retval);
 
-            $command = 'libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir;
+            // $command = 'libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir;
+            // $output = shell_exec('sudo -u bejo -p bejo123 ' . $command);
             // exec('echo "bejo123" | sudo -S -u bejo && "' . $command . '"', $output, $retval);
-            $output = shell_exec('sudo -u bejo -p bejo123 ' . $command);
-            if ($output !== null) {
-                echo "Command executed successfully!";
-            } else {
-                echo "Command failed to execute.";
-            }
+            $loop = Factory::create();
+
+            $command = 'libreoffice --headless --convert-to pdf ' . $path . ' --outdir ' . $dir;
+            $process = new Process('sudo -u bejo -p bejo123 ' . $command);
+
+            $process->start($loop);
+
+            $process->on('exit', function ($exitCode, $termSignal) {
+                if ($exitCode === 0) {
+                    echo "Command executed successfully!";
+                } else {
+                    echo "Command failed to execute.";
+                }
+            });
+
+            $loop->run();
             die;
             // ) {
             // if ($retval === 0) {
