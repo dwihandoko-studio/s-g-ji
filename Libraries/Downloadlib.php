@@ -6,6 +6,7 @@ use PhpOffice\PhpWord\PhpWord;
 use mPDF;
 use React\EventLoop\Factory;
 use React\ChildProcess\Process;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Downloadlib
 {
@@ -48,21 +49,27 @@ class Downloadlib
 
             $fileNya = $dir . '/' . $name;
 
-            $process->on('exit', function ($exitCode, $termSignal) use ($fileNya) {
+            $response = new ResponseInterface();
+            $process->on('exit', function ($exitCode, $termSignal) use ($fileNya, $response) {
                 if ($exitCode === 0) {
+                    // $filePdf = $responseD->file;
+                    $response->setHeader('Content-Type', 'application/octet-stream');
+                    $response->setHeader('Content-Disposition', 'attachment; filename="' . basename($fileNya) . '"');
+                    $response->setHeader('Content-Length', filesize($fileNya));
+                    return $response->download($fileNya, null);
                     // var_dump($termSignal);
                     // die;
                     // $fileNya = $dir . '/' . $name;
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Berhasil convert file.";
-                    $response->file = $fileNya;
-                    return $response;
+                    // $response = new \stdClass;
+                    // $response->status = 200;
+                    // $response->message = "Berhasil convert file.";
+                    // $response->file = $fileNya;
+                    // return $response;
                 } else {
                     $response = new \stdClass;
                     $response->status = 400;
                     $response->message = "Gagal convert file.";
-                    return $response;
+                    return json_encode($response);
                 }
             });
 

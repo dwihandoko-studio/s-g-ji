@@ -550,19 +550,20 @@ class Tamsil extends BaseController
 
             $responseD =  $downloadLib->downloaded($filed, $usulan->kode_usulan . ".pdf", "tamsil");
 
-            if ($responseD->status == 200) {
-                $filePdf = $responseD->file;
+            return $responseD;
+            // if ($responseD->status == 200) {
+            //     $filePdf = $responseD->file;
                 $this->response->setHeader('Content-Type', 'application/octet-stream');
-                $this->response->setHeader('Content-Disposition', 'attachment; filename="' . basename($filePdf) . '"');
-                $this->response->setHeader('Content-Length', filesize($filePdf));
-                return $this->response->download($filePdf, null);
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->error = $responseD;
-                $response->message = "Gagal mendownload SPTJM.";
-                return json_encode($response);
-            }
+            //     $this->response->setHeader('Content-Disposition', 'attachment; filename="' . basename($filePdf) . '"');
+            //     $this->response->setHeader('Content-Length', filesize($filePdf));
+            //     return $this->response->download($filePdf, null);
+            // } else {
+            //     $response = new \stdClass;
+            //     $response->status = 400;
+            //     $response->error = $responseD;
+            //     $response->message = "Gagal mendownload SPTJM.";
+            //     return json_encode($response);
+            // }
         } else {
             $response = new \stdClass;
             $response->status = 400;
