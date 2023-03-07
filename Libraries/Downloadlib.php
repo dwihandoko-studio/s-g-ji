@@ -11,6 +11,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 class Downloadlib
 {
     private $_db;
+
     function __construct()
     {
         helper(['text', 'session', 'cookie', 'file', 'array', 'filesystem']);
@@ -49,14 +50,14 @@ class Downloadlib
 
             $fileNya = $dir . '/' . $name;
 
-            $response = new ResponseInterface();
-            $process->on('exit', function ($exitCode, $termSignal) use ($fileNya, $response) {
+            // $response = new ResponseInterface();
+            $process->on('exit', function ($exitCode, $termSignal) use ($fileNya) {
                 if ($exitCode === 0) {
                     // $filePdf = $responseD->file;
-                    $response->setHeader('Content-Type', 'application/octet-stream');
-                    $response->setHeader('Content-Disposition', 'attachment; filename="' . basename($fileNya) . '"');
-                    $response->setHeader('Content-Length', filesize($fileNya));
-                    return $response->download($fileNya, null);
+                    $this->response->setHeader('Content-Type', 'application/octet-stream');
+                    $this->response->setHeader('Content-Disposition', 'attachment; filename="' . basename($fileNya) . '"');
+                    $this->response->setHeader('Content-Length', filesize($fileNya));
+                    return $this->response->download($fileNya, null);
                     // var_dump($termSignal);
                     // die;
                     // $fileNya = $dir . '/' . $name;
