@@ -3,7 +3,7 @@
 namespace App\Controllers\Situgu\Opsr\Verifikasi;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Opsr\VerifikasiModel;
+use App\Models\Situgu\Opsr\VerifikasitamsilsekolahModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -28,6 +28,86 @@ class Tamsil extends BaseController
     }
 
     public function getAll()
+    {
+        $request = Services::request();
+        $datamodel = new VerifikasitamsilsekolahModel($request);
+
+        $jwt = get_cookie('jwt');
+        $token_jwt = getenv('token_jwt.default.key');
+        if ($jwt) {
+            try {
+                $decoded = JWT::decode($jwt, new Key($token_jwt, 'HS256'));
+                if ($decoded) {
+                    $userId = $decoded->id;
+                    $level = $decoded->level;
+                } else {
+                    $output = [
+                        "draw" => $request->getPost('draw'),
+                        "recordsTotal" => 0,
+                        "recordsFiltered" => 0,
+                        "data" => []
+                    ];
+                    echo json_encode($output);
+                    return;
+                }
+            } catch (\Exception $e) {
+                $output = [
+                    "draw" => $request->getPost('draw'),
+                    "recordsTotal" => 0,
+                    "recordsFiltered" => 0,
+                    "data" => []
+                ];
+                echo json_encode($output);
+                return;
+            }
+        }
+
+        $npsns = $this->_helpLib->getSekolahNaungan($userId);
+
+        $lists = $datamodel->get_datatables($npsns, 'tamsil');
+        $data = [];
+        $no = $request->getPost("start");
+        foreach ($lists as $list) {
+            $no++;
+            $row = [];
+
+            $row[] = $no;
+            // $action = '<div class="btn-group">
+            //             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
+            //             <div class="dropdown-menu" style="">
+            //                 <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+            //                 <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Sync Dapodik</a>
+            //             </div>
+            //         </div>';
+            $action = '<a href="./datalist?n=' . $list->kode_usulan . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
+                </a>';
+            //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <i class="bx bx-transfer-alt font-size-16 align-middle"></i></button>
+            //     </a>
+            //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
+            //     </a>';
+            $row[] = $action;
+            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
+            $row[] = $list->npsn;
+            $row[] = $list->bentuk_pendidikan;
+            $row[] = $list->status_sekolah;
+            $row[] = $list->kecamatan;
+            $row[] = $list->jumlah_ptk;
+
+            $data[] = $row;
+        }
+        $output = [
+            "draw" => $request->getPost('draw'),
+            "recordsTotal" => $datamodel->count_all($npsns, 'tamsil'),
+            "recordsFiltered" => $datamodel->count_filtered($npsns, 'tamsil'),
+            "data" => $data
+        ];
+        echo json_encode($output);
+    }
+
+    public function getAllDetail()
     {
         $request = Services::request();
         $datamodel = new VerifikasiModel($request);

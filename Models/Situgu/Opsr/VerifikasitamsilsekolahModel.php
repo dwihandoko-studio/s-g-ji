@@ -5,12 +5,12 @@ namespace App\Models\Situgu\Opsr;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class VerifikasiModel extends Model
+class VerifikasitamsilsekolahModel extends Model
 {
-    protected $table = "_tb_temp_usulan_detail a";
-    protected $column_order = array(null, null, 'b.nama', 'nik', 'b.nuptk', 'b.jenis_ptk', 'a.created_at');
-    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
-    protected $order = array('a.created_at' => 'asc', 'a.status_usulan' => 'asc');
+    protected $table = "v_antrian_usulan_tamsil a";
+    protected $column_order = array(null, null, 'b.nama', 'b.npsn', 'b.bentuk_pendidikan', 'b.status_sekolah', 'b.kecamatan', null);
+    protected $column_search = array('a.nik', 'a.nuptk', 'a.nama', 'b.npsn', 'b.nama');
+    protected $order = array('a.date_approve_sptjm' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -49,12 +49,13 @@ class VerifikasiModel extends Model
     }
     function get_datatables($npsns, $jenis)
     {
-        $this->dt->select("a.*, b.nama, b.nuptk, b.nik, b.npsn, b.jenis_ptk");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan, a.status_usulan, a.date_approve_sptjm, b.nama, b.npsn, b.bentuk_pendidikan, b.status_sekolah, b.kecamatan");
+        $this->dt->join('ref_sekolah b', 'a.npsn = b.npsn');
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->whereIn('b.npsn', $npsns);
+        $this->dt->whereIn('a.npsn', $npsns);
+        $this->dt->groupBy('a.kode_usulan');
         // $this->dt->where('b.npsn', $npsn);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
@@ -64,24 +65,24 @@ class VerifikasiModel extends Model
     }
     function count_filtered($npsns, $jenis)
     {
-        $this->dt->select("a.*, b.nama, b.nuptk, b.nik");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan");
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->whereIn('b.npsn', $npsns);
+        $this->dt->whereIn('a.npsn', $npsns);
+        $this->dt->groupBy('a.kode_usulan');
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
     public function count_all($npsns, $jenis)
     {
-        $this->dt->select("a.*, b.nama, b.nuptk, b.nik");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan");
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->whereIn('b.npsn', $npsns);
+        $this->dt->whereIn('a.npsn', $npsns);
+        $this->dt->groupBy('a.kode_usulan');
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
