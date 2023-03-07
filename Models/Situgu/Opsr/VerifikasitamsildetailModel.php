@@ -51,7 +51,6 @@ class VerifikasitamsildetailModel extends Model
     {
         $this->dt->where('kode_usulan', $kode_usulan);
         $this->dt->where('status_usulan', 0);
-        $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -62,7 +61,6 @@ class VerifikasitamsildetailModel extends Model
     {
         $this->dt->where('kode_usulan', $kode_usulan);
         $this->dt->where('status_usulan', 0);
-        $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
@@ -71,7 +69,6 @@ class VerifikasitamsildetailModel extends Model
     {
         $this->dt->where('kode_usulan', $kode_usulan);
         $this->dt->where('status_usulan', 0);
-        $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
