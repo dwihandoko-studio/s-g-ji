@@ -203,7 +203,7 @@ class Tamsil extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
             $current = $this->_db->table('v_temp_usulan')
-                ->where(['jenis_tunjangan_usulan' => $jenis_tunjangan, 'status_usulan' => 2, 'id_tahun_tw' => $tw])->get()->getResult();
+                ->where(['jenis_tunjangan_usulan' => $jenis_tunjangan, 'npsn' => $user->data->npsn, 'status_usulan' => 2, 'id_tahun_tw' => $tw])->get()->getResult();
 
             if (count($current) > 0) {
                 $data['data'] = $current;
@@ -544,7 +544,7 @@ class Tamsil extends BaseController
 
             $template_processor->saveAs($filed);
 
-            
+
 
             $downloadLib = new Downloadlib();
 

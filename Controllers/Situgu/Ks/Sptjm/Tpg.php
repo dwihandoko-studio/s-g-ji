@@ -199,11 +199,12 @@ class Tpg extends BaseController
                 . $this->validator->getError('tw');
             return json_encode($response);
         } else {
+
             $jenis_tunjangan = htmlspecialchars($this->request->getVar('id'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
             $current = $this->_db->table('v_temp_usulan')
-                ->where(['jenis_tunjangan_usulan' => $jenis_tunjangan, 'status_usulan' => 2, 'id_tahun_tw' => $tw])->get()->getResult();
+                ->where(['jenis_tunjangan_usulan' => $jenis_tunjangan, 'npsn' => $user->data->npsn, 'status_usulan' => 2, 'id_tahun_tw' => $tw])->get()->getResult();
 
             if (count($current) > 0) {
                 $data['data'] = $current;
