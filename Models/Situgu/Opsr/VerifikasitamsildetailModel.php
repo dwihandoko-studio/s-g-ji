@@ -8,7 +8,7 @@ use CodeIgniter\Model;
 class VerifikasitamsildetailModel extends Model
 {
     protected $table = "v_antrian_usulan_tamsil";
-    protected $column_order = array(null, null, 'kode_usulan', 'nama', 'nik', 'nuptk', 'jenis_ptk', 'created_at');
+    protected $column_order = array(null, null, 'kode_usulan', 'nama', 'nik', 'nuptk', 'jenis_ptk');
     protected $column_search = array('nik', 'nuptk', 'nama', 'npsn', 'nama');
     protected $order = array('date_approve_sptjm' => 'asc');
     protected $request;

@@ -4,6 +4,7 @@ namespace App\Controllers\Situgu\Opsr\Verifikasi;
 
 use App\Controllers\BaseController;
 use App\Models\Situgu\Opsr\VerifikasitamsilsekolahModel;
+use App\Models\Situgu\Opsr\VerifikasitamsildetailModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -110,7 +111,7 @@ class Tamsil extends BaseController
     public function getAllDetail()
     {
         $request = Services::request();
-        $datamodel = new VerifikasiModel($request);
+        $datamodel = new VerifikasitamsildetailModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -142,9 +143,9 @@ class Tamsil extends BaseController
             }
         }
 
-        $npsns = $this->_helpLib->getSekolahNaungan($userId);
+        // $npsns = $this->_helpLib->getSekolahNaungan($userId);
 
-        $lists = $datamodel->get_datatables($npsns, 'tamsil');
+        $lists = $datamodel->get_datatables($request->getPost('id'));
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -169,18 +170,18 @@ class Tamsil extends BaseController
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
             $row[] = $action;
+            $row[] = $list->kode_usulan;
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
             $row[] = $list->nik;
             $row[] = $list->nuptk;
             $row[] = $list->jenis_ptk;
-            $row[] = $list->created_at;
 
             $data[] = $row;
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsns, 'tamsil'),
-            "recordsFiltered" => $datamodel->count_filtered($npsns, 'tamsil'),
+            "recordsTotal" => $datamodel->count_all($request->getPost('id')),
+            "recordsFiltered" => $datamodel->count_filtered($request->getPost('id')),
             "data" => $data
         ];
         echo json_encode($output);
@@ -205,6 +206,25 @@ class Tamsil extends BaseController
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
         return view('situgu/opsr/verifikasi/tamsil/index', $data);
+    }
+
+    public function datalist()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            delete_cookie('jwt');
+            session()->destroy();
+            return redirect()->to(base_url('auth'));
+        }
+
+        $id = htmlspecialchars($this->request->getGet('n'), true);
+
+        $data['title'] = 'VERIFIKASI USULAN TUNJANGAN TAMSIL';
+        $data['user'] = $user->data;
+        $data['kode_usulan'] = $id;
+        $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
+        return view('situgu/opsr/verifikasi/tamsil/detail_index', $data);
     }
 
     public function detail()
