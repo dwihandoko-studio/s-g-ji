@@ -278,7 +278,7 @@ class Tpg extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $current = $this->_db->table('v_temp_usulan a')
+            $current = $this->_db->table('v_antrian_usulan_tpg a')
                 ->select("a.*, b.kecamatan as kecamatan_sekolah")
                 ->join('ref_sekolah b', 'a.npsn = b.npsn')
                 ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
@@ -357,7 +357,7 @@ class Tpg extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('_tb_temp_usulan_detail')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_tb_usulan_detail_tpg')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -367,7 +367,7 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_temp_usulan_detail')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
@@ -512,7 +512,7 @@ class Tpg extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
 
-            $oldData = $this->_db->table('_tb_temp_usulan_detail')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_tb_usulan_detail_tpg')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -522,7 +522,7 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_temp_usulan_detail')->where('id', $oldData->id)->update(['status_usulan' => 1, 'keterangan_reject' => $keterangan, 'date_reject' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update(['status_usulan' => 1, 'keterangan_reject' => $keterangan, 'date_reject' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
