@@ -248,6 +248,15 @@ class Ajukan extends BaseController
                 return json_encode($response);
             }
 
+            if (!$igdD) {
+                if ($ptk->lampiran_att_lain === null || $ptk->lampiran_att_lain === "") {
+                    $response->status = 404;
+                    $response->message = "Anda terdeteksi belum menautkan info GTK Digital. Bagi yang belum mempunyai info GTK Digital, Diwajibkan mengupload Print Out Info GTK pada menu dokumen atrribut lainnya!!";
+                    $response->redirrect = base_url("situgu/ks/doc/atribut");
+                    return json_encode($response);
+                }
+            }
+
             if ($jenis_tunjangan === "tpg") {
 
                 $canUsulTpg = canUsulTpg();
@@ -275,15 +284,6 @@ class Ajukan extends BaseController
                     $response->message = "Lampiran Dokumen Master NRG, NUPTK, dan Serdik tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
                     $response->redirrect = base_url("situgu/ks/doc/atribut");
                     return json_encode($response);
-                }
-
-                if (!$igdD) {
-                    if ($ptk->lampiran_att_lain === null || $ptk->lampiran_att_lain === "") {
-                        $response->status = 404;
-                        $response->message = "Anda terdeteksi belum menautkan info GTK Digital. Bagi yang belum mempunyai info GTK Digital, Diwajibkan mengupload Print Out Info GTK pada menu dokumen atrribut lainnya!!";
-                        $response->redirrect = base_url("situgu/ks/doc/atribut");
-                        return json_encode($response);
-                    }
                 }
 
                 if ($ptk->status_kepegawaian === "PNS" || $ptk->status_kepegawaian === "PPPK" || $ptk->status_kepegawaian === "PNS Diperbantukan" || $ptk->status_kepegawaian === "PNS Depag" || $ptk->status_kepegawaian === "CPNS") {

@@ -399,6 +399,26 @@
                 </tr>
                 <tr>
                     <th scope="row">19</th>
+                    <td><label class="form-check-label" for="_lampiran_igd">Info GTK Digital</label></td>
+                    <td>
+                        <?php if (isset($igd)) { ?>
+                            <?php if ($igd) { ?>
+                                <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= $igd->qrcode ?>','popup','width=600,height=600'); return false;" href="<?= $igd->qrcode ?>">Lihat Info GTK Digital</a>
+                            <?php } else { ?>
+                                Tidak ada
+                            <?php } ?>
+                        <?php } else { ?>
+                            Tidak ada
+                        <?php } ?>
+                    </td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="_lampiran_igd" onchange="changeChecked()" name="hasil[]">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">20</th>
                     <td><label class="form-check-label" for="_lampiran_absen_lain">Lainnya</label></td>
                     <td>
                         <?php if ($ptk->lampiran_doc_absen_lain == null || $ptk->lampiran_doc_absen_lain == "") {
