@@ -50,10 +50,11 @@
                                     <th data-orderable="false">#</th>
                                     <th data-orderable="false">Aksi</th>
                                     <th>NAMA</th>
-                                    <th>NIK</th>
-                                    <th>NUPTK</th>
-                                    <th>JENIS PTK</th>
-                                    <th>TANGGAL USULAN</th>
+                                    <th>NPSN</th>
+                                    <th>BENTUK PENDIDIKAN</th>
+                                    <th>STATUS</th>
+                                    <th>KECAMATAN</th>
+                                    <th>JUMLAH PTK</th>
                                 </tr>
                             </thead>
                         </table>

@@ -41,13 +41,13 @@ class Helplib
         return '';
     }
 
-    public function getSekolahKecamatanString($kecamatan)
+    public function getSekolahKecamatanString($kecamatan, $listLevel)
     {
 
         $user = $this->_db->table('ref_sekolah')
             ->select("npsn")
             ->where('kode_kecamatan', $kecamatan)
-            ->whereIn('bentuk_pendidikan_id', [5])
+            ->whereIn('bentuk_pendidikan_id', $listLevel)
             ->get()->getResult();
 
         if (count($user) > 0) {

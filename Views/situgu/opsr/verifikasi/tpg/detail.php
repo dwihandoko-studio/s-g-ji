@@ -441,73 +441,84 @@
         function actionApprove(e) {
             const id = '<?= $data->id_usulan ?>';
             const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
+            Swal.fire({
+                title: 'Apakah anda yakin ingin menyetujui usulan TPG ini?',
+                text: "Setujui Usulan TPG PTK: <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
+                showCancelButton: true,
+                icon: 'question',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Setujui!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "./approve",
+                        type: 'POST',
+                        data: {
+                            id: id,
+                            nama: nama,
+                        },
+                        dataType: 'JSON',
+                        beforeSend: function() {
+                            e.disabled = true;
+                            $('div.modal-content-loading').block({
+                                message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                            });
+                        },
+                        success: function(resul) {
+                            $('div.modal-content-loading').unblock();
 
-            $.ajax({
-                url: "./approve",
-                type: 'POST',
-                data: {
-                    id: id,
-                    nama: nama,
-                },
-                dataType: 'JSON',
-                beforeSend: function() {
-                    e.disabled = true;
-                    $('div.modal-content-loading').block({
-                        message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                    });
-                },
-                success: function(resul) {
-                    $('div.modal-content-loading').unblock();
-
-                    if (resul.status !== 200) {
-                        if (resul.status !== 201) {
-                            if (resul.status === 401) {
+                            if (resul.status !== 200) {
+                                if (resul.status !== 201) {
+                                    if (resul.status === 401) {
+                                        Swal.fire(
+                                            'Failed!',
+                                            resul.message,
+                                            'warning'
+                                        ).then((valRes) => {
+                                            reloadPage();
+                                        });
+                                    } else {
+                                        e.disabled = false;
+                                        Swal.fire(
+                                            'GAGAL!',
+                                            resul.message,
+                                            'warning'
+                                        );
+                                    }
+                                } else {
+                                    Swal.fire(
+                                        'Peringatan!',
+                                        resul.message,
+                                        'success'
+                                    ).then((valRes) => {
+                                        reloadPage();
+                                    })
+                                }
+                            } else {
                                 Swal.fire(
-                                    'Failed!',
+                                    'SELAMAT!',
                                     resul.message,
-                                    'warning'
+                                    'success'
                                 ).then((valRes) => {
                                     reloadPage();
-                                });
-                            } else {
-                                e.disabled = false;
-                                Swal.fire(
-                                    'GAGAL!',
-                                    resul.message,
-                                    'warning'
-                                );
+                                })
                             }
-                        } else {
+                        },
+                        error: function(erro) {
+                            console.log(erro);
+                            // e.attr('disabled', false);
+                            e.disabled = false
+                            $('div.modal-content-loading').unblock();
                             Swal.fire(
-                                'Peringatan!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
+                                'PERINGATAN!',
+                                "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                                'warning'
+                            );
                         }
-                    } else {
-                        Swal.fire(
-                            'SELAMAT!',
-                            resul.message,
-                            'success'
-                        ).then((valRes) => {
-                            reloadPage();
-                        })
-                    }
-                },
-                error: function(erro) {
-                    console.log(erro);
-                    // e.attr('disabled', false);
-                    e.disabled = false
-                    $('div.modal-content-loading').unblock();
-                    Swal.fire(
-                        'PERINGATAN!',
-                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                        'warning'
-                    );
+                    });
                 }
-            });
+            })
         };
     </script>
 <?php } ?>

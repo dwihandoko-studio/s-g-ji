@@ -36,7 +36,7 @@ class Home extends BaseController
         }
 
         $data['user'] = $user->data;
-        $npsns = $this->_helpLib->getSekolahKecamatanString($user->data->kecamatan);
+        $npsns = $this->_helpLib->getSekolahKecamatanString($user->data->kecamatan, [5]);
         $data['registered'] = $this->_db->table('_profil_users_tb')->select('surat_tugas')->where('id', $user->data->id)->get()->getRowObject();
         $data['title'] = 'Dashboard';
         $data['admin'] = true;
