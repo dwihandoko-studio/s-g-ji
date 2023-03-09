@@ -62,10 +62,7 @@ class Pengguna extends BaseController
             }
         }
 
-
-        $kecamatan = $this->_helpLib->getKecamatan($userId);
-
-        $lists = $datamodel->get_datatables($kecamatan);
+        $lists = $datamodel->get_datatables();
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -100,8 +97,8 @@ class Pengguna extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($kecamatan),
-            "recordsFiltered" => $datamodel->count_filtered($kecamatan),
+            "recordsTotal" => $datamodel->count_all(),
+            "recordsFiltered" => $datamodel->count_filtered(),
             "data" => $data
         ];
         echo json_encode($output);

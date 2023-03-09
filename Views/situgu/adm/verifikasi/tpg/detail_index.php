@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">VERIFIKASI USULAN TPG</h4>
+                    <h4 class="mb-sm-0 font-size-18">VERIFIKASI USULAN <?= $kode_usulan ?></h4>
 
                     <!-- <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -27,7 +27,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">Data Usulan TPG</h4>
+                                <h4 class="card-title">Data Usulan PTK <?= $kode_usulan ?></h4>
                             </div>
                             <!-- <div class="col-6">
                                 <div class="mb-3">
@@ -49,12 +49,11 @@
                                 <tr>
                                     <th data-orderable="false">#</th>
                                     <th data-orderable="false">Aksi</th>
-                                    <th>NAMA</th>
-                                    <th>NPSN</th>
-                                    <th>BENTUK PENDIDIKAN</th>
-                                    <th>STATUS</th>
-                                    <th>KECAMATAN</th>
-                                    <th>JUMLAH PTK</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
+                                    <th>NIK</th>
+                                    <th>NUPTK</th>
+                                    <th>Jenis PTK</th>
                                 </tr>
                             </thead>
                         </table>
@@ -201,10 +200,10 @@
             "serverSide": true,
             "order": [],
             "ajax": {
-                "url": "./getAll",
+                "url": "./getAllDetail",
                 "type": "POST",
                 "data": function(data) {
-                    data.tw = '<?= $tw->id ?>';
+                    data.id = '<?= $kode_usulan ?>';
                 }
             },
             language: {

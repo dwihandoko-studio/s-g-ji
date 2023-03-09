@@ -5,12 +5,12 @@ namespace App\Models\Situgu\Adm;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class VerifikasipenggunaModel extends Model
+class VerifikasitpgdetailModel extends Model
 {
-    protected $table = "_profil_users_tb";
-    protected $column_order = array(null, null, 'fullname', 'nip', 'email', 'no_hp', 'npsn');
-    protected $column_search = array('nip', 'fullname', 'email', 'npsn');
-    protected $order = array('fullname' => 'asc');
+    protected $table = "v_antrian_usulan_tpg";
+    protected $column_order = array(null, null, 'kode_usulan', 'nama', 'nik', 'nuptk', 'jenis_ptk');
+    protected $column_search = array('nik', 'nuptk', 'nama', 'npsn', 'nama');
+    protected $order = array('date_approve_sptjm' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -47,25 +47,28 @@ class VerifikasipenggunaModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables()
+    function get_datatables($kode_usulan)
     {
-        $this->dt->whereIn('role_user', [3, 4, 5, 6, 7]);
+        $this->dt->where('kode_usulan', $kode_usulan);
+        $this->dt->where('status_usulan', 0);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered()
+    function count_filtered($kode_usulan)
     {
-        $this->dt->whereIn('role_user', [3, 4, 5, 6, 7]);
+        $this->dt->where('kode_usulan', $kode_usulan);
+        $this->dt->where('status_usulan', 0);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all()
+    public function count_all($kode_usulan)
     {
-        $this->dt->whereIn('role_user', [3, 4, 5, 6, 7]);
+        $this->dt->where('kode_usulan', $kode_usulan);
+        $this->dt->where('status_usulan', 0);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
