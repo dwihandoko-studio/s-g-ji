@@ -21,7 +21,7 @@ class Auth extends BaseController
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status == 200) {
-            return redirect()->to(base_url('home'));
+            return redirect()->to(base_url('portal'));
         }
         $data['title'] = "Login";
         return view('login/index', $data);
