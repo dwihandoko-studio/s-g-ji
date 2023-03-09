@@ -217,6 +217,8 @@ class Ajukan extends BaseController
 
             $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
             $data['ptk'] = $ptk;
+            $igdD = $this->_db->table('_info_gtk')->where('ptk_id', $ptk->id_ptk)->get()->getRowObject();
+            $data['igd'] = $igdD;
             $response = new \stdClass;
 
             if ($ptk->no_rekening === null || $ptk->no_rekening === "" || $ptk->cabang_bank === null || $ptk->cabang_bank === "") {
@@ -288,6 +290,15 @@ class Ajukan extends BaseController
                     $response->message = "Lampiran Dokumen Master NRG, NUPTK, dan Serdik tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
                     $response->redirrect = base_url("situgu/ptk/doc/master");
                     return json_encode($response);
+                }
+
+                if (!$igdD) {
+                    if ($ptk->lampiran_att_lain === null || $ptk->lampiran_att_lain === "") {
+                        $response->status = 404;
+                        $response->message = "Anda terdeteksi belum menautkan info GTK Digital. Bagi yang belum mempunyai info GTK Digital, Diwajibkan mengupload Print Out Info GTK pada menu dokumen atrribut lainnya!!";
+                        $response->redirrect = base_url("situgu/ptk/doc/atribut");
+                        return json_encode($response);
+                    }
                 }
 
                 if ($ptk->status_kepegawaian === "PNS" || $ptk->status_kepegawaian === "PPPK" || $ptk->status_kepegawaian === "PNS Diperbantukan" || $ptk->status_kepegawaian === "PNS Depag" || $ptk->status_kepegawaian === "CPNS") {

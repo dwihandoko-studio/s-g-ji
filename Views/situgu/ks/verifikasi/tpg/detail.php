@@ -311,8 +311,8 @@
         function actionTolak(e) {
             const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
             Swal.fire({
-                title: 'Apakah anda yakin ingin menolak usulan Tamsil ini?',
-                text: "Tolak Usulan Tamsil PTK: <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
+                title: 'Apakah anda yakin ingin menolak usulan TPG ini?',
+                text: "Tolak Usulan TPG PTK: <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
@@ -342,7 +342,7 @@
                                     'warning'
                                 );
                             } else {
-                                $('#content-tolakModalLabel').html('TOLAK USULAN TAMSIL ' + nama);
+                                $('#content-tolakModalLabel').html('TOLAK USULAN TPG ' + nama);
                                 $('.contentTolakBodyModal').html(resul.data);
                                 $('.content-tolakModal').modal({
                                     backdrop: 'static',

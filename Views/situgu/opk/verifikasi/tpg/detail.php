@@ -342,7 +342,7 @@
                                     'warning'
                                 );
                             } else {
-                                $('#content-tolakModalLabel').html('TOLAK USULAN TAMSIL ' + nama);
+                                $('#content-tolakModalLabel').html('TOLAK USULAN TPG ' + nama);
                                 $('.contentTolakBodyModal').html(resul.data);
                                 $('.content-tolakModal').modal({
                                     backdrop: 'static',
