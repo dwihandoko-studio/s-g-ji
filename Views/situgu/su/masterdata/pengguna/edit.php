@@ -1,5 +1,6 @@
 <?php if (isset($data)) { ?>
     <form id="formEditModalData" action="./editSave" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="<?= $data->id ?>" id="_id" name="_id" />
         <div class="modal-body loading-get-data">
             <div class="row">
                 <div class="col-lg-6">
@@ -44,6 +45,7 @@
     <script>
         $("#formEditModalData").on("submit", function(e) {
             e.preventDefault();
+            const id = document.getElementsByName('_id')[0].value;
             const fullname = document.getElementsByName('_fullname')[0].value;
             const email = document.getElementsByName('_email')[0].value;
             const nohp = document.getElementsByName('_nohp')[0].value;
@@ -86,6 +88,7 @@
 
             const formUpload = new FormData();
 
+            formUpload.append('id', id);
             formUpload.append('nama', fullname);
             formUpload.append('email', email);
             formUpload.append('nohp', nohp);
