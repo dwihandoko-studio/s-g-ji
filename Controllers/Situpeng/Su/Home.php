@@ -23,6 +23,8 @@ class Home extends BaseController
 
     public function index()
     {
+        var_dump("WORKING");
+        die;
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
 

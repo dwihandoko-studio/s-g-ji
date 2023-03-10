@@ -332,8 +332,6 @@ class Filterauth implements FilterInterface
                                         }
                                     }
                                 } else {
-                                    var_dump($uriLevel);
-                                    die;
                                     if ($level == 1) { //SuperAdmin
 
                                         if ($uriLevel === "" || $uriLevel === "index") {
