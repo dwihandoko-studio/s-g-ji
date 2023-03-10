@@ -300,8 +300,6 @@ class Filterauth implements FilterInterface
                                     }
                                 }
                             } else if ($uriMain === "situpeng") {
-                                var_dump($uriMain);
-                                die;
                                 $uriLevel = $uri->getSegment(2);
                                 $mtLib = new Mtlib();
                                 if ($mtLib->get(2)) {
@@ -334,6 +332,8 @@ class Filterauth implements FilterInterface
                                         }
                                     }
                                 } else {
+                                    var_dump($uriLevel);
+                                    die;
                                     if ($level == 1) { //SuperAdmin
 
                                         if ($uriLevel === "" || $uriLevel === "index") {
