@@ -6653,6 +6653,165 @@
                         <?php } ?>
                     <?php } ?>
                 <?php } ?>
+                <?php if (!$data) {
+                    if ($data_antrian_tamsil) {
+                        if ($data_antrian_tamsil->status_usulan == 0 || $data_antrian_tamsil->status_usulan == 1 || $data_antrian_tamsil->status_usulan == 2 || $data_antrian_tamsil->status_usulan == 5) { ?>
+                        <?php } else { ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php } else if ($data_antrian_tpg) {
+                        if ($data_antrian_tpg->status_usulan == 0 || $data_antrian_tpg->status_usulan == 1 || $data_antrian_tpg->status_usulan == 2 || $data_antrian_tpg->status_usulan == 5 || $data_antrian_tpg->status_usulan == 6 || $data_antrian_tpg->status_usulan == 7) { ?>
+                        <?php } else { ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php } else if ($data_antrian_pghm) {
+                        if ($data_antrian_pghm->status_usulan == 0 || $data_antrian_pghm->status_usulan == 1 || $data_antrian_pghm->status_usulan == 2 || $data_antrian_pghm->status_usulan == 5) { ?>
+                        <?php } else { ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php } else if ($data_antrian_tamsil_transfer) {
+                        if ($data_antrian_tamsil_transfer->status_usulan == 0 || $data_antrian_tamsil_transfer->status_usulan == 1 || $data_antrian_tamsil_transfer->status_usulan == 2 || $data_antrian_tamsil_transfer->status_usulan == 5) { ?>
+                        <?php } else { ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php } else if ($data_antrian_tpg_transfer) {
+                        if ($data_antrian_tpg_transfer->status_usulan == 0 || $data_antrian_tpg_transfer->status_usulan == 1 || $data_antrian_tpg_transfer->status_usulan == 2 || $data_antrian_tpg_transfer->status_usulan == 5 || $data_antrian_tpg_transfer->status_usulan == 6 || $data_antrian_tpg_transfer->status_usulan == 7) { ?>
+                        <?php } else { ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php } else if ($data_antrian_pghm_transfer) {
+                        if ($data_antrian_pghm_transfer->status_usulan == 0 || $data_antrian_pghm_transfer->status_usulan == 1 || $data_antrian_pghm_transfer->status_usulan == 2 || $data_antrian_pghm_transfer->status_usulan == 5) { ?>
+                        <?php } else { ?>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-grid gap-2">
+                                        <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN USULAN TUNJANGAN</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php }
+                } else {
+                    if ($data->status_usulan == 1) { ?>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } else if ($data->status_usulan == 2) { ?>
+                    <?php } else if ($data->status_usulan == 5) { ?>
+                        <?php if ($data_antrian_tamsil) {
+                            if ($data_antrian_tamsil->status_usulan == 0 || $data_antrian_tamsil->status_usulan == 1 || $data_antrian_tamsil->status_usulan == 2 || $data_antrian_tamsil->status_usulan == 5) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php } else if ($data_antrian_tpg) {
+                            if ($data_antrian_tpg->status_usulan == 0 || $data_antrian_tpg->status_usulan == 1 || $data_antrian_tpg->status_usulan == 2 || $data_antrian_tpg->status_usulan == 5 || $data_antrian_tpg->status_usulan == 6 || $data_antrian_tpg->status_usulan == 7) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php } else if ($data_antrian_pghm) {
+                            if ($data_antrian_pghm->status_usulan == 0 || $data_antrian_pghm->status_usulan == 1 || $data_antrian_pghm->status_usulan == 2 || $data_antrian_pghm->status_usulan == 5) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php } else if ($data_antrian_tamsil_transfer) {
+                            if ($data_antrian_tamsil_transfer->status_usulan == 0 || $data_antrian_tamsil_transfer->status_usulan == 1 || $data_antrian_tamsil_transfer->status_usulan == 2 || $data_antrian_tamsil_transfer->status_usulan == 5) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php } else if ($data_antrian_tpg_transfer) {
+                            if ($data_antrian_tpg_transfer->status_usulan == 0 || $data_antrian_tpg_transfer->status_usulan == 1 || $data_antrian_tpg_transfer->status_usulan == 2 || $data_antrian_tpg_transfer->status_usulan == 5 || $data_antrian_tpg_transfer->status_usulan == 6 || $data_antrian_tpg_transfer->status_usulan == 7) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <button type="button" onclick="actionAjukan()" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <?php } else if ($data_antrian_pghm_transfer) {
+                            if ($data_antrian_pghm_transfer->status_usulan == 0 || $data_antrian_pghm_transfer->status_usulan == 1 || $data_antrian_pghm_transfer->status_usulan == 2 || $data_antrian_pghm_transfer->status_usulan == 5) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <a href="<?= base_url('situgu/ks/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        <?php } else { ?>
+                        <?php } ?>
+
+                    <?php } else { ?>
+                <?php }
+                } ?>
             </div>
         </div>
         <div class="row">
