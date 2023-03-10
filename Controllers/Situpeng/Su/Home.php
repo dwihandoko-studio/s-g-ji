@@ -37,8 +37,8 @@ class Home extends BaseController
         $data['title'] = 'Dashboard';
         $data['admin'] = true;
 
-        var_dump("WORKING");
-        die;
+        // var_dump("WORKING");
+        // die;
 
         return view('situpeng/su/home/index', $data);
     }
