@@ -64,9 +64,9 @@ class Tpg extends BaseController
         }
 
         $kecamatan = $this->_helpLib->getKecamatan($userId);
-        $npsns = $this->_helpLib->getSekolahKecamatanString($kecamatan, [5]);
-        var_dump($npsns);
-        die;
+        $npsns = $this->_helpLib->getSekolahKecamatanArray($kecamatan, [5]);
+        // var_dump($npsns);
+        // die;
 
         $lists = $datamodel->get_datatables($npsns, 'tpg');
         $data = [];

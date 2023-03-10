@@ -65,6 +65,26 @@ class Helplib
         return '';
     }
 
+    public function getSekolahKecamatanArray($kecamatan, $listLevel)
+    {
+
+        $user = $this->_db->table('ref_sekolah')
+            ->select("npsn")
+            ->where('kode_kecamatan', $kecamatan)
+            ->whereIn('bentuk_pendidikan_id', $listLevel)
+            ->get()->getResult();
+
+        if (count($user) > 0) {
+            $npsn = [];
+            foreach ($user as $key => $value) {
+                $npsn[] = $value->npsn;
+            }
+            return $npsn;
+        }
+
+        return [];
+    }
+
     public function getCurrentTw()
     {
 

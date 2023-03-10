@@ -64,7 +64,7 @@ class Tamsil extends BaseController
         }
 
         $kecamatan = $this->_helpLib->getKecamatan($userId);
-        $npsns = $this->_helpLib->getSekolahKecamatanString($kecamatan, [5]);
+        $npsns = $this->_helpLib->getSekolahKecamatanArray($kecamatan, [5]);
 
         $lists = $datamodel->get_datatables($npsns, 'tamsil');
         $data = [];
