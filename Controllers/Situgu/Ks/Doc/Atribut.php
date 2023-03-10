@@ -94,85 +94,43 @@ class Atribut extends BaseController
                 default:
                     if ($list->status_kepegawaian === "PNS" || $list->status_kepegawaian === "PPPK" || $list->status_kepegawaian === "PNS Diperbantukan" || $list->status_kepegawaian === "PNS Depag" || $list->status_kepegawaian === "CPNS") {
                         $row[] = $list->pangkat_terakhir ? '<a target="_blank" href="' . base_url('upload/ptk/pangkat') . '/' . $list->pangkat_terakhir . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Pangkat Terakhir\',\'pangkat\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pangkat_terakhir . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
+                    <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionEditFile(\'Pangkat Terakhir\',\'pangkat\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pangkat_terakhir . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>' :
                             '<a href="javascript:actionUpload(\'Pangkat Terakhir\',\'pangkat\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
+                    <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                </a>';
                         $row[] = $list->kgb_terakhir ? '<a target="_blank" href="' . base_url('upload/ptk/kgb') . '/' . $list->kgb_terakhir . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Berkala Terakhir\',\'kgb\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kgb_terakhir . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
+                    <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionEditFile(\'Berkala Terakhir\',\'kgb\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kgb_terakhir . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionHapusFile(\'Berkala Terakhir\',\'kgb\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kgb_terakhir . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
+                </a>' :
                             '<a href="javascript:actionUpload(\'Berkala Terakhir\',\'kgb\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
+                    <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                </a>';
                         $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/ptk/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pernyataan_24jam . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
+                    <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionEditFile(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pernyataan_24jam . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>' :
                             '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
-                        $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->cuti . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
-                            '<a href="javascript:actionUpload(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
-                        $row[] = $list->pensiun ? '<a target="_blank" href="' . base_url('upload/ptk/pensiun') . '/' . $list->pensiun . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pensiun . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
-                            '<a href="javascript:actionUpload(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
-                        $row[] = $list->kematian ? '<a target="_blank" href="' . base_url('upload/ptk/kematian') . '/' . $list->kematian . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kematian . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
-                            '<a href="javascript:actionUpload(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
-                        $row[] = $list->lainnya ? '<a target="_blank" href="' . base_url('upload/ptk/lainnya') . '/' . $list->lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
-                            '<a href="javascript:actionUpload(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
-                    } else {
-                        $row[] = '-';
-                        $row[] = '-';
-                        $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/ptk/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pernyataan_24jam . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
-                            '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
+                    <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                </a>';
                         $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                     <i class="bx bxs-show font-size-16 align-middle"></i></button>
                 </a>
                 <a href="javascript:actionEditFile(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->cuti . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                     <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionHapusFile(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->cuti . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
                 </a>' :
                             '<a href="javascript:actionUpload(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
@@ -182,6 +140,9 @@ class Atribut extends BaseController
                 </a>
                 <a href="javascript:actionEditFile(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pensiun . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                     <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionHapusFile(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pensiun . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
                 </a>' :
                             '<a href="javascript:actionUpload(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
@@ -191,23 +152,89 @@ class Atribut extends BaseController
                 </a>
                 <a href="javascript:actionEditFile(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kematian . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                     <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionHapusFile(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kematian . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
                 </a>' :
                             '<a href="javascript:actionUpload(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                 </a>';
                         $row[] = $list->lainnya ? '<a target="_blank" href="' . base_url('upload/ptk/lainnya') . '/' . $list->lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
+                    <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionEditFile(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionHapusFile(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
+                </a>' :
                             '<a href="javascript:actionUpload(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
+                    <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                </a>';
+                    } else {
+                        $row[] = '-';
+                        $row[] = '-';
+                        $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/ptk/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionEditFile(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pernyataan_24jam . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>' :
+                            '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
+                    <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                </a>';
+                        $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="bx bxs-show font-size-16 align-middle"></i></button>
+            </a>
+            <a href="javascript:actionEditFile(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->cuti . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+            </a>
+            <a href="javascript:actionHapusFile(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->cuti . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
+            </a>' :
+                            '<a href="javascript:actionUpload(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
+                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+            </a>';
+                        $row[] = $list->pensiun ? '<a target="_blank" href="' . base_url('upload/ptk/pensiun') . '/' . $list->pensiun . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="bx bxs-show font-size-16 align-middle"></i></button>
+            </a>
+            <a href="javascript:actionEditFile(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pensiun . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+            </a>
+            <a href="javascript:actionHapusFile(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pensiun . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
+            </a>' :
+                            '<a href="javascript:actionUpload(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
+                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+            </a>';
+                        $row[] = $list->kematian ? '<a target="_blank" href="' . base_url('upload/ptk/kematian') . '/' . $list->kematian . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="bx bxs-show font-size-16 align-middle"></i></button>
+            </a>
+            <a href="javascript:actionEditFile(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kematian . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+            </a>
+            <a href="javascript:actionHapusFile(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kematian . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
+            </a>' :
+                            '<a href="javascript:actionUpload(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
+                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+            </a>';
+                        $row[] = $list->lainnya ? '<a target="_blank" href="' . base_url('upload/ptk/lainnya') . '/' . $list->lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionEditFile(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                </a>
+                <a href="javascript:actionHapusFile(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
+                </a>' :
+                            '<a href="javascript:actionUpload(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
+                    <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                </a>';
                     }
                     $row[] = '<div class="text-center">
-                <span class="badge rounded-pill badge-soft-danger font-size-11">Terbuka</span>
-            </div>';
+            <span class="badge rounded-pill badge-soft-danger font-size-11">Terbuka</span>
+        </div>';
                     break;
             }
             $data[] = $row;
@@ -535,6 +562,160 @@ class Atribut extends BaseController
             $response->message = "Permintaan diizinkan";
             $response->data = view('situgu/ks/doc/atribut/editupload', $data);
             return json_encode($response);
+        }
+    }
+
+    public function hapusfile()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'bulan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Bulan tidak boleh kosong. ',
+                ]
+            ],
+            'tw' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'TW tidak boleh kosong. ',
+                ]
+            ],
+            'title' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Title tidak boleh kosong. ',
+                ]
+            ],
+            'old' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Old tidak boleh kosong. ',
+                ]
+            ],
+            'id_ptk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('bulan')
+                . $this->validator->getError('tw')
+                . $this->validator->getError('title')
+                . $this->validator->getError('old')
+                . $this->validator->getError('id_ptk');
+            return json_encode($response);
+        } else {
+            $bulan = htmlspecialchars($this->request->getVar('bulan'), true);
+            $tw = htmlspecialchars($this->request->getVar('tw'), true);
+            $title = htmlspecialchars($this->request->getVar('title'), true);
+            $old = htmlspecialchars($this->request->getVar('old'), true);
+            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            switch ($bulan) {
+                case 'pangkat':
+                    $dir = FCPATH . "upload/ptk/pangkat";
+                    $field_db = 'pangkat_terakhir';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'kgb':
+                    $dir = FCPATH . "upload/ptk/kgb";
+                    $field_db = 'kgb_terakhir';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'pernyataan24':
+                    $dir = FCPATH . "upload/ptk/pernyataanindividu";
+                    $field_db = 'pernyataan_24jam';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'cuti':
+                    $dir = FCPATH . "upload/ptk/keterangancuti";
+                    $field_db = 'cuti';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'pensiun':
+                    $dir = FCPATH . "upload/ptk/pensiun";
+                    $field_db = 'pensiun';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'kematian':
+                    $dir = FCPATH . "upload/ptk/kematian";
+                    $field_db = 'kematian';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                case 'attr_lainnya':
+                    $dir = FCPATH . "upload/ptk/lainnya";
+                    $field_db = 'lainnya';
+                    $table_db = '_upload_data_attribut';
+                    break;
+                default:
+                    $dir = FCPATH . "upload/sekolah/doc-lainnya";
+                    $field_db = 'qrcode';
+                    $table_db = 'info_gtk';
+                    break;
+            }
+
+            $currentFile = $this->_db->table($table_db)->where(['id' => $id_ptk, 'is_locked' => 0])->get()->getRowObject();
+            if (!$currentFile) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menghapus file. Data tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table($table_db)->select("$field_db AS file, id")->where(['id' => $id_ptk, 'is_locked' => 0])->update([$field_db => null, 'updated_at' => date('Y-m-d H:i:s')]);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($e);
+                $response->message = "Gagal menghapus file lampiran $title.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                try {
+                    unlink($dir . '/' . $currentFile->file);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "File lampiran $title berhasil dihapus.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menghapus file lampiran $title";
+                return json_encode($response);
+            }
         }
     }
 
