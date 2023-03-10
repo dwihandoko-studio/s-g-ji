@@ -3,12 +3,12 @@
 namespace App\Controllers\Situgu\Su\Setting;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Su\SettingmtModel;
+use App\Models\Situgu\Su\SettingroleModel;
 use Config\Services;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 
-class Mt extends BaseController
+class Role extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -23,7 +23,7 @@ class Mt extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new SettingmtModel($request);
+        $datamodel = new SettingroleModel($request);
 
 
         $lists = $datamodel->get_datatables();
@@ -37,9 +37,7 @@ class Mt extends BaseController
             $action = '<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace("'", "", $list->title) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Access Role</a>
-                            <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . str_replace("'", "", $list->title)  . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>
-                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->title)  . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
+                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace("'", "", $list->fullname) . '\');"><i class="bx bx-fingerprint font-size-16 align-middle"></i> &nbsp;Access Role</a>
                         </div>
                     </div>';
             // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -52,19 +50,9 @@ class Mt extends BaseController
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
             $row[] = $action;
-            $row[] = $list->title;
-            switch ($list->template_active) {
-                case 1:
-                    $row[] = '<div class="text-center">
-                            <span class="badge rounded-pill badge-soft-success font-size-11">Aktif</span>
-                        </div>';
-                    break;
-                default:
-                    $row[] = '<div class="text-center">
-                        <span class="badge rounded-pill badge-soft-danger font-size-11">Non Aktif</span>
-                    </div>';
-                    break;
-            }
+            $row[] = $list->fullname;
+            $row[] = $list->email;
+            $row[] = $list->role_name;
 
             $data[] = $row;
         }
@@ -79,7 +67,7 @@ class Mt extends BaseController
 
     public function index()
     {
-        $data['title'] = 'MAINTENANCE';
+        $data['title'] = 'ROLE ACCESS';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -88,11 +76,9 @@ class Mt extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
-        $data['status_mt'] = $this->_db->table('_tb_maintenance')->where(['id' => 1, 'status' => 1])->countAllResults();
-
         $data['user'] = $user->data;
 
-        return view('situgu/su/setting/mt/index', $data);
+        return view('situgu/su/setting/role/index', $data);
     }
 
     public function detail()
@@ -185,7 +171,7 @@ class Mt extends BaseController
         }
     }
 
-    public function disabled()
+    public function sync()
     {
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -201,57 +187,16 @@ class Mt extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id');
-            return json_encode($response);
-        } else {
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-
-            $this->_db->transBegin();
-            try {
-                $this->_db->table('_tb_maintenance')->where(['id' => 1, 'status' => 1])->update(['status' => 0]);
-
-                if ($this->_db->affectedRows() > 0) {
-                    $this->_db->transCommit();
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Maintenace Berhasil Dinonaktifkan.";
-                    return json_encode($response);
-                } else {
-                    $this->_db->transRollback();
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal menonaktifkan maintenance.";
-                    return json_encode($response);
-                }
-            } catch (\Throwable $th) {
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal menonaktifkan maintenance.";
-                return json_encode($response);
-            }
-        }
-    }
-
-    public function active()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
+            'nama' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'kecamatan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kecamatan tidak boleh kosong. ',
                 ]
             ],
         ];
@@ -259,33 +204,34 @@ class Mt extends BaseController
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('id');
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('kecamatan');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $kecamatan = htmlspecialchars($this->request->getVar('kecamatan'), true);
 
-            $this->_db->transBegin();
-            try {
-                $this->_db->table('_tb_maintenance')->where(['id' => 1, 'status' => 0])->update(['status' => 1]);
+            $apiLib = new Apilib();
+            $result = $apiLib->syncSekolah($id, $kecamatan);
 
-                if ($this->_db->affectedRows() > 0) {
-                    $this->_db->transCommit();
+            if ($result) {
+                if ($result->status == 200) {
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->message = "Maintenace Berhasil Diaktifkan.";
+                    $response->message = "Syncrone Data Sekolah Berhasil Dilakukan.";
                     return json_encode($response);
                 } else {
-                    $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal mengaktifkan maintenance.";
+                    $response->message = "Gagal Syncrone Data";
                     return json_encode($response);
                 }
-            } catch (\Throwable $th) {
-                $this->_db->transRollback();
+            } else {
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Gagal mengaktifkan maintenance.";
+                $response->message = "Gagal Syncrone Data";
                 return json_encode($response);
             }
         }

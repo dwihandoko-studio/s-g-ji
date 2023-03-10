@@ -24,7 +24,7 @@ class Maintenance extends BaseController
             return redirect()->to(base_url('situgu'));
         }
         $data['title'] = "MAINTENANCE";
-        $template = $this->_db->table('_tb_maintenance')->where('template_active', 1)->get()->getRowObject();
+        $template = $this->_db->table('_tb_maintenance')->where(['id' => 1, 'template_active' => 1])->get()->getRowObject();
         if ($template) {
             if ($template->template !== null) {
                 $activeTemplate = $template->template;

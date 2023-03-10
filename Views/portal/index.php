@@ -253,23 +253,25 @@
                         <?php if (isset($layanans)) {
                             if (count($layanans) > 0) {
                                 foreach ($layanans as $key => $value) { ?>
-                                    <div class="col-xl-3 col-sm-6">
-                                        <div class="card text-center  _sorot-mouse">
-                                            <a href="<?= $value['layanan_url'] ?>">
-                                                <div class="card-body">
-                                                    <div class="mb-4">
-                                                        <img class="avatar-lg" src="<?= base_url('uploads/layanan/' . $value['layanan_image']) ?>" alt="">
-                                                    </div>
-                                                    <h5 class="font-size-15 mb-1"><a href="<?= $value['layanan_url'] ?>" style="color: rgba(var(--bs-dark-rgb),var(--bs-text-opacity));" class="_color-h-hover"><?= $value['layanan_nama'] ?></a></h5>
-                                                    <p><a class="_color-p-hover" style="color: #c3cbe4;" href="<?= $value['layanan_url'] ?>"><?= $value['layanan_deskripsi'] ?></a></p>
+                                    <?php if ($value['layanan_nama'] == "SI-TUPENG") { ?>
+                                        <?php if ($user->role_user == 8 || $user->role_user == 1 || $user->role_user == 2) { ?>
+                                            <div class="col-xl-3 col-sm-6">
+                                                <div class="card text-center  _sorot-mouse">
+                                                    <a href="<?= $value['layanan_url'] ?>">
+                                                        <div class="card-body">
+                                                            <div class="mb-4">
+                                                                <img class="avatar-lg" src="<?= base_url('uploads/layanan/' . $value['layanan_image']) ?>" alt="">
+                                                            </div>
+                                                            <h5 class="font-size-15 mb-1"><a href="<?= $value['layanan_url'] ?>" style="color: rgba(var(--bs-dark-rgb),var(--bs-text-opacity));" class="_color-h-hover"><?= $value['layanan_nama'] ?></a></h5>
+                                                            <p><a class="_color-p-hover" style="color: #c3cbe4;" href="<?= $value['layanan_url'] ?>"><?= $value['layanan_deskripsi'] ?></a></p>
 
-                                                    <!-- <div>
+                                                            <!-- <div>
                                                         <a href="<?= $value['layanan_url'] ?>" class="badge bg-primary font-size-11 m-1">Html</a>
                                                         <a href="<?= $value['layanan_url'] ?>" class="badge bg-primary font-size-11 m-1">Css</a>
                                                         <a href="<?= $value['layanan_url'] ?>" class="badge bg-primary font-size-11 m-1">2 + more</a>
                                                     </div> -->
-                                                </div>
-                                                <!-- <div class="card-footer bg-transparent border-top">
+                                                        </div>
+                                                        <!-- <div class="card-footer bg-transparent border-top">
                                                     <div class="contact-links d-flex font-size-20">
                                                         <div class="flex-fill">
                                                             <a href="<?= $value['layanan_url'] ?>"><i class="bx bx-message-square-dots"></i></a>
@@ -282,9 +284,47 @@
                                                         </div>
                                                     </div>
                                                 </div> -->
-                                            </a>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        <?php } else {
+                                            continue;
+                                        } ?>
+
+                                    <?php } else { ?>
+                                        <div class="col-xl-3 col-sm-6">
+                                            <div class="card text-center  _sorot-mouse">
+                                                <a href="<?= $value['layanan_url'] ?>">
+                                                    <div class="card-body">
+                                                        <div class="mb-4">
+                                                            <img class="avatar-lg" src="<?= base_url('uploads/layanan/' . $value['layanan_image']) ?>" alt="">
+                                                        </div>
+                                                        <h5 class="font-size-15 mb-1"><a href="<?= $value['layanan_url'] ?>" style="color: rgba(var(--bs-dark-rgb),var(--bs-text-opacity));" class="_color-h-hover"><?= $value['layanan_nama'] ?></a></h5>
+                                                        <p><a class="_color-p-hover" style="color: #c3cbe4;" href="<?= $value['layanan_url'] ?>"><?= $value['layanan_deskripsi'] ?></a></p>
+
+                                                        <!-- <div>
+                                                        <a href="<?= $value['layanan_url'] ?>" class="badge bg-primary font-size-11 m-1">Html</a>
+                                                        <a href="<?= $value['layanan_url'] ?>" class="badge bg-primary font-size-11 m-1">Css</a>
+                                                        <a href="<?= $value['layanan_url'] ?>" class="badge bg-primary font-size-11 m-1">2 + more</a>
+                                                    </div> -->
+                                                    </div>
+                                                    <!-- <div class="card-footer bg-transparent border-top">
+                                                    <div class="contact-links d-flex font-size-20">
+                                                        <div class="flex-fill">
+                                                            <a href="<?= $value['layanan_url'] ?>"><i class="bx bx-message-square-dots"></i></a>
+                                                        </div>
+                                                        <div class="flex-fill">
+                                                            <a href="<?= $value['layanan_url'] ?>"><i class="bx bx-pie-chart-alt"></i></a>
+                                                        </div>
+                                                        <div class="flex-fill">
+                                                            <a href="<?= $value['layanan_url'] ?>"><i class="bx bx-user-circle"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php } ?>
                         <?php }
                             }
                         } ?>

@@ -250,6 +250,39 @@ class Filterauth implements FilterInterface
                                         return redirect()->to(base_url('portal'));
                                     }
                                 }
+                            } else if ($uriMain === "situpeng") {
+                                $uriLevel = $uri->getSegment(2);
+                                $mtLib = new Mtlib();
+                                if ($mtLib->get(2)) {
+                                    if (!$mtLib->getAccess($userId)) {
+                                        if ($uriLevel !== "maintenance") {
+                                            return redirect()->to(base_url('situpeng/maintenance'));
+                                        }
+                                    }
+                                } else {
+                                    if ($level == 1) { //SuperAdmin
+
+                                        if ($uriLevel === "" || $uriLevel === "index") {
+                                            return redirect()->to(base_url('situpeng/su/home'));
+                                        }
+                                        if ($uriLevel != "su") {
+                                            return redirect()->to(base_url('situpeng/su/home'));
+                                        }
+                                    } else if ($level == 2) { //Admin
+                                        if ($uriLevel === "" || $uriLevel === "index") {
+                                            return redirect()->to(base_url('situpeng/adm/home'));
+                                        }
+                                        if ($uriLevel != "adm") {
+                                            return redirect()->to(base_url('situpeng/adm/home'));
+                                        }
+                                    } else if ($level == 8) { //PTK
+                                        if ($uriLevel != "peng") {
+                                            return redirect()->to(base_url('situpeng/peng/home'));
+                                        }
+                                    } else {
+                                        return redirect()->to(base_url('portal'));
+                                    }
+                                }
                             } else {
                                 return redirect()->to(base_url('portal'));
                             }
