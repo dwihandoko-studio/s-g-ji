@@ -300,6 +300,8 @@ class Filterauth implements FilterInterface
                                     }
                                 }
                             } else if ($uriMain === "situpeng") {
+                                var_dump($uriMain);
+                                die;
                                 $uriLevel = $uri->getSegment(2);
                                 $mtLib = new Mtlib();
                                 if ($mtLib->get(2)) {
