@@ -421,7 +421,7 @@
         try {
             if (isset($user)) {
                 if ($user->npsn === '10801778') { ?>
-                    actionSyndapolocal('DAPODIK LOCAL', '<?= $user->npsn ?>');
+                    // actionSyndapolocal('DAPODIK LOCAL', '<?= $user->npsn ?>');
         <?php }
             }
         } catch (\Throwable $th) {
