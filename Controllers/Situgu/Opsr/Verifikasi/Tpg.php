@@ -521,7 +521,7 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update(['status_usulan' => 1, 'keterangan_reject' => $keterangan, 'date_reject' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update(['status_usulan' => 3, 'keterangan_reject' => $keterangan, 'date_reject' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
