@@ -241,7 +241,6 @@
                                         reloadPage();
                                     });
                                 } else {
-                                    e.disabled = false;
                                     Swal.fire(
                                         'GAGAL!',
                                         resul.message,
