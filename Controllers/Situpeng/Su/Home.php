@@ -23,6 +23,7 @@ class Home extends BaseController
 
     public function index()
     {
+
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
 
@@ -31,6 +32,9 @@ class Home extends BaseController
             delete_cookie('jwt');
             return redirect()->to(base_url('auth'));
         }
+
+        var_dump("WORKING");
+        die;
 
         $data['user'] = $user->data;
         $data['title'] = 'Dashboard';
