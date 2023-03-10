@@ -62,10 +62,7 @@ class Skterbit extends BaseController
             }
         }
 
-
-        $npsn = $this->_helpLib->getNpsn($userId);
-
-        $lists = $datamodel->get_datatables($npsn);
+        $lists = $datamodel->get_datatables();
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -100,8 +97,8 @@ class Skterbit extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsn),
-            "recordsFiltered" => $datamodel->count_filtered($npsn),
+            "recordsTotal" => $datamodel->count_all(),
+            "recordsFiltered" => $datamodel->count_filtered(),
             "data" => $data
         ];
         echo json_encode($output);
