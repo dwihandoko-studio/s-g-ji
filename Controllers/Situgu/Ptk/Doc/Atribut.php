@@ -679,7 +679,7 @@ class Atribut extends BaseController
                     break;
             }
 
-            $currentFile = $this->_db->table($table_db)->where(['id' => $id_ptk, 'is_locked' => 0])->get()->getRowObject();
+            $currentFile = $this->_db->table($table_db)->select("$field_db AS file, id")->where(['id_tahun_tw' => $tw, 'id_ptk' => $id_ptk, 'is_locked' => 0])->get()->getRowObject();
             if (!$currentFile) {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -689,7 +689,7 @@ class Atribut extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table($table_db)->select("$field_db AS file, id")->where(['id' => $id_ptk, 'is_locked' => 0])->update([$field_db => null, 'updated_at' => date('Y-m-d H:i:s')]);
+                $this->_db->table($table_db)->where(['id' => $currentFile->id, 'is_locked' => 0])->update([$field_db => null, 'updated_at' => date('Y-m-d H:i:s')]);
             } catch (\Exception $e) {
                 $this->_db->transRollback();
 
