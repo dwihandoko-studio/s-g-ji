@@ -33,12 +33,12 @@ class Home extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
-        var_dump("WORKING");
-        die;
-
         $data['user'] = $user->data;
         $data['title'] = 'Dashboard';
         $data['admin'] = true;
+
+        var_dump("WORKING");
+        die;
 
         return view('situpeng/su/home/index', $data);
     }
