@@ -42,6 +42,55 @@ class Filterauth implements FilterInterface
                                         if ($uriLevel !== "maintenance") {
                                             return redirect()->to(base_url('situgu/maintenance'));
                                         }
+                                    } else {
+
+                                        if ($level == 1) { //SuperAdmin
+
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('situgu/su/home'));
+                                            }
+                                            if ($uriLevel != "su") {
+                                                return redirect()->to(base_url('situgu/su/home'));
+                                            }
+                                        } else if ($level == 2) { //Admin
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('situgu/adm/home'));
+                                            }
+                                            if ($uriLevel != "adm") {
+                                                return redirect()->to(base_url('situgu/adm/home'));
+                                            }
+                                        } else if ($level == 3) { //Kecamatan
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('situgu/opk/home'));
+                                            }
+                                            if ($uriLevel != "opk") {
+                                                return redirect()->to(base_url('situgu/opk/home'));
+                                            }
+                                        } else if ($level == 4) { //SubRayon
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('situgu/opsr/home'));
+                                            }
+                                            if ($uriLevel != "opsr") {
+                                                return redirect()->to(base_url('situgu/opsr/home'));
+                                            }
+                                        } else if ($level == 5) { //Sekolah
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('situgu/ops/home'));
+                                            }
+                                            if ($uriLevel != "ops") {
+                                                return redirect()->to(base_url('situgu/ops/home'));
+                                            }
+                                        } else if ($level == 6) { //Kepsek
+                                            if ($uriLevel != "ks") {
+                                                return redirect()->to(base_url('situgu/ks/home'));
+                                            }
+                                        } else if ($level == 7) { //PTK
+                                            if ($uriLevel != "ptk") {
+                                                return redirect()->to(base_url('situgu/ptk/home'));
+                                            }
+                                        } else {
+                                            return redirect()->to(base_url('portal'));
+                                        }
                                     }
                                 } else {
 
@@ -257,6 +306,29 @@ class Filterauth implements FilterInterface
                                     if (!$mtLib->getAccess($userId)) {
                                         if ($uriLevel !== "maintenance") {
                                             return redirect()->to(base_url('situpeng/maintenance'));
+                                        }
+                                    } else {
+                                        if ($level == 1) { //SuperAdmin
+
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('situpeng/su/home'));
+                                            }
+                                            if ($uriLevel != "su") {
+                                                return redirect()->to(base_url('situpeng/su/home'));
+                                            }
+                                        } else if ($level == 2) { //Admin
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('situpeng/adm/home'));
+                                            }
+                                            if ($uriLevel != "adm") {
+                                                return redirect()->to(base_url('situpeng/adm/home'));
+                                            }
+                                        } else if ($level == 8) { //PTK
+                                            if ($uriLevel != "peng") {
+                                                return redirect()->to(base_url('situpeng/peng/home'));
+                                            }
+                                        } else {
+                                            return redirect()->to(base_url('portal'));
                                         }
                                     }
                                 } else {
