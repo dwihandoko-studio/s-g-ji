@@ -47,7 +47,7 @@ class DitolakModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables($npsn)
+    function get_datatables()
     {
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
@@ -55,14 +55,13 @@ class DitolakModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('npsn', $npsn);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered($npsn)
+    function count_filtered()
     {
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
@@ -70,12 +69,11 @@ class DitolakModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('b.npsn', $npsn);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all($npsn)
+    public function count_all()
     {
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
@@ -83,7 +81,6 @@ class DitolakModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('npsn', $npsn);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
