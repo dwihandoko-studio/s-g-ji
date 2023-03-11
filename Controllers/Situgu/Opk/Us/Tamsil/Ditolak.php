@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Situgu\Ops\Us\Tamsil;
+namespace App\Controllers\Situgu\Opk\Us\Tamsil;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Ops\Tamsil\DitolakModel;
+use App\Models\Situgu\Opk\Tamsil\DitolakModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -62,10 +62,9 @@ class Ditolak extends BaseController
             }
         }
 
-
-        $npsn = $this->_helpLib->getNpsn($userId);
-
-        $lists = $datamodel->get_datatables($npsn);
+        $kecamatan = $this->_helpLib->getKecamatan($userId);
+        $npsns = $this->_helpLib->getSekolahKecamatanArray($kecamatan, [5]);
+        $lists = $datamodel->get_datatables($npsns);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -100,8 +99,8 @@ class Ditolak extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsn),
-            "recordsFiltered" => $datamodel->count_filtered($npsn),
+            "recordsTotal" => $datamodel->count_all($npsns),
+            "recordsFiltered" => $datamodel->count_filtered($npsns),
             "data" => $data
         ];
         echo json_encode($output);
@@ -109,7 +108,7 @@ class Ditolak extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/ops/us/tamsil/ditolak/data'));
+        return redirect()->to(base_url('situgu/opk/us/tamsil/ditolak/data'));
     }
 
     public function data()
@@ -126,7 +125,7 @@ class Ditolak extends BaseController
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
         $data['tws'] = $this->_db->table('_ref_tahun_tw')->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        return view('situgu/ops/us/tamsil/ditolak/index', $data);
+        return view('situgu/opk/us/tamsil/ditolak/index', $data);
     }
 
     public function detail()
@@ -179,20 +178,24 @@ class Ditolak extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $current = $this->_db->table('v_temp_usulan')
-                ->where(['id_usulan' => $id, 'id_tahun_tw' => $tw])->get()->getRowObject();
+            $current = $this->_db->table('v_ditolak_usulan_tamsil a')
+                ->select("a.*, b.kecamatan as kecamatan_sekolah")
+                ->join('ref_sekolah b', 'a.npsn = b.npsn')
+                ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
                 $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
-                    ->select("a.*, b.npsn, b.nama as namaSekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
+                    ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
                     ->join('ref_sekolah b', 'a.sekolah_id = b.id')
                     ->where('a.ptk_id', $current->id_ptk)
+                    ->where("a.jenis_keluar IS NULL")
                     ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
+                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk)->get()->getRowObject();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/ks/verifikasi/tpg/detail', $data);
+                $response->data = view('situgu/opk/us/tamsil/detail-tolak', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;

@@ -47,7 +47,7 @@ class LolosberkasModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables($npsn)
+    function get_datatables($npsns)
     {
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
@@ -55,14 +55,14 @@ class LolosberkasModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('b.npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered($npsn)
+    function count_filtered($npsns)
     {
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
@@ -70,12 +70,12 @@ class LolosberkasModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('b.npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all($npsn)
+    public function count_all($npsns)
     {
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
@@ -83,7 +83,7 @@ class LolosberkasModel extends Model
                 $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->where('b.npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
