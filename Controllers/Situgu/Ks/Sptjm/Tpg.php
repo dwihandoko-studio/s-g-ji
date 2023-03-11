@@ -561,6 +561,214 @@ class Tpg extends BaseController
         }
     }
 
+    public function formuploadedit()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'tahun' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Title tidak boleh kosong. ',
+                ]
+            ],
+            'tw' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('tahun')
+                . $this->validator->getError('tw');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
+            $tw = htmlspecialchars($this->request->getVar('tw'), true);
+
+            $current = $this->_db->table('_tb_sptjm')->where(['id' => $id])->get()->getRowObject();
+
+            if (!$current) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "SPTJM tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            if ($current->is_locked == 1) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data PTK dalam SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
+                return json_encode($response);
+            }
+
+            $data['data'] = $current;
+            $data['tahun'] = $tahun;
+            $data['tw'] = $tw;
+            $data['id'] = $id;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situgu/ks/sptjm/tpg/upload_edit', $data);
+            return json_encode($response);
+        }
+    }
+
+    public function uploadEditSave()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'tahun' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tahun tidak boleh kosong. ',
+                ]
+            ],
+            'tw' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'TW tidak boleh kosong. ',
+                ]
+            ],
+            'id' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            '_file' => [
+                'rules' => 'uploaded[_file]|max_size[_file,2048]|mime_in[_file,image/jpeg,image/jpg,image/png,application/pdf]',
+                'errors' => [
+                    'uploaded' => 'Pilih file terlebih dahulu. ',
+                    'max_size' => 'Ukuran file terlalu besar, Maximum 2Mb. ',
+                    'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar dan pdf. '
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('tahun')
+                . $this->validator->getError('id')
+                . $this->validator->getError('tw')
+                . $this->validator->getError('_file');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
+            $tw = htmlspecialchars($this->request->getVar('tw'), true);
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $current = $this->_db->table('_tb_sptjm')->where(['id' => $id])->get()->getRowObject();
+
+            if (!$current) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "SPTJM tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            if ($current->is_locked == 1) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data PTK dalam SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
+                return json_encode($response);
+            }
+
+            $data = [
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $dir = FCPATH . "upload/sekolah/sptjm";
+            $field_db = 'lampiran_sptjm';
+            $table_db = '_tb_sptjm';
+
+            $lampiran = $this->request->getFile('_file');
+            $filesNamelampiran = $lampiran->getName();
+            $newNamelampiran = _create_name_file($filesNamelampiran);
+
+            if ($lampiran->isValid() && !$lampiran->hasMoved()) {
+                $lampiran->move($dir, $newNamelampiran);
+                $data[$field_db] = $newNamelampiran;
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupload file.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table($table_db)->where(['id' => $id, 'is_locked' => 0])->update($data);
+            } catch (\Exception $e) {
+                unlink($dir . '/' . $newNamelampiran);
+
+                $this->_db->transRollback();
+
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($e);
+                $response->message = "Gagal mengupdate data.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                try {
+                    unlink($dir . '/' . $current->lampiran_sptjm);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data berhasil diupdate.";
+                return json_encode($response);
+            } else {
+                unlink($dir . '/' . $newNamelampiran);
+
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupdate data";
+                return json_encode($response);
+            }
+        }
+    }
+
     public function formupload()
     {
         if ($this->request->getMethod() != 'post') {
