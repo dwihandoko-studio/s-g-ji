@@ -7,10 +7,10 @@ use CodeIgniter\Model;
 
 class LolosberkasModel extends Model
 {
-    protected $table = "_tb_usulan_detail_tpg a";
-    protected $column_order = array(null, null, 'b.nama', 'nik', 'b.nuptk', 'b.jenis_ptk', 'a.created_at');
-    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
-    protected $order = array('a.created_at' => 'asc', 'a.status_usulan' => 'asc');
+    protected $table = "v_lolosberkas_usulan_tpg";
+    protected $column_order = array(null, null, 'nama', 'nik', 'nuptk', 'jenis_ptk', 'created_at');
+    protected $column_search = array('nik', 'nuptk', 'nama');
+    protected $order = array('created_at' => 'asc', 'status_usulan' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -47,52 +47,43 @@ class LolosberkasModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables($npsn)
+    function get_datatables($npsns)
     {
-        $this->dt->select("a.*, b.nama, b.nuptk, b.nik, b.npsn, b.jenis_ptk");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
-        $this->dt->where('a.status_usulan', '2');
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->whereIn('b.npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered($npsn)
+    function count_filtered($npsns)
     {
-        $this->dt->select("a.*, b.nama, b.nuptk, b.nik, b.npsn, b.jenis_ptk");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
-        $this->dt->where('a.status_usulan', '2');
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->whereIn('b.npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all($npsn)
+    public function count_all($npsns)
     {
-        $this->dt->select("a.*, b.nama, b.nuptk, b.nik, b.npsn, b.jenis_ptk");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
-        $this->dt->where('a.status_usulan', '2');
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
             }
         }
-        $this->dt->whereIn('b.npsn', $npsn);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
