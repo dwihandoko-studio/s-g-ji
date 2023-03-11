@@ -350,7 +350,7 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canUsulTamsil();
+            $canUsulTamsil = canVerifikasiTpg();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
                 return json_encode($canUsulTamsil);
@@ -460,7 +460,7 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canUsulTamsil();
+            $canUsulTamsil = canVerifikasiTpg();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
                 return json_encode($canUsulTamsil);
@@ -528,7 +528,7 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canUsulTamsil();
+            $canUsulTamsil = canVerifikasiTpg();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
                 return json_encode($canUsulTamsil);

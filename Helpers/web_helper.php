@@ -772,6 +772,54 @@ function canUsulTamsil()
 	}
 }
 
+function canVerifikasiTamsil()
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$limit = $db->table('_setting_verifikasi_tb')
+		->where('id', 3)
+		->get()->getRowObject();
+	if ($limit) {
+		$waktuSekarang = date('Y-m-d H:i:s');
+		// $setinganUplaodSptjm = new \DateTime($settingSptjm->max_upload_sptjm);
+
+		$waktuSekarang = str_replace("-", "", $waktuSekarang);
+		$waktuSekarang = str_replace(" ", "", $waktuSekarang);
+		$waktuSekarang = str_replace(":", "", $waktuSekarang);
+
+		$setinganDownloadVerifikasi = str_replace("-", "", $limit->max_download_verifikasi);
+		$setinganDownloadVerifikasi = str_replace(" ", "", $setinganDownloadVerifikasi);
+		$setinganDownloadVerifikasi = str_replace(":", "", $setinganDownloadVerifikasi);
+
+		$setinganUplaodVerifikasi = str_replace("-", "", $limit->max_upload_verifikasi);
+		$setinganUplaodVerifikasi = str_replace(" ", "", $setinganUplaodVerifikasi);
+		$setinganUplaodVerifikasi = str_replace(":", "", $setinganUplaodVerifikasi);
+
+		if ((int)$waktuSekarang > (int)$setinganUplaodVerifikasi) {
+			$response = new \stdClass;
+			$response->code = 400;
+			$response->message = "Verifikasi Tamsil sudah Ditutup, Batas akhir Verifikasi Tamsil adalah " . $limit->max_upload_verifikasi;
+			return $response;
+		}
+		if ((int)$waktuSekarang < (int)$setinganDownloadVerifikasi) {
+			$response = new \stdClass;
+			$response->code = 400;
+			$response->message = "Verifikasi Tamsil belum dibuka, Jadwal Verifikasi Tamsil adalah " . $limit->max_download_verifikasi;
+			return $response;
+		}
+		$response = new \stdClass;
+		$response->code = 200;
+		$response->message = "";
+		return $response;
+	} else {
+		$response = new \stdClass;
+		$response->code = 400;
+		$response->message = "Jadwal tidak ditemukan";
+		return $response;
+	}
+}
+
 function canSptjmPghm()
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
@@ -868,6 +916,54 @@ function canUsulPghm()
 	}
 }
 
+function canVerifikasiPghm()
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$limit = $db->table('_setting_verifikasi_tb')
+		->where('id', 4)
+		->get()->getRowObject();
+	if ($limit) {
+		$waktuSekarang = date('Y-m-d H:i:s');
+		// $setinganUplaodVerifikasi = new \DateTime($settingVerifikasi->max_upload_verifikasi);
+
+		$waktuSekarang = str_replace("-", "", $waktuSekarang);
+		$waktuSekarang = str_replace(" ", "", $waktuSekarang);
+		$waktuSekarang = str_replace(":", "", $waktuSekarang);
+
+		$setinganDownloadVerifikasi = str_replace("-", "", $limit->max_download_verifikasi);
+		$setinganDownloadVerifikasi = str_replace(" ", "", $setinganDownloadVerifikasi);
+		$setinganDownloadVerifikasi = str_replace(":", "", $setinganDownloadVerifikasi);
+
+		$setinganUplaodVerifikasi = str_replace("-", "", $limit->max_upload_verifikasi);
+		$setinganUplaodVerifikasi = str_replace(" ", "", $setinganUplaodVerifikasi);
+		$setinganUplaodVerifikasi = str_replace(":", "", $setinganUplaodVerifikasi);
+
+		if ((int)$waktuSekarang > (int)$setinganUplaodVerifikasi) {
+			$response = new \stdClass;
+			$response->code = 400;
+			$response->message = "Verifikasi PGHM sudah Ditutup, Batas akhir Verifikasi PGHM adalah " . $limit->max_upload_verifikasi;
+			return $response;
+		}
+		if ((int)$waktuSekarang < (int)$setinganDownloadVerifikasi) {
+			$response = new \stdClass;
+			$response->code = 400;
+			$response->message = "Verifikasi PGHM belum dibuka, Jadwal Verifikasi PGHM adalah " . $limit->max_download_verifikasi;
+			return $response;
+		}
+		$response = new \stdClass;
+		$response->code = 200;
+		$response->message = "";
+		return $response;
+	} else {
+		$response = new \stdClass;
+		$response->code = 400;
+		$response->message = "Jadwal tidak ditemukan";
+		return $response;
+	}
+}
+
 function canSptjmTpg()
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
@@ -950,6 +1046,54 @@ function canUsulTpg()
 			$response = new \stdClass;
 			$response->code = 400;
 			$response->message = "Usulan TPG belum dibuka, Jadwal Usulan TPG adalah " . $limit->max_download_sptjm;
+			return $response;
+		}
+		$response = new \stdClass;
+		$response->code = 200;
+		$response->message = "";
+		return $response;
+	} else {
+		$response = new \stdClass;
+		$response->code = 400;
+		$response->message = "Jadwal tidak ditemukan";
+		return $response;
+	}
+}
+
+function canVerifikasiTpg()
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$limit = $db->table('_setting_verifikasi_tb')
+		->where('id', 2)
+		->get()->getRowObject();
+	if ($limit) {
+		$waktuSekarang = date('Y-m-d H:i:s');
+		// $setinganUplaodVerifikasi = new \DateTime($settingVerifikasi->max_upload_verifikasi);
+
+		$waktuSekarang = str_replace("-", "", $waktuSekarang);
+		$waktuSekarang = str_replace(" ", "", $waktuSekarang);
+		$waktuSekarang = str_replace(":", "", $waktuSekarang);
+
+		$setinganDownloadVerifikasi = str_replace("-", "", $limit->max_download_verifikasi);
+		$setinganDownloadVerifikasi = str_replace(" ", "", $setinganDownloadVerifikasi);
+		$setinganDownloadVerifikasi = str_replace(":", "", $setinganDownloadVerifikasi);
+
+		$setinganUplaodVerifikasi = str_replace("-", "", $limit->max_upload_verifikasi);
+		$setinganUplaodVerifikasi = str_replace(" ", "", $setinganUplaodVerifikasi);
+		$setinganUplaodVerifikasi = str_replace(":", "", $setinganUplaodVerifikasi);
+
+		if ((int)$waktuSekarang > (int)$setinganUplaodVerifikasi) {
+			$response = new \stdClass;
+			$response->code = 400;
+			$response->message = "Verifikasi TPG sudah Ditutup, Batas akhir Verifikasi TPG adalah " . $limit->max_upload_verifikasi;
+			return $response;
+		}
+		if ((int)$waktuSekarang < (int)$setinganDownloadVerifikasi) {
+			$response = new \stdClass;
+			$response->code = 400;
+			$response->message = "Verifikasi TPG belum dibuka, Jadwal Verifikasi TPG adalah " . $limit->max_download_verifikasi;
 			return $response;
 		}
 		$response = new \stdClass;
