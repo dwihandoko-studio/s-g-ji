@@ -34,6 +34,16 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "sptjm") ? ' active-menu-href' : '' ?>" href="#" id="topnav-sptjm" role="button">
+                                <i class="bx bx-spreadsheet me-2"></i><span key="t-sptjm">SPTJM</span>
+                                <div class="arrow-down"></div>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="topnav-sptjm">
+                                <a href="<?= base_url('situgu/opsr/sptjm/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-sptjm-tpg">Tunjangan Profesi Guru</a>
+                                <a href="<?= base_url('situgu/opsr/sptjm/tamsil') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "tamsil") ? ' active-menu-href' : '' ?>" key="t-sptjm-tamsil">Tamsil</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "opsr" && $uri->getSegment(3) == "us") ? ' active-menu-href' : '' ?>" href="javascript:;" id="topnav-usulan" role="button">
                                 <i class="bx bx-columns me-2"></i>
                                 <span key="t-usulan"> USULAN</span>

@@ -2,30 +2,27 @@
     <div class="modal-body">
         <div class="col-lg-12">
             <div class="table-responsive">
-                <h4>Generate SPTJM Usulan Tunjangan Profesi Guru (Sertifikasi / TPG).</h4>
+                <h4>Generate SPTJM Verifikasi Tunjangan Profesi Guru (TPG).</h4>
                 <table class="table mb-0">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama</th>
-                            <th>NUPTK</th>
+                            <th>Aksi</th>
+                            <th>Jumlah</th>
                             <th>Konfirm</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($data as $key => $value) { ?>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td><?= $value->nama ?></td>
-                                <!-- <td><label class="form-check-label" for="_nama"><?= $value->nama ?></label></td> -->
-                                <td><?= $value->nuptk ?></td>
-                                <td>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="_nama" value="<?= $value->id_ptk_usulan ?>" onchange="changeChecked(this)" name="hasil[]">
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php } ?>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Verifikasi Tunjangan Profesi Guru</td>
+                            <td><?= $data->jumlah ?></td>
+                            <td>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="_confirm" value="<?= $value->kode_usulan ?>" name="_confirm">
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -34,48 +31,22 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        <button type="button" onclick="actionSubmit(this)" class="btn btn-success waves-effect waves-light button-submit">Generate SPTJM Usulan TPG</button>
+        <button type="button" onclick="actionSubmit(this)" class="btn btn-success waves-effect waves-light button-submit">Generate SPTJM Verifikasi Tamsil</button>
     </div>
     <script>
-        let ptks = [];
-
-        function changeChecked(event) {
-            let checkedCount = document.getElementsByName('hasil[]');
-            // for (let i = 0, n = checkedCount.length; i < n; i++) {
-            // if (checkedCount[i].checked) {
-            if (event.checked) {
-                ptks.push(event.value);
-                // if (tpks === "") {
-                //     tpks = checkedCount[i].value();
-                // } else {
-                //     tpks = tpsk + "," + checkedCount[i].value();
-                // }
-                // $('.submit-button-ajuan').attr('disabled', true);
-                // return;
-            } else {
-                const ptkIndex = ptks.findIndex((ptk) => ptk === event.value);
-                if (ptkIndex === -1) {
-                    return;
-                }
-                ptks.splice(ptkIndex, 1);
-            }
-            // }
-
-            // $('.submit-button-ajuan').attr('disabled', false);
-        }
-
-        // $("#formEditModalData").on("submit", function(e) {
-        //     e.preventDefault();
         function actionSubmit(event) {
-            if (ptks.length > 0) {
+
+            let status;
+            if ($('#_confirm').is(":checked")) {
+
                 Swal.fire({
-                    title: 'Apakah anda yakin ingin mengenerate SPTJM Usulan Tunjangan Profesi Guru?',
-                    text: "Generate SPTJM Tunjangan TPG",
+                    title: 'Apakah anda yakin ingin mengenerate SPTJM Verifikasi Tunjangan TPG?',
+                    text: "Generate SPTJM Verifikasi Tunjangan TPG",
                     showCancelButton: true,
                     icon: 'question',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, Generate SPTJM TPG!',
+                    confirmButtonText: 'Ya, Generate SPTJM Verifikasi Tpg!',
                     cancelButtonText: 'Tidak',
                 }).then((result) => {
                     if (result.value) {
@@ -85,8 +56,7 @@
                             data: {
                                 jenis: 'tpg',
                                 tw: '<?= $tw ?>',
-                                jumlah: ptks.length,
-                                ptks: ptks
+                                jumlah: '<?= $data->jumlah ?>',
                             },
                             dataType: 'JSON',
                             beforeSend: function() {
@@ -149,11 +119,12 @@
                 })
             } else {
                 Swal.fire(
-                    'PERINGATAN!!!',
-                    "Silahkan pilih data ptk yang akan digenerate SPTJM.",
+                    'PERINGATAN!',
+                    "Silahkan ceklis konfirmasi terlebih dahulu.",
                     'warning'
                 );
             }
+
         };
     </script>
 <?php } ?>
