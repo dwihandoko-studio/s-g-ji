@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controllers\Situgu\Opsr\Verifikasi;
+namespace App\Controllers\Situgu\Su\Us\Tamsil;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Opsr\VerifikasitpgdetailModel;
-use App\Models\Situgu\Opsr\VerifikasitpgsekolahModel;
+use App\Models\Situgu\Su\Tamsil\AntrianModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -14,7 +13,7 @@ use App\Libraries\Helplib;
 use App\Libraries\Situgu\Kehadiranptklib;
 use App\Libraries\Uuid;
 
-class Tpg extends BaseController
+class Antrian extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -31,7 +30,7 @@ class Tpg extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new VerifikasitpgsekolahModel($request);
+        $datamodel = new AntrianModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -63,89 +62,7 @@ class Tpg extends BaseController
             }
         }
 
-        $npsns = $this->_helpLib->getSekolahNaungan($userId);
-
-        $lists = $datamodel->get_datatables($npsns, 'tpg');
-        $data = [];
-        $no = $request->getPost("start");
-        foreach ($lists as $list) {
-            $no++;
-            $row = [];
-
-            $row[] = $no;
-            // $action = '<div class="btn-group">
-            //             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
-            //             <div class="dropdown-menu" style="">
-            //                 <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-            //                 <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Sync Dapodik</a>
-            //             </div>
-            //         </div>';
-            $action = '<a href="./datalist?n=' . $list->kode_usulan . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
-                </a>';
-            //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-            //     <i class="bx bx-transfer-alt font-size-16 align-middle"></i></button>
-            //     </a>
-            //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-            //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
-            //     </a>';
-            $row[] = $action;
-            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
-            $row[] = $list->npsn;
-            $row[] = $list->bentuk_pendidikan;
-            $row[] = $list->status_sekolah;
-            $row[] = $list->kecamatan;
-            $row[] = $list->jumlah_ptk;
-
-            $data[] = $row;
-        }
-        $output = [
-            "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsns, 'tamsil'),
-            "recordsFiltered" => $datamodel->count_filtered($npsns, 'tamsil'),
-            "data" => $data
-        ];
-        echo json_encode($output);
-    }
-
-    public function getAllDetail()
-    {
-        $request = Services::request();
-        $datamodel = new VerifikasitpgdetailModel($request);
-
-        $jwt = get_cookie('jwt');
-        $token_jwt = getenv('token_jwt.default.key');
-        if ($jwt) {
-            try {
-                $decoded = JWT::decode($jwt, new Key($token_jwt, 'HS256'));
-                if ($decoded) {
-                    $userId = $decoded->id;
-                    $level = $decoded->level;
-                } else {
-                    $output = [
-                        "draw" => $request->getPost('draw'),
-                        "recordsTotal" => 0,
-                        "recordsFiltered" => 0,
-                        "data" => []
-                    ];
-                    echo json_encode($output);
-                    return;
-                }
-            } catch (\Exception $e) {
-                $output = [
-                    "draw" => $request->getPost('draw'),
-                    "recordsTotal" => 0,
-                    "recordsFiltered" => 0,
-                    "data" => []
-                ];
-                echo json_encode($output);
-                return;
-            }
-        }
-
-        // $npsns = $this->_helpLib->getSekolahNaungan($userId);
-
-        $lists = $datamodel->get_datatables($request->getPost('id'));
+        $lists = $datamodel->get_datatables();
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -175,13 +92,14 @@ class Tpg extends BaseController
             $row[] = $list->nik;
             $row[] = $list->nuptk;
             $row[] = $list->jenis_ptk;
+            $row[] = $list->created_at;
 
             $data[] = $row;
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($request->getPost('id')),
-            "recordsFiltered" => $datamodel->count_filtered($request->getPost('id')),
+            "recordsTotal" => $datamodel->count_all(),
+            "recordsFiltered" => $datamodel->count_filtered(),
             "data" => $data
         ];
         echo json_encode($output);
@@ -189,12 +107,12 @@ class Tpg extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/opsr/verifikasi/tpg/data'));
+        return redirect()->to(base_url('situgu/su/us/tamsil/antrian/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'VERIFIKASI USULAN TUNJANGAN PROFESI GURU';
+        $data['title'] = 'ANTRIAN USULAN TUNJANGAN TAMSIL';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -205,26 +123,8 @@ class Tpg extends BaseController
         $id = $this->_helpLib->getPtkId($user->data->id);
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        return view('situgu/opsr/verifikasi/tpg/index', $data);
-    }
-
-    public function datalist()
-    {
-        $Profilelib = new Profilelib();
-        $user = $Profilelib->user();
-        if ($user->status != 200) {
-            delete_cookie('jwt');
-            session()->destroy();
-            return redirect()->to(base_url('auth'));
-        }
-
-        $id = htmlspecialchars($this->request->getGet('n'), true);
-
-        $data['title'] = 'VERIFIKASI USULAN TUNJANGAN PROFESI GURU';
-        $data['user'] = $user->data;
-        $data['kode_usulan'] = $id;
-        $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        return view('situgu/opsr/verifikasi/tpg/detail_index', $data);
+        $data['tws'] = $this->_db->table('_ref_tahun_tw')->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
+        return view('situgu/su/us/tamsil/antrian/index', $data);
     }
 
     public function detail()
@@ -277,7 +177,7 @@ class Tpg extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $current = $this->_db->table('v_antrian_usulan_tpg a')
+            $current = $this->_db->table('v_antrian_usulan_tamsil a')
                 ->select("a.*, b.kecamatan as kecamatan_sekolah")
                 ->join('ref_sekolah b', 'a.npsn = b.npsn')
                 ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
@@ -294,7 +194,7 @@ class Tpg extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/opsr/verifikasi/tpg/detail', $data);
+                $response->data = view('situgu/su/verifikasi/tamsil/detail', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -347,7 +247,7 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canVerifikasiTpg();
+            $canUsulTamsil = canVerifikasiTamsil();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
                 return json_encode($canUsulTamsil);
@@ -356,7 +256,7 @@ class Tpg extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('_tb_usulan_detail_tpg')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_tb_usulan_detail_tamsil')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -366,7 +266,7 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => $user->data->id]);
+                $this->_db->table('_tb_usulan_detail_tamsil')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => $user->data->id]);
                 if ($this->_db->affectedRows() > 0) {
                     try {
                         $checkLocked = $this->_db->table('_tb_sptjm')->select('is_locked')->where('kode_usulan', $oldData->kode_usulan)->get()->getRowObject();
@@ -375,6 +275,7 @@ class Tpg extends BaseController
                                 $this->_db->table('_tb_sptjm')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
                             }
                         }
+
                         $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
                         $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
                         $this->_db->table('_ptk_tb')->where(['id_ptk' => $oldData->id_ptk])->update(['is_locked' => 1]);
@@ -382,8 +283,6 @@ class Tpg extends BaseController
                         $this->_db->transRollback();
                         $response = new \stdClass;
                         $response->status = 400;
-                        $response->error = var_dump($th);
-                        $response->onError = 'update SPTJM';
                         $response->message = "Gagal memverifikasi usulan $nama.";
                         return json_encode($response);
                     }
@@ -453,7 +352,7 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canVerifikasiTpg();
+            $canUsulTamsil = canVerifikasiTamsil();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
                 return json_encode($canUsulTamsil);
@@ -467,7 +366,7 @@ class Tpg extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/opsr/verifikasi/tpg/tolak', $data);
+            $response->data = view('situgu/su/verifikasi/tamsil/tolak', $data);
             return json_encode($response);
         }
     }
@@ -521,7 +420,7 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canVerifikasiTpg();
+            $canUsulTamsil = canVerifikasiTamsil();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
                 return json_encode($canUsulTamsil);
@@ -531,7 +430,7 @@ class Tpg extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
 
-            $oldData = $this->_db->table('_tb_usulan_detail_tpg')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_tb_usulan_detail_tamsil')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -541,7 +440,7 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update(['status_usulan' => 3, 'keterangan_reject' => $keterangan, 'admin_reject' => $user->data->id, 'date_reject' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_tb_usulan_detail_tamsil')->where('id', $oldData->id)->update(['status_usulan' => 3, 'keterangan_reject' => $keterangan, 'admin_reject' => $user->data->id, 'date_reject' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     try {
                         $checkLocked = $this->_db->table('_tb_sptjm')->select('is_locked')->where('kode_usulan', $oldData->kode_usulan)->get()->getRowObject();
