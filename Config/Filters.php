@@ -51,7 +51,7 @@ class Filters extends BaseConfig
                     'auth', 'auth/*',
                     'situgu', 'situgu/*',
                     'situgu/ops', 'situgu/ops/*',
-                    'c', 'c/*',
+                    'situpeng', 'situpeng/*',
                     'd', 'd/*',
                     'e', 'e/*',
                     'f', 'f/*',
