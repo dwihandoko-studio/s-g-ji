@@ -14,6 +14,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript:actionTautUlang('<?= $infogtk->ptk_id ?>');" class="btn btn-primary btn-rounded waves-effect waves-light">Tautkan Ulang Info GTK Digital</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:actionHapus('<?= $infogtk->ptk_id ?>');" class="btn btn-danger btn-rounded waves-effect waves-light">Hapus Tautkan Info GTK Digital</a></li>
                             </ol>
                         </div>
                     <?php } ?>
@@ -309,6 +310,82 @@
                     );
                 }
             });
+        }
+
+        function actionHapus(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin ingin menghapus tautan Info GTK Digital ini?',
+                text: "Hapus Tautan Info GTK Digital",
+                showCancelButton: true,
+                icon: 'question',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Tidak',
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "./hapus",
+                        type: 'POST',
+                        data: {
+                            id: id,
+                        },
+                        dataType: 'JSON',
+                        beforeSend: function() {
+                            $('div.main-content').block({
+                                message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                            });
+                        },
+                        success: function(resul) {
+                            $('div.main-content').unblock();
+                            if (resul.status !== 200) {
+                                if (resul.status !== 201) {
+                                    if (resul.status === 401) {
+                                        Swal.fire(
+                                            'Failed!',
+                                            resul.message,
+                                            'warning'
+                                        ).then((valRes) => {
+                                            reloadPage();
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'GAGAL!',
+                                            resul.message,
+                                            'warning'
+                                        );
+                                    }
+                                } else {
+                                    Swal.fire(
+                                        'Peringatan!',
+                                        resul.message,
+                                        'success'
+                                    ).then((valRes) => {
+                                        reloadPage();
+                                    })
+                                }
+                            } else {
+                                Swal.fire(
+                                    'SELAMAT!',
+                                    resul.message,
+                                    'success'
+                                ).then((valRes) => {
+                                    reloadPage();
+                                })
+                            }
+                        },
+                        error: function() {
+                            $('div.main-content').unblock();
+                            Swal.fire(
+                                'Failed!',
+                                "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                                'warning'
+                            );
+                        }
+                    });
+                }
+            })
+
         }
     </script>
 <?php } ?>

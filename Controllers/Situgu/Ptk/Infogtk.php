@@ -210,4 +210,69 @@ class Infogtk extends BaseController
             }
         }
     }
+
+    public function hapus()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $current = $this->_db->table('_info_gtk')
+                ->where('ptk_id', $id)->get()->getRowObject();
+
+            if ($current) {
+                $this->_db->transBegin();
+                try {
+                    $this->_db->table('_info_gtk')->where('ptk_id', $id)->delete();
+                } catch (\Exception $e) {
+                    $this->_db->transRollback();
+
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->error = var_dump($e);
+                    $response->message = "Gagal menghapus tautan Info GTK Digital.";
+                    return json_encode($response);
+                }
+
+                if ($this->_db->affectedRows() > 0) {
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Info GTK Digital berhasil dihapus.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal memhapus tautan Info GTK Digital.";
+                    return json_encode($response);
+                }
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
 }
