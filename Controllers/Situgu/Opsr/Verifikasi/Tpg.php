@@ -278,8 +278,9 @@ class Tpg extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
             $current = $this->_db->table('v_antrian_usulan_tpg a')
-                ->select("a.*, b.kecamatan as kecamatan_sekolah")
+                ->select("a.*, b.kecamatan as kecamatan_sekolah, c.lampiran_sptjm")
                 ->join('ref_sekolah b', 'a.npsn = b.npsn')
+                ->join('_tb_sptjm c', 'a.kode_usulan = c.kode_usulan')
                 ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
