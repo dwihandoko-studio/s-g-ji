@@ -7,10 +7,10 @@ use CodeIgniter\Model;
 
 class PenggunaModel extends Model
 {
-    protected $table = "v_user";
-    protected $column_order = array(null, null, 'npsn', 'fullname', 'email', 'no_hp', 'role_user', 'is_active', 'email_verified', 'wa_verified');
-    protected $column_search = array('npsn', 'fullname', 'email', 'no_hp');
-    protected $order = array('role_user' => 'asc', 'fullname' => 'asc');
+    protected $table = "v_user a";
+    protected $column_order = array(null, null, 'a.npsn', 'a.fullname', 'a.email', 'a.no_hp', 'a.role_user', 'a.kecamatan', 'a.is_active', 'a.email_verified', 'a.wa_verified');
+    protected $column_search = array('a.npsn', 'a.fullname', 'a.email', 'a.no_hp');
+    protected $order = array('a.role_user' => 'asc', 'a.fullname' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -49,8 +49,10 @@ class PenggunaModel extends Model
     }
     function get_datatables()
     {
+        $this->dt->select("a.*, b.kecamatan as nama_kecamatan");
+        $this->dt->join('ref_kecamatan b', 'a.kecamatan = b.kode_kecamatan');
         if ($this->request->getPost('role')) {
-            $this->dt->where('role_user', $this->request->getPost('role'));
+            $this->dt->where('a.role_user', $this->request->getPost('role'));
         }
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
@@ -61,7 +63,7 @@ class PenggunaModel extends Model
     function count_filtered()
     {
         if ($this->request->getPost('role')) {
-            $this->dt->where('role_user', $this->request->getPost('role'));
+            $this->dt->where('a.role_user', $this->request->getPost('role'));
         }
         $this->_get_datatables_query();
         return $this->dt->countAllResults();
@@ -69,7 +71,7 @@ class PenggunaModel extends Model
     public function count_all()
     {
         if ($this->request->getPost('role')) {
-            $this->dt->where('role_user', $this->request->getPost('role'));
+            $this->dt->where('a.role_user', $this->request->getPost('role'));
         }
         $this->_get_datatables_query();
         return $this->dt->countAllResults();

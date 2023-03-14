@@ -55,6 +55,7 @@
                                     <th rowspan="2">EMAIL</th>
                                     <th rowspan="2">NO HP</th>
                                     <th rowspan="2">ROLE</th>
+                                    <th rowspan="2">KECAMATAN</th>
                                     <th rowspan="2">STATUS</th>
                                     <th colspan="2" data-orderable="false">
                                         <div class="text-center">VERIFIED</div>

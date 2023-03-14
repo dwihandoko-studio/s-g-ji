@@ -92,6 +92,7 @@ class Pengguna extends BaseController
             $row[] = $list->email;
             $row[] = $list->no_hp;
             $row[] = $list->role_name;
+            $row[] = $list->nama_kecamatan;
             switch ($list->is_active) {
                 case 1:
                     $row[] = '<div class="text-center">
