@@ -358,11 +358,22 @@ class Ajukan extends BaseController
                         $response->message = "Data attribut kepegawaian masih kosong.";
                         return json_encode($response);
                     }
-                    if ($ptk->lampiran_pangkat === null || $ptk->lampiran_pangkat === "" || $ptk->lampiran_kgb === null || $ptk->lampiran_kgb === "") {
-                        $response->status = 404;
-                        $response->message = "Lampiran Dokumen Atribut Pangkat dan KGB tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
-                        $response->redirrect = base_url("situgu/ks/doc/atribut");
+
+                    if ($ptk->lampiran_pangkat === null || $ptk->lampiran_pangkat === "") {
+
+                        $response->status = 400;
+                        $response->message = "Lampiran Dokumen Atribut Pangkat tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
+                        $response->redirrect = base_url("situgu/ptk/doc/atribut");
                         return json_encode($response);
+                    }
+
+                    if ($ptk->pang_jenis === "kgb") {
+                        if ($ptk->lampiran_kgb === null || $ptk->lampiran_kgb === "") {
+                            $response->status = 400;
+                            $response->message = "Lampiran Dokumen Atribut KGB tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
+                            $response->redirrect = base_url("situgu/ptk/doc/atribut");
+                            return json_encode($response);
+                        }
                     }
                     $response->data = view('situgu/ks/us/ajukan/tamsil', $data);
                 } else {
