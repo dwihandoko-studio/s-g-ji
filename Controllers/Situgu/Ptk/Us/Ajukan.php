@@ -265,10 +265,12 @@ class Ajukan extends BaseController
 
             if (!$igdD) {
                 if ($ptk->lampiran_att_lain === null || $ptk->lampiran_att_lain === "") {
-                    $response->status = 404;
-                    $response->message = "Anda terdeteksi belum menautkan info GTK Digital. Bagi yang belum mempunyai info GTK Digital, Diwajibkan mengupload Print Out Info GTK pada menu dokumen atrribut lainnya!!";
-                    $response->redirrect = base_url("situgu/ptk/doc/atribut");
-                    return json_encode($response);
+                    if ($ptk->lampiran_doc_absen_lain === null || $ptk->lampiran_doc_absen_lain === "") {
+                        $response->status = 404;
+                        $response->message = "Anda terdeteksi belum menautkan info GTK Digital. Bagi yang belum mempunyai info GTK Digital, Diwajibkan mengupload Print Out Info GTK pada menu dokumen atrribut lainnya!!";
+                        $response->redirrect = base_url("situgu/ptk/doc/atribut");
+                        return json_encode($response);
+                    }
                 }
             }
 
