@@ -36,7 +36,7 @@ class Home extends BaseController
         }
 
         $data['user'] = $user->data;
-        $data['pengawas'] = $this->_db->table('__pengawas_tb')->where('id', $user->data->id)->get()->getRowObject();
+        $data['pengawas'] = $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
         $data['title'] = 'Dashboard';
         // $data['verified_wa'] = $user->data->wa_verified == 1 ? true : false;
         $data['verified_wa'] = true;
