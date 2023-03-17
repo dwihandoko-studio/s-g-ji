@@ -5,7 +5,7 @@
             <div class="row mb-3">
                 <div class="col-lg-6">
                     <label for="_nik" class="col-form-label">NIK</label>
-                    <input type="text" class="form-control nik" value="<?= $data->tempat_lahir ?>" id="_nik" name="_nik" placeholder="NIK..." onfocusin="inputFocus(this);">
+                    <input type="text" class="form-control nik" value="<?= $data->nik ?>" id="_nik" name="_nik" placeholder="NIK..." onfocusin="inputFocus(this);">
                     <div class="help-block _nik"></div>
                 </div>
                 <div class="col-lg-6">
