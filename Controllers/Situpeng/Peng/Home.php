@@ -36,8 +36,7 @@ class Home extends BaseController
         }
 
         $data['user'] = $user->data;
-        $id = $this->_helpLib->getPtkId($user->data->id);
-        $data['ptk'] = $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
+        $data['pengawas'] = $this->_db->table('__pengawas_tb')->where('id', $user->data->id)->get()->getRowObject();
         $data['title'] = 'Dashboard';
         // $data['verified_wa'] = $user->data->wa_verified == 1 ? true : false;
         $data['verified_wa'] = true;
@@ -45,18 +44,14 @@ class Home extends BaseController
         $data['email_tertaut'] = $user->data->email_tertaut == 1 ? true : false;
         $data['admin'] = true;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        $data['data_antrian_tamsil'] = $this->_db->table('_tb_usulan_detail_tamsil')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_tpg'] = $this->_db->table('_tb_usulan_detail_tpg')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_pghm'] = $this->_db->table('_tb_usulan_detail_pghm')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_tamsil_transfer'] = $this->_db->table('_tb_usulan_detail_pghm')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_tpg_transfer'] = $this->_db->table('_tb_usulan_detail_pghm')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_pghm_transfer'] = $this->_db->table('_tb_usulan_detail_pghm')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $aa = $this->_db->table('_tb_temp_usulan_detail')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getResult();
+        $data['data_antrian_tpg'] = $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_pengawas' => $user->data->id])->orderBy('created_at', 'desc')->get()->getRowObject();
+        $data['data_antrian_tpg_transfer'] = $this->_db->table('_tb_usulan_tpg_siap_sk_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_pengawas' => $user->data->id])->orderBy('created_at', 'desc')->get()->getRowObject();
+        $aa = $this->_db->table('_tb_temp_usulan_detail_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_pengawas' => $user->data->id])->orderBy('created_at', 'desc')->get()->getResult();
         if (count($aa) > 0) {
             if ($aa[0]->status_usulan == 1) {
                 // var_dump($data['data_antrian_tamsil']);
                 // die;
-                if ($data['data_antrian_tamsil'] || $data['data_antrian_tpg'] || $data['data_antrian_pghm'] || $data['data_antrian_tamsil_transfer'] || $data['data_antrian_tpg_transfer'] || $data['data_antrian_pghm_transfer']) {
+                if ($data['data_antrian_tpg'] || $data['data_antrian_tpg_transfer']) {
                     $data['data'] = false;
                 } else {
                     $data['data'] = $aa[0];
