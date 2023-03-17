@@ -140,10 +140,10 @@
                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
                     });
 
-                    if (data.success) {
+                    if (resul.success) {
                         ambilId("status").innerHTML = "Menyimpan Data . . .";
-                        console.log(data.data);
-                        console.log(data.data.length);
+                        console.log(resul.data);
+                        console.log(resul.data.length);
 
                         let sendToServer = function(lines, index) {
                             if (index > lines.length - 1) {
@@ -258,13 +258,13 @@
                             });
                         };
 
-                        sendToServer(data.data, 0);
+                        sendToServer(resul.data, 0);
 
                     }
 
-                    if (data.error) {
+                    if (resul.error) {
                         ambilId("progressBar").style.display = "none";
-                        ambilId("status").innerHTML = data.error;
+                        ambilId("status").innerHTML = resul.error;
                         ambilId("status").style.color = "red";
                         ambilId("progressBar").value = 0;
                         ambilId("loaded_n_total").innerHTML = "";
@@ -273,7 +273,7 @@
 
                         Swal.fire(
                             'Failed!',
-                            data.error,
+                            resul.error,
                             'warning'
                         );
                     }
