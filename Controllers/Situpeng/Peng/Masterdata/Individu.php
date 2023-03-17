@@ -105,7 +105,7 @@ class Individu extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/ptk/masterdata/dapodik/edit', $data);
+                $response->data = view('situpeng/ptk/masterdata/individu/edit', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
