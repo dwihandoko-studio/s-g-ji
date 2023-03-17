@@ -47,7 +47,7 @@
                 <tr>
                     <th scope="row">2</th>
                     <td><label class="form-check-label" for="_nopes">No Peserta</label></td>
-                    <td><label class="form-check-label" for="_nopes"><?= $ptk->nrg ?></label></td>
+                    <td><label class="form-check-label" for="_nopes"><?= $ptk->no_peserta ?></label></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_nopes" onchange="changeChecked()" name="hasil[]">
