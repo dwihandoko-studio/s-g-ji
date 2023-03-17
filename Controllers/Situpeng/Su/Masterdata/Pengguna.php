@@ -161,7 +161,7 @@ class Pengguna extends BaseController
         return view('situpeng/su/masterdata/pengguna/index', $data);
     }
 
-    public function getWilayahShow()
+    public function getPengawas()
     {
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -187,20 +187,32 @@ class Pengguna extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $wilayahs = $this->_db->table('ref_kecamatan')
-                ->get()->getResult();
+            $already = $this->_db->table('_profil_users_tb')
+                ->where("ptk_id = '$id'")->get()->getRowObject();
 
-            if ($wilayahs) {
-                $data['wilayahs'] = $wilayahs;
+            if ($already) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Pengawas ini sudah tertaut ke akun " . $already->fullname . " - " . $already->nip;
+                return json_encode($response);
+            }
+
+            $current = $this->_db->table('__pengawas_tb')
+                ->where("id = '$id'")->get()->getRowObject();
+
+            if ($current) {
+                $data['data'] = $current;
+                $data['id'] = $id;
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situpeng/su/masterdata/pengguna/wilayahs', $data);
+                $response->data = $current;
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data tidak ditemukan";
+                $response->status = 404;
+                $response->redirrect = base_url('situpeng/su/masterdata/pengawas');
+                $response->message = "Anda terdeteksi belum melakukan Import Data Pengawas. Silahkan untuk melakukan Import Data terlebih dahulu.";
                 return json_encode($response);
             }
         }
