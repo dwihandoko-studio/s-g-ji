@@ -370,12 +370,11 @@ class Pengguna extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('action'), true);
 
-            $roles = $this->_db->table('_role_user')->whereNotIn('id', [1, 3, 4, 5, 6, 7])->get()->getResult();
-            $wilayahs = $this->_db->table('ref_kecamatan')->orderBy('nama_kecamatan', 'ASC')->get()->getResult();
+            $current = $this->_db->table('__pengawas_tb')
+                ->where("nip NOT IN (SELECT nip FROM _profil_users_tb WHERE role_user = 8)")->get()->getResult();
 
-            if (count($roles) > 0 && count($wilayahs) > 0) {
-                $data['roles'] = $roles;
-                $data['wilayahs'] = $wilayahs;
+            if (count($current) > 0) {
+                $data['data'] = $current;
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
@@ -383,8 +382,9 @@ class Pengguna extends BaseController
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data tidak ditemukan";
+                $response->status = 404;
+                $response->redirrect = base_url('situpeng/su/masterdata/pengawas');
+                $response->message = "Anda terdeteksi belum melakukan Import Data Pengawas. Silahkan untuk melakukan Import Data Pengawas terlebih dahulu.";
                 return json_encode($response);
             }
         }
