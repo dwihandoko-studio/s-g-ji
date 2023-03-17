@@ -531,7 +531,7 @@ class Tamsil extends BaseController
                     'JB' => 3,
                     'JU' => rpTanpaAwalan(($v->us_gaji_pokok * 3)),
                     'PPH' => $pph,
-                    'JD' => rpTanpaAwalan((($v->us_gaji_pokok * 3) * $pph21)),
+                    'JD' => rpTanpaAwalan(($v->us_gaji_pokok * 3) - (($v->us_gaji_pokok * 3) * $pph21)),
                     'NPWP' => $v->npwp,
                     'NOREK' => $v->no_rekening,
                     'BANK' => $v->cabang_bank,
