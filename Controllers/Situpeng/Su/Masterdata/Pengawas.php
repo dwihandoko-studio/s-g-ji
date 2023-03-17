@@ -299,6 +299,229 @@ class Pengawas extends BaseController
         echo json_encode($response);
     }
 
+    public function importData()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'nuptk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NUPTK tidak boleh kosong. ',
+                ]
+            ],
+            'nip' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NIP tidak boleh kosong. ',
+                ]
+            ],
+            'tgl_lahir' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal lahir tidak boleh kosong. ',
+                ]
+            ],
+            'jenis_pengawas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis pengawas tidak boleh kosong. ',
+                ]
+            ],
+            'tmt_cpns' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tmt cpns tidak boleh kosong. ',
+                ]
+            ],
+            'tmt_pns' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tmt pns tidak boleh kosong. ',
+                ]
+            ],
+            'tmt_pengangkatan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tmt pengangkatan tidak boleh kosong. ',
+                ]
+            ],
+            'sk_pengangkatan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'SK pengangkatan tidak boleh kosong. ',
+                ]
+            ],
+            'tgl_pensiun' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal pensiun tidak boleh kosong. ',
+                ]
+            ],
+            'pendidikan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pendidikan tidak boleh kosong. ',
+                ]
+            ],
+            'nomor_surat_tugas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nomor surat tugas tidak boleh kosong. ',
+                ]
+            ],
+            'tmt_surat_tugas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'TMT surat tugas tidak boleh kosong. ',
+                ]
+            ],
+            'jenjang_pengawas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenjang pengawas tidak boleh kosong. ',
+                ]
+            ],
+            'keaktifan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Keaktifan tidak boleh kosong. ',
+                ]
+            ],
+            'tgl_nonaktif' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal nonaktif tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('nama')
+                . $this->validator->getError('nuptk')
+                . $this->validator->getError('nip')
+                . $this->validator->getError('tgl_lahir')
+                . $this->validator->getError('jenis_pengawas')
+                . $this->validator->getError('tmt_cpns')
+                . $this->validator->getError('tmt_pns')
+                . $this->validator->getError('tmt_pengangkatan')
+                . $this->validator->getError('sk_pengangkatan')
+                . $this->validator->getError('tgl_pensiun')
+                . $this->validator->getError('pendidikan')
+                . $this->validator->getError('nomor_surat_tugas')
+                . $this->validator->getError('tmt_surat_tugas')
+                . $this->validator->getError('jenjang_pengawas')
+                . $this->validator->getError('keaktifan')
+                . $this->validator->getError('tgl_nonaktif');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                return json_encode($response);
+            }
+
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $nuptk = htmlspecialchars($this->request->getVar('nuptk'), true);
+            $nip = htmlspecialchars($this->request->getVar('nip'), true);
+            $pangkat = htmlspecialchars($this->request->getVar('pangkat'), true);
+            $tgl_lahir = htmlspecialchars($this->request->getVar('tgl_lahir'), true);
+            $jenis_pengawas = htmlspecialchars($this->request->getVar('jenis_pengawas'), true);
+            $tmt_cpns = htmlspecialchars($this->request->getVar('tmt_cpns'), true);
+            $tmt_pns = htmlspecialchars($this->request->getVar('tmt_pns'), true);
+            $tmt_pengangkatan = htmlspecialchars($this->request->getVar('tmt_pengangkatan'), true);
+            $sk_pengangkatan = htmlspecialchars($this->request->getVar('sk_pengangkatan'), true);
+            $tgl_pensiun = htmlspecialchars($this->request->getVar('tgl_pensiun'), true);
+            $pendidikan = htmlspecialchars($this->request->getVar('pendidikan'), true);
+            $nomor_surat_tugas = htmlspecialchars($this->request->getVar('nomor_surat_tugas'), true);
+            $tmt_surat_tugas = htmlspecialchars($this->request->getVar('tmt_surat_tugas'), true);
+            $jenjang_pengawas = htmlspecialchars($this->request->getVar('jenjang_pengawas'), true);
+            $keaktifan = htmlspecialchars($this->request->getVar('keaktifan'), true);
+            $tgl_nonaktif = htmlspecialchars($this->request->getVar('tgl_nonaktif'), true);
+
+            $data = [
+                'nama' => $nama,
+                'nuptk' => $nuptk,
+                'nip' => $nip,
+                'tgl_lahir' => $tgl_lahir,
+                'jenis_pengawas' => $jenis_pengawas,
+                'tmt_cpns' => $tmt_cpns,
+                'tmt_pns' => $tmt_pns,
+                'tmt_pengangkatan' => $tmt_pengangkatan,
+                'sk_pengangkatan' => $sk_pengangkatan,
+                'tgl_pensiun' => $tgl_pensiun,
+                'pendidikan' => $pendidikan,
+                'nomor_surat_tugas' => $nomor_surat_tugas,
+                'tmt_surat_tugas' => $tmt_surat_tugas,
+                'jenjang_pengawas' => $jenjang_pengawas,
+                'keaktifan' => $keaktifan,
+                'tgl_nonaktif' => $tgl_nonaktif,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $oldData =  $this->_db->table('__pengawas_tb')->where('nuptk', $nuptk)->get()->getRowObject();
+
+            $this->_db->transBegin();
+            if ($oldData) {
+                try {
+                    $this->_db->table('__pengawas_tb')->where('id', $oldData->id)->update($data);
+                } catch (\Exception $e) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupdate data baru.";
+                    return json_encode($response);
+                }
+            } else {
+                $uuidLib = new Uuid();
+                $data['id'] = $uuidLib->v4();
+
+                try {
+                    $this->_db->table('__pengawas_tb')->insert($data);
+                } catch (\Exception $e) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menyimpan data baru.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data berhasil diupdate.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupate data";
+                return json_encode($response);
+            }
+        }
+    }
+
     public function detail()
     {
         if ($this->request->getMethod() != 'post') {
