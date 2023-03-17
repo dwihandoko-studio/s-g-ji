@@ -41,7 +41,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "ajuan") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "ajuan") ? 'javascript:;' : base_url('situpeng/peng/ajuan') ?>">
-                                <i class="bx bx-columns me-2"></i><span key="t-absen">Usul Tunjangan</span>
+                                <i class="bx bx-columns me-2"></i><span key="t-absen">Usul Verval</span>
                             </a>
                         </li>
 
@@ -60,14 +60,6 @@
                                             <a href="<?= base_url('situpeng/peng/spj/tpg/antrian') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "antrian") ? ' active-menu-href' : '' ?>" key="t-spj-antrian">Antrian</a>
                                             <a href="<?= base_url('situpeng/peng/spj/tpg/ditolak') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "ditolak") ? ' active-menu-href' : '' ?>" key="t-spj-ditolak">Ditolak</a>
                                             <a href="<?= base_url('situpeng/peng/spj/tpg/lolosberkas') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "lolosberkas") ? ' active-menu-href' : '' ?>" key="t-spj-lolosberkas">Lolos Verifikasi</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <h6> TAMSIL</h6>
-                                        <div>
-                                            <a href="<?= base_url('situpeng/peng/spj/tamsil/antrian') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "antrian") ? ' active-menu-href' : '' ?>" key="t-spj-antrian">Antrian</a>
-                                            <a href="<?= base_url('situpeng/peng/spj/tamsil/ditolak') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "ditolak") ? ' active-menu-href' : '' ?>" key="t-spj-ditolak">Ditolak</a>
-                                            <a href="<?= base_url('situpeng/peng/spj/tamsil/lolosberkas') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "lolosberkas") ? ' active-menu-href' : '' ?>" key="t-spj-lolosberkas">Lolos Verifikasi</a>
                                         </div>
                                     </div>
                                 </div>
