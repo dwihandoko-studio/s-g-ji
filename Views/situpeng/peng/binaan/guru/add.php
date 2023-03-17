@@ -30,7 +30,6 @@
                 <div class="mb-3">
                     <label for="_ptks" class="col-form-label">Pilih Guru:</label>
                     <select class="select2 form-control select2-multiple" id="_ptks" name="_ptks[]" style="width: 100%" multiple="multiple" data-placeholder="Pilih Guru ...">
-                        <option value="" selected>Pilih Guru</option>
                     </select>
                     <div class="help-block _ptks"></div>
                 </div>
