@@ -68,7 +68,7 @@
             $("#_sekolah").select2({
                 dropdownParent: '#content-detailModal',
                 ajax: {
-                    url: './getSekolah/' + id_prov,
+                    url: './getSekolah/' + event.value,
                     type: "post",
                     dataType: 'json',
                     delay: 200,
@@ -97,7 +97,7 @@
             $("#_sekolah").select2({
                 dropdownParent: '#content-detailModal',
                 ajax: {
-                    url: './getSekolah/' + id_prov,
+                    url: './getSekolah/' + event.value,
                     type: "post",
                     dataType: 'json',
                     delay: 200,
