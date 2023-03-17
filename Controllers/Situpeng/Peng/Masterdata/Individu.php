@@ -98,7 +98,7 @@ class Individu extends BaseController
             $current = $this->_db->table('__pengawas_tb a')
                 ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.wa_verified, b.image")
                 ->join('v_user b', 'a.id = b.ptk_id', 'left')
-                ->where('a.id_ptk', $user->data->ptk_id)->get()->getRowObject();
+                ->where('a.id', $user->data->ptk_id)->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
