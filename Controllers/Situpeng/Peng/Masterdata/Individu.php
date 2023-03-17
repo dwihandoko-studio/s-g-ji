@@ -95,9 +95,9 @@ class Individu extends BaseController
                 return redirect()->to(base_url('auth'));
             }
 
-            $current = $this->_db->table('_ptk_tb a')
+            $current = $this->_db->table('__pengawas_tb a')
                 ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.wa_verified, b.image")
-                ->join('v_user b', 'a.id_ptk = b.ptk_id', 'left')
+                ->join('v_user b', 'a.id = b.ptk_id', 'left')
                 ->where('a.id_ptk', $user->data->ptk_id)->get()->getRowObject();
 
             if ($current) {
@@ -130,6 +130,37 @@ class Individu extends BaseController
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Id buku tidak boleh kosong. ',
+                ]
+            ],
+            'tempat_lahir' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tempat lahir tidak boleh kosong. ',
+                ]
+            ],
+            'tgl_lahir' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal lahir tidak boleh kosong. ',
+                ]
+            ],
+            'jk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis kelamin tidak boleh kosong. ',
+                ]
+            ],
+            'nohp' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No handphone tidak boleh kosong. ',
+                ]
+            ],
+            'email' => [
+                'rules' => 'required|valid_email|trim',
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong. ',
+                    'valid_email' => 'Email tidak valid. ',
                 ]
             ],
             'nrg' => [
@@ -168,6 +199,11 @@ class Individu extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('nrg')
+                . $this->validator->getError('tempat_lahir')
+                . $this->validator->getError('tgl_lahir')
+                . $this->validator->getError('jk')
+                . $this->validator->getError('nohp')
+                . $this->validator->getError('email')
                 . $this->validator->getError('id')
                 . $this->validator->getError('no_peserta')
                 . $this->validator->getError('npwp')
@@ -187,13 +223,18 @@ class Individu extends BaseController
             }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
+            $tempat_lahir = htmlspecialchars($this->request->getVar('tempat_lahir'), true);
+            $tgl_lahir = htmlspecialchars($this->request->getVar('tgl_lahir'), true);
+            $jk = htmlspecialchars($this->request->getVar('jk'), true);
+            $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
+            $email = htmlspecialchars($this->request->getVar('email'), true);
             $nrg = htmlspecialchars($this->request->getVar('nrg'), true);
             $no_peserta = htmlspecialchars($this->request->getVar('no_peserta'), true);
             $npwp = htmlspecialchars($this->request->getVar('npwp'), true);
             $no_rekening = htmlspecialchars($this->request->getVar('no_rekening'), true);
             $cabang_bank = htmlspecialchars($this->request->getVar('cabang_bank'), true);
 
-            $oldData =  $this->_db->table('_ptk_tb')->where('id_ptk', $id)->get()->getRowObject();
+            $oldData =  $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
 
             if (!$oldData) {
                 $response = new \stdClass;
@@ -202,20 +243,12 @@ class Individu extends BaseController
                 return json_encode($response);
             }
 
-            if (
-                $nrg === $oldData->nrg
-                && $no_peserta === $oldData->no_peserta
-                && $npwp === $oldData->npwp
-                && $no_rekening === $oldData->no_rekening
-                && $cabang_bank === $oldData->cabang_bank
-            ) {
-                $response = new \stdClass;
-                $response->status = 201;
-                $response->message = "Tidak ada perubahan data yang disimpan.";
-                return json_encode($response);
-            }
-
             $data = [
+                'email' => $email,
+                'no_hp' => $nohp,
+                'tempat_lahir' => $tempat_lahir,
+                'tgl_lahir' => $tgl_lahir,
+                'jenis_kelamin' => $jk,
                 'nrg' => $nrg,
                 'no_peserta' => $no_peserta,
                 'npwp' => $npwp,
@@ -226,7 +259,8 @@ class Individu extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_ptk_tb')->where('id_ptk', $oldData->id_ptk)->update($data);
+                $this->_db->table('__pengawas_tb')->where('id', $oldData->id)->update($data);
+                // $this->_db->table('_profil_users_tb')->where('id', $user->data->id)->update(['email' => $email]);
             } catch (\Exception $e) {
                 $this->_db->transRollback();
                 $response = new \stdClass;

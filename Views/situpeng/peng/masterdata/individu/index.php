@@ -207,7 +207,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-detailModalLabel').html('UBAH DATA PTK ' + event);
+                    $('#content-detailModalLabel').html('UBAH DATA PENGAWAS ' + event);
                     $('.contentBodyModal').html(resul.data);
                     $('.content-detailModal').modal({
                         backdrop: 'static',

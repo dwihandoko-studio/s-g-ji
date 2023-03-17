@@ -36,7 +36,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "ajuan") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "ajuan") ? 'javascript:;' : base_url('situpeng/peng/ajuan') ?>">
-                                <i class="bx bx-columns me-2"></i><span key="t-absen">Status Usulan Tunjangan</span>
+                                <i class="bx bx-columns me-2"></i><span key="t-absen">Usul Tunjangan</span>
                             </a>
                         </li>
 
