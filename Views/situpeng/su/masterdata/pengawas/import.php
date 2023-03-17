@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="mt-3">
-                            <label for="_file" class="form-label"><?= $title ?>: </label>
+                            <label for="_file" class="form-label">Import Data Pengawas: </label>
                             <input class="form-control" type="file" id="_file" name="_file" onFocus="inputFocus(this);" accept=".xls, .xlsx" onchange="loadFileXl(this, '_file');">
                             <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title=".xls/.xlsx">Files</code> and Maximum File Size <code>2 Mb</code></p>
                             <div class="help-block _file" for="_file"></div>
