@@ -2,7 +2,7 @@
     <form id="formEditModalData" action="./editSave" method="post">
         <input type="hidden" id="_id" name="_id" value="<?= $data->id ?>" />
         <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-lg-6">
                     <label for="_tempat_lahir" class="col-form-label">Tempat Lahir</label>
                     <input type="text" class="form-control tempat-lahir" value="<?= $data->tempat_lahir ?>" id="_tempat_lahir" name="_tempat_lahir" placeholder="Tempat Lahir..." onfocusin="inputFocus(this);">
