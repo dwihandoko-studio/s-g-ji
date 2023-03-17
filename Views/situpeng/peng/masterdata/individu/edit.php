@@ -4,6 +4,11 @@
         <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
             <div class="row mb-3">
                 <div class="col-lg-6">
+                    <label for="_nik" class="col-form-label">NIK</label>
+                    <input type="text" class="form-control nik" value="<?= $data->tempat_lahir ?>" id="_nik" name="_nik" placeholder="NIK..." onfocusin="inputFocus(this);">
+                    <div class="help-block _nik"></div>
+                </div>
+                <div class="col-lg-6">
                     <label for="_tempat_lahir" class="col-form-label">Tempat Lahir</label>
                     <input type="text" class="form-control tempat-lahir" value="<?= $data->tempat_lahir ?>" id="_tempat_lahir" name="_tempat_lahir" placeholder="Tempat Lahir..." onfocusin="inputFocus(this);">
                     <div class="help-block _tempat_lahir"></div>
@@ -75,6 +80,7 @@
         $("#formEditModalData").on("submit", function(e) {
             e.preventDefault();
             const id = document.getElementsByName('_id')[0].value;
+            const nik = document.getElementsByName('_nik')[0].value;
             const email = document.getElementsByName('_email')[0].value;
             const tempat_lahir = document.getElementsByName('_tempat_lahir')[0].value;
             const tgl_lahir = document.getElementsByName('_tgl_lahir')[0].value;
@@ -85,6 +91,13 @@
             const npwp = document.getElementsByName('_npwp')[0].value;
             const no_rekening = document.getElementsByName('_no_rekening')[0].value;
             const cabang_bank = document.getElementsByName('_cabang_bank')[0].value;
+
+            if (nik === "") {
+                $("input#_nik").css("color", "#dc3545");
+                $("input#_nik").css("border-color", "#dc3545");
+                $('._nik').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">NIK tidak boleh kosong.</li></ul>');
+                return false;
+            }
 
             if (tempat_lahir === "") {
                 $("input#_tempat_lahir").css("color", "#dc3545");
@@ -160,6 +173,7 @@
                         type: 'POST',
                         data: {
                             id: id,
+                            nik: nik,
                             tempat_lahir: tempat_lahir,
                             tgl_lahir: tgl_lahir,
                             jk: jk,

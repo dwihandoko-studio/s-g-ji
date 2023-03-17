@@ -132,6 +132,12 @@ class Individu extends BaseController
                     'required' => 'Id buku tidak boleh kosong. ',
                 ]
             ],
+            'nik' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NIK tidak boleh kosong. ',
+                ]
+            ],
             'tempat_lahir' => [
                 'rules' => 'required|trim',
                 'errors' => [
@@ -199,6 +205,7 @@ class Individu extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('nrg')
+                . $this->validator->getError('nik')
                 . $this->validator->getError('tempat_lahir')
                 . $this->validator->getError('tgl_lahir')
                 . $this->validator->getError('jk')
@@ -223,6 +230,7 @@ class Individu extends BaseController
             }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nik = htmlspecialchars($this->request->getVar('nik'), true);
             $tempat_lahir = htmlspecialchars($this->request->getVar('tempat_lahir'), true);
             $tgl_lahir = htmlspecialchars($this->request->getVar('tgl_lahir'), true);
             $jk = htmlspecialchars($this->request->getVar('jk'), true);
@@ -244,6 +252,7 @@ class Individu extends BaseController
             }
 
             $data = [
+                'nik' => $nik,
                 'email' => $email,
                 'no_hp' => $nohp,
                 'tempat_lahir' => $tempat_lahir,
