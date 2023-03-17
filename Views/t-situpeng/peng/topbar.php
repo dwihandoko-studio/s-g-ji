@@ -34,35 +34,12 @@
                                 <a href="<?= base_url('situpeng/peng/doc/atribut') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "doc" && $uri->getSegment(4) == "atribut") ? ' active-menu-href' : '' ?>" key="t-updokument-atribut">Data Atribut</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "us") ? ' active-menu-href' : '' ?>" href="#" id="topnav-usulan" role="button">
-                                <i class="bx bx-columns me-2"></i>
-                                <span key="t-usulan"> USULAN</span>
-                                <div class="arrow-down"></div>
+                        <li class="nav-item">
+                            <a class="nav-link <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "ajuan") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "ajuan") ? 'javascript:;' : base_url('situpeng/peng/ajuan') ?>">
+                                <i class="bx bx-columns me-2"></i><span key="t-absen">Status Usulan Tunjangan</span>
                             </a>
-
-                            <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl" aria-labelledby="topnav-usulan">
-                                <div>
-                                    <a href="<?= base_url('situpeng/peng/us/ajukan') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "create") ? ' active-menu-href' : '' ?>" key="t-us-create">Ajukan Usulan Tunjangan</a>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <h6> TPG (Sertifikasi)</h6>
-                                        <div>
-                                            <a href="<?= base_url('situpeng/peng/us/tpg/antrian') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "antrian") ? ' active-menu-href' : '' ?>" key="t-us-antrian">Antrian</a>
-                                            <a href="<?= base_url('situpeng/peng/us/tpg/ditolak') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "ditolak") ? ' active-menu-href' : '' ?>" key="t-us-ditolak">Ditolak</a>
-                                            <a href="<?= base_url('situpeng/peng/us/tpg/lolosberkas') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "lolosberkas") ? ' active-menu-href' : '' ?>" key="t-us-lolosberkas">Lolos Verifikasi</a>
-                                            <a href="<?= base_url('situpeng/peng/us/tpg/siapsk') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "siapsk") ? ' active-menu-href' : '' ?>" key="t-us-siapsk">Siap SK</a>
-                                            <a href="<?= base_url('situpeng/peng/us/tpg/skterbit') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "skterbit") ? ' active-menu-href' : '' ?>" key="t-us-skterbit">SK Terbit</a>
-                                            <a href="<?= base_url('situpeng/peng/us/tpg/prosestransfer') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "prosestransfer") ? ' active-menu-href' : '' ?>" key="t-us-prosestransfer">Proses Transfer</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
                         </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-spj" role="button">
                                 <i class="bx bx-task me-2"></i>
