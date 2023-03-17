@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Situgu\Su;
+namespace App\Models\Situpeng\Su;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
