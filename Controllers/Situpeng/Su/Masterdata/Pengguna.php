@@ -88,7 +88,7 @@ class Pengguna extends BaseController
             //     </a>';
             $row[] = $action;
             $row[] = $list->fullname;
-            $row[] = $list->email;
+            $row[] = $list->nip;
             $row[] = $list->no_hp;
             $row[] = $list->role_name;
             switch ($list->is_active) {
