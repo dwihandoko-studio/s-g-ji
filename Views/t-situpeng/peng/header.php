@@ -4,21 +4,21 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situgu/peng/home') ?>" class="logo logo-dark">
+                <a href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situpeng/peng/home') ?>" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="<?= base_url() ?>/assets/images/logo.svg" alt="" height="22">
+                        <img src="<?= base_url() ?>/assets/images/TUPENG.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?= base_url() ?>/assets/images/logo-dark.png" alt="" height="17">
+                        <img src="<?= base_url() ?>/assets/images/TUPENG.png" alt="" height="17">
                     </span>
                 </a>
 
-                <a href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situgu/peng/home') ?>" class="logo logo-light">
+                <a href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situpeng/peng/home') ?>" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="<?= base_url() ?>/assets/images/logo-light.svg" alt="" height="22">
+                        <img src="<?= base_url() ?>/assets/images/TUPENG.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?= base_url() ?>/assets/images/logo-light.png" alt="" height="19">
+                        <img src="<?= base_url() ?>/assets/images/TUPENG.png" alt="" height="19">
                     </span>
                 </a>
             </div>
