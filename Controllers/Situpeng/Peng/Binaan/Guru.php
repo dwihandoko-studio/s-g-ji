@@ -191,10 +191,10 @@ class Guru extends BaseController
         $datas = array();
         if (count($datas) > 0) {
             foreach ($datas as $kel) {
-                $data[] = array("id" => $kel->npsn, "text" => $kel->nama . ' (' . $kel->npsn . ' - ' . $kel->bentuk_pendidikan . ')');
+                $datas[] = array("id" => $kel->npsn, "text" => $kel->nama . ' (' . $kel->npsn . ' - ' . $kel->bentuk_pendidikan . ')');
             }
         }
-        echo json_encode($data);
+        echo json_encode($datas);
     }
 
     public function getGuru($id)
@@ -210,10 +210,10 @@ class Guru extends BaseController
         $datas = array();
         if (count($datas) > 0) {
             foreach ($datas as $kel) {
-                $data[] = array("id" => $kel->id_ptk, "text" => $kel->nama . ' (' . $kel->nuptk . ' - ' . $kel->jenis_ptk . ')');
+                $datas[] = array("id" => $kel->id_ptk, "text" => $kel->nama . ' (' . $kel->nuptk . ' - ' . $kel->jenis_ptk . ')');
             }
         }
-        echo json_encode($data);
+        echo json_encode($datas);
     }
 
     public function detail()
