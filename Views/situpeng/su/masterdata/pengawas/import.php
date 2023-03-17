@@ -58,7 +58,7 @@
             </div>
         </div>
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        <button type="submit" id="submit-import" class="btn btn-primary waves-effect waves-light">Import</button>
+        <button type="submit" id="submit-import" class="btn btn-primary waves-effect waves-light submit-import">Import</button>
     </div>
 </form>
 <script>
@@ -96,7 +96,7 @@
                 // ambilId("status").innerHTML = "Mulai mengupload . . .";
                 ambilId("status").style.color = "blue";
                 ambilId("progressBar").value = 0;
-                ambilId("submit-import").attr('disabled', 'disabled');
+                $(".submit-import").attr('disabled', 'disabled');
                 ambilId("loaded_n_total").innerHTML = "";
                 $('div.modal-content-loading').block({
                     message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
@@ -124,7 +124,7 @@
                                 resul.message,
                                 'warning'
                             );
-                            ambilId("submit-import").attr('disabled', false);
+                            $(".submit-import").attr('disabled', false);
                         }
                     } else {
                         Swal.fire(
@@ -248,7 +248,7 @@
                                     ambilId("status").innerHTML = msg.message;
                                     ambilId("status").style.color = "green";
                                     ambilId("progressBar").value = 0;
-                                    ambilId("submit-import").attr('disabled', false);
+                                    $(".submit-import").attr('disabled', false);
                                     Swal.fire(
                                         'Failed!',
                                         "Gagal.",
@@ -268,7 +268,7 @@
                         ambilId("status").style.color = "red";
                         ambilId("progressBar").value = 0;
                         ambilId("loaded_n_total").innerHTML = "";
-                        ambilId("submit-import").attr('disabled', false);
+                        $(".submit-import").attr('disabled', false);
                         $('div.modal-content-loaded').unblock();
 
                         Swal.fire(

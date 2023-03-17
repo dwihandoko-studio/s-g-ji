@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript:actionImport();">Import Data</a></li>
+                            <li class="breadcrumb-item"><a class="btn btn-primary btn-rounded waves-effect waves-light" href="javascript:actionImport();">Import Data</a></li>
                         </ol>
                     </div>
 
