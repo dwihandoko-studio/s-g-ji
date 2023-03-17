@@ -192,9 +192,7 @@ class Guru extends BaseController
         $search = htmlspecialchars($this->request->getVar('searchTerm'), true);
         $sekolahs = $this->_db->table('ref_sekolah')
             ->select("npsn, nama, bentuk_pendidikan")
-            ->where('kode_kecamatan', $id)
-            ->where("bentuk_pendidikan = (SELECT jenjang_pengawas FROM __pengawas_tb WHERE id = '$idPengawas')")
-            ->where("nama like '%" . $search . "%' OR npsn like '%" . $search . "%'")
+            ->where("kode_kecamatan = '$id' AND bentuk_pendidikan = (SELECT jenjang_pengawas FROM __pengawas_tb WHERE id = '$idPengawas') AND (nama like '%" . $search . "%' OR npsn like '%" . $search . "%')")
             ->orderBy('nama', 'ASC')
             ->get()->getResult();
         $datas = array();
