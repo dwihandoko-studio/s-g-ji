@@ -5,11 +5,11 @@ namespace App\Models\Situpeng\Peng;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class BinaanModel extends Model
+class BinaansekolahModel extends Model
 {
-    protected $table = "_ptk_tb";
-    protected $column_order = array(null, null, 'nama', 'nuptk', 'nip', 'npsn', 'tempat_tugas');
-    protected $column_search = array('nik', 'nuptk', 'nama', 'npsn');
+    protected $table = "ref_sekolah";
+    protected $column_order = array(null, null, 'npsn', 'nama', 'kecamatan', 'bentuk_pendidikan');
+    protected $column_search = array('nama', 'npsn');
     protected $order = array('nama' => 'asc');
     protected $request;
     protected $db;
@@ -47,25 +47,25 @@ class BinaanModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables($id_ptks)
+    function get_datatables($npsns)
     {
-        $this->dt->whereIn('id_ptk', $id_ptks);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered($id_ptks)
+    function count_filtered($npsns)
     {
-        $this->dt->whereIn('id_ptk', $id_ptks);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
-    public function count_all($id_ptks)
+    public function count_all($npsns)
     {
-        $this->dt->whereIn('id_ptk', $id_ptks);
+        $this->dt->whereIn('npsn', $npsns);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();

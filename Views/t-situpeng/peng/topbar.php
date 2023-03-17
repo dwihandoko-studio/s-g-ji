@@ -17,13 +17,17 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-masterdata">
                                 <a href="<?= base_url('situpeng/peng/masterdata/individu') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "individu") ? ' active-menu-href' : '' ?>" key="t-masterdata-individu">Individu</a>
-                                <a href="<?= base_url('situpeng/peng/masterdata/binaan') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "binaan") ? ' active-menu-href' : '' ?>" key="t-masterdata-binaan">Guru Binaan</a>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "absen") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "absen") ? 'javascript:;' : base_url('situpeng/peng/absen') ?>">
-                                <i class="bx bx-fingerprint me-2"></i><span key="t-absen">Absen</span>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "binaan") ? ' active-menu-href' : '' ?>" href="#" id="topnav-binaan" role="button">
+                                <i class="bx bx-shape-circle me-2"></i><span key="t-binaan">DATA BINAAN</span>
+                                <div class="arrow-down"></div>
                             </a>
+                            <div class="dropdown-menu" aria-labelledby="topnav-binaan">
+                                <a href="<?= base_url('situpeng/peng/binaan/sekolah') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "binaan" && $uri->getSegment(4) == "sekolah") ? ' active-menu-href' : '' ?>" key="t-binaan-sekolah">Sekolah Binaan</a>
+                                <a href="<?= base_url('situpeng/peng/binaan/guru') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "binaan" && $uri->getSegment(4) == "guru") ? ' active-menu-href' : '' ?>" key="t-binaan-guru">Guru Binaan</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "doc") ? ' active-menu-href' : '' ?>" href="#" id="topnav-updokument" role="button">

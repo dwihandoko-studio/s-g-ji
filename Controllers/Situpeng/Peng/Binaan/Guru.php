@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Situpeng\Peng\Masterdata;
+namespace App\Controllers\Situpeng\Peng\Binaan;
 
 use App\Controllers\BaseController;
-use App\Models\Situpeng\Peng\BinaanModel;
+use App\Models\Situpeng\Peng\BinaanguruModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -13,7 +13,7 @@ use App\Libraries\Helplib;
 
 use App\Libraries\Uuid;
 
-class Binaan extends BaseController
+class Guru extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -30,7 +30,7 @@ class Binaan extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new BinaanModel($request);
+        $datamodel = new BinaanguruModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -104,7 +104,7 @@ class Binaan extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situpeng/peng/masterdata/Binaan/data'));
+        return redirect()->to(base_url('situpeng/peng/binaan/guru/data'));
     }
 
     public function data()
@@ -120,7 +120,100 @@ class Binaan extends BaseController
 
         $data['user'] = $user->data;
 
-        return view('situpeng/peng/masterdata/binaan/index', $data);
+        return view('situpeng/peng/binaan/guru/index', $data);
+    }
+
+    public function add()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $kecs =  $this->_db->table('ref_kecamatan')->orderBy('nama_kecamatan', 'ASC')->get()->getResult();
+
+            if (count($kecs) > 0) {
+                $data['id'] = $id;
+                $data['kecamatans'] = $kecs;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situpeng/peng/binaan/guru/add', $data);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function getSekolah($id)
+    {
+        $id = htmlspecialchars($id, true);
+        $search = htmlspecialchars($this->request->getVar('searchTerm'), true);
+        $sekolahs = $this->_db->table('ref_sekolah')
+            ->select("npsn, nama, bentuk_pendidikan")
+            ->where('kode_kecamatan', $id)
+            ->where("nama like '%" . $search . "%' ")
+            ->orderBy('nama', 'ASC')
+            ->get()->getResult();
+        $datas = array();
+        if (count($datas) > 0) {
+            foreach ($datas as $kel) {
+                $data[] = array("id" => $kel->npsn, "text" => $kel->nama . ' (' . $kel->npsn . ' - ' . $kel->bentuk_pendidikan . ')');
+            }
+        }
+        echo json_encode($data);
+    }
+
+    public function getGuru($id)
+    {
+        $id = htmlspecialchars($id, true);
+        $search = htmlspecialchars($this->request->getVar('searchTerm'), true);
+        $sekolahs = $this->_db->table('_ptk_tb')
+            ->select("id_ptk, npsn, nama, nuptk, jenis_ptk")
+            ->where('npsn', $id)
+            ->where("nama like '%" . $search . "%' ")
+            ->orderBy('nama', 'ASC')
+            ->get()->getResult();
+        $datas = array();
+        if (count($datas) > 0) {
+            foreach ($datas as $kel) {
+                $data[] = array("id" => $kel->id_ptk, "text" => $kel->nama . ' (' . $kel->nuptk . ' - ' . $kel->jenis_ptk . ')');
+            }
+        }
+        echo json_encode($data);
     }
 
     public function detail()

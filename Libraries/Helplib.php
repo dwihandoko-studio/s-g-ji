@@ -104,6 +104,25 @@ class Helplib
         return ['nulle'];
     }
 
+    public function getNaunganPengawasSekolahArray($id_user)
+    {
+
+        $user = $this->_db->table('__pengawas_tb')
+            ->select("npsn_naungan")
+            ->where("id = (SELECT ptk_id FROM v_user_pengawas where id = '$id_user')")
+            ->get()->getRowObject();
+
+        if ($user) {
+            $gurus = explode(",", $user->npsn_naungan);
+            if (count($gurus) > 0) {
+                return $gurus;
+            }
+            return ['nulle'];
+        }
+
+        return ['nulle'];
+    }
+
     public function getCurrentTw()
     {
 
