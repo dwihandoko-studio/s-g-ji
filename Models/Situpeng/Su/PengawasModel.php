@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 
 class PengawasModel extends Model
 {
-    protected $table = "_pengawas_tb";
+    protected $table = "__pengawas_tb";
     protected $column_order = array(null, null, 'nama', 'nik', 'nuptk', 'nip', 'keaktifan');
     protected $column_search = array('nik', 'nuptk', 'nama', 'nip');
     protected $order = array('jenis_pengawas' => 'asc', 'jenjang_pengawas' => 'desc');
