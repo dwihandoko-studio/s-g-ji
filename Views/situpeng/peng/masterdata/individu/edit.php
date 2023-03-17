@@ -14,7 +14,7 @@
                     <div class="help-block _tgl_lahir"></div>
                 </div>
                 <div class="col-lg-6">
-                    <h5 class="font-size-14 mb-4">Jenis Kelamin</h5>
+                    <h5 class="font-size-14 mt-4 mb-4">Jenis Kelamin</h5>
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="radio" value="L" name="_jk" id="_jk1" checked="">
                         <label class="form-check-label" for="_jk1">
