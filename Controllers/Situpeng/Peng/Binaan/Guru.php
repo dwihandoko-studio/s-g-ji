@@ -180,11 +180,20 @@ class Guru extends BaseController
 
     public function getSekolah($id)
     {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            return json_encode(array());
+        }
+
+        $idPengawas = $user->data->ptk_id;
+
         $id = htmlspecialchars($id, true);
         $search = htmlspecialchars($this->request->getVar('searchTerm'), true);
         $sekolahs = $this->_db->table('ref_sekolah')
             ->select("npsn, nama, bentuk_pendidikan")
             ->where('kode_kecamatan', $id)
+            ->where("bentuk_pendidikan = (SELECT jenjang_pengawas FROM __pengawas_tb WHERE id = '$idPengawas')")
             ->where("nama like '%" . $search . "%' OR npsn like '%" . $search . "%'")
             ->orderBy('nama', 'ASC')
             ->get()->getResult();
