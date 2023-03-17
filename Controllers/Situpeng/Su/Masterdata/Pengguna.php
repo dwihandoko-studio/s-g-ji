@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Situgu\Su\Masterdata;
+namespace App\Controllers\Situpeng\Su\Masterdata;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Su\PenggunaModel;
+use App\Models\Situpeng\Su\PenggunaModel;
 use Config\Services;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
@@ -87,7 +87,6 @@ class Pengguna extends BaseController
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
             $row[] = $action;
-            $row[] = $list->npsn;
             $row[] = $list->fullname;
             $row[] = $list->email;
             $row[] = $list->no_hp;
@@ -142,7 +141,7 @@ class Pengguna extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/su/masterdata/pengguna/data'));
+        return redirect()->to(base_url('situpeng/su/masterdata/pengguna/data'));
     }
 
     public function data()
@@ -159,7 +158,7 @@ class Pengguna extends BaseController
         $data['user'] = $user->data;
         $data['roles'] = $this->_db->table('_role_user')->whereIn('id', [2, 3, 4, 5, 6, 7])->get()->getResult();
 
-        return view('situgu/su/masterdata/pengguna/index', $data);
+        return view('situpeng/su/masterdata/pengguna/index', $data);
     }
 
     public function getWilayahShow()
@@ -196,7 +195,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/pengguna/wilayahs', $data);
+                $response->data = view('situpeng/su/masterdata/pengguna/wilayahs', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -380,7 +379,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/pengguna/add', $data);
+                $response->data = view('situpeng/su/masterdata/pengguna/add', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -442,7 +441,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/pengguna/add_rayon', $data);
+                $response->data = view('situpeng/su/masterdata/pengguna/add_rayon', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -799,7 +798,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/pengguna/edit', $data);
+                $response->data = view('situpeng/su/masterdata/pengguna/edit', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -896,7 +895,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 201;
                 $response->message = "Tidak ada perubahan data yang disimpan.";
-                $response->redirect = base_url('situgu/su/masterdata/pengguna');
+                $response->redirect = base_url('situpeng/su/masterdata/pengguna');
                 return json_encode($response);
             }
 
@@ -957,7 +956,7 @@ class Pengguna extends BaseController
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->message = "Data berhasil diupdate.";
-                    $response->redirect = base_url('situgu/su/masterdata/pengguna');
+                    $response->redirect = base_url('situpeng/su/masterdata/pengguna');
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
@@ -1130,7 +1129,7 @@ class Pengguna extends BaseController
             return redirect()->to(base_url('auth'));
         }
         $data['user'] = $user->data;
-        return view('situgu/su/masterdata/pengguna/import', $data);
+        return view('situpeng/su/masterdata/pengguna/import', $data);
     }
 
     public function uploadData()

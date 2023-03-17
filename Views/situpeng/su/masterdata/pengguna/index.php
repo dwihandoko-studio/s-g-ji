@@ -50,9 +50,8 @@
                                 <tr>
                                     <th rowspan="2" data-orderable="false">#</th>
                                     <th rowspan="2" data-orderable="false">Aksi</th>
-                                    <th rowspan="2">NPSN</th>
                                     <th rowspan="2">NAMA</th>
-                                    <th rowspan="2">EMAIL</th>
+                                    <th rowspan="2">USERNAME</th>
                                     <th rowspan="2">NO HP</th>
                                     <th rowspan="2">ROLE</th>
                                     <th rowspan="2">STATUS</th>

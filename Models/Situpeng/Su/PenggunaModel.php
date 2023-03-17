@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Situgu\Su;
+namespace App\Models\Situpeng\Su;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
@@ -54,6 +54,7 @@ class PenggunaModel extends Model
         if ($this->request->getPost('role')) {
             $this->dt->where('a.role_user', $this->request->getPost('role'));
         }
+        $this->dt->whereIn('a.role_user', [8]);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -65,6 +66,7 @@ class PenggunaModel extends Model
         if ($this->request->getPost('role')) {
             $this->dt->where('a.role_user', $this->request->getPost('role'));
         }
+        $this->dt->whereIn('a.role_user', [8]);
         $this->_get_datatables_query();
         return $this->dt->countAllResults();
     }
@@ -73,6 +75,7 @@ class PenggunaModel extends Model
         if ($this->request->getPost('role')) {
             $this->dt->where('a.role_user', $this->request->getPost('role'));
         }
+        $this->dt->whereIn('a.role_user', [8]);
         $this->_get_datatables_query();
         return $this->dt->countAllResults();
     }
