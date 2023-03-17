@@ -188,11 +188,9 @@ class Guru extends BaseController
             ->where("nama like '%" . $search . "%' OR npsn like '%" . $search . "%'")
             ->orderBy('nama', 'ASC')
             ->get()->getResult();
-        var_dump($id);
-        die;
         $datas = array();
-        if (count($datas) > 0) {
-            foreach ($datas as $kel) {
+        if (count($sekolahs) > 0) {
+            foreach ($sekolahs as $kel) {
                 $datas[] = array("id" => $kel->npsn, "text" => $kel->nama . ' (' . $kel->npsn . ' - ' . $kel->bentuk_pendidikan . ')');
             }
         }
@@ -203,15 +201,15 @@ class Guru extends BaseController
     {
         $id = htmlspecialchars($id, true);
         $search = htmlspecialchars($this->request->getVar('searchTerm'), true);
-        $sekolahs = $this->_db->table('_ptk_tb')
+        $gurus = $this->_db->table('_ptk_tb')
             ->select("id_ptk, npsn, nama, nuptk, jenis_ptk")
             ->where('npsn', $id)
             ->where("nama like '%" . $search . "%' OR nuptk like '%" . $search . "%'")
             ->orderBy('nama', 'ASC')
             ->get()->getResult();
         $datas = array();
-        if (count($datas) > 0) {
-            foreach ($datas as $kel) {
+        if (count($gurus) > 0) {
+            foreach ($gurus as $kel) {
                 $datas[] = array("id" => $kel->id_ptk, "text" => $kel->nama . ' (' . $kel->nuptk . ' - ' . $kel->jenis_ptk . ')');
             }
         }
