@@ -69,7 +69,7 @@
         const formUpload = new FormData();
         if (fileName !== "") {
             const file = document.getElementsByName('_file')[0].files[0];
-            formUpload.append('_file', file);
+            formUpload.append('file', file);
         }
 
         $.ajax({
