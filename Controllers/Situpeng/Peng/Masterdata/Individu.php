@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Situgu\Ptk\Masterdata;
+namespace App\Controllers\Situpeng\Peng\Masterdata;
 
 use App\Controllers\BaseController;
 // use App\Models\Situgu\Ptk\PtkModel;
@@ -11,7 +11,7 @@ use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 
-class Dapodik extends BaseController
+class Individu extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -27,12 +27,12 @@ class Dapodik extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/ptk/masterdata/dapodik/data'));
+        return redirect()->to(base_url('situpeng/peng/masterdata/individu/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'PTK';
+        $data['title'] = 'DATA INDIVIDU';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -42,23 +42,22 @@ class Dapodik extends BaseController
         }
 
         $data['user'] = $user->data;
-        $current = $this->_db->table('_ptk_tb a')
-            ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.wa_verified, b.image, c.kecamatan as kecamatan_sekolah")
-            ->join('v_user b', 'a.id_ptk = b.ptk_id', 'left')
-            ->join('ref_sekolah c', 'a.npsn = c.npsn')
-            ->where('a.id_ptk', $user->data->ptk_id)->get()->getRowObject();
+        $current = $this->_db->table('__pengawas_tb a')
+            ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.wa_verified, b.image")
+            ->join('v_user_pengawas b', 'a.id = b.ptk_id', 'left')
+            ->where('a.id', $user->data->ptk_id)->get()->getRowObject();
 
         if ($current) {
             $data['data'] = $current;
-            $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
-                ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
-                ->join('ref_sekolah b', 'a.sekolah_id = b.id')
-                ->where('a.ptk_id', $current->id_ptk)
-                ->where("a.jenis_keluar IS NULL")
-                ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
-            return view('situgu/ptk/masterdata/dapodik/index', $data);
+            // $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
+            //     ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
+            //     ->join('ref_sekolah b', 'a.sekolah_id = b.id')
+            //     ->where('a.ptk_id', $current->id_ptk)
+            //     ->where("a.jenis_keluar IS NULL")
+            //     ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
+            return view('situpeng/peng/masterdata/individu/index', $data);
         } else {
-            return view('situgu/ptk/404', $data);
+            return view('situpeng/peng/404', $data);
         }
     }
 

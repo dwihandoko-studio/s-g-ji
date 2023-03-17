@@ -1,4 +1,4 @@
-<?= $this->extend('t-situgu/ptk/index'); ?>
+<?= $this->extend('t-situpeng/peng/index'); ?>
 
 <?= $this->section('content'); ?>
 <div class="page-content">
@@ -8,11 +8,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">PTK | DATA DAPODIK</h4>
+                    <h4 class="mb-sm-0 font-size-18">PENGAWAS | DATA INDIVIDU</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript:actionEdit('<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>');" class="btn btn-primary btn-rounded waves-effect waves-light">Ubah Data PTK</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:actionEdit('<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>');" class="btn btn-primary btn-rounded waves-effect waves-light">Ubah Data Pengawas</a></li>
                         </ol>
                     </div>
 
@@ -87,16 +87,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <label class="col-form-label">Email Dapodik:</label>
-                                <input type="text" class="form-control" value="<?= $data->email ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
                                 <label class="col-form-label">Email Akun:</label>
                                 <input type="text" class="form-control" value="<?= $data->emailAkun ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">No Hanphone Dapodik:</label>
-                                <input type="text" class="form-control" value="<?= $data->no_hp ?>" readonly />
                             </div>
                             <div class="col-lg-6">
                                 <label class="col-form-label">No Hanphone Akun:</label>
@@ -118,125 +110,7 @@
 
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <h2>DATA PENUGASAN</h2>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">NPSN:</label>
-                                <input type="text" class="form-control" value="<?= $data->npsn ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Tempat Tugas:</label>
-                                <input type="text" class="form-control" value="<?= $data->tempat_tugas ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Status Tugas:</label>
-                                <div><span class="badge badge-pill badge-soft-secondary"><?= $data->status_tugas ?></span></div>
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Kecamatan:</label>
-                                <input type="text" class="form-control" value="<?= $data->kecamatan_sekolah ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Status PTK:</label>
-                                <div><span class="badge badge-pill badge-soft-secondary"><?= $data->status_kepegawaian ?></span></div>
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Mapel Diajarkan:</label>
-                                <input type="text" class="form-control" value="<?= $data->mapel_diajarkan ?>" readonly />
-                            </div>
-                            <?php switch ($data->bidang_studi_sertifikasi) {
-                                case '':
-                                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Status Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                                    break;
-                                case null:
-                                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Status Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                                    break;
-                                case '-':
-                                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Status Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                                    break;
-                                case ' ':
-                                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Status Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                                    break;
 
-                                default:
-                                    echo `<div class="col-lg-6">
-                        <label class="col-form-label">Status Sertifikasi:</label>
-                        <div><span class="badge badge-pill badge-soft-success">Sudah</span></div>
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="col-form-label">Bidang Studi Sertifikasi:</label>
-                        <input type="text" class="form-control" value="$data->bidang_studi_sertifikasi" readonly />
-                    </div>`;
-                                    break;
-                            } ?>
-
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Jam Mengajar Perminggu:</label>
-                                <input type="text" class="form-control" value="<?= $data->jam_mengajar_perminggu ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">SK Pengangkatan:</label>
-                                <input type="text" class="form-control" value="<?= $data->sk_pengangkatan ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">TMT Pengangkatan:</label>
-                                <input type="text" class="form-control" value="<?php switch ($data->tmt_pengangkatan) {
-                                                                                    case '':
-                                                                                        echo '';
-                                                                                        break;
-                                                                                    case '-':
-                                                                                        echo '';
-                                                                                        break;
-                                                                                    case NULL:
-                                                                                        echo '';
-                                                                                        break;
-                                                                                    case '1900-01-01':
-                                                                                        echo '';
-                                                                                        break;
-
-                                                                                    default:
-                                                                                        echo $data->tmt_pengangkatan;
-                                                                                        break;
-                                                                                } ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">SK CPNS:</label>
-                                <input type="text" class="form-control" value="<?= $data->sk_cpns ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Tanggal CPNS:</label>
-                                <input type="text" class="form-control" value="<?php switch ($data->tgl_cpns) {
-                                                                                    case '':
-                                                                                        echo '';
-                                                                                        break;
-                                                                                    case '-':
-                                                                                        echo '';
-                                                                                        break;
-                                                                                    case NULL:
-                                                                                        echo '';
-                                                                                        break;
-                                                                                    case '1900-01-01':
-                                                                                        echo '';
-                                                                                        break;
-
-                                                                                    default:
-                                                                                        echo $data->tgl_cpns;
-                                                                                        break;
-                                                                                } ?>" readonly />
-                            </div>
-                        </div>
                         <div class="row mt-2">
                             <h2>DATA KEPEGAWAIAN</h2>
                             <div class="col-lg-6">
