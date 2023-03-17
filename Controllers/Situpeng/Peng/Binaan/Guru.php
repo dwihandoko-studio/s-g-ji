@@ -210,8 +210,7 @@ class Guru extends BaseController
         $search = htmlspecialchars($this->request->getVar('searchTerm'), true);
         $gurus = $this->_db->table('_ptk_tb')
             ->select("id_ptk, npsn, nama, nuptk, jenis_ptk")
-            ->where('npsn', $id)
-            ->where("nama like '%" . $search . "%' OR nuptk like '%" . $search . "%'")
+            ->where("npsn = '$id' AND (nama like '%" . $search . "%' OR nuptk like '%" . $search . "%')")
             ->orderBy('nama', 'ASC')
             ->get()->getResult();
         $datas = array();
