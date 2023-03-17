@@ -7,8 +7,8 @@ use CodeIgniter\Model;
 
 class PenggunaModel extends Model
 {
-    protected $table = "v_user a";
-    protected $column_order = array(null, null, 'a.npsn', 'a.fullname', 'a.email', 'a.no_hp', 'a.role_user', 'a.kecamatan', 'a.is_active', 'a.email_verified', 'a.wa_verified');
+    protected $table = "v_user_pengawas a";
+    protected $column_order = array(null, null, 'a.fullname', 'a.username', 'a.no_hp', 'a.role_user', 'a.kecamatan', 'a.is_active', 'a.email_verified', 'a.wa_verified');
     protected $column_search = array('a.npsn', 'a.fullname', 'a.email', 'a.no_hp');
     protected $order = array('a.role_user' => 'asc', 'a.fullname' => 'asc');
     protected $request;
@@ -49,7 +49,7 @@ class PenggunaModel extends Model
     }
     function get_datatables()
     {
-        $this->dt->select("a.*, b.nama_kecamatan");
+        $this->dt->select("a.*");
         if ($this->request->getPost('role')) {
             $this->dt->where('a.role_user', $this->request->getPost('role'));
         }
