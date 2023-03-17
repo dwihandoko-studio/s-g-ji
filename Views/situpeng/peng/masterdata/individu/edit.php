@@ -2,65 +2,67 @@
     <form id="formEditModalData" action="./editSave" method="post">
         <input type="hidden" id="_id" name="_id" value="<?= $data->id ?>" />
         <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
-            <div class="mb-3">
-                <label for="_tempat_lahir" class="form-label">Tempat Lahir</label>
-                <input type="text" class="form-control tempat-lahir" value="<?= $data->tempat_lahir ?>" id="_tempat_lahir" name="_tempat_lahir" placeholder="Tempat Lahir..." onfocusin="inputFocus(this);">
-                <div class="help-block _tempat_lahir"></div>
-            </div>
-            <div class="mb-3">
-                <label for="_tgl_lahir" class="form-label">Tanggal Lahir</label>
-                <input type="date" class="form-control tgl-lahir" value="<?= $data->tgl_lahir ?>" id="_tgl_lahir" name="_tgl_lahir" onfocusin="inputFocus(this);">
-                <div class="help-block _tgl_lahir"></div>
-            </div>
-            <div class="mb-3">
-                <h5 class="font-size-14 mb-4">Jenis Kelamin</h5>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="radio" value="L" name="_jk" id="_jk1" checked="">
-                    <label class="form-check-label" for="_jk1">
-                        Laki - laki
-                    </label>
+            <div class="row">
+                <div class="col-lg-6">
+                    <label for="_tempat_lahir" class="col-form-label">Tempat Lahir</label>
+                    <input type="text" class="form-control tempat-lahir" value="<?= $data->tempat_lahir ?>" id="_tempat_lahir" name="_tempat_lahir" placeholder="Tempat Lahir..." onfocusin="inputFocus(this);">
+                    <div class="help-block _tempat_lahir"></div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" value="P" name="_jk" id="_jk2">
-                    <label class="form-check-label" for="_jk2">
-                        Perempuan
-                    </label>
+                <div class="col-lg-6">
+                    <label for="_tgl_lahir" class="col-form-label">Tanggal Lahir</label>
+                    <input type="date" class="form-control tgl-lahir" value="<?= $data->tgl_lahir ?>" id="_tgl_lahir" name="_tgl_lahir" onfocusin="inputFocus(this);">
+                    <div class="help-block _tgl_lahir"></div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="_nohp" class="form-label">No Handphone</label>
-                <input type="text" class="form-control nohp" value="<?= $data->nrg ?>" id="_nohp" name="_nohp" placeholder="No HP..." onfocusin="inputFocus(this);">
-                <div class="help-block _nohp"></div>
-            </div>
-            <div class="mb-3">
-                <label for="_email" class="form-label">Email</label>
-                <input type="email" class="form-control email" value="<?= $data->nrg ?>" id="_email" name="_email" placeholder="Email..." onfocusin="inputFocus(this);">
-                <div class="help-block _email"></div>
-            </div>
-            <div class="mb-3">
-                <label for="_nrg" class="form-label">NRG</label>
-                <input type="text" class="form-control nrg" value="<?= $data->nrg ?>" id="_nrg" name="_nrg" placeholder="NRG..." onfocusin="inputFocus(this);">
-                <div class="help-block _nrg"></div>
-            </div>
-            <div class="mb-3">
-                <label for="_no_peserta" class="form-label">No Peserta</label>
-                <input type="text" class="form-control no_peserta" value="<?= $data->no_peserta ?>" id="_no_peserta" name="_no_peserta" placeholder="No Peserta..." onfocusin="inputFocus(this);">
-                <div class="help-block _no_peserta"></div>
-            </div>
-            <div class="mb-3">
-                <label for="_npwp" class="form-label">NPWP</label>
-                <input type="text" class="form-control npwp" value="<?= $data->npwp ?>" id="_npwp" name="_npwp" placeholder="NPWP..." onfocusin="inputFocus(this);">
-                <div class="help-block _npwp"></div>
-            </div>
-            <div class="mb-3">
-                <label for="_no_rekening" class="form-label">No Rekening Bank</label>
-                <input type="text" class="form-control no_rekening" id="_no_rekening" name="_no_rekening" value="<?= $data->no_rekening ?>" placeholder="No Rekening..." onfocusin="inputFocus(this);">
-                <div class="help-block _no_rekening"></div>
-            </div>
-            <div class="mb-3">
-                <label for="_cabang_bank" class="form-label">Cabang Bank</label>
-                <input type="text" class="form-control cabang_bank" id="_cabang_bank" name="_cabang_bank" value="<?= $data->cabang_bank ?>" placeholder="Cabang Bank..." onfocusin="inputFocus(this);">
-                <div class="help-block _cabang_bank"></div>
+                <div class="col-lg-6">
+                    <h5 class="font-size-14 mb-4">Jenis Kelamin</h5>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" value="L" name="_jk" id="_jk1" checked="">
+                        <label class="form-check-label" for="_jk1">
+                            Laki - laki
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="P" name="_jk" id="_jk2">
+                        <label class="form-check-label" for="_jk2">
+                            Perempuan
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="_nohp" class="col-form-label">No Handphone</label>
+                    <input type="text" class="form-control nohp" value="<?= $data->nrg ?>" id="_nohp" name="_nohp" placeholder="No HP..." onfocusin="inputFocus(this);">
+                    <div class="help-block _nohp"></div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="_email" class="col-form-label">Email</label>
+                    <input type="email" class="form-control email" value="<?= $data->nrg ?>" id="_email" name="_email" placeholder="Email..." onfocusin="inputFocus(this);">
+                    <div class="help-block _email"></div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="_nrg" class="col-form-label">NRG</label>
+                    <input type="text" class="form-control nrg" value="<?= $data->nrg ?>" id="_nrg" name="_nrg" placeholder="NRG..." onfocusin="inputFocus(this);">
+                    <div class="help-block _nrg"></div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="_no_peserta" class="col-form-label">No Peserta</label>
+                    <input type="text" class="form-control no_peserta" value="<?= $data->no_peserta ?>" id="_no_peserta" name="_no_peserta" placeholder="No Peserta..." onfocusin="inputFocus(this);">
+                    <div class="help-block _no_peserta"></div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="_npwp" class="col-form-label">NPWP</label>
+                    <input type="text" class="form-control npwp" value="<?= $data->npwp ?>" id="_npwp" name="_npwp" placeholder="NPWP..." onfocusin="inputFocus(this);">
+                    <div class="help-block _npwp"></div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="_no_rekening" class="col-form-label">No Rekening Bank</label>
+                    <input type="text" class="form-control no_rekening" id="_no_rekening" name="_no_rekening" value="<?= $data->no_rekening ?>" placeholder="No Rekening..." onfocusin="inputFocus(this);">
+                    <div class="help-block _no_rekening"></div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="_cabang_bank" class="col-form-label">Cabang Bank</label>
+                    <input type="text" class="form-control cabang_bank" id="_cabang_bank" name="_cabang_bank" value="<?= $data->cabang_bank ?>" placeholder="Cabang Bank..." onfocusin="inputFocus(this);">
+                    <div class="help-block _cabang_bank"></div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">
