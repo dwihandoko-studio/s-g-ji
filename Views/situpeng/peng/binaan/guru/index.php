@@ -316,9 +316,7 @@
     });
 
     function initSelect2(event, option) {
-        $('#' + event).select2({
-            dropdownParent: parrent
-        });
+        $('#' + event).select2(option);
     }
 
     $(document).ready(function() {
