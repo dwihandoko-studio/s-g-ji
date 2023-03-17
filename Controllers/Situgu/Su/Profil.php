@@ -27,6 +27,13 @@ class Profil extends BaseController
 
     public function index()
     {
+
+        $us_gaji_pokok = 1000000;
+        $pph21 = 1 + (15 / 100);
+
+        var_dump(rpTanpaAwalan(($us_gaji_pokok * 3) - (($us_gaji_pokok * 3) * $pph21)));
+        die;
+
         return redirect()->to(base_url('situgu/su/profil/data'));
     }
 
@@ -497,7 +504,7 @@ class Profil extends BaseController
             }
         }
     }
-    
+
     public function kirimAktivasiEmail()
     {
         if ($this->request->getMethod() != 'post') {

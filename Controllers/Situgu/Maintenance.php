@@ -24,12 +24,6 @@ class Maintenance extends BaseController
             return redirect()->to(base_url('situgu'));
         }
 
-        $us_gaji_pokok = 1000000;
-        $pph21 = 1 + (15 / 100);
-
-        var_dump(rpTanpaAwalan(($us_gaji_pokok * 3) - (($us_gaji_pokok * 3) * $pph21)));
-        die;
-
         $data['title'] = "MAINTENANCE";
         $template = $this->_db->table('_tb_maintenance')->where(['id' => 1, 'template_active' => 1])->get()->getRowObject();
         if ($template) {
