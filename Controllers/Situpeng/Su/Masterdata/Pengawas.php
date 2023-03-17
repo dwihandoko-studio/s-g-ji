@@ -399,12 +399,6 @@ class Pengawas extends BaseController
                     'required' => 'Keaktifan tidak boleh kosong. ',
                 ]
             ],
-            'tgl_nonaktif' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Tanggal nonaktif tidak boleh kosong. ',
-                ]
-            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -424,8 +418,7 @@ class Pengawas extends BaseController
                 . $this->validator->getError('nomor_surat_tugas')
                 . $this->validator->getError('tmt_surat_tugas')
                 . $this->validator->getError('jenjang_pengawas')
-                . $this->validator->getError('keaktifan')
-                . $this->validator->getError('tgl_nonaktif');
+                . $this->validator->getError('keaktifan');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -473,7 +466,7 @@ class Pengawas extends BaseController
                 'tmt_surat_tugas' => $tmt_surat_tugas,
                 'jenjang_pengawas' => $jenjang_pengawas,
                 'keaktifan' => $keaktifan,
-                'tgl_nonaktif' => $tgl_nonaktif,
+                'tgl_nonaktif' => $tgl_nonaktif == "" ? NULL : $tgl_nonaktif,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
