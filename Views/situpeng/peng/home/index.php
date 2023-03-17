@@ -1744,12 +1744,12 @@
 <script src="<?= base_url() ?>/assets/js/pages/coming-soon.init.js"></script>
 <script>
     $(document).ready(function() {
-        <?php if (!$ptk) { ?>
-            $('#content-aktivasiModalLabel').html('PERINGATAN AKUN BELUM TERKAIT KE DATA PTK');
+        <?php if (!$pengawas) { ?>
+            $('#content-aktivasiModalLabel').html('PERINGATAN AKUN BELUM TERKAIT KE DATA PENGAWAS');
             let akuntertautNya = '';
             akuntertautNya += '<div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">';
             akuntertautNya += '<div class="alert alert-danger" role="alert">';
-            akuntertautNya += 'Akun anda terdeteksi belum tertaut ke Data PTK.\nSilahkan hubungi admin SITUGU Sekolah untuk melakukan taut Akun terlebih dahulu.';
+            akuntertautNya += 'Akun anda terdeteksi belum tertaut ke Data Pengawas.\nSilahkan hubungi admin SITUPENG untuk melakukan taut Akun terlebih dahulu.';
             akuntertautNya += '</div>';
             akuntertautNya += '</div>';
             akuntertautNya += '<div class="modal-footer">';
@@ -1763,7 +1763,7 @@
             $('.content-aktivasiModal').modal('show');
 
         <?php } ?>
-        <?php if ($ptk && !$verified_wa) { ?>
+        <?php if ($pengawas && !$verified_wa) { ?>
             $('#content-aktivasiModalLabel').html('PERINGATAN AKUN BELUM AKTIVASI WHATSAPP');
             let aktivasiWa = '';
             aktivasiWa += '<div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">';
