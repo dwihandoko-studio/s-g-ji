@@ -85,6 +85,21 @@ class Helplib
         return [];
     }
 
+    public function getNaunganPengawasArray($id_user)
+    {
+
+        $user = $this->_db->table('__pengawas_tb')
+            ->select("guru_naungan")
+            ->where("id = (SELECT ptk_id FROM v_user_pengawas where id = '$id_user'")
+            ->get()->getRowObject();
+
+        if ($user) {
+            return explode(",", $user->guru_naungan);
+        }
+
+        return [];
+    }
+
     public function getCurrentTw()
     {
 

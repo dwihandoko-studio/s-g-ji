@@ -16,7 +16,8 @@
                                 <div class="arrow-down"></div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-masterdata">
-                                <a href="<?= base_url('situpeng/peng/masterdata/individu') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "individu") ? ' active-menu-href' : '' ?>" key="t-masterdata-peng">Individu</a>
+                                <a href="<?= base_url('situpeng/peng/masterdata/individu') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "individu") ? ' active-menu-href' : '' ?>" key="t-masterdata-individu">Individu</a>
+                                <a href="<?= base_url('situpeng/peng/masterdata/naungan') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "naungan") ? ' active-menu-href' : '' ?>" key="t-masterdata-naungan">Naungan</a>
                             </div>
                         </li>
                         <li class="nav-item">
