@@ -185,9 +185,11 @@ class Guru extends BaseController
         $sekolahs = $this->_db->table('ref_sekolah')
             ->select("npsn, nama, bentuk_pendidikan")
             ->where('kode_kecamatan', $id)
-            ->where("nama like '%" . $search . "%' ")
+            ->where("nama like '%" . $search . "%' OR npsn like '%" . $search . "%'")
             ->orderBy('nama', 'ASC')
             ->get()->getResult();
+        var_dump($id);
+        die;
         $datas = array();
         if (count($datas) > 0) {
             foreach ($datas as $kel) {
@@ -204,7 +206,7 @@ class Guru extends BaseController
         $sekolahs = $this->_db->table('_ptk_tb')
             ->select("id_ptk, npsn, nama, nuptk, jenis_ptk")
             ->where('npsn', $id)
-            ->where("nama like '%" . $search . "%' ")
+            ->where("nama like '%" . $search . "%' OR nuptk like '%" . $search . "%'")
             ->orderBy('nama', 'ASC')
             ->get()->getResult();
         $datas = array();
