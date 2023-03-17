@@ -21,13 +21,13 @@
                 <div class="col-lg-6">
                     <h5 class="font-size-14 mt-4 mb-4">Jenis Kelamin</h5>
                     <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" value="L" name="_jk" id="_jk1" checked="">
+                        <input class="form-check-input" type="radio" value="L" name="_jk" id="_jk1" <?= $data->jenis_kelamin == NULL ? 'checked' : ($data->jenis_kelamin == 'L' ? 'checked' : '') ?>>
                         <label class="form-check-label" for="_jk1">
                             Laki - laki
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="P" name="_jk" id="_jk2">
+                        <input class="form-check-input" type="radio" value="P" name="_jk" id="_jk2" <?= $data->jenis_kelamin == NULL ? '' : ($data->jenis_kelamin == 'P' ? 'checked' : '') ?>>
                         <label class="form-check-label" for="_jk2">
                             Perempuan
                         </label>
@@ -35,12 +35,12 @@
                 </div>
                 <div class="col-lg-6">
                     <label for="_nohp" class="col-form-label">No Handphone</label>
-                    <input type="text" class="form-control nohp" value="<?= $data->nrg ?>" id="_nohp" name="_nohp" placeholder="No HP..." onfocusin="inputFocus(this);">
+                    <input type="text" class="form-control nohp" value="<?= $data->no_hp ?>" id="_nohp" name="_nohp" placeholder="No HP..." onfocusin="inputFocus(this);">
                     <div class="help-block _nohp"></div>
                 </div>
                 <div class="col-lg-6">
                     <label for="_email" class="col-form-label">Email</label>
-                    <input type="email" class="form-control email" value="<?= $data->nrg ?>" id="_email" name="_email" placeholder="Email..." onfocusin="inputFocus(this);">
+                    <input type="email" class="form-control email" value="<?= $data->email ?>" id="_email" name="_email" placeholder="Email..." onfocusin="inputFocus(this);">
                     <div class="help-block _email"></div>
                 </div>
                 <div class="col-lg-6">
