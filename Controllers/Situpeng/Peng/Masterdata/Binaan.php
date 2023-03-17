@@ -3,7 +3,7 @@
 namespace App\Controllers\Situpeng\Peng\Masterdata;
 
 use App\Controllers\BaseController;
-use App\Models\Situpeng\Peng\NaunganModel;
+use App\Models\Situpeng\Peng\BinaanModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -13,7 +13,7 @@ use App\Libraries\Helplib;
 
 use App\Libraries\Uuid;
 
-class Naungan extends BaseController
+class Binaan extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -30,7 +30,7 @@ class Naungan extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new NaunganModel($request);
+        $datamodel = new BinaanModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -104,12 +104,12 @@ class Naungan extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situpeng/peng/masterdata/naungan/data'));
+        return redirect()->to(base_url('situpeng/peng/masterdata/Binaan/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'GURU NAUNGAN';
+        $data['title'] = 'GURU BINAAN';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -120,7 +120,7 @@ class Naungan extends BaseController
 
         $data['user'] = $user->data;
 
-        return view('situpeng/peng/masterdata/naungan/index', $data);
+        return view('situpeng/peng/masterdata/binaan/index', $data);
     }
 
     public function detail()

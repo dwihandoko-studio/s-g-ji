@@ -17,7 +17,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-masterdata">
                                 <a href="<?= base_url('situpeng/peng/masterdata/individu') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "individu") ? ' active-menu-href' : '' ?>" key="t-masterdata-individu">Individu</a>
-                                <a href="<?= base_url('situpeng/peng/masterdata/naungan') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "naungan") ? ' active-menu-href' : '' ?>" key="t-masterdata-naungan">Naungan</a>
+                                <a href="<?= base_url('situpeng/peng/masterdata/binaan') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "binaan") ? ' active-menu-href' : '' ?>" key="t-masterdata-binaan">Guru Binaan</a>
                             </div>
                         </li>
                         <li class="nav-item">

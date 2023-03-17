@@ -5,7 +5,7 @@ namespace App\Models\Situpeng\Peng;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class NaunganModel extends Model
+class BinaanModel extends Model
 {
     protected $table = "_ptk_tb";
     protected $column_order = array(null, null, 'nama', 'nuptk', 'nip', 'npsn', 'tempat_tugas');
