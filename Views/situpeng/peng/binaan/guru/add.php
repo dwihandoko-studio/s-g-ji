@@ -97,7 +97,7 @@
             $("#_sekolah").select2({
                 dropdownParent: '#content-detailModal',
                 ajax: {
-                    url: './getSekolah/' + event.value,
+                    url: './getGuru/' + event.value,
                     type: "post",
                     dataType: 'json',
                     delay: 200,
