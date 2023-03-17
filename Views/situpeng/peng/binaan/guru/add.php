@@ -94,7 +94,7 @@
         $('.' + color).html('');
 
         if (event.value !== "") {
-            $("#_sekolah").select2({
+            $("#_ptks").select2({
                 dropdownParent: '#content-detailModal',
                 ajax: {
                     url: './getGuru/' + event.value,
