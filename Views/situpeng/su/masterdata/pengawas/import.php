@@ -1,6 +1,6 @@
 <?php if (isset($data)) { ?>
     <form id="formImportModalData" action="./aksiimport" method="post" enctype="multipart/form-data">
-        <div class="modal-body">
+        <div class="modal-body modal-content-loaded">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary waves-effect waves-light">Import</button>
+            <button type="submit" id="submit-import" class="btn btn-primary waves-effect waves-light">Import</button>
         </div>
     </form>
     <script>
@@ -97,6 +97,7 @@
                     // ambilId("status").innerHTML = "Mulai mengupload . . .";
                     ambilId("status").style.color = "blue";
                     ambilId("progressBar").value = 0;
+                    ambilId("submit-import").attr('disabled', 'disabled');
                     ambilId("loaded_n_total").innerHTML = "";
                     $('div.modal-content-loading').block({
                         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
@@ -124,6 +125,7 @@
                                     resul.message,
                                     'warning'
                                 );
+                                ambilId("submit-import").attr('disabled', false);
                             }
                         } else {
                             Swal.fire(
@@ -135,13 +137,150 @@
                             })
                         }
                     } else {
-                        ambilId("status").style.color = "green";
-                        ambilId("progressBar").value = 0;
-                        ambilId("loaded_n_total").innerHTML = "";
-                        ambilId("progressBar").style.display = "none";
+                        $('div.modal-content-loaded').block({
+                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+
+                        if (data.success) {
+                            ambilId("status").innerHTML = "Menyimpan Data . . .";
+                            console.log(data.data);
+                            console.log(data.data.length);
+
+                            let sendToServer = function(lines, index) {
+                                if (index > lines.length - 1) {
+                                    $('div.modal-content-loaded').unblock();
+                                    ambilId("progressBar").style.display = "none";
+                                    ambilId("status").innerHTML = "Data berhasil diimport semua.";
+                                    ambilId("status").style.color = "green";
+                                    ambilId("progressBar").value = 0;
+
+                                    Swal.fire(
+                                        'SELAMAT!',
+                                        "Data berhasil diimport semua.",
+                                        'success'
+                                    ).then((valRes) => {
+                                        reloadPage();
+                                    })
+                                    return;
+                                }
+
+                                item = lines[index];
+                                let total = ((index + 1) / lines.length) * 100;
+                                total = total.toFixed(2);
+
+                                $.ajax({
+                                    url: "./importData",
+                                    type: 'POST',
+                                    dataType: 'JSON',
+                                    data: {
+                                        nama: item.nama,
+                                        nuptk: item.nuptk,
+                                        nip: item.nip,
+                                        tgl_lahir: item.tgl_lahir,
+                                        jenis_pengawas: item.jenis_pengawas,
+                                        tmt_cpns: item.tmt_cpns,
+                                        tmt_pns: item.tmt_pns,
+                                        tmt_pengangkatan: item.tmt_pengangkatan,
+                                        sk_pengangkatan: item.sk_pengangkatan,
+                                        tgl_pensiun: item.tgl_pensiun,
+                                        pendidikan: item.pendidikan,
+                                        nomor_surat_tugas: item.nomor_surat_tugas,
+                                        tmt_surat_tugas: item.tmt_surat_tugas,
+                                        jenjang_pengawas: item.jenjang_pengawas,
+                                        keaktifan: item.keaktifan,
+                                        tgl_nonaktif: item.tgl_nonaktif,
+                                    },
+                                    success: function(msg) {
+                                        if (msg.status != 200) {
+
+                                            ambilId("status").style.color = "blue";
+                                            ambilId("progressBar").value = total;
+                                            ambilId("loaded_n_total").innerHTML = total + '%';
+                                            console.log(msg.message);
+                                            if (index + 1 === lines.length) {
+
+                                                $('div.modal-content-loaded').unblock();
+                                                ambilId("progressBar").style.display = "none";
+                                                ambilId("status").innerHTML = msg.message;
+                                                ambilId("status").style.color = "green";
+                                                ambilId("progressBar").value = 0;
+
+                                                Swal.fire(
+                                                    'SELAMAT!',
+                                                    msg.message,
+                                                    'success'
+                                                ).then((valRes) => {
+                                                    reloadPage();
+                                                })
+                                            }
+                                        } else {
+
+                                            ambilId("status").style.color = "blue";
+                                            ambilId("progressBar").value = total;
+                                            ambilId("loaded_n_total").innerHTML = total + '%';
+                                            if (index + 1 === lines.length) {
+                                                $('div.modal-content-loaded').unblock();
+                                                ambilId("progressBar").style.display = "none";
+                                                ambilId("status").innerHTML = msg.message;
+                                                ambilId("status").style.color = "green";
+                                                ambilId("progressBar").value = 0;
+
+                                                Swal.fire(
+                                                    'SELAMAT!',
+                                                    msg.message,
+                                                    'success'
+                                                ).then((valRes) => {
+                                                    reloadPage();
+                                                })
+
+                                            }
+                                        }
+
+                                        setTimeout(
+                                            function() {
+                                                sendToServer(lines, index + 1);
+                                            },
+                                            350 // delay in ms
+                                        );
+                                    },
+                                    error: function(error) {
+                                        $('div.modal-content-loaded').unblock();
+                                        ambilId("progressBar").style.display = "none";
+                                        ambilId("status").innerHTML = msg.message;
+                                        ambilId("status").style.color = "green";
+                                        ambilId("progressBar").value = 0;
+                                        ambilId("submit-import").attr('disabled', false);
+                                        Swal.fire(
+                                            'Failed!',
+                                            "Gagal.",
+                                            'warning'
+                                        );
+                                    }
+                                });
+                            };
+
+                            sendToServer(data.data, 0);
+
+                        }
+
+                        if (data.error) {
+                            ambilId("progressBar").style.display = "none";
+                            ambilId("status").innerHTML = data.error;
+                            ambilId("status").style.color = "red";
+                            ambilId("progressBar").value = 0;
+                            ambilId("loaded_n_total").innerHTML = "";
+                            ambilId("submit-import").attr('disabled', false);
+                            $('div.modal-content-loaded').unblock();
+
+                            Swal.fire(
+                                'Failed!',
+                                data.error,
+                                'warning'
+                            );
+                        }
 
 
-                        
+
                         // Swal.fire(
                         //     'SELAMAT!',
                         //     resul.message,

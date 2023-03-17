@@ -9,6 +9,10 @@ use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 
+use App\Libraries\Uuid;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Pengawas extends BaseController
 {
     var $folderImage = 'masterdata';
@@ -157,6 +161,142 @@ class Pengawas extends BaseController
                 return json_encode($response);
             }
         }
+    }
+
+    public function import()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situpeng/su/masterdata/pengawas/import');
+            return json_encode($response);
+        }
+    }
+
+    public function aksiimport()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = [
+                'status' => 400,
+                'message' => "Hanya request post yang diperbolehkan."
+            ];
+        } else {
+
+            $rules = [
+                'file' => [
+                    'rules' => 'uploaded[file]|max_size[file, 5120]|mime_in[file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip]',
+                    'errors' => [
+                        'uploaded' => 'File import gagal di upload ',
+                        'max_size' => 'Ukuran file melebihi batas file max file upload. ',
+                        'mime_in' => 'Ekstensi file tidak diizinkan untuk di upload. ',
+                    ]
+                ]
+            ];
+
+            if (!$this->validate($rules)) {
+                $response = [
+                    'status' => 400,
+                    'message' => $this->validator->getError('file')
+                ];
+            } else {
+                $lampiran = $this->request->getFile('file');
+                $extension = $lampiran->getClientExtension();
+                $filesNamelampiran = $lampiran->getName();
+                $fileLocation = $lampiran->getTempName();
+
+                if ('xls' == $extension) {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+                } else {
+                    $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                }
+
+                $spreadsheet = $reader->load($fileLocation);
+                $sheet = $spreadsheet->getActiveSheet()->toArray();
+
+                $total_line = (count($sheet) > 0) ? count($sheet) - 1 : 0;
+
+                $dataImport = [];
+
+                unset($sheet[0]);
+
+                foreach ($sheet as $key => $data) {
+
+                    // if ($data[7] == "Non Induk") {
+                    //     continue;
+                    // }
+
+                    $nuptk = ($data[2] === "null" || $data[2] === "") ? null : $data[2];
+                    $nip = ($data[3] === "null" || $data[3] === "") ? null : $data[3];
+
+                    $dataInsert = [
+                        'nama' => $data[1],
+                        'nuptk' => $nuptk,
+                        'nip' => $nip,
+                        'tgl_lahir' => $data[4],
+                        'jenis_pengawas' => $data[5],
+                        'tmt_cpns' => $data[6],
+                        'tmt_pns' => $data[7],
+                        'tmt_pengangkatan' => $data[8],
+                        'sk_pengangkatan' => $data[9],
+                        'tgl_pensiun' => $data[10],
+                        'pendidikan' => $data[11],
+                        'nomor_surat_tugas' => $data[12],
+                        'tmt_surat_tugas' => $data[13],
+                        'jenjang_pengawas' => $data[14],
+                        'keaktifan' => $data[15],
+                        'tgl_nonaktif' => $data[16],
+                    ];
+
+                    $dataImport[] = $dataInsert;
+                }
+
+                $response = [
+                    'status' => 200,
+                    'success' => true,
+                    'total_line' => $total_line,
+                    'data' => $dataImport,
+                ];
+                //     } else {
+                //         $response =[
+                //             'code' => 400,
+                //             'error' => "Gagal upload file."
+                //         ];
+                //     }
+                // } else {
+                //     $response =[
+                //         'code' => 400,
+                //         'error' => "Gagal upload file."
+                //     ];
+                // }
+            }
+        }
+
+        echo json_encode($response);
     }
 
     public function detail()
