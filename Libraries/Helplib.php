@@ -94,10 +94,14 @@ class Helplib
             ->get()->getRowObject();
 
         if ($user) {
-            return explode(",", $user->guru_naungan);
+            $gurus = explode(",", $user->guru_naungan);
+            if (count($gurus) > 0) {
+                return $gurus;
+            }
+            return ['nulle'];
         }
 
-        return [];
+        return ['nulle'];
     }
 
     public function getCurrentTw()
