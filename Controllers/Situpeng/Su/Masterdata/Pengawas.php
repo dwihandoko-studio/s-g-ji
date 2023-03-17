@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Controllers\Situgu\Su\Masterdata;
+namespace App\Controllers\Situpeng\Su\Masterdata;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Su\PtkModel;
+use App\Models\Situpeng\Su\PengawasModel;
 use Config\Services;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 
-class Ptk extends BaseController
+class Pengawas extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -26,7 +26,7 @@ class Ptk extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new PtkModel($request);
+        $datamodel = new PengawasModel($request);
 
 
         $lists = $datamodel->get_datatables();
@@ -41,31 +41,20 @@ class Ptk extends BaseController
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
                         <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                        <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
-                            <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>
+                        <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->jenis_pengawas . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
+                            <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->jenis_pengawas . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>
                             <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="javascript:actionUnlockSpj(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-lock-open-alt font-size-16 align-middle"></i> &nbsp;Unlock SPJ</i></a>
                             <a class="dropdown-item" href="javascript:actionDetailBackbone(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="mdi mdi-bullseye font-size-16 align-middle"></i> &nbsp;Detail Data Backbone</i></a>
                         </div>
                     </div>';
-            // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-            //     <i class="bx bxs-show font-size-16 align-middle"></i></button>
-            //     </a>
-            //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-            //     <i class="bx bx-transfer-alt font-size-16 align-middle"></i></button>
-            //     </a>
-            //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-            //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
-            //     </a>';
             $row[] = $action;
             $row[] = $list->nama;
             $row[] = $list->nik;
             $row[] = $list->nuptk;
-            $row[] = $list->npsn;
-            $row[] = $list->tempat_tugas;
-            $row[] = $list->kecamatan;
-            $row[] = $list->jenis_ptk;
+            $row[] = $list->nip;
+            $row[] = $list->keaktifan;
 
             $data[] = $row;
         }
@@ -80,12 +69,12 @@ class Ptk extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/su/masterdata/ptk/data'));
+        return redirect()->to(base_url('situpeng/su/masterdata/pengawas/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'PTK';
+        $data['title'] = 'PENGAWAS';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -96,7 +85,7 @@ class Ptk extends BaseController
 
         $data['user'] = $user->data;
 
-        return view('situgu/su/masterdata/ptk/index', $data);
+        return view('situpeng/su/masterdata/pengawas/index', $data);
     }
 
     public function detailbackbone()
@@ -159,7 +148,7 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/ptk/get_detail_backbone', $data);
+                $response->data = view('situpeng/su/masterdata/pengawas/get_detail_backbone', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -214,7 +203,7 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/ptk/detail', $data);
+                $response->data = view('situpeng/su/masterdata/pengawas/detail', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -283,153 +272,12 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/ptk/edit', $data);
+                $response->data = view('situpeng/su/masterdata/pengawas/edit', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Data tidak ditemukan";
-                return json_encode($response);
-            }
-        }
-    }
-
-    public function syncAll()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-            'kecamatan' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Kecamatan tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id')
-                . $this->validator->getError('nama')
-                . $this->validator->getError('kecamatan');
-            return json_encode($response);
-        } else {
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-            $kecamatan = htmlspecialchars($this->request->getVar('kecamatan'), true);
-
-            $apiLib = new Apilib();
-            $result = $apiLib->syncSekolah($id, $kecamatan);
-
-            if ($result) {
-                if ($result->status == 200) {
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Syncrone Data Sekolah Berhasil Dilakukan.";
-                    return json_encode($response);
-                } else {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal Syncrone Data";
-                    return json_encode($response);
-                }
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal Syncrone Data";
-                return json_encode($response);
-            }
-        }
-    }
-
-    public function sync()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'ptk_id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id PTK tidak boleh kosong. ',
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-            'npsn' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'NPSN tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('ptk_id')
-                . $this->validator->getError('nama')
-                . $this->validator->getError('npsn');
-            return json_encode($response);
-        } else {
-            $idPtk = htmlspecialchars($this->request->getVar('ptk_id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
-
-            $tw = $this->_helpLib->getCurrentTw();
-            if (!$tw) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Tahun Triwulan Active tidak ditemukan.";
-                return json_encode($response);
-            }
-
-            $apiLib = new Apilib();
-            $result = $apiLib->syncPtkId($idPtk, $npsn, $tw);
-
-            if ($result) {
-                if ($result->status == 200) {
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Tarik Data PTK $nama Berhasil Dilakukan.";
-                    return json_encode($response);
-                } else {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->error = $result;
-                    $response->message = "Gagal Tarik Data.";
-                    return json_encode($response);
-                }
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal Tarik Data";
                 return json_encode($response);
             }
         }

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">PTK</h4>
+                    <h4 class="mb-sm-0 font-size-18">PENGAWAS</h4>
 
                     <!-- <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -28,7 +28,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">Data Ptk</h4>
+                                <h4 class="card-title">Data Pengawas</h4>
                             </div>
                         </div>
                     </div>
@@ -41,10 +41,8 @@
                                     <th>NAMA</th>
                                     <th>NIK</th>
                                     <th>NUPTK</th>
-                                    <th>NPSN</th>
-                                    <th>TEMPAT TUGAS</th>
-                                    <th>KECAMATAN</th>
-                                    <th>JENIS PTK</th>
+                                    <th>NIP</th>
+                                    <th>KEAKTIFAN</th>
                                 </tr>
                             </thead>
                         </table>
@@ -103,65 +101,6 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionSync(id, ptkId, nama, nuptk, npsn) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin pembaharuan data ptk ini dari backbone dapodik?',
-            text: "Tarik Data Dari Backbone Untuk PTK : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Syncrone Data!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "./sync",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        ptk_id: ptkId,
-                        nama: nama,
-                        nuptk: nuptk,
-                        npsn: npsn,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
-
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
-
     function actionEdit(id, ptkId, nama, nuptk, npsn) {
         $.ajax({
             url: "./edit",
@@ -261,50 +200,6 @@
                 });
             }
         })
-    }
-
-    function actionDetailBackbone(id, nama, nuptk) {
-        $.ajax({
-            url: "./detailbackbone",
-            type: 'POST',
-            data: {
-                id: id,
-                nama: nama,
-                nuptk: nuptk,
-            },
-            dataType: 'JSON',
-            beforeSend: function() {
-                $('div.main-content').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.main-content').unblock();
-                if (resul.status !== 200) {
-                    Swal.fire(
-                        'Failed!',
-                        resul.message,
-                        'warning'
-                    );
-                } else {
-                    $('#content-detailModalLabel').html('DETAIL DATA BACKBONE PTK ' + title);
-                    $('.contentBodyModal').html(resul.data);
-                    $('.content-detailModal').modal({
-                        backdrop: 'static',
-                        keyboard: false,
-                    });
-                    $('.content-detailModal').modal('show');
-                }
-            },
-            error: function() {
-                $('div.main-content').unblock();
-                Swal.fire(
-                    'Failed!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
     }
 
     function actionDetail(event, title) {
