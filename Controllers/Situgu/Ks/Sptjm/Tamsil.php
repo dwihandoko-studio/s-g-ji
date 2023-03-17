@@ -509,13 +509,13 @@ class Tamsil extends BaseController
                 } else {
                     $pang = explode("/", $v->us_pang_golongan);
                     if ($pang[0] == "III") {
-                        $pph21 = 1 + (5 / 100);
+                        $pph21 = (5 / 100);
                         $pph = "5%";
                     } else if ($pang[0] == "IV") {
-                        $pph21 = 1 + (15 / 100);
+                        $pph21 = (15 / 100);
                         $pph = "15%";
                     } else {
-                        $pph21 = 1;
+                        $pph21 = 0;
                         $pph = "0%";
                     }
                 }
