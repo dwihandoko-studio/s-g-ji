@@ -62,7 +62,7 @@ class Binaan extends BaseController
             }
         }
 
-        $naungan = $this->_helpLib->getSekolahNaungan($userId);
+        $naungan = $this->_helpLib->getNaunganPengawasArray($userId);
 
         $lists = $datamodel->get_datatables($naungan);
         $data = [];
