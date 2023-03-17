@@ -53,6 +53,8 @@
 </form>
 
 <script>
+    initSelect2('#_ptk', '#content-detailModal');
+
     function changePengawas(event) {
         const color = $(event).attr('name');
         $(event).removeAttr('style');
