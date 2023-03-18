@@ -222,6 +222,86 @@ class Guru extends BaseController
         echo json_encode($datas);
     }
 
+    public function addSaveBinaan()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'gurus' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Guru binaan tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('gurus');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $gurus = $this->request->getVar('gurus');
+
+            $oldData =  $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
+
+            $data = [
+                'guru_naungan' => $gurus,
+            ];
+
+            if ($oldData) {
+                $this->_db->transBegin();
+                $data['updated_at'] = date('Y-m-d H:i:s');
+                try {
+                    $this->_db->table('__pengawas_tb')->where('id', $oldData->id)->update($data);
+                } catch (\Exception $e) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->error = var_dump($e);
+                    $response->message = "Gagal menyimpan data binaan.";
+                    return json_encode($response);
+                }
+
+                if ($this->_db->affectedRows() > 0) {
+
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Guru binaan berhasil disimpan.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menyimpan guru binaan.";
+                    return json_encode($response);
+                }
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan guru binaan. Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
     public function detail()
     {
         if ($this->request->getMethod() != 'post') {

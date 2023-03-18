@@ -119,29 +119,28 @@
 
     $("#formAddModalData").on("submit", function(e) {
         e.preventDefault();
-        const sekolahs = document.getElementById('_kecamatan');
+        const gurus = document.getElementById('_ptks');
 
-        var selectedSekolah = [];
+        var selectedGuru = [];
 
-        for (var i = 0; i < sekolahs.length; i++) {
-            if (sekolahs[i].selected) {
-                selectedSekolah.push(sekolahs[i].value);
-                console.log(selectedSekolah);
+        for (var i = 0; i < gurus.length; i++) {
+            if (gurus[i].selected) {
+                selectedGuru.push(gurus[i].value);
+                console.log(selectedGuru);
             }
         }
 
-        if (selectedSekolah.length < 1) {
+        if (selectedGuru.length < 1) {
             Swal.fire(
                 "Peringatan!",
-                "Silahkan pilih sekolah naungan terlebih dahulu.",
+                "Silahkan pilih Guru Binaan terlebih dahulu.",
                 "warning"
             );
             return true;
         }
 
         const formUpload = new FormData();
-        formUpload.append('sekolahs', selectedSekolah);
-        formUpload.append('id', '<?= $id ?>');
+        formUpload.append('gurus', selectedGuru);
 
         $.ajax({
             xhr: function() {
@@ -156,7 +155,7 @@
                 }, false);
                 return xhr;
             },
-            url: "./addSaveRayon",
+            url: "./addSaveBinaan",
             type: 'POST',
             data: formUpload,
             contentType: false,
