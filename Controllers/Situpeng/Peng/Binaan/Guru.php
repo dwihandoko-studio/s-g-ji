@@ -261,11 +261,14 @@ class Guru extends BaseController
 
             $oldData =  $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
 
-            $data = [
-                'guru_naungan' => $gurus,
-            ];
-
             if ($oldData) {
+                if ($oldData->guru_naungan !== NULL) {
+                    $gurus = $oldData->guru_naungan . ',' . $gurus;
+                }
+
+                $data = [
+                    'guru_naungan' => $gurus,
+                ];
                 $this->_db->transBegin();
                 $data['updated_at'] = date('Y-m-d H:i:s');
                 try {
