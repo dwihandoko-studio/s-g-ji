@@ -103,12 +103,12 @@ class Sekolah extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situpeng/peng/binaan/guru/data'));
+        return redirect()->to(base_url('situpeng/peng/binaan/sekolah/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'GURU BINAAN';
+        $data['title'] = 'SEKOLAH BINAAN';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -119,7 +119,7 @@ class Sekolah extends BaseController
 
         $data['user'] = $user->data;
 
-        return view('situpeng/peng/binaan/guru/index', $data);
+        return view('situpeng/peng/binaan/sekolah/index', $data);
     }
 
     public function add()
@@ -166,12 +166,121 @@ class Sekolah extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situpeng/peng/binaan/guru/add', $data);
+                $response->data = view('situpeng/peng/binaan/sekolah/add', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function getSekolah($id)
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            return json_encode(array());
+        }
+
+        $idPengawas = $user->data->ptk_id;
+
+        $id = htmlspecialchars($id, true);
+        $search = htmlspecialchars($this->request->getVar('searchTerm'), true);
+        $sekolahs = $this->_db->table('ref_sekolah')
+            ->select("npsn, nama, bentuk_pendidikan")
+            ->where("kode_kecamatan = '$id' AND bentuk_pendidikan = (SELECT jenjang_pengawas FROM __pengawas_tb WHERE id = '$idPengawas') AND (nama like '%" . $search . "%' OR npsn like '%" . $search . "%')")
+            ->orderBy('nama', 'ASC')
+            ->get()->getResult();
+        $datas = array();
+        if (count($sekolahs) > 0) {
+            foreach ($sekolahs as $kel) {
+                $datas[] = array("id" => $kel->npsn, "text" => $kel->nama . ' (' . $kel->npsn . ' - ' . $kel->bentuk_pendidikan . ')');
+            }
+        }
+        echo json_encode($datas);
+    }
+
+    public function addSaveBinaan()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'npsns' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Sekolah binaan tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('npsns');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $npsns = $this->request->getVar('npsns');
+
+            $oldData =  $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
+
+            if ($oldData) {
+                if ($oldData->npsn_naungan !== NULL) {
+                    $npsns = $oldData->npsn_naungan . ',' . $npsns;
+                }
+
+                $data = [
+                    'npsn_naungan' => $npsns,
+                ];
+                $this->_db->transBegin();
+                $data['updated_at'] = date('Y-m-d H:i:s');
+                try {
+                    $this->_db->table('__pengawas_tb')->where('id', $oldData->id)->update($data);
+                } catch (\Exception $e) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->error = var_dump($e);
+                    $response->message = "Gagal menyimpan data binaan.";
+                    return json_encode($response);
+                }
+
+                if ($this->_db->affectedRows() > 0) {
+
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Sekolah binaan berhasil disimpan.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menyimpan sekolah binaan.";
+                    return json_encode($response);
+                }
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan sekolah binaan. Data tidak ditemukan";
                 return json_encode($response);
             }
         }

@@ -5,6 +5,7 @@
                 <div class="mb-3">
                     <label for="_kecamatan" class="col-form-label">Pilih Kecamatan:</label>
                     <select class="select2 form-control select2" id="_kecamatan" name="_kecamatan" onchange="changeKecamatan(this)" style="width: 100%" data-placeholder="Pilih Kecamatan ...">
+                        <option value="" selected>Pilih Kecamatan</option>
                         <?php if (isset($kecamatans)) {
                             if (count($kecamatans) > 0) {
                                 foreach ($kecamatans as $key => $value) { ?>
@@ -16,20 +17,12 @@
                     <div class="help-block _kecamatan"></div>
                 </div>
             </div>
-            <div class="col-lg-6 sekolah-role">
-                <div class="mb-3">
-                    <label for="_sekolah" class="col-form-label">Pilih Sekolah:</label>
-                    <select class="select2 form-control select2" id="_sekolah" name="_sekolah" onchange="changeSekolah(this)" style="width: 100%" data-placeholder="Pilih Sekolah ...">
-                    </select>
-                    <div class="help-block _sekolah"></div>
-                </div>
-            </div>
             <div class="col-lg-12 ptks-role">
                 <div class="mb-3">
-                    <label for="_ptks" class="col-form-label">Pilih Guru:</label>
-                    <select class="select2 form-control select2-multiple" id="_ptks" name="_ptks[]" style="width: 100%" multiple="multiple" data-placeholder="Pilih Guru ...">
+                    <label for="_sekolah" class="col-form-label">Pilih Sekolah:</label>
+                    <select class="select2 form-control select2-multiple" id="_sekolah" name="_sekolah[]" style="width: 100%" multiple="multiple" data-placeholder="Pilih Sekolah ...">
                     </select>
-                    <div class="help-block _ptks"></div>
+                    <div class="help-block _sekolah"></div>
                 </div>
             </div>
         </div>
@@ -54,25 +47,7 @@
 <script>
     initSelect2('_kecamatan', {
         dropdownParent: '#content-detailModal',
-        ajax: {
-            url: './getdataprov',
-            type: "post",
-            dataType: 'json',
-            delay: 200,
-            data: function(params) {
-                return {
-                    searchTerm: params.term
-                };
-            },
-            processResults: function(response) {
-                return {
-                    results: response
-                };
-            },
-            cache: true
-        }
     });
-
 
     function changeKecamatan(event) {
         const color = $(event).attr('name');
@@ -80,56 +55,32 @@
         $('.' + color).html('');
 
         if (event.value !== "") {
-            $.ajax({
-                url: './getSekolah',
-                type: 'POST',
-                data: {
-                    id: event.value,
-                },
-                dataType: 'JSON',
-                beforeSend: function() {
-                    $('div.wilayah-role').block({
-                        message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                    });
-                },
-                success: function(resul) {
-                    $('div.wilayah-role').unblock();
-                    if (resul.status == 200) {
-                        $('.wilayah-role').html(resul.data);
-                    } else {
-                        if (resul.status == 404) {
-                            Swal.fire(
-                                'PERINGATAN!',
-                                resul.message,
-                                'warning'
-                            ).then((valRes) => {
-                                reloadPage(resul.redirrect);
-                            })
-                        } else {
-                            Swal.fire(
-                                'PERINGATAN!!!',
-                                resul.message,
-                                'warning'
-                            );
-                        }
-                    }
-                },
-                error: function(data) {
-                    $('div.wilayah-role').unblock();
-                    Swal.fire(
-                        'PERINGATAN!',
-                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                        'warning'
-                    );
+            $("#_sekolah").select2({
+                dropdownParent: '#content-detailModal',
+                ajax: {
+                    url: './getSekolah/' + event.value,
+                    type: "post",
+                    dataType: 'json',
+                    delay: 200,
+                    data: function(params) {
+                        return {
+                            searchTerm: params.term
+                        };
+                    },
+                    processResults: function(response) {
+                        return {
+                            results: response
+                        };
+                    },
+                    cache: true
                 }
             });
         }
     }
 
-
     $("#formAddModalData").on("submit", function(e) {
         e.preventDefault();
-        const sekolahs = document.getElementById('_kecamatan');
+        const sekolahs = document.getElementById('_sekolah');
 
         var selectedSekolah = [];
 
@@ -143,15 +94,14 @@
         if (selectedSekolah.length < 1) {
             Swal.fire(
                 "Peringatan!",
-                "Silahkan pilih sekolah naungan terlebih dahulu.",
+                "Silahkan pilih Sekolah Binaan terlebih dahulu.",
                 "warning"
             );
             return true;
         }
 
         const formUpload = new FormData();
-        formUpload.append('sekolahs', selectedSekolah);
-        formUpload.append('id', '<?= $id ?>');
+        formUpload.append('npsns', selectedSekolah);
 
         $.ajax({
             xhr: function() {
@@ -166,7 +116,7 @@
                 }, false);
                 return xhr;
             },
-            url: "./addSaveRayon",
+            url: "./addSaveBinaan",
             type: 'POST',
             data: formUpload,
             contentType: false,
