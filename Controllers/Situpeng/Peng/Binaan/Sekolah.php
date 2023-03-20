@@ -75,13 +75,7 @@ class Sekolah extends BaseController
             $action = '<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
-                        <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                        <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
-                            <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>
                             <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:actionUnlockSpj(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\');"><i class="bx bx-lock-open-alt font-size-16 align-middle"></i> &nbsp;Unlock SPJ</i></a>
-                            <a class="dropdown-item" href="javascript:actionDetailBackbone(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\');"><i class="mdi mdi-bullseye font-size-16 align-middle"></i> &nbsp;Detail Data Backbone</i></a>
                         </div>
                     </div>';
             $row[] = $action;
@@ -341,75 +335,6 @@ class Sekolah extends BaseController
         }
     }
 
-    public function edit()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-            'ptk_id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'PTK Id tidak boleh kosong. ',
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-            'npsn' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'NPSN tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id')
-                . $this->validator->getError('nama')
-                . $this->validator->getError('npsn')
-                . $this->validator->getError('ptk_id');
-            return json_encode($response);
-        } else {
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-            $ptk_id = htmlspecialchars($this->request->getVar('ptk_id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
-
-            $current = $this->_db->table('_ptk_tb')
-                ->where(['id' => $id, 'id_ptk' => $ptk_id, 'npsn' => $npsn])->get()->getRowObject();
-
-            if ($current) {
-                $data['data'] = $current;
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->message = "Permintaan diizinkan";
-                $response->data = view('situpeng/su/masterdata/pengawas/edit', $data);
-                return json_encode($response);
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data tidak ditemukan";
-                return json_encode($response);
-            }
-        }
-    }
-
     public function delete()
     {
         if ($this->request->getMethod() != 'post') {
@@ -426,15 +351,23 @@ class Sekolah extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
         ];
 
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('id');
+            $response->message = $this->validator->getError('id')
+            . $this->validator->getError('nama');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
             $Profilelib = new Profilelib();
             $user = $Profilelib->user();
@@ -446,10 +379,11 @@ class Sekolah extends BaseController
                 $response->message = "Permintaan diizinkan";
                 return json_encode($response);
             }
-            $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
+            $current = $this->_db->table('__pengawas_tb')
+                ->where('id', $user->data->ptk_id)->get()->getRowObject();
 
             if ($current) {
+                
                 $this->_db->transBegin();
                 try {
                     $this->_db->table('_users_tb')->where('uid', $id)->delete();

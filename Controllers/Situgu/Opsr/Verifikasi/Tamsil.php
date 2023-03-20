@@ -278,9 +278,10 @@ class Tamsil extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
             $current = $this->_db->table('v_antrian_usulan_tamsil a')
-                ->select("a.*, b.kecamatan as kecamatan_sekolah, c.lampiran_sptjm")
+                ->select("a.*, b.kecamatan as kecamatan_sekolah, c.lampiran_sptjm, , d.gaji_pokok as gaji_pokok_referensi")
                 ->join('ref_sekolah b', 'a.npsn = b.npsn')
                 ->join('_tb_sptjm c', 'a.kode_usulan = c.kode_usulan')
+                ->join('ref_gaji d', 'a.us_pang_golongan = d.pangkat AND a.us_pang_mk_tahun = d.masa_kerja', 'LEFT')
                 ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
