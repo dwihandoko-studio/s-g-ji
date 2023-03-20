@@ -123,6 +123,9 @@ function rp($inp = 0)
 
 function rpAwalan($inp = 0)
 {
+	if ($inp == NULL) {
+		return 'Rp. 0';
+	}
 	return 'Rp. ' . number_format($inp, 0, ',', '.');
 }
 

@@ -245,7 +245,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label class="col-form-label">Gaji Pokok:</label>
-                        <input type="text" class="form-control" value="<?= rpAwalan($data->us_gaji_pokok) ?>" readonly />
+                        <input type="text" class="form-control" value="<?= rpAwalan($data->gaji_pokok_referensi) ?>" readonly />
                     </div>
                 </div>
             </div>
