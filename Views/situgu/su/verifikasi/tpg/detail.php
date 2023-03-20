@@ -164,7 +164,7 @@
                                             <td><?= $v->nomor_surat_tugas ?></td>
                                             <td><?= $v->tanggal_surat_tugas ?></td>
                                             <td><?= $v->ptk_induk == "1" ? '<span class="badge badge-pill badge-soft-success">INDUK</span>' : '<span class="badge badge-pill badge-soft-warning">NON INDUK</span>' ?></td>
-                                            <td><?= $v->jumlah_total_jam_mengajar_perminggu ?> Jam</td>
+                                            <td><?= $v->jumlah_total_jam_mengajar_perminggu == NULL ? ($v->jenis_ptk == 'Kepala Sekolah' && $v->status_keaktifan == 'Aktif' && $v->jenis_keluar == NULL && $v->ptk_induk == '1' ? '24' : $v->jumlah_total_jam_mengajar_perminggu) : $v->jumlah_total_jam_mengajar_perminggu ?> Jam</td>
                                         </tr>
                                     <?php }
                                 } else { ?>
