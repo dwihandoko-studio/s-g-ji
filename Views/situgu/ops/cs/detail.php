@@ -57,7 +57,7 @@
             </div>
 
         </div>
-        <div class="row">
+        <div class="row mt-2">
             <h2>DATA LAMPIRAN ADUAN</h2>
             <div class="col-lg-4">
                 <label class="col-form-label">Lampiran Aduan:</label>
