@@ -51,6 +51,7 @@
                                 <div class="arrow-down"></div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-setting">
+                                <a href="<?= base_url('situgu/su/setting/informasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "informasi") ? ' active-menu-href' : '' ?>" key="t-setting-informasi">Informasi</a>
                                 <a href="<?= base_url('situgu/su/setting/role') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "role") ? ' active-menu-href' : '' ?>" key="t-setting-role">Role Access</a>
                                 <a href="<?= base_url('situgu/su/setting/sptjm') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "sptjm") ? ' active-menu-href' : '' ?>" key="t-setting-sptjm">SPTJM</a>
                                 <a href="<?= base_url('situgu/su/setting/verifikasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "setting" && $uri->getSegment(4) == "verifikasi") ? ' active-menu-href' : '' ?>" key="t-setting-verifikasi">Verifikasi</a>
