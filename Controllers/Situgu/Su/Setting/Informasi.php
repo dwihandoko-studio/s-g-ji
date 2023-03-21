@@ -7,7 +7,7 @@ use App\Models\Situgu\Su\InformasiModel;
 use Config\Services;
 use App\Libraries\Profilelib;
 
-class Pengumuman extends BaseController
+class Informasi extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
