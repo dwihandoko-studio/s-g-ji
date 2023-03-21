@@ -1,6 +1,6 @@
 <?php if (isset($data)) { ?>
     <div class="modal-body">
-        <div class="row">
+        <div class="row mb-4">
             <h2>DATA ADUAN</h2>
             <div class="col-lg-6">
                 <label class="col-form-label">Nama Pengadu:</label>
