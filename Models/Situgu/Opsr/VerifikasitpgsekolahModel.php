@@ -51,13 +51,10 @@ class VerifikasitpgsekolahModel extends Model
     {
         $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan, a.status_usulan, a.date_approve_sptjm, b.nama, b.npsn, b.bentuk_pendidikan, b.status_sekolah, b.kecamatan");
         $this->dt->join('ref_sekolah b', "b.npsn = SUBSTRING_INDEX(SUBSTRING_INDEX(a.kode_usulan, '-', -2), '-', 1)");
-        // $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         $this->dt->whereIn("SUBSTRING_INDEX(SUBSTRING_INDEX(a.kode_usulan, '-', -2), '-', 1)", $npsns);
-        // $this->dt->whereIn('a.npsn', $npsns);
         $this->dt->groupBy('a.kode_usulan');
-        // $this->dt->where('b.npsn', $npsn);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -68,11 +65,9 @@ class VerifikasitpgsekolahModel extends Model
     {
         $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan, a.status_usulan, a.date_approve_sptjm, b.nama, b.npsn, b.bentuk_pendidikan, b.status_sekolah, b.kecamatan");
         $this->dt->join('ref_sekolah b', "b.npsn = SUBSTRING_INDEX(SUBSTRING_INDEX(a.kode_usulan, '-', -2), '-', 1)");
-        // $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         $this->dt->whereIn("SUBSTRING_INDEX(SUBSTRING_INDEX(a.kode_usulan, '-', -2), '-', 1)", $npsns);
-        // $this->dt->whereIn('a.npsn', $npsns);
         $this->dt->groupBy('a.kode_usulan');
         $this->_get_datatables_query();
 
@@ -82,11 +77,9 @@ class VerifikasitpgsekolahModel extends Model
     {
         $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan, a.status_usulan, a.date_approve_sptjm, b.nama, b.npsn, b.bentuk_pendidikan, b.status_sekolah, b.kecamatan");
         $this->dt->join('ref_sekolah b', "b.npsn = SUBSTRING_INDEX(SUBSTRING_INDEX(a.kode_usulan, '-', -2), '-', 1)");
-        // $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         $this->dt->whereIn("SUBSTRING_INDEX(SUBSTRING_INDEX(a.kode_usulan, '-', -2), '-', 1)", $npsns);
-        // $this->dt->whereIn('a.npsn', $npsns);
         $this->dt->groupBy('a.kode_usulan');
         $this->_get_datatables_query();
 
