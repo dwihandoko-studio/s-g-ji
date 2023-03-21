@@ -161,6 +161,71 @@ class Cs extends BaseController
         // return view('situgu/ops/404', $data);
     }
 
+    public function detail()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Action tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+            }
+
+            $current = $this->_db->table('aduan_tb a')
+                ->select("a.*, b.fullname, c.nama")
+                ->join('v_user b', 'a.user_id = b.id')
+                ->join('ref_sekolah c', 'a.npsn = c.npsn')
+                ->where('a.id', $id)->get()->getRowObject();
+
+            if (!$current) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Aduan tidak ditemukan.";
+            }
+            $ptks = explode(",", $current->ptks);
+            if (count($ptks) > 0) {
+                $data['ptks'] = $this->_db->table('_ptk_tb')
+                    ->select("id, nuptk, nama, nip, status_kepegawaian")
+                    ->whereIn('id', $ptks)
+                    ->get()->getResult();
+            }
+            $data['data'] = $current;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+
+            $response->data = view('situgu/ops/cs/detail', $data);
+
+            return json_encode($response);
+        }
+    }
+
     public function add()
     {
         if ($this->request->getMethod() != 'post') {

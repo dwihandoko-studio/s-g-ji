@@ -142,7 +142,7 @@
         });
     }
 
-    function actionDetail(event, title) {
+    function actionDetail(event) {
         $.ajax({
             url: "./detail",
             type: 'POST',
@@ -164,7 +164,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-detailModalLabel').html('DETAIL ADUAN ' + title);
+                    $('#content-detailModalLabel').html('DETAIL ADUAN ');
                     $('.contentBodyModal').html(resul.data);
                     $('.content-detailModal').modal({
                         backdrop: 'static',

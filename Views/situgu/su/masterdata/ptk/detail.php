@@ -199,10 +199,10 @@
                 <label class="col-form-label">Mapel Diajarkan:</label>
                 <div><?= $data->mapel_diajarkan ?></div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
                 <label class="col-form-label">Jam Mengajar Perminggu:</label>
                 <div><?= $data->jam_mengajar_perminggu ?> Jam</div>
-            </div>
+            </div> -->
         </div>
         <div class="row mt-4">
             <h2>DATA KEPEGAWAIAN</h2>
