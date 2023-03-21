@@ -87,7 +87,7 @@ class VerifikasitpgsekolahModel extends Model
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         $this->dt->whereIn("SUBSTRING_INDEX(SUBSTRING_INDEX(a.kode_usulan, '-', -2), '-', 1)", $npsns);
         // $this->dt->whereIn('a.npsn', $npsns);
-        $this->dt->groupBy('a.kode_usulan');
+        $this->dt->groupBy('a.kode_usulans');
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
