@@ -210,6 +210,8 @@ class Cs extends BaseController
                 $response->status = 400;
                 $response->message = "Aduan tidak ditemukan.";
             }
+            var_dump($current);
+            die;
             $ptks = explode(",", $current->ptks);
             if (count($ptks) > 0) {
                 $data['ptks'] = $this->_db->table('_ptk_tb')
