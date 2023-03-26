@@ -404,10 +404,11 @@ class Informasi extends BaseController
             $data = [
                 'judul' => $judul,
                 'status' => $status,
+                'tampil' => $status,
                 'tujuan_role' => $roles,
                 'url' => $slug . '.html',
-                'deskripsi' => $isi,
-                'user_created' => $user->data->uid,
+                'isi' => $isi,
+                'uploader' => $user->data->id,
                 'created_at' => date('Y-m-d H:i:s'),
             ];
 
