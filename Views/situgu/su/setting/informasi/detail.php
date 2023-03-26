@@ -2,6 +2,10 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-lg-12">
+                <label class="col-form-label">Tujuan Role:</label>
+                <div><?= $data->tujuan_role ?></div>
+            </div>
+            <div class="col-lg-12">
                 <label class="col-form-label">Judul Informasi:</label>
                 <div><?= $data->judul ?></div>
             </div>

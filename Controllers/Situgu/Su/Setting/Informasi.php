@@ -194,7 +194,7 @@ class Informasi extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_tb_pengumuman')
+            $current = $this->_db->table('_tb_infopop')
                 ->where('id', $id)->get()->getRowObject();
 
             if ($current) {
@@ -249,13 +249,13 @@ class Informasi extends BaseController
                 $response->message = "Permintaan diizinkan";
                 return json_encode($response);
             }
-            $current = $this->_db->table('_tb_pengumuman')
+            $current = $this->_db->table('_tb_infopop')
                 ->where('id', $id)->get()->getRowObject();
 
             if ($current) {
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('_tb_pengumuman')->where('id', $id)->delete();
+                    $this->_db->table('_tb_infopop')->where('id', $id)->delete();
 
                     if ($this->_db->affectedRows() > 0) {
                         if ($current->image !== null) {
