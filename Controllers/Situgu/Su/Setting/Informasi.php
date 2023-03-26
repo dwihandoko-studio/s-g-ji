@@ -113,10 +113,13 @@ class Informasi extends BaseController
             return json_encode($response);
         }
 
+        $data['user'] = $user->data;
+        $data['roles'] = $this->_db->table('_role_user')->whereNotIn('id', [1, 8])->get()->getResult();
+
         $response = new \stdClass;
         $response->status = 200;
         $response->message = "Permintaan diizinkan";
-        $response->data = view('situgu/su/setting/informasi/add');
+        $response->data = view('situgu/su/setting/informasi/add', $data);
         return json_encode($response);
     }
 
@@ -382,9 +385,11 @@ class Informasi extends BaseController
             $isi = $this->request->getVar('isi');
             $status = htmlspecialchars($this->request->getVar('status'), true);
 
+            $roles = $this->request->getVar('roles');
+
             $slug = generateSlug($judul);
 
-            $cekData = $this->_db->table('_tb_pengumuman')->where(['url' => $slug . '.html'])->get()->getRowObject();
+            $cekData = $this->_db->table('_tb_infopop')->where(['url' => $slug . '.html'])->get()->getRowObject();
 
             if ($cekData) {
                 $slug = $slug . "-" . date('Y-m-d');
@@ -392,9 +397,14 @@ class Informasi extends BaseController
 
             $isi = str_replace('<img src=', '<img style="max-width: 100%;" src=', $isi);
 
+            if ($roles == "" || $roles == " ") {
+                $roles = "ALL";
+            }
+
             $data = [
                 'judul' => $judul,
                 'status' => $status,
+                'tujuan_role' => $roles,
                 'url' => $slug . '.html',
                 'deskripsi' => $isi,
                 'user_created' => $user->data->uid,
@@ -437,7 +447,7 @@ class Informasi extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_pengumuman')->insert($data);
+                $this->_db->table('_tb_infopop')->insert($data);
             } catch (\Exception $e) {
                 if ($filenamelampiran != '') {
                     unlink($dir . '/' . $newNamelampiran);
@@ -459,7 +469,7 @@ class Informasi extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Data berhasil disimpan.";
-                $response->redirect = base_url('a/informasi/pengumuman/data');
+                $response->redirect = base_url('situgu/su/setting/informasi/data');
                 return json_encode($response);
             } else {
                 if ($filenamelampiran != '') {

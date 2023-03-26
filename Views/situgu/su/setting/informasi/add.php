@@ -1,6 +1,24 @@
 <form id="formAddModalData" action="./addSave" method="post" enctype="multipart/form-data">
     <div class="modal-body">
         <div class="row">
+            <div class="col-lg-12">
+                <div class="mt-3">
+                    <label class="form-label">Pilih Tujuan Roles: </label>
+                    <select class="select2 form-control select2-multiple" style="width: 100%" id="_roles" name="_roles[]" multiple="multiple" data-placeholder="Pilih Tujuan Role ...">
+                        <?php
+                        if (isset($roles)) {
+                            if (count($roles) > 0) {
+                                foreach ($roles as $key => $value) { ?>
+                                    <option value="<?= $value->url_role ?>"><?= $value->role ?></option>
+                        <?php }
+                            }
+                        }
+                        ?>
+                    </select>
+
+                </div>
+                <div class="help-block _roles" for="_roles"></div>
+            </div>
             <div class="col-lg-10">
                 <label for="_judul" class="col-form-label">Judul Informasi:</label>
                 <input type="text" class="form-control judul" id="_judul" name="_judul" placeholder="Judul Informasi..." onfocusin="inputFocus(this);">
@@ -65,6 +83,7 @@
 </form>
 
 <script>
+    initSelect2('_roles', '#content-detailModal');
     ClassicEditor.create(document.querySelector('#_isi'), {
         simpleUpload: {
             uploadUrl: "./uploadImage"
@@ -163,6 +182,17 @@
         const isi = editorAdd.getData();
         const fileName = document.getElementsByName('_file')[0].value;
         const fileNameLampiran = document.getElementsByName('_file_lampiran')[0].value;
+        const roles = document.getElementById('_roles');
+
+        var selectedRoles = [];
+
+        for (var i = 0; i < roles.length; i++) {
+            if (roles[i].selected) {
+                selectedRoles.push(roles[i].value);
+                console.log(selectedRoles);
+            }
+        }
+
 
         let status;
         if ($('#status_publikasi').is(":checked")) {
@@ -213,6 +243,7 @@
         formUpload.append('judul', judul);
         formUpload.append('isi', isi);
         formUpload.append('status', status);
+        formUpload.append('roles', selectedRoles);
 
         $.ajax({
             xhr: function() {
