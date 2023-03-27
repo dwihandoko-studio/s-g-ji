@@ -509,7 +509,7 @@ class Tpg extends BaseController
                 if ($v->us_pang_golongan == NULL || $v->us_pang_golongan == "") {
                 } else {
                     $pang = explode("/", $v->us_pang_golongan);
-                    if ($pang[0] == "III") {
+                    if ($pang[0] == "III" || $pang[0] == "IX") {
                         $pph21 = (5 / 100);
                         $pph = "5%";
                     } else if ($pang[0] == "IV") {
