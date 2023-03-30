@@ -171,9 +171,9 @@ class Helplib
     public function getPengawasId($userId)
     {
 
-        $user = $this->_db->table('v_user_pengawas a')
-            ->select("a.ptk_id, b.id")
-            ->where('a.id', $userId)
+        $user = $this->_db->table('v_user_pengawas')
+            ->select("ptk_id, id")
+            ->where('id', $userId)
             ->get()->getRowObject();
 
         if ($user) {
