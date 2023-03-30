@@ -161,70 +161,70 @@ class Master extends BaseController
             $data['id'] = $id_ptk;
             switch ($bulan) {
                 case 'bulan1':
-                    $data['old_url'] = base_url('upload/sekolah/kehadiran') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/kehadiran') . '/' . $old;
                     break;
                 case 'bulan2':
-                    $data['old_url'] = base_url('upload/sekolah/kehadiran') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/kehadiran') . '/' . $old;
                     break;
                 case 'bulan3':
-                    $data['old_url'] = base_url('upload/sekolah/kehadiran') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/kehadiran') . '/' . $old;
                     break;
                 case 'pembagian_tugas':
-                    $data['old_url'] = base_url('upload/sekolah/pembagian-tugas') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/pembagian-tugas') . '/' . $old;
                     break;
                 case 'slip_gaji':
-                    $data['old_url'] = base_url('upload/sekolah/slip-gaji') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/slip-gaji') . '/' . $old;
                     break;
                 case 'doc_lainnya':
-                    $data['old_url'] = base_url('upload/sekolah/doc-lainnya') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/doc-lainnya') . '/' . $old;
                     break;
                 case 'pangkat':
-                    $data['old_url'] = base_url('upload/ptk/pangkat') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/pangkat') . '/' . $old;
                     break;
                 case 'kgb':
-                    $data['old_url'] = base_url('upload/ptk/kgb') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/kgb') . '/' . $old;
                     break;
                 case 'pernyataan24':
-                    $data['old_url'] = base_url('upload/ptk/pernyataanindividu') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/pernyataanindividu') . '/' . $old;
                     break;
                 case 'cuti_pensiun_kematian':
-                    $data['old_url'] = base_url('upload/ptk/keterangancuti') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/keterangancuti') . '/' . $old;
                     break;
                 case 'attr_lainnya':
-                    $data['old_url'] = base_url('upload/ptk/lainnya') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/lainnya') . '/' . $old;
                     break;
                 case 'foto':
-                    $data['old_url'] = base_url('upload/ptk/foto') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/foto') . '/' . $old;
                     break;
                 case 'karpeg':
-                    $data['old_url'] = base_url('upload/ptk/karpeg') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/karpeg') . '/' . $old;
                     break;
                 case 'ktp':
-                    $data['old_url'] = base_url('upload/ptk/ktp') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/ktp') . '/' . $old;
                     break;
                 case 'nrg':
-                    $data['old_url'] = base_url('upload/ptk/nrg') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/nrg') . '/' . $old;
                     break;
                 case 'nuptk':
-                    $data['old_url'] = base_url('upload/ptk/nuptk') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/nuptk') . '/' . $old;
                     break;
                 case 'serdik':
-                    $data['old_url'] = base_url('upload/ptk/serdik') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/serdik') . '/' . $old;
                     break;
                 case 'npwp':
-                    $data['old_url'] = base_url('upload/ptk/npwp') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/npwp') . '/' . $old;
                     break;
                 case 'buku_rekening':
-                    $data['old_url'] = base_url('upload/ptk/bukurekening') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/bukurekening') . '/' . $old;
                     break;
                 case 'ijazah':
-                    $data['old_url'] = base_url('upload/ptk/ijazah') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/ijazah') . '/' . $old;
                     break;
                 case 'inpassing':
-                    $data['old_url'] = base_url('upload/ptk/impassing') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/impassing') . '/' . $old;
                     break;
                 default:
-                    $data['old_url'] = base_url('upload/sekolah/doc-lainnya') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/doc-lainnya') . '/' . $old;
                     break;
             }
 
@@ -300,112 +300,112 @@ class Master extends BaseController
 
             switch ($name) {
                 case 'bulan1':
-                    $dir = FCPATH . "upload/sekolah/kehadiran";
+                    $dir = FCPATH . "upload/pengawas/kehadiran";
                     $field_db = 'lampiran_absen1';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'bulan2':
-                    $dir = FCPATH . "upload/sekolah/kehadiran";
+                    $dir = FCPATH . "upload/pengawas/kehadiran";
                     $field_db = 'lampiran_absen2';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'bulan3':
-                    $dir = FCPATH . "upload/sekolah/kehadiran";
+                    $dir = FCPATH . "upload/pengawas/kehadiran";
                     $field_db = 'lampiran_absen3';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'pembagian_tugas':
-                    $dir = FCPATH . "upload/sekolah/pembagian-tugas";
+                    $dir = FCPATH . "upload/pengawas/pembagian-tugas";
                     $field_db = 'pembagian_tugas';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'slip_gaji':
-                    $dir = FCPATH . "upload/sekolah/slip-gaji";
+                    $dir = FCPATH . "upload/pengawas/slip-gaji";
                     $field_db = 'slip_gaji';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'doc_lainnya':
-                    $dir = FCPATH . "upload/sekolah/doc-lainnya";
+                    $dir = FCPATH . "upload/pengawas/doc-lainnya";
                     $field_db = 'doc_lainnya';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'pangkat':
-                    $dir = FCPATH . "upload/ptk/pangkat";
+                    $dir = FCPATH . "upload/pengawas/pangkat";
                     $field_db = 'pangkat_terakhir';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'kgb':
-                    $dir = FCPATH . "upload/ptk/kgb";
+                    $dir = FCPATH . "upload/pengawas/kgb";
                     $field_db = 'kgb_terakhir';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'pernyataan24':
-                    $dir = FCPATH . "upload/ptk/pernyataanindividu";
+                    $dir = FCPATH . "upload/pengawas/pernyataanindividu";
                     $field_db = 'pernyataan_24jam';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'cuti_pensiun_kematian':
-                    $dir = FCPATH . "upload/ptk/keterangancuti";
+                    $dir = FCPATH . "upload/pengawas/keterangancuti";
                     $field_db = 'cuti_pensiun_kematian';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'attr_lainnya':
-                    $dir = FCPATH . "upload/ptk/lainnya";
+                    $dir = FCPATH . "upload/pengawas/lainnya";
                     $field_db = 'lainnya';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'foto':
-                    $dir = FCPATH . "upload/ptk/foto";
+                    $dir = FCPATH . "upload/pengawas/foto";
                     $field_db = 'lampiran_foto';
                     $table_db = '_ptk_tb';
                     break;
                 case 'karpeg':
-                    $dir = FCPATH . "upload/ptk/karpeg";
+                    $dir = FCPATH . "upload/pengawas/karpeg";
                     $field_db = 'lampiran_karpeg';
                     $table_db = '_ptk_tb';
                     break;
                 case 'ktp':
-                    $dir = FCPATH . "upload/ptk/ktp";
+                    $dir = FCPATH . "upload/pengawas/ktp";
                     $field_db = 'lampiran_ktp';
                     $table_db = '_ptk_tb';
                     break;
                 case 'nrg':
-                    $dir = FCPATH . "upload/ptk/nrg";
+                    $dir = FCPATH . "upload/pengawas/nrg";
                     $field_db = 'lampiran_nrg';
                     $table_db = '_ptk_tb';
                     break;
                 case 'nuptk':
-                    $dir = FCPATH . "upload/ptk/nuptk";
+                    $dir = FCPATH . "upload/pengawas/nuptk";
                     $field_db = 'lampiran_nuptk';
                     $table_db = '_ptk_tb';
                     break;
                 case 'serdik':
-                    $dir = FCPATH . "upload/ptk/serdik";
+                    $dir = FCPATH . "upload/pengawas/serdik";
                     $field_db = 'lampiran_serdik';
                     $table_db = '_ptk_tb';
                     break;
                 case 'npwp':
-                    $dir = FCPATH . "upload/ptk/npwp";
+                    $dir = FCPATH . "upload/pengawas/npwp";
                     $field_db = 'lampiran_npwp';
                     $table_db = '_ptk_tb';
                     break;
                 case 'buku_rekening':
-                    $dir = FCPATH . "upload/ptk/bukurekening";
+                    $dir = FCPATH . "upload/pengawas/bukurekening";
                     $field_db = 'lampiran_buku_rekening';
                     $table_db = '_ptk_tb';
                     break;
                 case 'ijazah':
-                    $dir = FCPATH . "upload/ptk/ijazah";
+                    $dir = FCPATH . "upload/pengawas/ijazah";
                     $field_db = 'lampiran_ijazah';
                     $table_db = '_ptk_tb';
                     break;
                 case 'inpassing':
-                    $dir = FCPATH . "upload/ptk/impassing";
+                    $dir = FCPATH . "upload/pengawas/impassing";
                     $field_db = 'lampiran_impassing';
                     $table_db = '_ptk_tb';
                     break;
                 default:
-                    $dir = FCPATH . "upload/sekolah/doc-lainnya";
+                    $dir = FCPATH . "upload/pengawas/doc-lainnya";
                     $field_db = 'doc_lainnya';
                     $table_db = '_absen_kehadiran';
                     break;
@@ -530,112 +530,112 @@ class Master extends BaseController
 
             switch ($name) {
                 case 'bulan1':
-                    $dir = FCPATH . "upload/sekolah/kehadiran";
+                    $dir = FCPATH . "upload/pengawas/kehadiran";
                     $field_db = 'lampiran_absen1';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'bulan2':
-                    $dir = FCPATH . "upload/sekolah/kehadiran";
+                    $dir = FCPATH . "upload/pengawas/kehadiran";
                     $field_db = 'lampiran_absen2';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'bulan3':
-                    $dir = FCPATH . "upload/sekolah/kehadiran";
+                    $dir = FCPATH . "upload/pengawas/kehadiran";
                     $field_db = 'lampiran_absen3';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'pembagian_tugas':
-                    $dir = FCPATH . "upload/sekolah/pembagian-tugas";
+                    $dir = FCPATH . "upload/pengawas/pembagian-tugas";
                     $field_db = 'pembagian_tugas';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'slip_gaji':
-                    $dir = FCPATH . "upload/sekolah/slip-gaji";
+                    $dir = FCPATH . "upload/pengawas/slip-gaji";
                     $field_db = 'slip_gaji';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'doc_lainnya':
-                    $dir = FCPATH . "upload/sekolah/doc-lainnya";
+                    $dir = FCPATH . "upload/pengawas/doc-lainnya";
                     $field_db = 'doc_lainnya';
                     $table_db = '_absen_kehadiran';
                     break;
                 case 'pangkat':
-                    $dir = FCPATH . "upload/ptk/pangkat";
+                    $dir = FCPATH . "upload/pengawas/pangkat";
                     $field_db = 'pangkat_terakhir';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'kgb':
-                    $dir = FCPATH . "upload/ptk/kgb";
+                    $dir = FCPATH . "upload/pengawas/kgb";
                     $field_db = 'kgb_terakhir';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'pernyataan24':
-                    $dir = FCPATH . "upload/ptk/pernyataanindividu";
+                    $dir = FCPATH . "upload/pengawas/pernyataanindividu";
                     $field_db = 'pernyataan_24jam';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'cuti_pensiun_kematian':
-                    $dir = FCPATH . "upload/ptk/keterangancuti";
+                    $dir = FCPATH . "upload/pengawas/keterangancuti";
                     $field_db = 'cuti_pensiun_kematian';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'attr_lainnya':
-                    $dir = FCPATH . "upload/ptk/lainnya";
+                    $dir = FCPATH . "upload/pengawas/lainnya";
                     $field_db = 'lainnya';
                     $table_db = '_upload_data_attribut';
                     break;
                 case 'foto':
-                    $dir = FCPATH . "upload/ptk/foto";
+                    $dir = FCPATH . "upload/pengawas/foto";
                     $field_db = 'lampiran_foto';
                     $table_db = '_ptk_tb';
                     break;
                 case 'karpeg':
-                    $dir = FCPATH . "upload/ptk/karpeg";
+                    $dir = FCPATH . "upload/pengawas/karpeg";
                     $field_db = 'lampiran_karpeg';
                     $table_db = '_ptk_tb';
                     break;
                 case 'ktp':
-                    $dir = FCPATH . "upload/ptk/ktp";
+                    $dir = FCPATH . "upload/pengawas/ktp";
                     $field_db = 'lampiran_ktp';
                     $table_db = '_ptk_tb';
                     break;
                 case 'nrg':
-                    $dir = FCPATH . "upload/ptk/nrg";
+                    $dir = FCPATH . "upload/pengawas/nrg";
                     $field_db = 'lampiran_nrg';
                     $table_db = '_ptk_tb';
                     break;
                 case 'nuptk':
-                    $dir = FCPATH . "upload/ptk/nuptk";
+                    $dir = FCPATH . "upload/pengawas/nuptk";
                     $field_db = 'lampiran_nuptk';
                     $table_db = '_ptk_tb';
                     break;
                 case 'serdik':
-                    $dir = FCPATH . "upload/ptk/serdik";
+                    $dir = FCPATH . "upload/pengawas/serdik";
                     $field_db = 'lampiran_serdik';
                     $table_db = '_ptk_tb';
                     break;
                 case 'npwp':
-                    $dir = FCPATH . "upload/ptk/npwp";
+                    $dir = FCPATH . "upload/pengawas/npwp";
                     $field_db = 'lampiran_npwp';
                     $table_db = '_ptk_tb';
                     break;
                 case 'buku_rekening':
-                    $dir = FCPATH . "upload/ptk/bukurekening";
+                    $dir = FCPATH . "upload/pengawas/bukurekening";
                     $field_db = 'lampiran_buku_rekening';
                     $table_db = '_ptk_tb';
                     break;
                 case 'ijazah':
-                    $dir = FCPATH . "upload/ptk/ijazah";
+                    $dir = FCPATH . "upload/pengawas/ijazah";
                     $field_db = 'lampiran_ijazah';
                     $table_db = '_ptk_tb';
                     break;
                 case 'inpassing':
-                    $dir = FCPATH . "upload/ptk/impassing";
+                    $dir = FCPATH . "upload/pengawas/impassing";
                     $field_db = 'lampiran_impassing';
                     $table_db = '_ptk_tb';
                     break;
                 default:
-                    $dir = FCPATH . "upload/sekolah/doc-lainnya";
+                    $dir = FCPATH . "upload/pengawas/doc-lainnya";
                     $field_db = 'doc_lainnya';
                     $table_db = '_absen_kehadiran';
                     break;
@@ -756,22 +756,22 @@ class Master extends BaseController
 
             switch ($bulan) {
                 case 'nrg':
-                    $dir = FCPATH . "upload/ptk/nrg";
+                    $dir = FCPATH . "upload/pengawas/nrg";
                     $field_db = 'lampiran_nrg';
                     $table_db = '_ptk_tb';
                     break;
                 case 'nuptk':
-                    $dir = FCPATH . "upload/ptk/nuptk";
+                    $dir = FCPATH . "upload/pengawas/nuptk";
                     $field_db = 'lampiran_nuptk';
                     $table_db = '_ptk_tb';
                     break;
                 case 'serdik':
-                    $dir = FCPATH . "upload/ptk/serdik";
+                    $dir = FCPATH . "upload/pengawas/serdik";
                     $field_db = 'lampiran_serdik';
                     $table_db = '_ptk_tb';
                     break;
                 case 'inpassing':
-                    $dir = FCPATH . "upload/ptk/impassing";
+                    $dir = FCPATH . "upload/pengawas/impassing";
                     $field_db = 'lampiran_impassing';
                     $table_db = '_ptk_tb';
                     break;
@@ -819,449 +819,6 @@ class Master extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal menghapus file lampiran $title";
-                return json_encode($response);
-            }
-        }
-    }
-
-
-
-
-
-
-
-    public function edit()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id');
-            return json_encode($response);
-        } else {
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-
-            $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
-
-            if ($current) {
-                $data['data'] = $current;
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->message = "Permintaan diizinkan";
-                $response->data = view('a/setting/pengguna/edit', $data);
-                return json_encode($response);
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data tidak ditemukan";
-                return json_encode($response);
-            }
-        }
-    }
-
-    // public function syncAll()
-    // {
-    //     if ($this->request->getMethod() != 'post') {
-    //         $response = new \stdClass;
-    //         $response->status = 400;
-    //         $response->message = "Permintaan tidak diizinkan";
-    //         return json_encode($response);
-    //     }
-
-    //     $rules = [
-    //         'npsn' => [
-    //             'rules' => 'required|trim',
-    //             'errors' => [
-    //                 'required' => 'NPSN tidak boleh kosong. ',
-    //             ]
-    //         ],
-    //     ];
-
-    //     if (!$this->validate($rules)) {
-    //         $response = new \stdClass;
-    //         $response->status = 400;
-    //         $response->message = $this->validator->getError('npsn');
-    //         return json_encode($response);
-    //     } else {
-    //         $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
-
-    //         $apiLib = new Apilib();
-    //         $result = $apiLib->syncPtk($npsn);
-
-    //         if ($result) {
-    //             if ($result->status == 200) {
-    //                 $response = new \stdClass;
-    //                 $response->status = 200;
-    //                 $response->message = "Syncrone Data Semua PTK Berhasil Dilakukan.";
-    //                 return json_encode($response);
-    //             } else {
-    //                 $response = new \stdClass;
-    //                 $response->status = 400;
-    //                 $response->message = "Gagal Syncrone Data";
-    //                 return json_encode($response);
-    //             }
-    //         } else {
-    //             $response = new \stdClass;
-    //             $response->status = 400;
-    //             $response->message = "Gagal Syncrone Data";
-    //             return json_encode($response);
-    //         }
-    //     }
-    // }
-
-    // public function sync()
-    // {
-    //     if ($this->request->getMethod() != 'post') {
-    //         $response = new \stdClass;
-    //         $response->status = 400;
-    //         $response->message = "Permintaan tidak diizinkan";
-    //         return json_encode($response);
-    //     }
-
-    //     $rules = [
-    //         'ptk_id' => [
-    //             'rules' => 'required|trim',
-    //             'errors' => [
-    //                 'required' => 'Id PTK tidak boleh kosong. ',
-    //             ]
-    //         ],
-    //         'nama' => [
-    //             'rules' => 'required|trim',
-    //             'errors' => [
-    //                 'required' => 'Nama tidak boleh kosong. ',
-    //             ]
-    //         ],
-    //         'npsn' => [
-    //             'rules' => 'required|trim',
-    //             'errors' => [
-    //                 'required' => 'NPSN tidak boleh kosong. ',
-    //             ]
-    //         ],
-    //     ];
-
-    //     if (!$this->validate($rules)) {
-    //         $response = new \stdClass;
-    //         $response->status = 400;
-    //         $response->message = $this->validator->getError('ptk_id')
-    //             . $this->validator->getError('nama')
-    //             . $this->validator->getError('npsn');
-    //         return json_encode($response);
-    //     } else {
-    //         $idPtk = htmlspecialchars($this->request->getVar('ptk_id'), true);
-    //         $nama = htmlspecialchars($this->request->getVar('nama'), true);
-    //         $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
-
-    //         $apiLib = new Apilib();
-    //         $result = $apiLib->syncPtkId($idPtk, $npsn);
-
-    //         if ($result) {
-    //             if ($result->status == 200) {
-    //                 $response = new \stdClass;
-    //                 $response->status = 200;
-    //                 $response->message = "Syncrone Data PTK $nama Berhasil Dilakukan.";
-    //                 return json_encode($response);
-    //             } else {
-    //                 $response = new \stdClass;
-    //                 $response->status = 400;
-    //                 $response->message = "Gagal Syncrone Data";
-    //                 return json_encode($response);
-    //             }
-    //         } else {
-    //             $response = new \stdClass;
-    //             $response->status = 400;
-    //             $response->message = "Gagal Syncrone Data";
-    //             return json_encode($response);
-    //         }
-    //     }
-    // }
-
-    public function delete()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id');
-            return json_encode($response);
-        } else {
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-
-            $Profilelib = new Profilelib();
-            $user = $Profilelib->user();
-            if ($user->status != 200) {
-                delete_cookie('jwt');
-                session()->destroy();
-                $response = new \stdClass;
-                $response->status = 401;
-                $response->message = "Permintaan diizinkan";
-                return json_encode($response);
-            }
-            $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
-
-            if ($current) {
-                $this->_db->transBegin();
-                try {
-                    $this->_db->table('_users_tb')->where('uid', $id)->delete();
-
-                    if ($this->_db->affectedRows() > 0) {
-                        try {
-                            $dir = FCPATH . "uploads/user";
-                            unlink($dir . '/' . $current->image);
-                        } catch (\Throwable $err) {
-                        }
-                        $this->_db->transCommit();
-                        $response = new \stdClass;
-                        $response->status = 200;
-                        $response->message = "Data berhasil dihapus.";
-                        return json_encode($response);
-                    } else {
-                        $this->_db->transRollback();
-                        $response = new \stdClass;
-                        $response->status = 400;
-                        $response->message = "Data gagal dihapus.";
-                        return json_encode($response);
-                    }
-                } catch (\Throwable $th) {
-                    $this->_db->transRollback();
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Data gagal dihapus.";
-                    return json_encode($response);
-                }
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data tidak ditemukan";
-                return json_encode($response);
-            }
-        }
-    }
-
-    public function editSave()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id buku tidak boleh kosong. ',
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-            'email' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Email tidak boleh kosong. ',
-                ]
-            ],
-            'nohp' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'No handphone tidak boleh kosong. ',
-                ]
-            ],
-            'nip' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'NIP tidak boleh kosong. ',
-                ]
-            ],
-            'alamat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Alamat tidak boleh kosong. ',
-                ]
-            ],
-            'status' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Status tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        $filenamelampiran = dot_array_search('file.name', $_FILES);
-        if ($filenamelampiran != '') {
-            $lampiranVal = [
-                'file' => [
-                    'rules' => 'uploaded[file]|max_size[file,512]|is_image[file]',
-                    'errors' => [
-                        'uploaded' => 'Pilih gambar profil terlebih dahulu. ',
-                        'max_size' => 'Ukuran gambar profil terlalu besar. ',
-                        'is_image' => 'Ekstensi yang anda upload harus berekstensi gambar. '
-                    ]
-                ],
-            ];
-            $rules = array_merge($rules, $lampiranVal);
-        }
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('nama')
-                . $this->validator->getError('id')
-                . $this->validator->getError('email')
-                . $this->validator->getError('nohp')
-                . $this->validator->getError('nip')
-                . $this->validator->getError('alamat')
-                . $this->validator->getError('status')
-                . $this->validator->getError('file');
-            return json_encode($response);
-        } else {
-            $Profilelib = new Profilelib();
-            $user = $Profilelib->user();
-            if ($user->status != 200) {
-                delete_cookie('jwt');
-                session()->destroy();
-                $response = new \stdClass;
-                $response->status = 401;
-                $response->message = "Permintaan diizinkan";
-                return json_encode($response);
-            }
-
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-            $email = htmlspecialchars($this->request->getVar('email'), true);
-            $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
-            $nip = htmlspecialchars($this->request->getVar('nip'), true);
-            $alamat = htmlspecialchars($this->request->getVar('alamat'), true);
-            $status = htmlspecialchars($this->request->getVar('status'), true);
-
-            $oldData =  $this->_db->table('_users_tb')->where('uid', $id)->get()->getRowObject();
-
-            if (!$oldData) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data tidak ditemukan.";
-                return json_encode($response);
-            }
-
-            if (
-                $nama === $oldData->fullname
-                && $email === $oldData->email
-                && $nohp === $oldData->no_hp
-                && $nip === $oldData->nip
-                && $alamat === $oldData->alamat
-                && (int)$status === (int)$oldData->is_active
-            ) {
-                if ($filenamelampiran == '') {
-                    $response = new \stdClass;
-                    $response->status = 201;
-                    $response->message = "Tidak ada perubahan data yang disimpan.";
-                    $response->redirect = base_url('a/setting/pengguna/data');
-                    return json_encode($response);
-                }
-            }
-
-            if ($email !== $oldData->email) {
-                $cekData = $this->_db->table('_users_tb')->where(['email' => $email])->get()->getRowObject();
-                if ($cekData) {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Email sudah terdaftar.";
-                    return json_encode($response);
-                }
-            }
-
-            $data = [
-                'email' => $email,
-                'fullname' => $nama,
-                'no_hp' => $nohp,
-                'nip' => $nip,
-                'alamat' => $alamat,
-                'is_active' => $status,
-                'updated_at' => date('Y-m-d H:i:s'),
-            ];
-            $dir = FCPATH . "uploads/user";
-
-            if ($filenamelampiran != '') {
-                $lampiran = $this->request->getFile('file');
-                $filesNamelampiran = $lampiran->getName();
-                $newNamelampiran = _create_name_foto($filesNamelampiran);
-
-                if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                    $lampiran->move($dir, $newNamelampiran);
-                    $data['image'] = $newNamelampiran;
-                } else {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal mengupload gambar.";
-                    return json_encode($response);
-                }
-            }
-
-            $this->_db->transBegin();
-            try {
-                $this->_db->table('_users_tb')->where('uid', $oldData->uid)->update($data);
-            } catch (\Exception $e) {
-                unlink($dir . '/' . $newNamelampiran);
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal menyimpan gambar baru.";
-                return json_encode($response);
-            }
-
-            if ($this->_db->affectedRows() > 0) {
-                try {
-                    unlink($dir . '/' . $oldData->image);
-                } catch (\Throwable $th) {
-                }
-                $this->_db->transCommit();
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->message = "Data berhasil diupdate.";
-                $response->redirect = base_url('a/setting/pengguna/data');
-                return json_encode($response);
-            } else {
-                unlink($dir . '/' . $newNamelampiran);
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal mengupate data";
                 return json_encode($response);
             }
         }
