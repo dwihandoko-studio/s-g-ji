@@ -161,22 +161,6 @@
                                                 '<a href="javascript:actionUpload(\'Ijazah\',\'ijazah\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                                             </a>';
-                                            if ($ptk->status_kepegawaian === "PNS" || $ptk->status_kepegawaian === "PPPK" || $ptk->status_kepegawaian === "PNS Diperbantukan" || $ptk->status_kepegawaian === "PNS Depag" || $ptk->status_kepegawaian === "CPNS") {
-                                                $row[] = '-';
-                                            } else {
-                                                $row[] = $ptk->lampiran_impassing ? '<a target="_blank" href="' . base_url('upload/ptk/impassing') . '/' . $ptk->lampiran_impassing . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                                            </a>
-                                            <a href="javascript:actionEditFile(\'Inpassing\',\'inpassing\',\'' . $ptk->lampiran_impassing . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                                            </a>
-                                            <a href="javascript:actionHapusFile(\'Inpassing\',\'inspassing\',\'' . $ptk->lampiran_impassing . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
-                                            </a>' :
-                                                    '<a href="javascript:actionUpload(\'Inpassing\',\'inpassing\')" class="btn btn-primary waves-effect waves-light">
-                                                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                                            </a>';
-                                            }
                                             $row[] = '<div class="text-center">
                                                 <span class="badge rounded-pill badge-soft-danger font-size-11">Terbuka</span>
                                             </div>';
