@@ -211,6 +211,9 @@ class Master extends BaseController
                 case 'serdik':
                     $data['old_url'] = base_url('upload/pengawas/serdik') . '/' . $old;
                     break;
+                case 'serpeng':
+                    $data['old_url'] = base_url('upload/pengawas/serpeng') . '/' . $old;
+                    break;
                 case 'npwp':
                     $data['old_url'] = base_url('upload/pengawas/npwp') . '/' . $old;
                     break;
@@ -382,6 +385,11 @@ class Master extends BaseController
                 case 'serdik':
                     $dir = FCPATH . "upload/pengawas/serdik";
                     $field_db = 'lampiran_serdik';
+                    $table_db = '__pengawas_tb';
+                    break;
+                case 'serpeng':
+                    $dir = FCPATH . "upload/pengawas/serpeng";
+                    $field_db = 'lampiran_serpeng';
                     $table_db = '__pengawas_tb';
                     break;
                 case 'npwp':
@@ -614,6 +622,11 @@ class Master extends BaseController
                     $field_db = 'lampiran_serdik';
                     $table_db = '__pengawas_tb';
                     break;
+                case 'serpeng':
+                    $dir = FCPATH . "upload/pengawas/serpeng";
+                    $field_db = 'lampiran_serpeng';
+                    $table_db = '__pengawas_tb';
+                    break;
                 case 'npwp':
                     $dir = FCPATH . "upload/pengawas/npwp";
                     $field_db = 'lampiran_npwp';
@@ -768,6 +781,11 @@ class Master extends BaseController
                 case 'serdik':
                     $dir = FCPATH . "upload/pengawas/serdik";
                     $field_db = 'lampiran_serdik';
+                    $table_db = '__pengawas_tb';
+                    break;
+                case 'serpeng':
+                    $dir = FCPATH . "upload/pengawas/serpeng";
+                    $field_db = 'lampiran_serpeng';
                     $table_db = '__pengawas_tb';
                     break;
                 case 'inpassing':

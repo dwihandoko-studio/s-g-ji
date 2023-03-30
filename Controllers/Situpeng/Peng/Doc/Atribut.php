@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Situgu\Ptk\Doc;
+namespace App\Controllers\Situpeng\Peng\Doc;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Ptk\AtributModel;
+use App\Models\Situpeng\Peng\AtributModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -80,20 +80,20 @@ class Atribut extends BaseController
 
             switch ($list->is_locked) {
                 case 1:
-                    $row[] = $list->pangkat_terakhir ? '<a href="' . base_url('upload/ptk/pangkat') . '/' . $list->pangkat_terakhir . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pangkat</span></a>' : '-';
-                    $row[] = $list->kgb_terakhir ? '<a href="' . base_url('upload/ptk/kgb') . '/' . $list->kgb_terakhir . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran KGB</span></a>' : '-';
-                    $row[] = $list->pernyataan_24jam ? '<a href="' . base_url('upload/ptk/pernyataanindividu') . '/' . $list->pernyataan_24jam . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pernyataan</span></a>' : '-';
-                    $row[] = $list->cuti ? '<a href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Cuti</span></a>' : '-';
-                    $row[] = $list->pensiun ? '<a href="' . base_url('upload/ptk/pensiun') . '/' . $list->pensiun . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pensiun</span></a>' : '-';
-                    $row[] = $list->kematian ? '<a href="' . base_url('upload/ptk/kematian') . '/' . $list->kematian . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Kematian</span></a>' : '-';
-                    $row[] = $list->lainnya ? '<a href="' . base_url('upload/ptk/lainnya') . '/' . $list->lainnya . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Atribut Lainnya</span></a>' : '-';
+                    $row[] = $list->pangkat_terakhir ? '<a href="' . base_url('upload/pengawas/pangkat') . '/' . $list->pangkat_terakhir . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pangkat</span></a>' : '-';
+                    $row[] = $list->kgb_terakhir ? '<a href="' . base_url('upload/pengawas/kgb') . '/' . $list->kgb_terakhir . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran KGB</span></a>' : '-';
+                    $row[] = $list->pernyataan_24jam ? '<a href="' . base_url('upload/pengawas/pernyataanindividu') . '/' . $list->pernyataan_24jam . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pernyataan</span></a>' : '-';
+                    $row[] = $list->cuti ? '<a href="' . base_url('upload/pengawas/keterangancuti') . '/' . $list->cuti . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Cuti</span></a>' : '-';
+                    $row[] = $list->pensiun ? '<a href="' . base_url('upload/pengawas/pensiun') . '/' . $list->pensiun . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pensiun</span></a>' : '-';
+                    $row[] = $list->kematian ? '<a href="' . base_url('upload/pengawas/kematian') . '/' . $list->kematian . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Kematian</span></a>' : '-';
+                    $row[] = $list->lainnya ? '<a href="' . base_url('upload/pengawas/lainnya') . '/' . $list->lainnya . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Atribut Lainnya</span></a>' : '-';
                     $row[] = '<div class="text-center">
                     <span class="badge rounded-pill badge-soft-success font-size-11">Terkunci</span>
                     </div>';
                     break;
                 default:
                     if ($list->status_kepegawaian === "PNS" || $list->status_kepegawaian === "PPPK" || $list->status_kepegawaian === "PNS Diperbantukan" || $list->status_kepegawaian === "PNS Depag" || $list->status_kepegawaian === "CPNS") {
-                        $row[] = $list->pangkat_terakhir ? '<a target="_blank" href="' . base_url('upload/ptk/pangkat') . '/' . $list->pangkat_terakhir . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->pangkat_terakhir ? '<a target="_blank" href="' . base_url('upload/pengawas/pangkat') . '/' . $list->pangkat_terakhir . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Pangkat Terakhir\',\'pangkat\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pangkat_terakhir . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -102,7 +102,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Pangkat Terakhir\',\'pangkat\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                        $row[] = $list->kgb_terakhir ? '<a target="_blank" href="' . base_url('upload/ptk/kgb') . '/' . $list->kgb_terakhir . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->kgb_terakhir ? '<a target="_blank" href="' . base_url('upload/pengawas/kgb') . '/' . $list->kgb_terakhir . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Berkala Terakhir\',\'kgb\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kgb_terakhir . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -114,7 +114,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Berkala Terakhir\',\'kgb\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                        $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/ptk/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/pengawas/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pernyataan_24jam . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -123,7 +123,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                        $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/pengawas/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->cuti . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -135,7 +135,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                        $row[] = $list->pensiun ? '<a target="_blank" href="' . base_url('upload/ptk/pensiun') . '/' . $list->pensiun . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->pensiun ? '<a target="_blank" href="' . base_url('upload/pengawas/pensiun') . '/' . $list->pensiun . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pensiun . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -147,7 +147,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                        $row[] = $list->kematian ? '<a target="_blank" href="' . base_url('upload/ptk/kematian') . '/' . $list->kematian . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->kematian ? '<a target="_blank" href="' . base_url('upload/pengawas/kematian') . '/' . $list->kematian . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kematian . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -159,7 +159,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                        $row[] = $list->lainnya ? '<a target="_blank" href="' . base_url('upload/ptk/lainnya') . '/' . $list->lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->lainnya ? '<a target="_blank" href="' . base_url('upload/pengawas/lainnya') . '/' . $list->lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -174,7 +174,7 @@ class Atribut extends BaseController
                     } else {
                         $row[] = '-';
                         $row[] = '-';
-                        $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/ptk/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/pengawas/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pernyataan_24jam . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -183,7 +183,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                        $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/ptk/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->cuti ? '<a target="_blank" href="' . base_url('upload/pengawas/keterangancuti') . '/' . $list->cuti . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                     <i class="bx bxs-show font-size-16 align-middle"></i></button>
                 </a>
                 <a href="javascript:actionEditFile(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->cuti . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -195,7 +195,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Cuti\',\'cuti\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                 </a>';
-                        $row[] = $list->pensiun ? '<a target="_blank" href="' . base_url('upload/ptk/pensiun') . '/' . $list->pensiun . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->pensiun ? '<a target="_blank" href="' . base_url('upload/pengawas/pensiun') . '/' . $list->pensiun . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                     <i class="bx bxs-show font-size-16 align-middle"></i></button>
                 </a>
                 <a href="javascript:actionEditFile(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pensiun . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -207,7 +207,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Pensiun\',\'pensiun\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                 </a>';
-                        $row[] = $list->kematian ? '<a target="_blank" href="' . base_url('upload/ptk/kematian') . '/' . $list->kematian . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->kematian ? '<a target="_blank" href="' . base_url('upload/pengawas/kematian') . '/' . $list->kematian . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                     <i class="bx bxs-show font-size-16 align-middle"></i></button>
                 </a>
                 <a href="javascript:actionEditFile(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->kematian . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -219,7 +219,7 @@ class Atribut extends BaseController
                             '<a href="javascript:actionUpload(\'Kematian\',\'kematian\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                     <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                 </a>';
-                        $row[] = $list->lainnya ? '<a target="_blank" href="' . base_url('upload/ptk/lainnya') . '/' . $list->lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                        $row[] = $list->lainnya ? '<a target="_blank" href="' . base_url('upload/pengawas/lainnya') . '/' . $list->lainnya . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
                     <a href="javascript:actionEditFile(\'Dokumen Atribut Lainnya\',\'attr_lainnya\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->lainnya . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -250,7 +250,7 @@ class Atribut extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/ptk/doc/atribut/data'));
+        return redirect()->to(base_url('situpeng/peng/doc/atribut/data'));
     }
 
     public function data()
@@ -274,7 +274,7 @@ class Atribut extends BaseController
 
         $data['ptk'] = $ptk;
 
-        return view('situgu/ptk/doc/atribut/index', $data);
+        return view('situpeng/peng/doc/atribut/index', $data);
     }
 
     public function add()
@@ -302,7 +302,7 @@ class Atribut extends BaseController
         $response = new \stdClass;
         $response->status = 200;
         $response->message = "Permintaan diizinkan";
-        $response->data = view('situgu/ptk/doc/atribut/add', $data);
+        $response->data = view('situpeng/peng/doc/atribut/add', $data);
         return json_encode($response);
     }
 
@@ -353,7 +353,7 @@ class Atribut extends BaseController
 
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
-            $cekData = $this->_db->table('_upload_data_attribut')->where(['id_tahun_tw' => $tw, 'id_ptk' => $ptkNya->id])->get()->getRowObject();
+            $cekData = $this->_db->table('__pengawas_upload_data_attribut')->where(['id_tahun_tw' => $tw, 'id_ptk' => $ptkNya->id])->get()->getRowObject();
 
             if ($cekData) {
                 $response = new \stdClass;
@@ -381,7 +381,7 @@ class Atribut extends BaseController
             $this->_db->transBegin();
 
             try {
-                $this->_db->table('_upload_data_attribut')->insert($data);
+                $this->_db->table('__pengawas_upload_data_attribut')->insert($data);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
@@ -464,7 +464,7 @@ class Atribut extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/ptk/doc/atribut/upload', $data);
+            $response->data = view('situpeng/peng/doc/atribut/upload', $data);
             return json_encode($response);
         }
     }
@@ -534,35 +534,35 @@ class Atribut extends BaseController
             $data['id_ptk'] = $id_ptk;
             switch ($bulan) {
                 case 'pangkat':
-                    $data['old_url'] = base_url('upload/ptk/pangkat') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/pangkat') . '/' . $old;
                     break;
                 case 'kgb':
-                    $data['old_url'] = base_url('upload/ptk/kgb') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/kgb') . '/' . $old;
                     break;
                 case 'pernyataan24':
-                    $data['old_url'] = base_url('upload/ptk/pernyataanindividu') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/pernyataanindividu') . '/' . $old;
                     break;
                 case 'cuti':
-                    $data['old_url'] = base_url('upload/ptk/keterangancuti') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/keterangancuti') . '/' . $old;
                     break;
                 case 'pensiun':
-                    $data['old_url'] = base_url('upload/ptk/pensiun') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/pensiun') . '/' . $old;
                     break;
                 case 'kematian':
-                    $data['old_url'] = base_url('upload/ptk/kematian') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/kematian') . '/' . $old;
                     break;
                 case 'attr_lainnya':
-                    $data['old_url'] = base_url('upload/ptk/lainnya') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/lainnya') . '/' . $old;
                     break;
                 default:
-                    $data['old_url'] = base_url('upload/sekolah/doc-lainnya') . '/' . $old;
+                    $data['old_url'] = base_url('upload/pengawas/doc-lainnya') . '/' . $old;
                     break;
             }
 
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/ptk/doc/atribut/editupload', $data);
+            $response->data = view('situpeng/peng/doc/atribut/editupload', $data);
             return json_encode($response);
         }
     }
@@ -638,42 +638,42 @@ class Atribut extends BaseController
 
             switch ($bulan) {
                 case 'pangkat':
-                    $dir = FCPATH . "upload/ptk/pangkat";
+                    $dir = FCPATH . "upload/pengawas/pangkat";
                     $field_db = 'pangkat_terakhir';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'kgb':
-                    $dir = FCPATH . "upload/ptk/kgb";
+                    $dir = FCPATH . "upload/pengawas/kgb";
                     $field_db = 'kgb_terakhir';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'pernyataan24':
-                    $dir = FCPATH . "upload/ptk/pernyataanindividu";
+                    $dir = FCPATH . "upload/pengawas/pernyataanindividu";
                     $field_db = 'pernyataan_24jam';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'cuti':
-                    $dir = FCPATH . "upload/ptk/keterangancuti";
+                    $dir = FCPATH . "upload/pengawas/keterangancuti";
                     $field_db = 'cuti';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'pensiun':
-                    $dir = FCPATH . "upload/ptk/pensiun";
+                    $dir = FCPATH . "upload/pengawas/pensiun";
                     $field_db = 'pensiun';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'kematian':
-                    $dir = FCPATH . "upload/ptk/kematian";
+                    $dir = FCPATH . "upload/pengawas/kematian";
                     $field_db = 'kematian';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'attr_lainnya':
-                    $dir = FCPATH . "upload/ptk/lainnya";
+                    $dir = FCPATH . "upload/pengawas/lainnya";
                     $field_db = 'lainnya';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 default:
-                    $dir = FCPATH . "upload/sekolah/doc-lainnya";
+                    $dir = FCPATH . "upload/pengawas/doc-lainnya";
                     $field_db = 'qrcode';
                     $table_db = 'info_gtk';
                     break;
@@ -793,44 +793,44 @@ class Atribut extends BaseController
 
             switch ($name) {
                 case 'pangkat':
-                    $dir = FCPATH . "upload/ptk/pangkat";
+                    $dir = FCPATH . "upload/pengawas/pangkat";
                     $field_db = 'pangkat_terakhir';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'kgb':
-                    $dir = FCPATH . "upload/ptk/kgb";
+                    $dir = FCPATH . "upload/pengawas/kgb";
                     $field_db = 'kgb_terakhir';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'pernyataan24':
-                    $dir = FCPATH . "upload/ptk/pernyataanindividu";
+                    $dir = FCPATH . "upload/pengawas/pernyataanindividu";
                     $field_db = 'pernyataan_24jam';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'cuti':
-                    $dir = FCPATH . "upload/ptk/keterangancuti";
+                    $dir = FCPATH . "upload/pengawas/keterangancuti";
                     $field_db = 'cuti';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'pensiun':
-                    $dir = FCPATH . "upload/ptk/pensiun";
+                    $dir = FCPATH . "upload/pengawas/pensiun";
                     $field_db = 'pensiun';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'kematian':
-                    $dir = FCPATH . "upload/ptk/kematian";
+                    $dir = FCPATH . "upload/pengawas/kematian";
                     $field_db = 'kematian';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'attr_lainnya':
-                    $dir = FCPATH . "upload/ptk/lainnya";
+                    $dir = FCPATH . "upload/pengawas/lainnya";
                     $field_db = 'lainnya';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 default:
-                    $dir = FCPATH . "upload/sekolah/doc-lainnya";
+                    $dir = FCPATH . "upload/pengawas/doc-lainnya";
                     $field_db = 'doc_lainnya';
-                    $table_db = '_absen_kehadiran';
+                    $table_db = '__pengawas_absen_kehadiran';
                     break;
             }
 
@@ -994,44 +994,44 @@ class Atribut extends BaseController
 
             switch ($name) {
                 case 'pangkat':
-                    $dir = FCPATH . "upload/ptk/pangkat";
+                    $dir = FCPATH . "upload/pengawas/pangkat";
                     $field_db = 'pangkat_terakhir';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'kgb':
-                    $dir = FCPATH . "upload/ptk/kgb";
+                    $dir = FCPATH . "upload/pengawas/kgb";
                     $field_db = 'kgb_terakhir';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'pernyataan24':
-                    $dir = FCPATH . "upload/ptk/pernyataanindividu";
+                    $dir = FCPATH . "upload/pengawas/pernyataanindividu";
                     $field_db = 'pernyataan_24jam';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'cuti':
-                    $dir = FCPATH . "upload/ptk/keterangancuti";
+                    $dir = FCPATH . "upload/pengawas/keterangancuti";
                     $field_db = 'cuti';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'pensiun':
-                    $dir = FCPATH . "upload/ptk/pensiun";
+                    $dir = FCPATH . "upload/pengawas/pensiun";
                     $field_db = 'pensiun';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'kematian':
-                    $dir = FCPATH . "upload/ptk/kematian";
+                    $dir = FCPATH . "upload/pengawas/kematian";
                     $field_db = 'kematian';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 case 'attr_lainnya':
-                    $dir = FCPATH . "upload/ptk/lainnya";
+                    $dir = FCPATH . "upload/pengawas/lainnya";
                     $field_db = 'lainnya';
-                    $table_db = '_upload_data_attribut';
+                    $table_db = '__pengawas_upload_data_attribut';
                     break;
                 default:
-                    $dir = FCPATH . "upload/sekolah/doc-lainnya";
+                    $dir = FCPATH . "upload/pengawas/doc-lainnya";
                     $field_db = 'doc_lainnya';
-                    $table_db = '_absen_kehadiran';
+                    $table_db = '__pengawas_absen_kehadiran';
                     break;
             }
 

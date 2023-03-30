@@ -41,6 +41,7 @@
                                     <th data-orderable="false">NUPTK</th>
                                     <th data-orderable="false">NPWP</th>
                                     <th data-orderable="false">Serdik</th>
+                                    <th data-orderable="false">Sertipeng</th>
                                     <th data-orderable="false">Buku Rekening</th>
                                     <th data-orderable="false">Status</th>
                                 </tr>
@@ -57,6 +58,7 @@
                                             $row[] = $ptk->lampiran_nuptk ? '<a href="' . base_url('upload/pengawas/nuptk') . '/' . $ptk->lampiran_nuptk . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran NUPTK</span></a>' : '-';
                                             $row[] = $ptk->lampiran_npwp ? '<a href="' . base_url('upload/pengawas/npwp') . '/' . $ptk->lampiran_npwp . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran NPWP</span></a>' : '-';
                                             $row[] = $ptk->lampiran_serdik ? '<a href="' . base_url('upload/pengawas/serdik') . '/' . $ptk->lampiran_serdik . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Serdik</span></a>' : '-';
+                                            $row[] = $ptk->lampiran_serpeng ? '<a href="' . base_url('upload/pengawas/serpeng') . '/' . $ptk->lampiran_serpeng . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Sertipeng</span></a>' : '-';
                                             $row[] = $ptk->lampiran_buku_rekening ? '<a href="' . base_url('upload/pengawas/bukurekening') . '/' . $ptk->lampiran_buku_rekening . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Buku Rekening</span></a>' : '-';
                                             $row[] = '<div class="text-center">
                                             <span class="badge rounded-pill badge-soft-success font-size-11">Terkunci</span>
@@ -123,6 +125,18 @@
                                                 <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
                                             </a>' :
                                                 '<a href="javascript:actionUpload(\'Sertifikat Pendidik\',\'serdik\')" class="btn btn-primary waves-effect waves-light">
+                                                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                                            </a>';
+                                            $row[] = $ptk->lampiran_serpeng ? '<a target="_blank" href="' . base_url('upload/pengawas/serpeng') . '/' . $ptk->lampiran_serpeng . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                                            </a>
+                                            <a href="javascript:actionEditFile(\'Sertifikat Pengawas\',\'serpeng\',\'' . $ptk->lampiran_serpeng . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                                            </a>
+                                            <a href="javascript:actionHapusFile(\'Sertifikat Pengawas\',\'serpeng\',\'' . $ptk->lampiran_serpeng . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
+                                            </a>' :
+                                                '<a href="javascript:actionUpload(\'Sertifikat Pengawas\',\'serpeng\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                                             </a>';
                                             $row[] = $ptk->lampiran_buku_rekening ? '<a target="_blank" href="' . base_url('upload/pengawas/bukurekening') . '/' . $ptk->lampiran_buku_rekening . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
