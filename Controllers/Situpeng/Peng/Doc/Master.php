@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Situgu\Ptk\Doc;
+namespace App\Controllers\Situpeng\Peng\Doc;
 
 use App\Controllers\BaseController;
 use Config\Services;
@@ -27,7 +27,7 @@ class Master extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/ptk/doc/master/data'));
+        return redirect()->to(base_url('situpeng/peng/doc/master/data'));
     }
 
     public function data()
@@ -42,15 +42,14 @@ class Master extends BaseController
         }
 
         $data['user'] = $user->data;
-        $id = $this->_helpLib->getPtkId($user->data->id);
-        $ptk = $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
+        $ptk = $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
         if (!$ptk) {
             return view('404', $data);
         }
 
         $data['ptk'] = $ptk;
 
-        return view('situgu/ptk/doc/master/index', $data);
+        return view('situpeng/peng/doc/master/index', $data);
     }
 
     public function formupload()
@@ -101,7 +100,7 @@ class Master extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/ptk/doc/master/upload', $data);
+            $response->data = view('situpeng/peng/doc/master/upload', $data);
             return json_encode($response);
         }
     }
@@ -232,7 +231,7 @@ class Master extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/ptk/doc/master/editupload', $data);
+            $response->data = view('situpeng/peng/doc/master/editupload', $data);
             return json_encode($response);
         }
     }
