@@ -266,7 +266,7 @@ class Atribut extends BaseController
 
         $data['user'] = $user->data;
         $id = $this->_helpLib->getPtkId($user->data->id);
-        $ptk = $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
+        $ptk = $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
 
         if (!$ptk) {
             return view('404', $data);
@@ -342,7 +342,7 @@ class Atribut extends BaseController
             }
 
             $id = $this->_helpLib->getPtkId($user->data->id);
-            $ptkNya = $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
+            $ptkNya = $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
 
             if (!$ptkNya) {
                 $response = new \stdClass;
@@ -848,7 +848,7 @@ class Atribut extends BaseController
                 return json_encode($response);
             }
 
-            $ptkNya = $this->_db->table('_ptk_tb')->where('id', $id_ptk)->get()->getRowObject();
+            $ptkNya = $this->_db->table('__pengawas_tb')->where('id', $id_ptk)->get()->getRowObject();
 
             if (!$ptkNya) {
                 $response = new \stdClass;
@@ -1049,7 +1049,7 @@ class Atribut extends BaseController
                 return json_encode($response);
             }
 
-            $ptkNya = $this->_db->table('_ptk_tb')->where('id', $id_ptk)->get()->getRowObject();
+            $ptkNya = $this->_db->table('__pengawas_tb')->where('id', $id_ptk)->get()->getRowObject();
 
             if (!$ptkNya) {
                 $response = new \stdClass;

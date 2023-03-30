@@ -357,52 +357,52 @@ class Master extends BaseController
                 case 'foto':
                     $dir = FCPATH . "upload/pengawas/foto";
                     $field_db = 'lampiran_foto';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'karpeg':
                     $dir = FCPATH . "upload/pengawas/karpeg";
                     $field_db = 'lampiran_karpeg';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'ktp':
                     $dir = FCPATH . "upload/pengawas/ktp";
                     $field_db = 'lampiran_ktp';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'nrg':
                     $dir = FCPATH . "upload/pengawas/nrg";
                     $field_db = 'lampiran_nrg';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'nuptk':
                     $dir = FCPATH . "upload/pengawas/nuptk";
                     $field_db = 'lampiran_nuptk';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'serdik':
                     $dir = FCPATH . "upload/pengawas/serdik";
                     $field_db = 'lampiran_serdik';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'npwp':
                     $dir = FCPATH . "upload/pengawas/npwp";
                     $field_db = 'lampiran_npwp';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'buku_rekening':
                     $dir = FCPATH . "upload/pengawas/bukurekening";
                     $field_db = 'lampiran_buku_rekening';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'ijazah':
                     $dir = FCPATH . "upload/pengawas/ijazah";
                     $field_db = 'lampiran_ijazah';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'inpassing':
                     $dir = FCPATH . "upload/pengawas/impassing";
                     $field_db = 'lampiran_impassing';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 default:
                     $dir = FCPATH . "upload/pengawas/doc-lainnya";
@@ -587,52 +587,52 @@ class Master extends BaseController
                 case 'foto':
                     $dir = FCPATH . "upload/pengawas/foto";
                     $field_db = 'lampiran_foto';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'karpeg':
                     $dir = FCPATH . "upload/pengawas/karpeg";
                     $field_db = 'lampiran_karpeg';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'ktp':
                     $dir = FCPATH . "upload/pengawas/ktp";
                     $field_db = 'lampiran_ktp';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'nrg':
                     $dir = FCPATH . "upload/pengawas/nrg";
                     $field_db = 'lampiran_nrg';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'nuptk':
                     $dir = FCPATH . "upload/pengawas/nuptk";
                     $field_db = 'lampiran_nuptk';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'serdik':
                     $dir = FCPATH . "upload/pengawas/serdik";
                     $field_db = 'lampiran_serdik';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'npwp':
                     $dir = FCPATH . "upload/pengawas/npwp";
                     $field_db = 'lampiran_npwp';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'buku_rekening':
                     $dir = FCPATH . "upload/pengawas/bukurekening";
                     $field_db = 'lampiran_buku_rekening';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'ijazah':
                     $dir = FCPATH . "upload/pengawas/ijazah";
                     $field_db = 'lampiran_ijazah';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'inpassing':
                     $dir = FCPATH . "upload/pengawas/impassing";
                     $field_db = 'lampiran_impassing';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 default:
                     $dir = FCPATH . "upload/pengawas/doc-lainnya";
@@ -758,22 +758,22 @@ class Master extends BaseController
                 case 'nrg':
                     $dir = FCPATH . "upload/pengawas/nrg";
                     $field_db = 'lampiran_nrg';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'nuptk':
                     $dir = FCPATH . "upload/pengawas/nuptk";
                     $field_db = 'lampiran_nuptk';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'serdik':
                     $dir = FCPATH . "upload/pengawas/serdik";
                     $field_db = 'lampiran_serdik';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 case 'inpassing':
                     $dir = FCPATH . "upload/pengawas/impassing";
                     $field_db = 'lampiran_impassing';
-                    $table_db = '_ptk_tb';
+                    $table_db = '__pengawas_tb';
                     break;
                 default:
                     $dir = "";
