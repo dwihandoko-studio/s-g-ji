@@ -36,7 +36,7 @@
                             <thead>
                                 <tr>
                                     <th rowspan="3" data-orderable="false">#</th>
-                                    <th rowspan="2" data-orderable="false">Aksi</th>
+                                    <th rowspan="3" data-orderable="false">Aksi</th>
                                     <th colspan="2" data-orderable="false">
                                         <div class="text-center">Tahun TW</div>
                                     </th>
