@@ -101,7 +101,6 @@
         <hr />
         <div class="row mt-2">
             <h2>DATA PENUGASAN</h2>
-
             <?php switch ($data->bidang_studi_sertifikasi) {
                 case '':
                     echo '<div class="col-lg-6">
@@ -180,6 +179,38 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">NPSN:</label>
+                <div><?= $data->npsn ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Tempat Tugas:</label>
+                <div><?= $data->tempat_tugas ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Status Tugas:</label>
+                <div><?= $data->status_tugas ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Kecamatan:</label>
+                <div><?= $data->kecamatan_sekolah ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Status PTK:</label>
+                <div><?= $data->status_kepegawaian ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Mapel Diajarkan:</label>
+                <div><?= $data->mapel_diajarkan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Pendidikan Terakhir:</label>
+                <div><?= $data->pendidikan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Bidang Studi Pendidikan:</label>
+                <div><?= $data->bidang_studi_pendidikan ?></div>
             </div>
         </div>
         <hr />

@@ -101,7 +101,6 @@
         <hr />
         <div class="row mt-2">
             <h2>DATA PENUGASAN</h2>
-
             <?php switch ($data->bidang_studi_sertifikasi) {
                 case '':
                     echo '<div class="col-lg-6">
@@ -164,7 +163,7 @@
                                             <td><?= $v->nomor_surat_tugas ?></td>
                                             <td><?= $v->tanggal_surat_tugas ?></td>
                                             <td><?= $v->ptk_induk == "1" ? '<span class="badge badge-pill badge-soft-success">INDUK</span>' : '<span class="badge badge-pill badge-soft-warning">NON INDUK</span>' ?></td>
-                                            <td><?= $v->jumlah_total_jam_mengajar_perminggu ?> Jam</td>
+                                            <td><?= $v->jumlah_total_jam_mengajar_perminggu == NULL ? ($v->jenis_ptk == 'Kepala Sekolah' && $v->status_keaktifan == 'Aktif' && $v->jenis_keluar == NULL && $v->ptk_induk == '1' ? '24' : $v->jumlah_total_jam_mengajar_perminggu) : $v->jumlah_total_jam_mengajar_perminggu ?> Jam</td>
                                         </tr>
                                     <?php }
                                 } else { ?>
@@ -180,6 +179,38 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">NPSN:</label>
+                <div><?= $data->npsn ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Tempat Tugas:</label>
+                <div><?= $data->tempat_tugas ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Status Tugas:</label>
+                <div><?= $data->status_tugas ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Kecamatan:</label>
+                <div><?= $data->kecamatan_sekolah ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Status PTK:</label>
+                <div><?= $data->status_kepegawaian ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Mapel Diajarkan:</label>
+                <div><?= $data->mapel_diajarkan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Pendidikan Terakhir:</label>
+                <div><?= $data->pendidikan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Bidang Studi Pendidikan:</label>
+                <div><?= $data->bidang_studi_pendidikan ?></div>
             </div>
         </div>
         <hr />

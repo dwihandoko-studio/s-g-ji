@@ -100,71 +100,116 @@
         </div>
         <div class="row">
             <h2>DATA PENUGASAN</h2>
-            <div class="col-lg-6">
-                <label class="col-form-label">NPSN:</label>
-                <input type="text" class="form-control" value="<?= $data->npsn ?>" readonly />
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Tempat Tugas:</label>
-                <input type="text" class="form-control" value="<?= $data->tempat_tugas ?>" readonly />
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Status Tugas:</label>
-                <div><span class="badge badge-pill badge-soft-secondary"><?= $data->status_tugas ?></span></div>
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Kecamatan:</label>
-                <input type="text" class="form-control" value="<?= $data->kecamatan_sekolah ?>" readonly />
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Status PTK:</label>
-                <div><span class="badge badge-pill badge-soft-secondary"><?= $data->status_kepegawaian ?></span></div>
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Mapel Diajarkan:</label>
-                <input type="text" class="form-control" value="<?= $data->mapel_diajarkan ?>" readonly />
-            </div>
             <?php switch ($data->bidang_studi_sertifikasi) {
                 case '':
-                    echo `<div class="col-lg-6">
+                    echo '<div class="col-lg-6">
                             <label class="col-form-label">Status Sertifikasi:</label>
                             <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
+                        </div>';
                     break;
                 case null:
-                    echo `<div class="col-lg-6">
+                    echo '<div class="col-lg-6">
                             <label class="col-form-label">Status Sertifikasi:</label>
                             <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
+                        </div>';
                     break;
                 case '-':
-                    echo `<div class="col-lg-6">
+                    echo '<div class="col-lg-6">
                             <label class="col-form-label">Status Sertifikasi:</label>
                             <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
+                        </div>';
                     break;
                 case ' ':
-                    echo `<div class="col-lg-6">
+                    echo '<div class="col-lg-6">
                             <label class="col-form-label">Status Sertifikasi:</label>
                             <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
+                        </div>';
                     break;
 
                 default:
-                    echo `<div class="col-lg-6">
+                    echo '<div class="col-lg-6">
                         <label class="col-form-label">Status Sertifikasi:</label>
                         <div><span class="badge badge-pill badge-soft-success">Sudah</span></div>
                     </div>
                     <div class="col-lg-6">
                         <label class="col-form-label">Bidang Studi Sertifikasi:</label>
-                        <input type="text" class="form-control" value="$data->bidang_studi_sertifikasi" readonly />
-                    </div>`;
+                        <input type="text" class="form-control" value="' . $data->bidang_studi_sertifikasi . '" readonly />
+                    </div>';
                     break;
             } ?>
-
+            <div class="col-lg-12 mt-4">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>NPSN</th>
+                                <th>Satuan Pendidikan</th>
+                                <th>Nomor Surat Tugas</th>
+                                <th>Tanggal Surat</th>
+                                <th>Status</th>
+                                <th>Jumlah Jam</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (isset($penugasans)) {
+                                if (count($penugasans) > 0) {
+                                    foreach ($penugasans as $key => $v) { ?>
+                                        <tr>
+                                            <th scope="row"><?= $key + 1 ?></th>
+                                            <td><?= $v->npsn ?></td>
+                                            <td><?= $v->namaSekolah ?></td>
+                                            <td><?= $v->nomor_surat_tugas ?></td>
+                                            <td><?= $v->tanggal_surat_tugas ?></td>
+                                            <td><?= $v->ptk_induk == "1" ? '<span class="badge badge-pill badge-soft-success">INDUK</span>' : '<span class="badge badge-pill badge-soft-warning">NON INDUK</span>' ?></td>
+                                            <td><?= $v->jumlah_total_jam_mengajar_perminggu == NULL ? ($v->jenis_ptk == 'Kepala Sekolah' && $v->status_keaktifan == 'Aktif' && $v->jenis_keluar == NULL && $v->ptk_induk == '1' ? '24' : $v->jumlah_total_jam_mengajar_perminggu) : $v->jumlah_total_jam_mengajar_perminggu ?> Jam</td>
+                                        </tr>
+                                    <?php }
+                                } else { ?>
+                                    <tr>
+                                        <td colspan="6">Tidak ada penugasan</td>
+                                    </tr>
+                                <?php }
+                            } else { ?>
+                                <tr>
+                                    <td colspan="6">Tidak ada penugasan</td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="col-lg-6">
-                <label class="col-form-label">Jam Mengajar Perminggu:</label>
-                <input type="text" class="form-control" value="<?= $data->jam_mengajar_perminggu ?>" readonly />
+                <label class="col-form-label">NPSN:</label>
+                <div><?= $data->npsn ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Tempat Tugas:</label>
+                <div><?= $data->tempat_tugas ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Status Tugas:</label>
+                <div><?= $data->status_tugas ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Kecamatan:</label>
+                <div><?= $data->kecamatan_sekolah ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Status PTK:</label>
+                <div><?= $data->status_kepegawaian ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Mapel Diajarkan:</label>
+                <div><?= $data->mapel_diajarkan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Pendidikan Terakhir:</label>
+                <div><?= $data->pendidikan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Bidang Studi Pendidikan:</label>
+                <div><?= $data->bidang_studi_pendidikan ?></div>
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">SK Pengangkatan:</label>

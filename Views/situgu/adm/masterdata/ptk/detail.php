@@ -95,7 +95,6 @@
         </div>
         <div class="row mt-2">
             <h2>DATA PENUGASAN</h2>
-
             <?php switch ($data->bidang_studi_sertifikasi) {
                 case '':
                     echo '<div class="col-lg-6">
@@ -207,10 +206,56 @@
                 <label class="col-form-label">Bidang Studi Pendidikan:</label>
                 <div><?= $data->bidang_studi_pendidikan ?></div>
             </div>
-            <!-- <div class="col-lg-6">
-                <label class="col-form-label">Jam Mengajar Perminggu:</label>
-                <div><?= $data->jam_mengajar_perminggu ?> Jam</div>
-            </div> -->
+            <div class="col-lg-6">
+                <label class="col-form-label">SK Pengangkatan:</label>
+                <input type="text" class="form-control" value="<?= $data->sk_pengangkatan ?>" readonly />
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">TMT Pengangkatan:</label>
+                <input type="text" class="form-control" value="<?php switch ($data->tmt_pengangkatan) {
+                                                                    case '':
+                                                                        echo '';
+                                                                        break;
+                                                                    case '-':
+                                                                        echo '';
+                                                                        break;
+                                                                    case NULL:
+                                                                        echo '';
+                                                                        break;
+                                                                    case '1900-01-01':
+                                                                        echo '';
+                                                                        break;
+
+                                                                    default:
+                                                                        echo $data->tmt_pengangkatan;
+                                                                        break;
+                                                                } ?>" readonly />
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">SK CPNS:</label>
+                <input type="text" class="form-control" value="<?= $data->sk_cpns ?>" readonly />
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Tanggal CPNS:</label>
+                <input type="text" class="form-control" value="<?php switch ($data->tgl_cpns) {
+                                                                    case '':
+                                                                        echo '';
+                                                                        break;
+                                                                    case '-':
+                                                                        echo '';
+                                                                        break;
+                                                                    case NULL:
+                                                                        echo '';
+                                                                        break;
+                                                                    case '1900-01-01':
+                                                                        echo '';
+                                                                        break;
+
+                                                                    default:
+                                                                        echo $data->tgl_cpns;
+                                                                        break;
+                                                                } ?>" readonly />
+            </div>
         </div>
         <div class="row mt-2">
             <h2>DATA KEPEGAWAIAN</h2>

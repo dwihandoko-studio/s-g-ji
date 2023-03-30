@@ -95,7 +95,6 @@
         </div>
         <div class="row mt-2">
             <h2>DATA PENUGASAN</h2>
-
             <?php switch ($data->bidang_studi_sertifikasi) {
                 case '':
                     echo '<div class="col-lg-6">
@@ -199,47 +198,13 @@
                 <label class="col-form-label">Mapel Diajarkan:</label>
                 <div><?= $data->mapel_diajarkan ?></div>
             </div>
-            <?php switch ($data->bidang_studi_sertifikasi) {
-                case '':
-                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Sudah Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                    break;
-                case null:
-                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Sudah Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                    break;
-                case '-':
-                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Sudah Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                    break;
-                case ' ':
-                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Sudah Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                    break;
-
-                default:
-                    echo `<div class="col-lg-6">
-                        <label class="col-form-label">Sudah Sertifikasi:</label>
-                        <div><span class="badge badge-pill badge-soft-success">Sudah</span></div>
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="col-form-label">Bidang Studi Sertifikasi:</label>
-                        <div>$data->bidang_studi_sertifikasi</div>
-                    </div>`;
-                    break;
-            } ?>
-
             <div class="col-lg-6">
-                <label class="col-form-label">Jam Mengajar Perminggu:</label>
-                <div><?= $data->jam_mengajar_perminggu ?> Jam</div>
+                <label class="col-form-label">Pendidikan Terakhir:</label>
+                <div><?= $data->pendidikan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Bidang Studi Pendidikan:</label>
+                <div><?= $data->bidang_studi_pendidikan ?></div>
             </div>
         </div>
         <div class="row mt-2">
