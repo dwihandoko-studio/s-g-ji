@@ -57,13 +57,25 @@
                 if (resul.status !== 200) {
                     if (resul.status !== 201) {
                         if (resul.status === 401) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            ).then((valRes) => {
-                                reloadPage();
-                            });
+                            if (resul.redirrect) {
+
+                                Swal.fire(
+                                    'Failed!',
+                                    resul.message,
+                                    'warning'
+                                ).then((valRes) => {
+                                    reloadPage(resul.redirrect);
+                                });
+
+                            } else {
+                                Swal.fire(
+                                    'Failed!',
+                                    resul.message,
+                                    'warning'
+                                ).then((valRes) => {
+                                    reloadPage();
+                                });
+                            }
                         } else {
                             Swal.fire(
                                 'GAGAL!',
