@@ -279,8 +279,7 @@ class Atribut extends BaseController
                 return json_encode($response);
             }
 
-            $id = $this->_helpLib->getPtkId($user->data->id);
-            $ptkNya = $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
+            $ptkNya = $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
 
             if (!$ptkNya) {
                 $response = new \stdClass;
