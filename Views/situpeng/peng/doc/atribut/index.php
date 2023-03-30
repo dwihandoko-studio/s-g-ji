@@ -165,6 +165,84 @@
         });
     }
 
+    function actionHapus(id, tahun, tw) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin menghapus data attribut ini?',
+            text: "Hapus Data Attribut Tahun : " + tahun + " / TW: " + tw,
+            showCancelButton: true,
+            icon: 'question',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Tidak',
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./hapus",
+                    type: 'POST',
+                    data: {
+                        action: 'del',
+                        id: id,
+                        tahun: tahun,
+                        tw: tw,
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('div.main-content').block({
+                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+                    },
+                    success: function(resul) {
+                        $('div.main-content').unblock();
+                        if (resul.status !== 200) {
+                            if (resul.status !== 201) {
+                                if (resul.status === 401) {
+                                    Swal.fire(
+                                        'Failed!',
+                                        resul.message,
+                                        'warning'
+                                    ).then((valRes) => {
+                                        reloadPage();
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'GAGAL!',
+                                        resul.message,
+                                        'warning'
+                                    );
+                                }
+                            } else {
+                                Swal.fire(
+                                    'Peringatan!',
+                                    resul.message,
+                                    'success'
+                                ).then((valRes) => {
+                                    reloadPage();
+                                })
+                            }
+                        } else {
+                            Swal.fire(
+                                'SELAMAT!',
+                                resul.message,
+                                'success'
+                            ).then((valRes) => {
+                                reloadPage();
+                            })
+                        }
+                    },
+                    error: function() {
+                        $('div.main-content').unblock();
+                        Swal.fire(
+                            'Failed!',
+                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                            'warning'
+                        );
+                    }
+                });
+            }
+        })
+    }
+
     function actionEdit(id, tahun, tw) {
         $.ajax({
             url: "./edit",

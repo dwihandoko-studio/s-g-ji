@@ -1278,4 +1278,132 @@ class Atribut extends BaseController
             }
         }
     }
+
+    public function hapus()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'action' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Action tidak boleh kosong. ',
+                ]
+            ],
+            'tw' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'TW tidak boleh kosong. ',
+                ]
+            ],
+            'tahun' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tahun tidak boleh kosong. ',
+                ]
+            ],
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('action')
+                . $this->validator->getError('tw')
+                . $this->validator->getError('tahun')
+                . $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $tw = htmlspecialchars($this->request->getVar('tw'), true);
+            $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $current = $this->_db->table('__pengawas_upload_data_attribut')->where(['id' => $id])->get()->getRowObject();
+            if (!$current) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menghapus data. Data tidak ditemukan.";
+                return json_encode($response);
+            }
+            if ($current->is_locked == 1) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menghapus data. Data attribut sudah terkunci, silahkan hubungi admin dinas untuk menghapus.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('__pengawas_upload_data_attribut')->where(['id' => $current->id, 'is_locked' => 0])->delete();
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($e);
+                $response->message = "Gagal menghapus data attribut.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                try {
+                    if ($current->pangkat_terakhir !== NULL) {
+                        unlink(FCPATH . "upload/pengawas/pangkat/" . $current->pangkat_terakhir);
+                    }
+                    if ($current->kgb_terakhir !== NULL) {
+                        unlink(FCPATH . "upload/pengawas/kgb/" . $current->kgb_terakhir);
+                    }
+                    if ($current->pernyataan_24jam !== NULL) {
+                        unlink(FCPATH . "upload/pengawas/pernyataanindividu/" . $current->pernyataan_24jam);
+                    }
+                    if ($current->cuti !== NULL) {
+                        unlink(FCPATH . "upload/pengawas/keterangancuti/" . $current->cuti);
+                    }
+                    if ($current->pensiun !== NULL) {
+                        unlink(FCPATH . "upload/pengawas/pensiun/" . $current->pensiun);
+                    }
+                    if ($current->kematian !== NULL) {
+                        unlink(FCPATH . "upload/pengawas/kematian/" . $current->kematian);
+                    }
+                    if ($current->lainnya !== NULL) {
+                        unlink(FCPATH . "upload/pengawas/lainnya/" . $current->lainnya);
+                    }
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data atribut berhasil dihapus.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menghapus data attribut";
+                return json_encode($response);
+            }
+        }
+    }
 }
