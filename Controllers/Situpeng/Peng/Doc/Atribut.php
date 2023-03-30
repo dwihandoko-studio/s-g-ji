@@ -288,6 +288,14 @@ class Atribut extends BaseController
                 return json_encode($response);
             }
 
+            if ($ptkNya->pangkat_golongan == NULL || $ptkNya->pangkat_golongan == "") {
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->redirrect = base_url('situpeng/peng/masterdata/individu');
+                $response->message = "Data individu belum lengkap, silahkan lengkapi terlebih dahulu.";
+                return json_encode($response);
+            }
+
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
             $cekData = $this->_db->table('__pengawas_upload_data_attribut')->where(['id_tahun_tw' => $tw, 'id_ptk' => $ptkNya->id])->get()->getRowObject();

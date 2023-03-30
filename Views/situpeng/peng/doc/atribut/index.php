@@ -1,4 +1,4 @@
-<?= $this->extend('t-situgu/ptk/index'); ?>
+<?= $this->extend('t-tupeng/peng/index'); ?>
 
 <?= $this->section('content'); ?>
 <div class="page-content">
@@ -129,11 +129,21 @@
             success: function(resul) {
                 $('div.main-content').unblock();
                 if (resul.status !== 200) {
-                    Swal.fire(
-                        'Failed!',
-                        resul.message,
-                        'warning'
-                    );
+                    if (resul.status !== 401) {
+                        Swal.fire(
+                            'Failed!',
+                            resul.message,
+                            'warning'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Failed!',
+                            resul.message,
+                            'warning'
+                        ).then((valRes) => {
+                            reloadPage(resul.redirrect);
+                        });
+                    }
                 } else {
                     $('#content-detailModalLabel').html('TAMBAH DATA ATRIBUT');
                     $('.contentBodyModal').html(resul.data);
