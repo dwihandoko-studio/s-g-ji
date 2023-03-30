@@ -75,8 +75,8 @@ class Guru extends BaseController
             $action = '<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
-                        <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                        <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
+                        <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+                        <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
                         </div>
                     </div>';
             $row[] = $action;
@@ -472,21 +472,11 @@ class Guru extends BaseController
                 try {
                     $gurus = explode(",", $current->guru_naungan);
 
-                    var_dump($gurus);
-
-                    $gurus_temp = [];
-
                     for ($i = 0; $i < count($gurus); $i++) {
-                        if ($gurus[$i] == $id) {
+                        if ($gurus[$i] === $id) {
                             unset($gurus[$i]);
-                        } else {
-                            $gurus_temp[] = $gurus[$i];
                         }
                     }
-
-                    var_dump("setelah hapus <br>\n");
-                    var_dump($gurus);
-                    die;
 
                     $fix_gurus = implode(",", $gurus);
 
