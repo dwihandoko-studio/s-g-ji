@@ -265,7 +265,7 @@ class Atribut extends BaseController
         }
 
         $data['user'] = $user->data;
-        $ptk = $this->_db->table('__pengawas_tb')->where('id', $user->data->id_ptk)->get()->getRowObject();
+        $ptk = $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
 
         if (!$ptk) {
             return view('404', $data);
