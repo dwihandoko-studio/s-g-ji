@@ -199,6 +199,14 @@
                 <label class="col-form-label">Mapel Diajarkan:</label>
                 <div><?= $data->mapel_diajarkan ?></div>
             </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Pendidikan Terakhir:</label>
+                <div><?= $data->pendidikan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Bidang Studi Pendidikan:</label>
+                <div><?= $data->bidang_studi_pendidikan ?></div>
+            </div>
             <!-- <div class="col-lg-6">
                 <label class="col-form-label">Jam Mengajar Perminggu:</label>
                 <div><?= $data->jam_mengajar_perminggu ?> Jam</div>
