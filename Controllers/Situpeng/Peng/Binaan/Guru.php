@@ -472,11 +472,21 @@ class Guru extends BaseController
                 try {
                     $gurus = explode(",", $current->guru_naungan);
 
+                    var_dump($gurus);
+
+                    $gurus_temp = [];
+
                     for ($i = 0; $i < count($gurus); $i++) {
-                        if ($gurus[$i] === $id) {
+                        if ($gurus[$i] == $id) {
                             unset($gurus[$i]);
+                        } else {
+                            $gurus_temp[] = $gurus[$i];
                         }
                     }
+
+                    var_dump("setelah hapus <br>\n");
+                    var_dump($gurus);
+                    die;
 
                     $fix_gurus = implode(",", $gurus);
 
