@@ -79,19 +79,16 @@
                                                 '<a href="javascript:actionUpload(\'Foto\',\'foto\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                                             </a>';
-                                            if ($ptk->status_kepegawaian === "PNS" || $ptk->status_kepegawaian === "PPPK" || $ptk->status_kepegawaian === "PNS Diperbantukan" || $ptk->status_kepegawaian === "PNS Depag" || $ptk->status_kepegawaian === "CPNS") {
-                                                $row[] = $ptk->lampiran_karpeg ? '<a target="_blank" href="' . base_url('upload/ptk/karpeg') . '/' . $ptk->lampiran_karpeg . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                                            $row[] = $ptk->lampiran_karpeg ? '<a target="_blank" href="' . base_url('upload/ptk/karpeg') . '/' . $ptk->lampiran_karpeg . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                                                 <i class="bx bxs-show font-size-16 align-middle"></i></button>
                                             </a>
                                             <a href="javascript:actionEditFile(\'Karpeg\',\'karpeg\',\'' . $ptk->lampiran_karpeg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                                                 <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                                             </a>' :
-                                                    '<a href="javascript:actionUpload(\'Karpeg\',\'karpeg\')" class="btn btn-primary waves-effect waves-light">
+                                                '<a href="javascript:actionUpload(\'Karpeg\',\'karpeg\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                                             </a>';
-                                            } else {
-                                                $row[] = '-';
-                                            }
+
                                             $row[] = $ptk->lampiran_ktp ? '<a target="_blank" href="' . base_url('upload/ptk/ktp') . '/' . $ptk->lampiran_ktp . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                                                 <i class="bx bxs-show font-size-16 align-middle"></i></button>
                                             </a>
