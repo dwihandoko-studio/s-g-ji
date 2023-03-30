@@ -38,6 +38,9 @@
                                     <th rowspan="3" data-orderable="false">#</th>
                                     <!-- <th rowspan="2" data-orderable="false">Aksi</th> -->
                                     <th colspan="2" data-orderable="false">
+                                        <div class="text-center">Aksi</div>
+                                    </th>
+                                    <th colspan="2" data-orderable="false">
                                         <div class="text-center">Tahun TW</div>
                                     </th>
                                     <th colspan="6" data-orderable="false">
