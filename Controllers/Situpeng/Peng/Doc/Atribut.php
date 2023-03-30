@@ -68,7 +68,16 @@ class Atribut extends BaseController
             $no++;
             $row = [];
 
+            $action = '<div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
+                        <div class="dropdown-menu" style="">
+                        <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->tw)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+                        <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->tw))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
+                        </div>
+                    </div>';
+
             $row[] = $no;
+            $row[] = $action;
             $row[] = $list->tahun;
             $row[] = $list->tw;
             $row[] = $list->pang_golongan;
@@ -1043,6 +1052,248 @@ class Atribut extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal menyimpan data";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function edit()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'action' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Action tidak boleh kosong. ',
+                ]
+            ],
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('action')
+                . $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis.";
+                return json_encode($response);
+            }
+
+            $current = $this->_db->table('__pengawas_upload_data_attribut')
+                ->where('id', $id)->get()->getRowObject();
+
+            if ($current) {
+                $data['data'] = $current;
+                $data['pangkats'] = $this->_db->table('ref_gaji')->select("pangkat, count(pangkat) as jumlah")->groupBy('pangkat')->orderBy('pangkat', 'ASC')->get()->getResult();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('situpeng/peng/doc/atribut/edit', $data);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function editSave()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id buku tidak boleh kosong. ',
+                ]
+            ],
+            'nik' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NIK tidak boleh kosong. ',
+                ]
+            ],
+            'tempat_lahir' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tempat lahir tidak boleh kosong. ',
+                ]
+            ],
+            'tgl_lahir' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal lahir tidak boleh kosong. ',
+                ]
+            ],
+            'jk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis kelamin tidak boleh kosong. ',
+                ]
+            ],
+            'nohp' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No handphone tidak boleh kosong. ',
+                ]
+            ],
+            'email' => [
+                'rules' => 'required|valid_email|trim',
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong. ',
+                    'valid_email' => 'Email tidak valid. ',
+                ]
+            ],
+            'nrg' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NRG tidak boleh kosong. ',
+                ]
+            ],
+            'no_peserta' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No Peserta tidak boleh kosong. ',
+                ]
+            ],
+            'npwp' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NPWP tidak boleh kosong. ',
+                ]
+            ],
+            'no_rekening' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'No Rekening tidak boleh kosong. ',
+                ]
+            ],
+            'cabang_bank' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Cabang bank tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('nrg')
+                . $this->validator->getError('nik')
+                . $this->validator->getError('tempat_lahir')
+                . $this->validator->getError('tgl_lahir')
+                . $this->validator->getError('jk')
+                . $this->validator->getError('nohp')
+                . $this->validator->getError('email')
+                . $this->validator->getError('id')
+                . $this->validator->getError('no_peserta')
+                . $this->validator->getError('npwp')
+                . $this->validator->getError('no_rekening')
+                . $this->validator->getError('cabang_bank');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nik = htmlspecialchars($this->request->getVar('nik'), true);
+            $tempat_lahir = htmlspecialchars($this->request->getVar('tempat_lahir'), true);
+            $tgl_lahir = htmlspecialchars($this->request->getVar('tgl_lahir'), true);
+            $jk = htmlspecialchars($this->request->getVar('jk'), true);
+            $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
+            $email = htmlspecialchars($this->request->getVar('email'), true);
+            $nrg = htmlspecialchars($this->request->getVar('nrg'), true);
+            $no_peserta = htmlspecialchars($this->request->getVar('no_peserta'), true);
+            $npwp = htmlspecialchars($this->request->getVar('npwp'), true);
+            $no_rekening = htmlspecialchars($this->request->getVar('no_rekening'), true);
+            $cabang_bank = htmlspecialchars($this->request->getVar('cabang_bank'), true);
+
+            $oldData =  $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
+
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $data = [
+                'nik' => $nik,
+                'email' => $email,
+                'no_hp' => $nohp,
+                'tempat_lahir' => $tempat_lahir,
+                'tgl_lahir' => $tgl_lahir,
+                'jenis_kelamin' => $jk,
+                'nrg' => $nrg,
+                'no_peserta' => $no_peserta,
+                'npwp' => $npwp,
+                'no_rekening' => $no_rekening,
+                'cabang_bank' => $cabang_bank,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('__pengawas_tb')->where('id', $oldData->id)->update($data);
+                // $this->_db->table('_profil_users_tb')->where('id', $user->data->id)->update(['email' => $email]);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupdate data.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data berhasil diupdate.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupate data";
                 return json_encode($response);
             }
         }
