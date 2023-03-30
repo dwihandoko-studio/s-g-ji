@@ -232,79 +232,6 @@
                                 <label class="col-form-label">Bidang Studi Pendidikan:</label>
                                 <div><?= $data->bidang_studi_pendidikan ?></div>
                             </div>
-                            <!-- <div class="col-lg-6">
-                <label class="col-form-label">Jam Mengajar Perminggu:</label>
-                <div><?= $data->jam_mengajar_perminggu ?> Jam</div>
-            </div> -->
-                        </div>
-                        <!-- <div class="row mt-2">
-                            <h2>DATA PENUGASAN</h2>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">NPSN:</label>
-                                <input type="text" class="form-control" value="<?= $data->npsn ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Tempat Tugas:</label>
-                                <input type="text" class="form-control" value="<?= $data->tempat_tugas ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Status Tugas:</label>
-                                <div><span class="badge badge-pill badge-soft-secondary"><?= $data->status_tugas ?></span></div>
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Kecamatan:</label>
-                                <input type="text" class="form-control" value="<?= $data->kecamatan_sekolah ?>" readonly />
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Status PTK:</label>
-                                <div><span class="badge badge-pill badge-soft-secondary"><?= $data->status_kepegawaian ?></span></div>
-                            </div>
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Mapel Diajarkan:</label>
-                                <input type="text" class="form-control" value="<?= $data->mapel_diajarkan ?>" readonly />
-                            </div>
-                            <?php switch ($data->bidang_studi_sertifikasi) {
-                                case '':
-                                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Status Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                                    break;
-                                case null:
-                                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Status Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                                    break;
-                                case '-':
-                                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Status Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                                    break;
-                                case ' ':
-                                    echo `<div class="col-lg-6">
-                            <label class="col-form-label">Status Sertifikasi:</label>
-                            <div><span class="badge badge-pill badge-soft-danger">Belum</span></div>
-                        </div>`;
-                                    break;
-
-                                default:
-                                    echo `<div class="col-lg-6">
-                        <label class="col-form-label">Status Sertifikasi:</label>
-                        <div><span class="badge badge-pill badge-soft-success">Sudah</span></div>
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="col-form-label">Bidang Studi Sertifikasi:</label>
-                        <input type="text" class="form-control" value="$data->bidang_studi_sertifikasi" readonly />
-                    </div>`;
-                                    break;
-                            } ?>
-
-                            <div class="col-lg-6">
-                                <label class="col-form-label">Jam Mengajar Perminggu:</label>
-                                <input type="text" class="form-control" value="<?= $data->jam_mengajar_perminggu ?>" readonly />
-                            </div>
                             <div class="col-lg-6">
                                 <label class="col-form-label">SK Pengangkatan:</label>
                                 <input type="text" class="form-control" value="<?= $data->sk_pengangkatan ?>" readonly />
@@ -355,7 +282,7 @@
                                                                                         break;
                                                                                 } ?>" readonly />
                             </div>
-                        </div> -->
+                        </div>
                         <div class="row mt-2">
                             <h2>DATA KEPEGAWAIAN</h2>
                             <div class="col-lg-6">
