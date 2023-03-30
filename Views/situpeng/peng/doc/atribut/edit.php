@@ -8,8 +8,8 @@
                         <label for="_jenis" class="col-form-label">Pilih Jenis Dokumen:</label>
                         <select class="select2 form-control select2" id="_jenis" name="_jenis" onchange="changeJenis(this)" style="width: 100%" data-placeholder="Pilih jenis ...">
                             <option value="">--Pilih Jenis Dokumen---</option>
-                            <option value="pangkat" <?= $data->us_pang_jenis == "pangkat" ? 'selected' : '' ?>>PANGKAT</option>
-                            <option value="kgb" <?= $data->us_pang_jenis == "kgb" ? 'selected' : '' ?>>KGB</option>
+                            <option value="pangkat" <?= $data->pang_jenis == "pangkat" ? 'selected' : '' ?>>PANGKAT</option>
+                            <option value="kgb" <?= $data->pang_jenis == "kgb" ? 'selected' : '' ?>>KGB</option>
                         </select>
                         <div class="help-block _jenis"></div>
                     </div>
@@ -22,7 +22,7 @@
                             <?php if (isset($pangkats)) {
                                 if (count($pangkats) > 0) {
                                     foreach ($pangkats as $key => $value) { ?>
-                                        <option value="<?= $value->pangkat ?>" <?= $data->us_pang_golongan == $value->pangkat ? 'selected' : '' ?>><?= $value->pangkat ?></option>
+                                        <option value="<?= $value->pangkat ?>" <?= $data->pang_golongan == $value->pangkat ? 'selected' : '' ?>><?= $value->pangkat ?></option>
                             <?php }
                                 }
                             } ?>
@@ -32,27 +32,27 @@
                 </div>
                 <div class="col-lg-6">
                     <label for="_nomor_sk" class="col-form-label">Nomor SK:</label>
-                    <input type="text" class="form-control nomor_sk" value="<?= $data->nomor_sk ?>" id="_nomor_sk" name="_nomor_sk" placeholder="Nomor SK..." onfocusin="inputFocus(this);">
+                    <input type="text" class="form-control nomor_sk" value="<?= $data->pang_no ?>" id="_nomor_sk" name="_nomor_sk" placeholder="Nomor SK..." onfocusin="inputFocus(this);">
                     <div class="help-block _nomor_sk"></div>
                 </div>
                 <div class="col-lg-6">
                     <label for="_tgl_sk" class="col-form-label">Tanggal SK</label>
-                    <input type="date" class="form-control tgl_sk" value="<?= $data->no_hp ?>" id="_tgl_sk" name="_tgl_sk" onfocusin="inputFocus(this);">
+                    <input type="date" class="form-control tgl_sk" value="<?= $data->pang_tgl ?>" id="_tgl_sk" name="_tgl_sk" onfocusin="inputFocus(this);">
                     <div class="help-block _tgl_sk"></div>
                 </div>
                 <div class="col-lg-6">
                     <label for="_tmt_sk" class="col-form-label">TMT SK</label>
-                    <input type="date" class="form-control tmt_sk" value="<?= $data->tmt_sk ?>" id="_tmt_sk" name="_tmt_sk" onfocusin="inputFocus(this);">
+                    <input type="date" class="form-control tmt_sk" value="<?= $data->pang_tmt ?>" id="_tmt_sk" name="_tmt_sk" onfocusin="inputFocus(this);">
                     <div class="help-block _tmt_sk"></div>
                 </div>
                 <div class="col-lg-6">
                     <label for="_mk_tahun" class="col-form-label">Masa Kerja Tahun</label>
-                    <input type="text" class="form-control mk_tahun" value="<?= $data->mk_tahun ?>" id="_mk_tahun" name="_mk_tahun" placeholder="Masa kerja tahun..." onfocusin="inputFocus(this);">
+                    <input type="text" class="form-control mk_tahun" value="<?= $data->pang_tahun ?>" id="_mk_tahun" name="_mk_tahun" placeholder="Masa kerja tahun..." onfocusin="inputFocus(this);">
                     <div class="help-block _mk_tahun"></div>
                 </div>
                 <div class="col-lg-6">
                     <label for="_mk_bulan" class="col-form-label">Masa Kerja Bulan</label>
-                    <input type="number" class="form-control mk_bulan" value="<?= $data->mk_bulan ?>" id="_mk_bulan" name="_mk_bulan" placeholder="Masa kerja bulan..." onfocusin="inputFocus(this);">
+                    <input type="number" class="form-control mk_bulan" value="<?= $data->pang_bulan ?>" id="_mk_bulan" name="_mk_bulan" placeholder="Masa kerja bulan..." onfocusin="inputFocus(this);">
                     <div class="help-block _mk_bulan"></div>
                 </div>
             </div>
