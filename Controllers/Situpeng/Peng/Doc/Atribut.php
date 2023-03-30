@@ -60,7 +60,7 @@ class Atribut extends BaseController
                 return;
             }
         }
-        $id = $this->_helpLib->getPtkId($userId);
+        $id = $this->_helpLib->getPengawasId($userId);
         $lists = $datamodel->get_datatables($id);
         $data = [];
         $no = $request->getPost("start");

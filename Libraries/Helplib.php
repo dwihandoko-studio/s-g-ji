@@ -168,6 +168,21 @@ class Helplib
         return false;
     }
 
+    public function getPengawasId($userId)
+    {
+
+        $user = $this->_db->table('v_user_pengawas a')
+            ->select("a.ptk_id, b.id")
+            ->where('a.id', $userId)
+            ->get()->getRowObject();
+
+        if ($user) {
+            return $user->ptk_id;
+        }
+
+        return false;
+    }
+
     public function getPtkId($userId)
     {
 
