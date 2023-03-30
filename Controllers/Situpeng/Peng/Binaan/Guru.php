@@ -76,12 +76,7 @@ class Guru extends BaseController
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
                         <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                        <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
-                            <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>
-                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="javascript:actionUnlockSpj(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-lock-open-alt font-size-16 align-middle"></i> &nbsp;Unlock SPJ</i></a>
-                            <a class="dropdown-item" href="javascript:actionDetailBackbone(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="mdi mdi-bullseye font-size-16 align-middle"></i> &nbsp;Detail Data Backbone</i></a>
+                        <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
                         </div>
                     </div>';
             $row[] = $action;
@@ -465,37 +460,47 @@ class Guru extends BaseController
                 $response->message = "Permintaan diizinkan";
                 return json_encode($response);
             }
-            $current = $this->_db->table('_users_tb')
-                ->where('uid', $id)->get()->getRowObject();
+            $id_user = $user->data->id;
+            $current = $this->_db->table('__pengawas_tb')
+                ->select("id, guru_naungan")
+                ->where("id = (SELECT ptk_id FROM v_user_pengawas where id = '$id_user')")
+                ->get()->getRowObject();
 
             if ($current) {
+
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('_users_tb')->where('uid', $id)->delete();
+                    $gurus = explode(",", $current->guru_naungan);
+
+                    for ($i = 0; $i < count($gurus); $i++) {
+                        if ($gurus[$i] === $id) {
+                            unset($gurus[$i]);
+                        }
+                    }
+
+                    $fix_gurus = implode(",", $gurus);
+
+                    $this->_db->table('__pengawas_tb')->where('id', $current->id)->update(['guru_naungan' => $fix_gurus, 'updated_at' => date('Y-m-d H:i:s')]);
 
                     if ($this->_db->affectedRows() > 0) {
-                        try {
-                            $dir = FCPATH . "uploads/user";
-                            unlink($dir . '/' . $current->image);
-                        } catch (\Throwable $err) {
-                        }
                         $this->_db->transCommit();
                         $response = new \stdClass;
                         $response->status = 200;
-                        $response->message = "Data berhasil dihapus.";
+                        $response->message = "Data binaan berhasil dihapus.";
                         return json_encode($response);
                     } else {
                         $this->_db->transRollback();
                         $response = new \stdClass;
                         $response->status = 400;
-                        $response->message = "Data gagal dihapus.";
+                        $response->message = "Data binaan gagal dihapus.";
                         return json_encode($response);
                     }
                 } catch (\Throwable $th) {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Data gagal dihapus.";
+                    $response->error = var_dump($th);
+                    $response->message = "Data binaan gagal dihapus.";
                     return json_encode($response);
                 }
             } else {
