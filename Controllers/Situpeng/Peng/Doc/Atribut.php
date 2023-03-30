@@ -1079,16 +1079,32 @@ class Atribut extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
+            'tahun' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tahun tidak boleh kosong. ',
+                ]
+            ],
+            'tw' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tw tidak boleh kosong. ',
+                ]
+            ],
         ];
 
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('action')
-                . $this->validator->getError('id');
+                . $this->validator->getError('id')
+                . $this->validator->getError('tahun')
+                . $this->validator->getError('tw');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
+            $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
+            $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
             $Profilelib = new Profilelib();
             $user = $Profilelib->user();
@@ -1106,7 +1122,9 @@ class Atribut extends BaseController
 
             if ($current) {
                 $data['data'] = $current;
-                $data['pangkats'] = $this->_db->table('ref_gaji')->select("pangkat, count(pangkat) as jumlah")->groupBy('pangkat')->orderBy('pangkat', 'ASC')->get()->getResult();
+                $data['tahun'] = $tahun;
+                $data['tw'] = $tw;
+                $data['pangkats'] = $this->_db->table('ref_gaji')->select("pangkat, count(pangkat) as jumlah")->whereNotIn('pangkat', ['pghm', 'tamsil'])->groupBy('pangkat')->orderBy('pangkat', 'ASC')->get()->getResult();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
@@ -1137,71 +1155,46 @@ class Atribut extends BaseController
                     'required' => 'Id buku tidak boleh kosong. ',
                 ]
             ],
-            'nik' => [
+            'jenis' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'NIK tidak boleh kosong. ',
+                    'required' => 'Jenis tidak boleh kosong. ',
                 ]
             ],
-            'tempat_lahir' => [
+            'pangkat' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Tempat lahir tidak boleh kosong. ',
+                    'required' => 'Pangkat golongan tidak boleh kosong. ',
                 ]
             ],
-            'tgl_lahir' => [
+            'nomor_sk' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Tanggal lahir tidak boleh kosong. ',
+                    'required' => 'Nomor SK tidak boleh kosong. ',
                 ]
             ],
-            'jk' => [
+            'tgl_sk' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Jenis kelamin tidak boleh kosong. ',
+                    'required' => 'Tanggal SK tidak boleh kosong. ',
                 ]
             ],
-            'nohp' => [
+            'tmt_sk' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'No handphone tidak boleh kosong. ',
+                    'required' => 'TMT SK tidak boleh kosong. ',
                 ]
             ],
-            'email' => [
-                'rules' => 'required|valid_email|trim',
-                'errors' => [
-                    'required' => 'Email tidak boleh kosong. ',
-                    'valid_email' => 'Email tidak valid. ',
-                ]
-            ],
-            'nrg' => [
+            'mk_tahun' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'NRG tidak boleh kosong. ',
+                    'required' => 'Masa kerja tahun tidak boleh kosong. ',
                 ]
             ],
-            'no_peserta' => [
+            'mk_bulan' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'No Peserta tidak boleh kosong. ',
-                ]
-            ],
-            'npwp' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'NPWP tidak boleh kosong. ',
-                ]
-            ],
-            'no_rekening' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'No Rekening tidak boleh kosong. ',
-                ]
-            ],
-            'cabang_bank' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Cabang bank tidak boleh kosong. ',
+                    'required' => 'Masa kerja bulan tidak boleh kosong. ',
                 ]
             ],
         ];
@@ -1209,18 +1202,14 @@ class Atribut extends BaseController
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('nrg')
-                . $this->validator->getError('nik')
-                . $this->validator->getError('tempat_lahir')
-                . $this->validator->getError('tgl_lahir')
-                . $this->validator->getError('jk')
-                . $this->validator->getError('nohp')
-                . $this->validator->getError('email')
-                . $this->validator->getError('id')
-                . $this->validator->getError('no_peserta')
-                . $this->validator->getError('npwp')
-                . $this->validator->getError('no_rekening')
-                . $this->validator->getError('cabang_bank');
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('jenis')
+                . $this->validator->getError('pangkat')
+                . $this->validator->getError('nomor_sk')
+                . $this->validator->getError('tgl_sk')
+                . $this->validator->getError('tmt_sk')
+                . $this->validator->getError('mk_tahun')
+                . $this->validator->getError('mk_bulan');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -1235,19 +1224,15 @@ class Atribut extends BaseController
             }
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $nik = htmlspecialchars($this->request->getVar('nik'), true);
-            $tempat_lahir = htmlspecialchars($this->request->getVar('tempat_lahir'), true);
-            $tgl_lahir = htmlspecialchars($this->request->getVar('tgl_lahir'), true);
-            $jk = htmlspecialchars($this->request->getVar('jk'), true);
-            $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
-            $email = htmlspecialchars($this->request->getVar('email'), true);
-            $nrg = htmlspecialchars($this->request->getVar('nrg'), true);
-            $no_peserta = htmlspecialchars($this->request->getVar('no_peserta'), true);
-            $npwp = htmlspecialchars($this->request->getVar('npwp'), true);
-            $no_rekening = htmlspecialchars($this->request->getVar('no_rekening'), true);
-            $cabang_bank = htmlspecialchars($this->request->getVar('cabang_bank'), true);
+            $jenis = htmlspecialchars($this->request->getVar('jenis'), true);
+            $pangkat = htmlspecialchars($this->request->getVar('pangkat'), true);
+            $nomor_sk = htmlspecialchars($this->request->getVar('nomor_sk'), true);
+            $tgl_sk = htmlspecialchars($this->request->getVar('tgl_sk'), true);
+            $tmt_sk = htmlspecialchars($this->request->getVar('tmt_sk'), true);
+            $mk_tahun = htmlspecialchars($this->request->getVar('mk_tahun'), true);
+            $mk_bulan = htmlspecialchars($this->request->getVar('mk_bulan'), true);
 
-            $oldData =  $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
+            $oldData =  $this->_db->table('__pengawas_upload_data_attribut')->where('id', $id)->get()->getRowObject();
 
             if (!$oldData) {
                 $response = new \stdClass;
@@ -1257,24 +1242,19 @@ class Atribut extends BaseController
             }
 
             $data = [
-                'nik' => $nik,
-                'email' => $email,
-                'no_hp' => $nohp,
-                'tempat_lahir' => $tempat_lahir,
-                'tgl_lahir' => $tgl_lahir,
-                'jenis_kelamin' => $jk,
-                'nrg' => $nrg,
-                'no_peserta' => $no_peserta,
-                'npwp' => $npwp,
-                'no_rekening' => $no_rekening,
-                'cabang_bank' => $cabang_bank,
+                'pang_jenis' => $jenis,
+                'pang_golongan' => $pangkat,
+                'pang_no' => $nomor_sk,
+                'pang_tgl' => $tgl_sk,
+                'pang_tmt' => $tmt_sk,
+                'pang_tahun' => $mk_tahun,
+                'pang_bulan' => $mk_bulan,
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('__pengawas_tb')->where('id', $oldData->id)->update($data);
-                // $this->_db->table('_profil_users_tb')->where('id', $user->data->id)->update(['email' => $email]);
+                $this->_db->table('__pengawas_upload_data_attribut')->where(['id' => $oldData->id, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
                 $this->_db->transRollback();
                 $response = new \stdClass;

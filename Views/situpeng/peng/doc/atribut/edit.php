@@ -6,7 +6,7 @@
                 <div class="col-lg-6 jenis-role">
                     <div class="mb-3">
                         <label for="_jenis" class="col-form-label">Pilih Jenis Dokumen:</label>
-                        <select class="select2 form-control select2" id="_jenis" name="_jenis" onchange="changeJenis(this)" style="width: 100%" data-placeholder="Pilih jenis ...">
+                        <select class="select2 form-control select2" id="_jenis" name="_jenis" style="width: 100%" data-placeholder="Pilih jenis ..." onfocusin="inputFocus(this);">
                             <option value="">--Pilih Jenis Dokumen---</option>
                             <option value="pangkat" <?= $data->pang_jenis == "pangkat" ? 'selected' : '' ?>>PANGKAT</option>
                             <option value="kgb" <?= $data->pang_jenis == "kgb" ? 'selected' : '' ?>>KGB</option>
@@ -17,7 +17,7 @@
                 <div class="col-lg-6 pangkat-role">
                     <div class="mb-3">
                         <label for="_pangkat" class="col-form-label">Pilih Pangkat Golongan:</label>
-                        <select class="select2 form-control select2" id="_pangkat" name="_pangkat" onchange="changePangkat(this)" style="width: 100%" data-placeholder="Pilih pangkat ...">
+                        <select class="select2 form-control select2" id="_pangkat" name="_pangkat" style="width: 100%" data-placeholder="Pilih pangkat ..." onfocusin="inputFocus(this);">
                             <option value="" selected>Pilih pangkat</option>
                             <?php if (isset($pangkats)) {
                                 if (count($pangkats) > 0) {
@@ -67,87 +67,60 @@
         $("#formEditModalData").on("submit", function(e) {
             e.preventDefault();
             const id = document.getElementsByName('_id')[0].value;
-            const nik = document.getElementsByName('_nik')[0].value;
-            const email = document.getElementsByName('_email')[0].value;
-            const tempat_lahir = document.getElementsByName('_tempat_lahir')[0].value;
-            const tgl_lahir = document.getElementsByName('_tgl_lahir')[0].value;
-            const jk = $("input[type='radio'][name='_jk']:checked").val();
-            const nohp = document.getElementsByName('_nohp')[0].value;
-            const nrg = document.getElementsByName('_nrg')[0].value;
-            const no_peserta = document.getElementsByName('_no_peserta')[0].value;
-            const npwp = document.getElementsByName('_npwp')[0].value;
-            const no_rekening = document.getElementsByName('_no_rekening')[0].value;
-            const cabang_bank = document.getElementsByName('_cabang_bank')[0].value;
+            const jenis = document.getElementsByName('_jenis')[0].value;
+            const pangkat = document.getElementsByName('_pangkat')[0].value;
+            const nomor_sk = document.getElementsByName('_nomor_sk')[0].value;
+            const tgl_sk = document.getElementsByName('_tgl_sk')[0].value;
+            const tmt_sk = document.getElementsByName('_tmt_sk')[0].value;
+            const mk_tahun = document.getElementsByName('_mk_tahun')[0].value;
+            const mk_bulan = document.getElementsByName('_mk_bulan')[0].value;
 
-            if (nik === "") {
-                $("input#_nik").css("color", "#dc3545");
-                $("input#_nik").css("border-color", "#dc3545");
-                $('._nik').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">NIK tidak boleh kosong.</li></ul>');
+            if (jenis === "") {
+                $("select#_jenis").css("color", "#dc3545");
+                $("select#_jenis").css("border-color", "#dc3545");
+                $('._jenis').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih jenis dokumen.</li></ul>');
                 return false;
             }
-
-            if (tempat_lahir === "") {
-                $("input#_tempat_lahir").css("color", "#dc3545");
-                $("input#_tempat_lahir").css("border-color", "#dc3545");
-                $('._tempat_lahir').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Tempat lahir tidak boleh kosong.</li></ul>');
+            if (pangkat === "") {
+                $("select#_pangkat").css("color", "#dc3545");
+                $("select#_pangkat").css("border-color", "#dc3545");
+                $('._pangkat').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih pangkat golongan.</li></ul>');
                 return false;
             }
-
-            if (tgl_lahir === "") {
-                $("input#_tgl_lahir").css("color", "#dc3545");
-                $("input#_tgl_lahir").css("border-color", "#dc3545");
-                $('._tgl_lahir').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Tanggal lahir tidak boleh kosong.</li></ul>');
+            if (nomor_sk === "") {
+                $("input#_nomor_sk").css("color", "#dc3545");
+                $("input#_nomor_sk").css("border-color", "#dc3545");
+                $('._nomor_sk').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nomor tidak boleh kosong.</li></ul>');
                 return false;
             }
-
-            if (nohp === "") {
-                $("input#_nohp").css("color", "#dc3545");
-                $("input#_nohp").css("border-color", "#dc3545");
-                $('._nohp').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">No handphone tidak boleh kosong.</li></ul>');
+            if (tgl_sk === "") {
+                $("input#_tgl_sk").css("color", "#dc3545");
+                $("input#_tgl_sk").css("border-color", "#dc3545");
+                $('._tgl_sk').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Tanggal SK tidak boleh kosong.</li></ul>');
                 return false;
             }
-
-            if (email === "") {
-                $("input#_email").css("color", "#dc3545");
-                $("input#_email").css("border-color", "#dc3545");
-                $('._email').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Email tidak boleh kosong.</li></ul>');
+            if (tmt_sk === "") {
+                $("input#_tmt_sk").css("color", "#dc3545");
+                $("input#_tmt_sk").css("border-color", "#dc3545");
+                $('._tmt_sk').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">TMT SK tidak boleh kosong.</li></ul>');
                 return false;
             }
-
-            if (nrg === "") {
-                $("input#_nrg").css("color", "#dc3545");
-                $("input#_nrg").css("border-color", "#dc3545");
-                $('._nrg').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">NRG tidak boleh kosong.</li></ul>');
+            if (mk_tahun === "") {
+                $("input#_mk_tahun").css("color", "#dc3545");
+                $("input#_mk_tahun").css("border-color", "#dc3545");
+                $('._mk_tahun').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Masa kerja tahun tidak boleh kosong.</li></ul>');
                 return false;
             }
-            if (no_peserta === "") {
-                $("input#_no_peserta").css("color", "#dc3545");
-                $("input#_no_peserta").css("border-color", "#dc3545");
-                $('._no_peserta').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">No Peserta tidak boleh kosong.</li></ul>');
-                return false;
-            }
-            if (npwp === "") {
-                $("input#_npwp").css("color", "#dc3545");
-                $("input#_npwp").css("border-color", "#dc3545");
-                $('._npwp').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">NPWP tidak boleh kosong.</li></ul>');
-                return false;
-            }
-            if (no_rekening === "") {
-                $("input#_no_rekening").css("color", "#dc3545");
-                $("input#_no_rekening").css("border-color", "#dc3545");
-                $('._no_rekening').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">No Rekening tidak boleh kosong.</li></ul>');
-                return false;
-            }
-            if (cabang_bank === "") {
-                $("input#_cabang_bank").css("color", "#dc3545");
-                $("input#_cabang_bank").css("border-color", "#dc3545");
-                $('._cabang_bank').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Cabang Bank tidak boleh kosong.</li></ul>');
+            if (mk_bulan === "") {
+                $("input#_mk_bulan").css("color", "#dc3545");
+                $("input#_mk_bulan").css("border-color", "#dc3545");
+                $('._mk_bulan').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Masa kerja bulan tidak boleh kosong.</li></ul>');
                 return false;
             }
 
             Swal.fire({
                 title: 'Apakah anda yakin ingin mengupdate data ini?',
-                text: "Update Data Pengawas: <?= $data->nama ?>",
+                text: "Update Data Attribut Tahun : <?= $tahun ?> / TW : <?= $tw ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
@@ -160,17 +133,13 @@
                         type: 'POST',
                         data: {
                             id: id,
-                            nik: nik,
-                            tempat_lahir: tempat_lahir,
-                            tgl_lahir: tgl_lahir,
-                            jk: jk,
-                            nohp: nohp,
-                            email: email,
-                            nrg: nrg,
-                            no_peserta: no_peserta,
-                            npwp: npwp,
-                            no_rekening: no_rekening,
-                            cabang_bank: cabang_bank,
+                            jenis: jenis,
+                            pangkat: pangkat,
+                            nomor_sk: nomor_sk,
+                            tgl_sk: tgl_sk,
+                            tmt_sk: tmt_sk,
+                            mk_tahun: mk_tahun,
+                            mk_bulan: mk_bulan,
                         },
                         dataType: 'JSON',
                         beforeSend: function() {
