@@ -38,13 +38,10 @@
                                     <th data-orderable="false">Foto</th>
                                     <th data-orderable="false">Karpeg</th>
                                     <th data-orderable="false">KTP</th>
-                                    <th data-orderable="false">NRG</th>
                                     <th data-orderable="false">NUPTK</th>
                                     <th data-orderable="false">NPWP</th>
                                     <th data-orderable="false">Serdik</th>
                                     <th data-orderable="false">Buku Rekening</th>
-                                    <th data-orderable="false">Ijazah</th>
-                                    <th data-orderable="false">Inpassing</th>
                                     <th data-orderable="false">Status</th>
                                 </tr>
                             </thead>
@@ -57,13 +54,10 @@
                                             $row[] = $ptk->lampiran_foto ? '<a href="' . base_url('upload/ptk/foto') . '/' . $ptk->lampiran_foto . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Foto</span></a>' : '-';
                                             $row[] = $ptk->lampiran_karpeg ? '<a href="' . base_url('upload/ptk/karpeg') . '/' . $ptk->lampiran_karpeg . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Karpeg</span></a>' : '-';
                                             $row[] = $ptk->lampiran_ktp ? '<a href="' . base_url('upload/ptk/ktp') . '/' . $ptk->lampiran_ktp . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran KTP</span></a>' : '-';
-                                            $row[] = $ptk->lampiran_nrg ? '<a href="' . base_url('upload/ptk/nrg') . '/' . $ptk->lampiran_nrg . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran NRG</span></a>' : '-';
                                             $row[] = $ptk->lampiran_nuptk ? '<a href="' . base_url('upload/ptk/nuptk') . '/' . $ptk->lampiran_nuptk . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran NUPTK</span></a>' : '-';
                                             $row[] = $ptk->lampiran_npwp ? '<a href="' . base_url('upload/ptk/npwp') . '/' . $ptk->lampiran_npwp . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran NPWP</span></a>' : '-';
                                             $row[] = $ptk->lampiran_serdik ? '<a href="' . base_url('upload/ptk/serdik') . '/' . $ptk->lampiran_serdik . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Serdik</span></a>' : '-';
                                             $row[] = $ptk->lampiran_buku_rekening ? '<a href="' . base_url('upload/ptk/bukurekening') . '/' . $ptk->lampiran_buku_rekening . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Buku Rekening</span></a>' : '-';
-                                            $row[] = $ptk->lampiran_ijazah ? '<a href="' . base_url('upload/ptk/ijazah') . '/' . $ptk->lampiran_ijazah . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Ijazah</span></a>' : '-';
-                                            $row[] = $ptk->lampiran_impassing ? '<a href="' . base_url('upload/ptk/impassing') . '/' . $ptk->lampiran_impassing . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Inpassing</span></a>' : '-';
                                             $row[] = '<div class="text-center">
                                             <span class="badge rounded-pill badge-soft-success font-size-11">Terkunci</span>
                                             </div>';
@@ -96,18 +90,6 @@
                                                 <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                                             </a>' :
                                                 '<a href="javascript:actionUpload(\'KTP\',\'ktp\')" class="btn btn-primary waves-effect waves-light">
-                                                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                                            </a>';
-                                            $row[] = $ptk->lampiran_nrg ? '<a target="_blank" href="' . base_url('upload/ptk/nrg') . '/' . $ptk->lampiran_nrg . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                                            </a>
-                                            <a href="javascript:actionEditFile(\'NRG\',\'nrg\',\'' . $ptk->lampiran_nrg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                                            </a>
-                                            <a href="javascript:actionHapusFile(\'NRG\',\'nrg\',\'' . $ptk->lampiran_nrg . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="mdi mdi-trash-can-outline font-size-16 align-middle"></i></button>
-                                            </a>' :
-                                                '<a href="javascript:actionUpload(\'NRG\',\'nrg\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                                             </a>';
                                             $row[] = $ptk->lampiran_nuptk ? '<a target="_blank" href="' . base_url('upload/ptk/nuptk') . '/' . $ptk->lampiran_nuptk . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -150,15 +132,6 @@
                                                 <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
                                             </a>' :
                                                 '<a href="javascript:actionUpload(\'Buku Rekening\',\'buku_rekening\')" class="btn btn-primary waves-effect waves-light">
-                                                <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                                            </a>';
-                                            $row[] = $ptk->lampiran_ijazah ? '<a target="_blank" href="' . base_url('upload/ptk/ijazah') . '/' . $ptk->lampiran_ijazah . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                                            </a>
-                                            <a href="javascript:actionEditFile(\'Ijazah\',\'ijazah\',\'' . $ptk->lampiran_ijazah . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                                                <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                                            </a>' :
-                                                '<a href="javascript:actionUpload(\'Ijazah\',\'ijazah\')" class="btn btn-primary waves-effect waves-light">
                                                 <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                                             </a>';
                                             $row[] = '<div class="text-center">
