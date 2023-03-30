@@ -114,6 +114,7 @@ class Apilib
             $data = [
                 'npsn' => $npsn,
                 'tw' => $tw,
+                'batas_tmt' => "2023-01-01",
             ];
             $add         = $this->_send_post($data, 'syncptk', $jwt);
             $send_data         = curl_exec($add);
@@ -143,6 +144,7 @@ class Apilib
                 'id_ptk' => $idPtk,
                 'npsn' => $npsn,
                 'tw' => $tw,
+                'batas_tmt' => "2023-01-01",
             ];
             $add         = $this->_send_post($data, 'syncptkid', $jwt);
             $send_data         = curl_exec($add);
