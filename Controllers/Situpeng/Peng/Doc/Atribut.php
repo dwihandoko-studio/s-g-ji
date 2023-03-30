@@ -288,7 +288,7 @@ class Atribut extends BaseController
                 return json_encode($response);
             }
 
-            if ($ptkNya->pangkat_golongan == NULL || $ptkNya->pangkat_golongan == "") {
+            if ($ptkNya->nik == NULL || $ptkNya->nik == "") {
                 $response = new \stdClass;
                 $response->status = 401;
                 $response->redirrect = base_url('situpeng/peng/masterdata/individu');
