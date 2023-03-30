@@ -49,7 +49,7 @@ class AtributModel extends Model
     }
     function get_datatables($id)
     {
-        $select = "a.*, b.tahun, b.tw, c.status_kepegawaian";
+        $select = "a.*, b.tahun, b.tw, c.jenis_pengawas";
 
         $this->dt->select($select);
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id', 'LEFT');
