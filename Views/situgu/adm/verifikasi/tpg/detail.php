@@ -318,7 +318,7 @@
                     </div>
                     <div class="col-sm-3">
                         <label class="col-form-label">MK Tahun:</label>
-                        <input type="text" class="form-control" value="<?= rpAwalan($data->us_pang_mk_tahun) ?>" readonly />
+                        <input type="text" class="form-control" value="<?= $data->us_pang_mk_tahun ?>" readonly />
                     </div>
                     <div class="col-sm-3">
                         <label class="col-form-label">MK Bulan:</label>

@@ -308,6 +308,14 @@
                 <label class="col-form-label">Tanggal:</label>
                 <input type="text" class="form-control" value="<?= $data->us_pang_tgl ?>" readonly />
             </div>
+            <div class="col-sm-3">
+                <label class="col-form-label">MK Tahun:</label>
+                <input type="text" class="form-control" value="<?= $data->us_pang_mk_tahun ?>" readonly />
+            </div>
+            <div class="col-sm-3">
+                <label class="col-form-label">MK Bulan:</label>
+                <input type="text" class="form-control" value="<?= $data->us_pang_mk_bulan ?>" readonly />
+            </div>
             <div class="col-lg-3">
                 <label class="col-form-label">Gaji Pokok:</label>
                 <input type="text" class="form-control" value="<?= rpAwalan($data->gaji_pokok_referensi) ?>" readonly />
