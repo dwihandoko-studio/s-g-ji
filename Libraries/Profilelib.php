@@ -26,6 +26,7 @@ class Profilelib
 
                     $user = $this->_db->table('v_user')
                         ->where('id', $userId)
+                        ->where('is_active', 1)
                         ->get()->getRowObject();
                     if ($user) {
                         $response = new \stdClass;
@@ -34,7 +35,7 @@ class Profilelib
                     } else {
                         $response = new \stdClass;
                         $response->status = 401;
-                        $response->message = "User tidak ditemukan.";
+                        $response->message = "User tidak ditemukan atau user tidak active, silahkan hubungi admin.";
                     }
                 } else {
                     $response = new \stdClass;
