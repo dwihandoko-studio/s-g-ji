@@ -289,7 +289,9 @@
                 <label class="col-form-label">Pangkat Golongan:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" aria-describedby="pangkat_golongan" aria-label="PANGKAT GOLONGAN" value="<?= $data->us_pang_golongan ?>" readonly />
-                    <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>" id="nik">Lampiran Pangkat</a>
+                    <?php if ($data->lampiran_pangkat !== NULL) { ?>
+                        <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>" id="nik">Lampiran Pangkat</a>
+                    <?php } ?>
                     <?php if ($data->lampiran_kgb !== NULL) { ?>
                         <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/kgb') . '/' . $data->lampiran_kgb ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/kgb') . '/' . $data->lampiran_kgb ?>" id="nik">Lampiran KGB</a>
                     <?php } ?>

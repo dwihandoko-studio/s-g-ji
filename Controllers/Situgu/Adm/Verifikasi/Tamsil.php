@@ -345,6 +345,13 @@ class Tamsil extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
+
+            $canGrantedVerifikasi = canGrantedVerifikasi($user->data->id);
+
+            if ($canGrantedVerifikasi && $canGrantedVerifikasi->code !== 200) {
+                return json_encode($canGrantedVerifikasi);
+            }
+
             // $canUsulTamsil = canVerifikasiTamsil();
 
             // if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
@@ -453,6 +460,13 @@ class Tamsil extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
+
+            $canGrantedVerifikasi = canGrantedVerifikasi($user->data->id);
+
+            if ($canGrantedVerifikasi && $canGrantedVerifikasi->code !== 200) {
+                return json_encode($canGrantedVerifikasi);
+            }
+
             // $canUsulTamsil = canVerifikasiTamsil();
 
             // if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
@@ -521,6 +535,13 @@ class Tamsil extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
+
+            $canGrantedVerifikasi = canGrantedVerifikasi($user->data->id);
+
+            if ($canGrantedVerifikasi && $canGrantedVerifikasi->code !== 200) {
+                return json_encode($canGrantedVerifikasi);
+            }
+
             // $canUsulTamsil = canVerifikasiTamsil();
 
             // if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
