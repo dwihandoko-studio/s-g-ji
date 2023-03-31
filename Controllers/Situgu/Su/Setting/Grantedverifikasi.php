@@ -59,6 +59,11 @@ class Grantedverifikasi extends BaseController
 
     public function index()
     {
+        return redirect()->to(base_url('situgu/su/setting/grantedverifikasi/data'));
+    }
+
+    public function data()
+    {
         $data['title'] = 'ACCESS VERIFIKASI';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
