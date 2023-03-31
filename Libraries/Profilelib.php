@@ -26,7 +26,7 @@ class Profilelib
 
                     $user = $this->_db->table('v_user')
                         ->where('id', $userId)
-                        ->where('is_active', 1)
+                        // ->where('is_active', 1)
                         ->get()->getRowObject();
                     if ($user) {
                         $response = new \stdClass;
