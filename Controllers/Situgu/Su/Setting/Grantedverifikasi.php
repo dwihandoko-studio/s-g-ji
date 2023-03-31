@@ -123,7 +123,7 @@ class Grantedverifikasi extends BaseController
                 return json_encode($response);
             }
 
-            if ($val == 0) {
+            if ($val == '0') {
                 $current = $this->_db->table('access_verifikasi')
                     ->where('user_id', $id)->get()->getRowObject();
 
