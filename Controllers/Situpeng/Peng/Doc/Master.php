@@ -214,6 +214,12 @@ class Master extends BaseController
                 case 'serpeng':
                     $data['old_url'] = base_url('upload/pengawas/serpeng') . '/' . $old;
                     break;
+                case 'sk80':
+                    $data['old_url'] = base_url('upload/pengawas/sk80') . '/' . $old;
+                    break;
+                case 'sk100':
+                    $data['old_url'] = base_url('upload/pengawas/sk100') . '/' . $old;
+                    break;
                 case 'npwp':
                     $data['old_url'] = base_url('upload/pengawas/npwp') . '/' . $old;
                     break;
@@ -390,6 +396,16 @@ class Master extends BaseController
                 case 'serpeng':
                     $dir = FCPATH . "upload/pengawas/serpeng";
                     $field_db = 'lampiran_serpeng';
+                    $table_db = '__pengawas_tb';
+                    break;
+                case 'sk80':
+                    $dir = FCPATH . "upload/pengawas/sk80";
+                    $field_db = 'lampiran_sk80';
+                    $table_db = '__pengawas_tb';
+                    break;
+                case 'sk100':
+                    $dir = FCPATH . "upload/pengawas/sk100";
+                    $field_db = 'lampiran_sk100';
                     $table_db = '__pengawas_tb';
                     break;
                 case 'npwp':
@@ -627,6 +643,16 @@ class Master extends BaseController
                     $field_db = 'lampiran_serpeng';
                     $table_db = '__pengawas_tb';
                     break;
+                case 'sk80':
+                    $dir = FCPATH . "upload/pengawas/sk80";
+                    $field_db = 'lampiran_sk80';
+                    $table_db = '__pengawas_tb';
+                    break;
+                case 'sk100':
+                    $dir = FCPATH . "upload/pengawas/sk100";
+                    $field_db = 'lampiran_sk100';
+                    $table_db = '__pengawas_tb';
+                    break;
                 case 'npwp':
                     $dir = FCPATH . "upload/pengawas/npwp";
                     $field_db = 'lampiran_npwp';
@@ -786,6 +812,16 @@ class Master extends BaseController
                 case 'serpeng':
                     $dir = FCPATH . "upload/pengawas/serpeng";
                     $field_db = 'lampiran_serpeng';
+                    $table_db = '__pengawas_tb';
+                    break;
+                case 'sk80':
+                    $dir = FCPATH . "upload/pengawas/sk80";
+                    $field_db = 'lampiran_sk80';
+                    $table_db = '__pengawas_tb';
+                    break;
+                case 'sk100':
+                    $dir = FCPATH . "upload/pengawas/sk100";
+                    $field_db = 'lampiran_sk100';
                     $table_db = '__pengawas_tb';
                     break;
                 case 'inpassing':
