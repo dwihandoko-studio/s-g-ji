@@ -116,11 +116,31 @@
             success: function(resul) {
                 $('div.main-content').unblock();
                 if (resul.status !== 200) {
-                    Swal.fire(
-                        'Failed!',
-                        resul.message,
-                        'warning'
-                    );
+                    if (resul.status !== 401) {
+                        if (resul.status !== 501) {
+                            Swal.fire(
+                                'Failed!',
+                                resul.message,
+                                'warning'
+                            );
+                        } else {
+                            Swal.fire(
+                                'Peringatan!',
+                                resul.message,
+                                'warning'
+                            ).then((valRes) => {
+                                reloadPage();
+                            });
+                        }
+                    } else {
+                        Swal.fire(
+                            'Peringatan!',
+                            resul.message,
+                            'warning'
+                        ).then((valRes) => {
+                            reloadPage();
+                        });
+                    }
                 } else {
                     $('#content-detailModalLabel').html('BUAT ADUAN');
                     $('.contentBodyModal').html(resul.data);

@@ -229,7 +229,7 @@ class Cs extends BaseController
     public function add()
     {
         $response = new \stdClass;
-        $response->status = 401;
+        $response->status = 501;
         $response->message = "Untuk sementara ini proses pengaduan ditutup.";
         return json_encode($response);
         if ($this->request->getMethod() != 'post') {
