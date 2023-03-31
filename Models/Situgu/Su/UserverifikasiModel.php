@@ -7,10 +7,10 @@ use CodeIgniter\Model;
 
 class UserverifikasiModel extends Model
 {
-    protected $table = "v_user";
-    protected $column_order = array(null, 'fullname', 'email', 'role_user', 'nama_kecamatan', null);
-    protected $column_search = array('fullname', 'email', 'no_hp');
-    protected $order = array('role_user' => 'asc', 'fullname' => 'asc');
+    protected $table = "v_user a";
+    protected $column_order = array(null, 'a.fullname', 'a.email', 'a.role_user', 'b.nama_kecamatan', null);
+    protected $column_search = array('a.fullname', 'a.email', 'a.no_hp');
+    protected $order = array('a.role_user' => 'asc', 'a.fullname' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -49,7 +49,9 @@ class UserverifikasiModel extends Model
     }
     function get_datatables()
     {
-        $this->dt->whereIn("role_user", [2, 3, 4]);
+        $this->dt->select("a.*, b.nama_kecamatan");
+        $this->dt->join('ref_kecamatan b', 'a.kecamatan = b.kode_kecamatan');
+        $this->dt->whereIn("a.role_user", [2, 3, 4]);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -58,14 +60,18 @@ class UserverifikasiModel extends Model
     }
     function count_filtered()
     {
-        $this->dt->whereIn("role_user", [2, 3, 4]);
+        $this->dt->select("a.*, b.nama_kecamatan");
+        $this->dt->join('ref_kecamatan b', 'a.kecamatan = b.kode_kecamatan');
+        $this->dt->whereIn("a.role_user", [2, 3, 4]);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
     public function count_all()
     {
-        $this->dt->whereIn("role_user", [2, 3, 4]);
+        $this->dt->select("a.*, b.nama_kecamatan");
+        $this->dt->join('ref_kecamatan b', 'a.kecamatan = b.kode_kecamatan');
+        $this->dt->whereIn("a.role_user", [2, 3, 4]);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
