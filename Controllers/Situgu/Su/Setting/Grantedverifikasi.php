@@ -154,7 +154,7 @@ class Grantedverifikasi extends BaseController
                     }
                 } else {
                     $response = new \stdClass;
-                    $response->status = 400;
+                    $response->status = 200;
                     $response->message = "Data berhasil disimpan";
                     return json_encode($response);
                 }
@@ -189,7 +189,7 @@ class Grantedverifikasi extends BaseController
                     }
                 } else {
                     $response = new \stdClass;
-                    $response->status = 400;
+                    $response->status = 200;
                     $response->message = "Data berhasil disimpan";
                     return json_encode($response);
                 }
