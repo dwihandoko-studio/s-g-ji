@@ -775,6 +775,18 @@ function canUsulTamsil()
 	}
 }
 
+function cekGrantedVerifikasi($user_id)
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('access_verifikasi')->where('user_id', $user_id)->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+	return true;
+}
+
 function canGrantedVerifikasi($user_id)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
