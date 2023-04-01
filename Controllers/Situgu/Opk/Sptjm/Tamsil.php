@@ -432,11 +432,13 @@ class Tamsil extends BaseController
             return json_encode($response);
         }
 
-        return $this->_download($currents, $user->data, $twActive);
+        $userDetail = $this->_db->table('_profil_users_tb')->where('id', $user->data->id)->get()->getRowObject();
+
+        return $this->_download($currents, $user->data, $twActive, $userDetail);
         // }
     }
 
-    private function _download($ptks, $user, $tw)
+    private function _download($ptks, $user, $tw, $userDetail)
     {
         if (count($ptks) > 0) {
             $file = FCPATH . "upload/template/sptjm-verifikasi-tamsil-new-1.docx";
@@ -448,7 +450,8 @@ class Tamsil extends BaseController
             $template_processor->setValue('NAMA_ADMIN', $user->fullname);
             $jabatan = $user->role_user == 3 ? 'Admin Kecamatan' : 'Admin Sub Rayon';
             $template_processor->setValue('JABATAN_ADMIN', $jabatan);
-            $template_processor->setValue('KECAMATAN_SUB_RAYON', $user->jabatan);
+            $userD = $userDetail->jabatan == NULL || $userDetail->jabatan == "" ? '' : $userDetail->jabatan;
+            $template_processor->setValue('KECAMATAN_SUB_RAYON', $userD);
             $template_processor->setValue('JUMLAH_PTK', count($ptks));
             $template_processor->setValue('TANGGAL_SPTJM', tgl_indo(date('Y-m-d')));
 
