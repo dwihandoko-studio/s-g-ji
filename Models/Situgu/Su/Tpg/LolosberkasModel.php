@@ -49,7 +49,7 @@ class LolosberkasModel extends Model
     }
     function get_datatables()
     {
-        $this->dt->select("a.id as id_usulan, a.date_reject, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
         $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         $this->dt->whereIn('a.status_usulan', [2]);
         if ($this->request->getPost('tw')) {
@@ -66,7 +66,7 @@ class LolosberkasModel extends Model
     }
     function count_filtered()
     {
-        $this->dt->select("a.id as id_usulan, a.date_reject, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
         $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         $this->dt->whereIn('a.status_usulan', [2]);
         if ($this->request->getPost('tw')) {
@@ -81,7 +81,7 @@ class LolosberkasModel extends Model
     }
     public function count_all()
     {
-        $this->dt->select("a.id as id_usulan, a.date_reject, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
         $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         $this->dt->whereIn('a.status_usulan', [2]);
         if ($this->request->getPost('tw')) {
