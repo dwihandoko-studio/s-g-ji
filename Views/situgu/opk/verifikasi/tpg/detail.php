@@ -94,7 +94,7 @@
                 <input type="text" class="form-control" value="<?= $data->email ?>" readonly />
             </div>
             <div class="col-lg-6">
-                <label class="col-form-label">No Hanphone Dapodik:</label>
+                <label class="col-form-label">No Handphone Dapodik:</label>
                 <input type="text" class="form-control" value="<?= $data->no_hp ?>" readonly />
             </div>
         </div>
@@ -535,7 +535,6 @@
         function actionApprove(e) {
             const id = '<?= $data->id_usulan ?>';
             const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
-
             Swal.fire({
                 title: 'Apakah anda yakin ingin menyetujui usulan TPG ini?',
                 text: "Setujui Usulan TPG PTK: <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
