@@ -182,11 +182,18 @@ class Ditolakkembali extends BaseController
                 ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
-                $sptjm = $this->_db->table('_tb_sptjm_verifikasi')->where(['kode_usulan' => $current->kode_usulan, 'id_ptks' => $current->id_ptk_usulan, 'generate_sptjm' => 0])->get()->getRowObject();
+                $sptjm = $this->_db->table('_tb_sptjm_verifikasi')->where(['kode_usulan' => $current->kode_usulan, 'id_ptks' => $current->id_ptk_usulan])->get()->getRowObject();
                 if (!$sptjm) {
                     $response = new \stdClass;
                     $response->status = 400;
                     $response->message = "Data SPTJM tidak ditemukan";
+                    return json_encode($response);
+                }
+
+                if ($sptjm->generate_sptjm == 1) {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Data SPTJM telah digenerate.";
                     return json_encode($response);
                 }
 
