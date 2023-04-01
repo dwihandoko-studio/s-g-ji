@@ -787,6 +787,67 @@ function cekGrantedVerifikasi($user_id)
 	return true;
 }
 
+function canGrantedPengajuan($id_ptk, $tw)
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('_tb_temp_usulan_detail')->where("id_ptk = '$id_ptk' AND id_tahun_tw = '$tw' AND (status_usulan IN (0,2,5))")->get()->getRowObject();
+	if ($grandted) {
+		if ($grandted->status_usulan == 5) {
+			if ($grandted->jenis_tunjangan == 'tpg') {
+				$grandtedAntrianTransfer = $db->table('_tb_usulan_tpg_siap_sk')->where("id_ptk = '$id_ptk' AND id_tahun_tw = '$tw' AND (status_usulan IN (0,2,5,6,7))")->get()->getRowObject();
+				if ($grandtedAntrianTransfer) {
+					$response = new \stdClass;
+					$response->code = 400;
+					$response->message = "Anda sebelumnya sudah mengajukan usulan tunjangan dan masih dalam proses. Silahkan cek pada Progres Usulan Anda.";
+					$response->redirect = "";
+					return $response;
+				}
+
+				$grandtedAntrian = $db->table('_tb_usulan_detail_tpg')->where("id_ptk = '$id_ptk' AND id_tahun_tw = '$tw' AND (status_usulan IN (0,2,5,6,7))")->get()->getRowObject();
+				if ($grandtedAntrian) {
+					$response = new \stdClass;
+					$response->code = 400;
+					$response->message = "Anda sebelumnya sudah mengajukan usulan tunjangan dan masih dalam proses. Silahkan cek pada Progres Usulan Anda.";
+					$response->redirect = "";
+					return $response;
+				}
+			}
+			if ($grandted->jenis_tunjangan == 'tamsil') {
+				$grandtedAntrian = $db->table('_tb_usulan_tamsil_transfer')->where("id_ptk = '$id_ptk' AND id_tahun_tw = '$tw' AND (status_usulan IN (0,2,5,6,7))")->get()->getRowObject();
+				if ($grandtedAntrianTransfer) {
+					$response = new \stdClass;
+					$response->code = 400;
+					$response->message = "Anda sebelumnya sudah mengajukan usulan tunjangan dan masih dalam proses. Silahkan cek pada Progres Usulan Anda.";
+					$response->redirect = "";
+					return $response;
+				}
+
+				$grandtedAntrian = $db->table('_tb_usulan_detail_tamsil')->where("id_ptk = '$id_ptk' AND id_tahun_tw = '$tw' AND (status_usulan IN (0,2,5,6,7))")->get()->getRowObject();
+				if ($grandtedAntrianTransfer) {
+					$response = new \stdClass;
+					$response->code = 400;
+					$response->message = "Anda sebelumnya sudah mengajukan usulan tunjangan dan masih dalam proses. Silahkan cek pada Progres Usulan Anda.";
+					$response->redirect = "";
+					return $response;
+				}
+			}
+		} else {
+			$response = new \stdClass;
+			$response->code = 400;
+			$response->message = "Anda sebelumnya sudah mengajukan usulan tunjangan dan masih dalam proses. Silahkan cek pada Progres Usulan Anda.";
+			$response->redirect = "";
+			return $response;
+		}
+	}
+
+	$response = new \stdClass;
+	$response->code = 200;
+	$response->message = "";
+	return $response;
+}
+
 function canGrantedVerifikasi($user_id)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'

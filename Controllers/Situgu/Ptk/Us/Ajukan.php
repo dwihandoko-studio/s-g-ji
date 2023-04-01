@@ -112,9 +112,17 @@ class Ajukan extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $id = $this->_helpLib->getPtkId($user->data->id);
 
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
+
+            $id = $this->_helpLib->getPtkId($user->data->id);
+
+            $canGrantedPengajuan = canGrantedPengajuan($id, $tw);
+
+            if ($canGrantedPengajuan && $canGrantedPengajuan->code !== 200) {
+                return json_encode($canGrantedPengajuan);
+            }
+
             $oldDataAbsen = $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $id, 'id_tahun_tw' => $tw])->orderBy('created_at', 'desc')->get()->getRowObject();
             if (!$oldDataAbsen) {
                 $response = new \stdClass;
