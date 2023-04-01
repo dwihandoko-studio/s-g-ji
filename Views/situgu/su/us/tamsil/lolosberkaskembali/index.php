@@ -49,6 +49,7 @@
                                 <tr>
                                     <th data-orderable="false">#</th>
                                     <th data-orderable="false">Aksi</th>
+                                    <th>KODE USULAN</th>
                                     <th>NAMA</th>
                                     <th>NIK</th>
                                     <th>NUPTK</th>
