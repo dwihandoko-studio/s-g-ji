@@ -219,6 +219,83 @@ class Tamsil extends BaseController
         }
     }
 
+    public function detail()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            delete_cookie('jwt');
+            session()->destroy();
+            $response = new \stdClass;
+            $response->status = 401;
+            $response->message = "Session telah habis";
+            $response->redirect = base_url('auth');
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'tw' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'TW tidak boleh kosong. ',
+                ]
+            ],
+            'tahun' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tahun tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('tahun')
+                . $this->validator->getError('tw');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $tw = htmlspecialchars($this->request->getVar('tw'), true);
+            $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
+
+            $currents = $this->_db->table('_tb_sptjm_verifikasi a')
+                ->select("a.id, a.kode_verifikasi, a.kode_usulan, a.id_ptks, a.id_tahun_tw, a.aksi, a.keterangan, a.created_at, b.nama as nama_ptk, b.nuptk, b.npsn, b.tempat_tugas as nama_sekolah")
+                ->join('_ptk_tb b', 'a.id_ptks = b.id')
+                ->where('kode_verifikasi', $id)
+                ->get()->getResult();
+
+            if (count($currents) < 1) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "SPTJM tidak ditemukan. Silahkan Generate terlebih dahulu.";
+                return json_encode($response);
+            }
+
+            $data['data'] = $currents;
+            $data['tw'] = $tw;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situgu/opsr/sptjm/tamsil/detail', $data);
+            return json_encode($response);
+        }
+    }
+
     public function generatesptjm()
     {
         if ($this->request->getMethod() != 'post') {
