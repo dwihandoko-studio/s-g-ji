@@ -86,9 +86,9 @@ class Tamsil extends BaseController
                             <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->kode_verifikasi . '\', \'' . $list->kode_usulan . '\', \'' . $list->id_tahun_tw . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>';
             if ($list->is_locked !== 1) {
                 if ($list->lampiran_sptjm == null || $list->lampiran_sptjm == "") {
-                    $action .= '<a class="dropdown-item" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Upload Lampiran</a>';
+                    $action .= '<a class="dropdown-item" href="javascript:actionUpload(\'' . $list->kode_verifikasi . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Upload Lampiran</a>';
                 } else {
-                    $action .= '<a class="dropdown-item" href="javascript:actionEditUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Edit Lampiran</a>';
+                    $action .= '<a class="dropdown-item" href="javascript:actionEditUpload(\'' . $list->kode_verifikasi . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Edit Lampiran</a>';
                 }
             }
             $action .= '</div>
@@ -111,8 +111,8 @@ class Tamsil extends BaseController
                 $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/verifikasi/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/verifikasi/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
             } else {
                 if ($list->lampiran_sptjm == null || $list->lampiran_sptjm == "") {
-                    $row[] = '<a class="btn btn-sm btn-primary waves-effect waves-light" target="_blank" href="' . base_url('situgu/opk/sptjm/tamsil/download') . '?id=' . $list->id . '"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download</a>&nbsp;&nbsp;'
-                        . '<a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload</a>';
+                    $row[] = '<a class="btn btn-sm btn-primary waves-effect waves-light" target="_blank" href="' . base_url('situgu/opk/sptjm/tamsil/download') . '?id=' . $list->kode_verifikasi . '"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download</a>&nbsp;&nbsp;'
+                        . '<a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(\'' . $list->kode_verifikasi . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload</a>';
                 } else {
                     $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/verifikasi/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/verifikasi/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
                 }
