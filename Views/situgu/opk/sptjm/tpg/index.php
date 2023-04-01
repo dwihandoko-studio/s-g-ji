@@ -101,6 +101,15 @@
 
 <script>
     function actionDetail(id, tahun, tw) {
+        if (id === undefined || id === "") {
+            Swal.fire(
+                'Peringatan!',
+                "Kode Verifikasi belum dibuat, silahkan klik Download terlebih dahulu.",
+                'warning'
+            );
+            return;
+        }
+
         $.ajax({
             url: "./detail",
             type: 'POST',

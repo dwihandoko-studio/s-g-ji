@@ -103,7 +103,7 @@ class Tpg extends BaseController
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
             $row[] = $action;
-            $row[] = $list->kode_usulan;
+            $row[] = $list->kode_verifikasi;
             $row[] = $list->tahun;
             $row[] = $list->tw;
             $row[] = $list->jumlah_ptk;
