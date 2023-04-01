@@ -279,11 +279,11 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTpg = canUsulTpg();
+            // $canUsulTpg = canUsulTpg();
 
-            if ($canUsulTpg && $canUsulTpg->code !== 200) {
-                return json_encode($canUsulTpg);
-            }
+            // if ($canUsulTpg && $canUsulTpg->code !== 200) {
+            //     return json_encode($canUsulTpg);
+            // }
 
             $jenis = htmlspecialchars($this->request->getVar('jenis'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);

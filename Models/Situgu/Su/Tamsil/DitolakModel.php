@@ -7,10 +7,10 @@ use CodeIgniter\Model;
 
 class DitolakModel extends Model
 {
-    protected $table = "v_ditolak_usulan_tamsil";
-    protected $column_order = array(null, null, 'kode_usulan', 'nama', 'nik', 'nuptk', 'jenis_ptk', 'keterangan_reject');
-    protected $column_search = array('nik', 'nuptk', 'nama', 'kode_usulan');
-    protected $order = array('updated_at' => 'desc', 'nama' => 'asc');
+    protected $table = "_tb_usulan_detail_tamsil a";
+    protected $column_order = array(null, null, 'a.kode_usulan', 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'b.keterangan_reject');
+    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama', 'a.kode_usulan');
+    protected $order = array('a.date_reject' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -49,10 +49,13 @@ class DitolakModel extends Model
     }
     function get_datatables()
     {
+        $this->dt->select("a.id as id_usulan, a.date_reject, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->whereIn('a.status_usulan', [3, 4]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
             }
         }
         $this->_get_datatables_query();
@@ -63,10 +66,13 @@ class DitolakModel extends Model
     }
     function count_filtered()
     {
+        $this->dt->select("a.id as id_usulan, a.date_reject, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->whereIn('a.status_usulan', [3, 4]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
             }
         }
         $this->_get_datatables_query();
@@ -75,10 +81,13 @@ class DitolakModel extends Model
     }
     public function count_all()
     {
+        $this->dt->select("a.id as id_usulan, a.date_reject, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->whereIn('a.status_usulan', [3, 4]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
             }
         }
         $this->_get_datatables_query();
