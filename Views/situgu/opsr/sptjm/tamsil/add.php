@@ -19,7 +19,7 @@
                             <td><?= $data->jumlah ?></td>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="_confirm" value="<?= $value->kode_usulan ?>" name="_confirm">
+                                    <input class="form-check-input" type="checkbox" id="_confirm" value="<?= $data->jumlah ?>" name="_confirm">
                                 </div>
                             </td>
                         </tr>
