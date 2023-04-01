@@ -383,7 +383,7 @@ class Tpg extends BaseController
                 $dataPtnya[] = [
                     'NO' => $key + 1,
                     'KODE_USULAN' => $v->kode_usulan,
-                    'NAMA_PTK' => $v->nama,
+                    'NAMA_PTK' => $v->nama_ptk,
                     'NUPTK' => $v->nuptk,
                     'NPSN' => $v->npsn,
                     'NAMA_SEKOLAH' => $v->nama_sekolah,
