@@ -114,13 +114,13 @@
 <script>
     function actionKembali(id, id_ptk, tw, nama) {
         Swal.fire({
-            title: 'Apakah anda yakin ingin menolak usulan Tamsil ini?',
-            text: "Tolak Usulan Tamsil PTK: <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
+            title: 'Apakah anda yakin ingin mengembalikan usulan ini ke antrian?',
+            text: "Kembalikan Usulan PTK: " + nama + " ke Antrian",
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Tolak!'
+            confirmButtonText: 'Ya, Kembalikan!'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
