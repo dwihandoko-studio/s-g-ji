@@ -112,6 +112,84 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
+    function actionKembali(id, id_ptk, tw, nama) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin menolak usulan Tamsil ini?',
+            text: "Tolak Usulan Tamsil PTK: <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
+            showCancelButton: true,
+            icon: 'question',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Tolak!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./kembalikan",
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        id_ptk: id_ptk,
+                        tw: tw,
+                        nama: nama,
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('div.main-content').block({
+                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+                    },
+                    success: function(resul) {
+                        $('div.main-content').unblock();
+                        if (resul.status !== 200) {
+                            if (resul.status !== 201) {
+                                if (resul.status === 401) {
+                                    Swal.fire(
+                                        'Failed!',
+                                        resul.message,
+                                        'warning'
+                                    ).then((valRes) => {
+                                        reloadPage();
+                                    });
+                                } else {
+                                    e.disabled = false;
+                                    Swal.fire(
+                                        'GAGAL!',
+                                        resul.message,
+                                        'warning'
+                                    );
+                                }
+                            } else {
+                                Swal.fire(
+                                    'Peringatan!',
+                                    resul.message,
+                                    'success'
+                                ).then((valRes) => {
+                                    reloadPage();
+                                })
+                            }
+                        } else {
+                            Swal.fire(
+                                'SELAMAT!',
+                                resul.message,
+                                'success'
+                            ).then((valRes) => {
+                                reloadPage();
+                            })
+                        }
+                    },
+                    error: function() {
+                        $('div.main-content').unblock();
+                        Swal.fire(
+                            'Failed!',
+                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                            'warning'
+                        );
+                    }
+                });
+            }
+        })
+    }
+
     function actionDetail(id, id_ptk, tw, nama) {
         $.ajax({
             url: "./detail",

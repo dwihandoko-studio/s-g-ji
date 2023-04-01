@@ -55,7 +55,7 @@ class AntrianModel extends Model
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
             }
         }
         $this->_get_datatables_query();
@@ -70,7 +70,7 @@ class AntrianModel extends Model
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
             }
         }
         $this->_get_datatables_query();
@@ -83,7 +83,7 @@ class AntrianModel extends Model
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
 
-                $this->dt->where('id_tahun_tw', $this->request->getPost('tw'));
+                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
             }
         }
         $this->_get_datatables_query();
