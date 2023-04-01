@@ -451,7 +451,7 @@ class Tamsil extends BaseController
             $jabatan = $user->role_user == 3 ? 'Admin Kecamatan' : 'Admin Sub Rayon';
             $template_processor->setValue('JABATAN_ADMIN', $jabatan);
             $userD = $userDetail->jabatan == NULL || $userDetail->jabatan == "" ? '' : $userDetail->jabatan;
-            $template_processor->setValue('KECAMATAN_SUB_RAYON', $userD);
+            $template_processor->setValue('KECAMATAN_SUB._RAYON', $userD);
             $template_processor->setValue('JUMLAH_PTK', count($ptks));
             $template_processor->setValue('TANGGAL_SPTJM', tgl_indo(date('Y-m-d')));
 
