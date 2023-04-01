@@ -83,7 +83,7 @@ class Tpg extends BaseController
             $action = '<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->kode_usulan . '\', \'' . $list->id_tahun_tw . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>';
+                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->kode_verifikasi . '\', \'' . $list->kode_usulan . '\', \'' . $list->id_tahun_tw . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>';
             if ($list->is_locked !== 1) {
                 if ($list->lampiran_sptjm == null || $list->lampiran_sptjm == "") {
                     $action .= '<a class="dropdown-item" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Upload Lampiran</a>';
