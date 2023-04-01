@@ -53,7 +53,6 @@
                                     <th>NAMA</th>
                                     <th>NIK</th>
                                     <th>NUPTK</th>
-                                    <th>JENIS PTK</th>
                                     <th>TANGGAL VERIFIKASI</th>
                                 </tr>
                             </thead>
