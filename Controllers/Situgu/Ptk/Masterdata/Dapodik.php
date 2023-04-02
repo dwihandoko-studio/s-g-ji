@@ -238,6 +238,7 @@ class Dapodik extends BaseController
 
             if ($this->_db->affectedRows() > 0) {
                 $this->_db->transCommit();
+                createAktifitas($user->data->id, "Mengedit data PTK", "Mengedit Data PTK", "edit");
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Data berhasil diupdate.";

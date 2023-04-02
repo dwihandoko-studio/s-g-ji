@@ -442,7 +442,9 @@ class Master extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
+                createAktifitas($user->data->id, "Mengupload lampiran data master pada lampiran $field_db", "Mengupload Lampiran Master $field_db", "upload");
                 $this->_db->transCommit();
+
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Data berhasil disimpan.";
@@ -673,12 +675,14 @@ class Master extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
+                createAktifitas($user->data->id, "Mengedit upload lampiran data master pada lampiran $field_db", "Mengedit Upload Lampiran Master $field_db", "edit");
                 $this->_db->transCommit();
                 try {
                     unlink($dir . '/' . $old);
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
+
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Data berhasil diupdate.";
@@ -805,12 +809,15 @@ class Master extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
+                createAktifitas($user->data->id, "Menghapus lampiran data master pada lampiran $field_db", "Menghapus Lampiran Master $field_db", "delete");
                 $this->_db->transCommit();
                 try {
                     unlink($dir . '/' . $currentFile->file);
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
+
+
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "File lampiran $title berhasil dihapus.";

@@ -884,6 +884,29 @@ function canGrantedPengajuan($id_ptk, $tw)
 	return $response;
 }
 
+function createAktifitas($user_id, $keterangan, $aksi, $icon, $tw = "")
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	if ($tw == "") {
+		$twa = $db->table('_ref_tahun_tw')->select('id')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
+		if ($twa) {
+			$tw = $twa->id;
+		}
+	}
+
+	$grandted = $db->table('riwayat_system')->insert([
+		'user_id' => $user_id,
+		'keterangan' => $keterangan,
+		'aksi' => $aksi,
+		'icon' => $icon,
+		'id_tahun_tw' => $tw,
+	]);
+
+	return true;
+}
+
 function canGrantedVerifikasi($user_id)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'

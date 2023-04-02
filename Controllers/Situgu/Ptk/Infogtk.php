@@ -115,6 +115,7 @@ class Infogtk extends BaseController
                 }
 
                 if ($this->_db->affectedRows() > 0) {
+                    createAktifitas($user->data->id, "Menautkan ulang info gtk digital", "Taut Ulang Info GTK Digital", "edit");
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
@@ -150,6 +151,7 @@ class Infogtk extends BaseController
                 }
 
                 if ($this->_db->affectedRows() > 0) {
+                    createAktifitas($user->data->id, "Menautkan Info GTK Digital", "Menautkan Info GTK Digital", "add");
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
@@ -235,6 +237,17 @@ class Infogtk extends BaseController
             $response->message = $this->validator->getError('id');
             return json_encode($response);
         } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
             $current = $this->_db->table('_info_gtk')
@@ -255,6 +268,7 @@ class Infogtk extends BaseController
                 }
 
                 if ($this->_db->affectedRows() > 0) {
+                    createAktifitas($user->data->id, "Menghapus tautan Info GTK Digital", "Menghapus Tautan Info GTK Digital", "delete");
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;

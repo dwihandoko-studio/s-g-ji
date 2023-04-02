@@ -383,6 +383,7 @@ class Atribut extends BaseController
             try {
                 $this->_db->table('_upload_data_attribut')->insert($data);
                 if ($this->_db->affectedRows() > 0) {
+                    createAktifitas($user->data->id, "Menambahkan riwayat data atribut", "Add Riwayat Data Atribut", "add", $tw);
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
@@ -701,12 +702,15 @@ class Atribut extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
+                createAktifitas($user->data->id, "Menghapus lampiran data atribut pada lampiran $title", "Menghapus Lampiran Atribut $title", "delete", $tw);
                 $this->_db->transCommit();
                 try {
                     unlink($dir . '/' . $currentFile->file);
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
+
+
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "File lampiran $title berhasil dihapus.";
@@ -897,6 +901,7 @@ class Atribut extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
+                createAktifitas($user->data->id, "Mengupload lampiran data atribut pada lampiran $field_db", "Mengupload Lampiran Atribut $field_db", "upload", $tw);
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
@@ -1081,12 +1086,14 @@ class Atribut extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
+                createAktifitas($user->data->id, "Mengedit upload lampiran data atribut pada lampiran $field_db", "Edit Upload Lampiran Atribut $field_db", "edit", $tw);
                 $this->_db->transCommit();
                 try {
                     unlink($dir . '/' . $old);
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
+
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Data berhasil diupdate.";

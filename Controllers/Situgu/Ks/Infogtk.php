@@ -115,6 +115,7 @@ class Infogtk extends BaseController
                 }
 
                 if ($this->_db->affectedRows() > 0) {
+                    createAktifitas($user->data->id, "Menautkan ulang info gtk digital", "Taut Ulang Info GTK Digital", "edit");
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
@@ -150,6 +151,7 @@ class Infogtk extends BaseController
                 }
 
                 if ($this->_db->affectedRows() > 0) {
+                    createAktifitas($user->data->id, "Menautkan Info GTK Digital", "Menautkan Info GTK Digital", "add");
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
@@ -255,6 +257,7 @@ class Infogtk extends BaseController
                 }
 
                 if ($this->_db->affectedRows() > 0) {
+                    createAktifitas($user->data->id, "Menghapus tautan Info GTK Digital", "Menghapus Tautan Info GTK Digital", "delete");
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
