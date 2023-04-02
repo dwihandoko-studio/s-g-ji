@@ -86,7 +86,7 @@ class Atribut extends BaseController
             if ($list->is_locked == 1) {
                 $row[] = $list->pang_golongan;
             } else {
-                $row[] = $list->pang_golongan . ' &nbsp;&nbsp;<a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->tw)) . '\');"><i class="bx bxs-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>';
+                $row[] = $list->pang_golongan . ' &nbsp;<a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->tw)) . '\');"><i class="bx bxs-edit-alt font-size-16 align-middle"></i> Edit</a>';
             }
             // }
             $row[] = $list->pang_no;
