@@ -43,7 +43,7 @@
                                     <th colspan="6" data-orderable="false">
                                         <div class="text-center">Riwayat Kepegawaian</div>
                                     </th>
-                                    <th colspan="9" data-orderable="false">
+                                    <th colspan="8" data-orderable="false">
                                         <div class="text-center">Dokumen Atribut</div>
                                     </th>
                                     <th rowspan="3">Status</th>
@@ -58,7 +58,7 @@
                                     <th colspan="2">Masa Kerja</th>
                                     <th rowspan="2">Pangkat</th>
                                     <th rowspan="2">KGB</th>
-                                    <th rowspan="2">Pernyataan</th>
+                                    <!-- <th rowspan="2">Pernyataan</th> -->
                                     <th rowspan="2">Penugasan</th>
                                     <th rowspan="2">Ket. Kunjungan Binaan</th>
                                     <th rowspan="2">Cuti</th>

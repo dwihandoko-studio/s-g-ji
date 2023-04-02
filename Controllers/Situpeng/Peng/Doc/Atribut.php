@@ -91,7 +91,7 @@ class Atribut extends BaseController
                 case 1:
                     $row[] = $list->pangkat_terakhir ? '<a href="' . base_url('upload/pengawas/pangkat') . '/' . $list->pangkat_terakhir . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pangkat</span></a>' : '-';
                     $row[] = $list->kgb_terakhir ? '<a href="' . base_url('upload/pengawas/kgb') . '/' . $list->kgb_terakhir . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran KGB</span></a>' : '-';
-                    $row[] = $list->pernyataan_24jam ? '<a href="' . base_url('upload/pengawas/pernyataanindividu') . '/' . $list->pernyataan_24jam . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pernyataan</span></a>' : '-';
+                    // $row[] = $list->pernyataan_24jam ? '<a href="' . base_url('upload/pengawas/pernyataanindividu') . '/' . $list->pernyataan_24jam . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Pernyataan</span></a>' : '-';
                     $row[] = $list->penugasan ? '<a href="' . base_url('upload/pengawas/penugasan') . '/' . $list->penugasan . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Penugasan</span></a>' : '-';
                     $row[] = $list->kunjungan_binaan ? '<a href="' . base_url('upload/pengawas/kunjunganbinaan') . '/' . $list->kunjungan_binaan . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Ket. Kunjungan Binaan</span></a>' : '-';
                     $row[] = $list->cuti ? '<a href="' . base_url('upload/pengawas/keterangancuti') . '/' . $list->cuti . '" target="_blank"><span class="badge rounded-pill badge-soft-primary font-size-11">Lampiran Cuti</span></a>' : '-';
@@ -124,15 +124,15 @@ class Atribut extends BaseController
                         '<a href="javascript:actionUpload(\'Berkala Terakhir\',\'kgb\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
                         <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
                     </a>';
-                    $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/pengawas/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-show font-size-16 align-middle"></i></button>
-                    </a>
-                    <a href="javascript:actionEditFile(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pernyataan_24jam . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
-                        <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
-                    </a>' :
-                        '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
-                        <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
-                    </a>';
+                    // $row[] = $list->pernyataan_24jam ? '<a target="_blank" href="' . base_url('upload/pengawas/pernyataanindividu') . '/' . $list->pernyataan_24jam . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    //     <i class="bx bxs-show font-size-16 align-middle"></i></button>
+                    // </a>
+                    // <a href="javascript:actionEditFile(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\',\'' . $list->pernyataan_24jam . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+                    //     <i class="bx bxs-edit-alt font-size-16 align-middle"></i></button>
+                    // </a>' :
+                    //     '<a href="javascript:actionUpload(\'Pernyataan 24Jam\',\'pernyataan24\',\'' . $list->id_tahun_tw . '\',\'' . $list->id_ptk . '\')" class="btn btn-primary waves-effect waves-light">
+                    //     <i class="bx bx-upload font-size-16 align-middle me-2"></i> Upload
+                    // </a>';
                     $row[] = $list->penugasan ? '<a target="_blank" href="' . base_url('upload/pengawas/penugasan') . '/' . $list->penugasan . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                         <i class="bx bxs-show font-size-16 align-middle"></i></button>
                     </a>
