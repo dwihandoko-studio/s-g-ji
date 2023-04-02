@@ -284,11 +284,11 @@ class Ajukan extends BaseController
 
             if ($jenis_tunjangan === "tpg") {
 
-                $canUsulTpg = canUsulTpg();
+                // $canUsulTpg = canUsulTpg();
 
-                if ($canUsulTpg && $canUsulTpg->code !== 200) {
-                    return json_encode($canUsulTpg);
-                }
+                // if ($canUsulTpg && $canUsulTpg->code !== 200) {
+                //     return json_encode($canUsulTpg);
+                // }
 
                 if ($ptk->nuptk === null || $ptk->nuptk === "" || $ptk->nrg === null || $ptk->nrg === "" || $ptk->no_peserta === ""  || $ptk->no_peserta === null || $ptk->bidang_studi_sertifikasi === null || $ptk->bidang_studi_sertifikasi === "") {
                     $response->status = 400;
