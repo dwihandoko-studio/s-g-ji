@@ -118,7 +118,9 @@
 
 <script>
     function actionDownload(event) {
-        const tw = $('#filter_tw').val();
+        const tw = document.getElementsByName('filter_tw')[0].value;
+
+        console.log(tw);
         if (tw === undefined || tw === "") {
             const linkSource = "<?= base_url('situgu/su/us/tpg/lolosberkas/download') ?>?tw=<?= $tw->id ?>";
             const downloadLink = document.createElement("a");
