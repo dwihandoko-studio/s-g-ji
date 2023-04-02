@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Situgu\Us\Sptjm;
+namespace App\Controllers\Situgu\Su\Sptjm;
 
 use App\Controllers\BaseController;
 use App\Models\Situgu\Su\SptjmverifikasiModel;
