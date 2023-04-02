@@ -16,7 +16,7 @@
                     <tbody>
                         <?php if (count($data) > 0) { ?>
                             <?php $i = 0; ?>
-                            <?php foreach ($variable as $key => $value) {
+                            <?php foreach ($data as $key => $value) {
                                 $i++; ?>
                                 <tr>
                                     <th scope="row"><?= $i ?></th>
