@@ -98,6 +98,7 @@ class Verifikasi extends BaseController
             $row[] = $action;
             $row[] = $list->fullname;
             $row[] = $list->jabatan;
+            $row[] = strtoupper($list->jenis_usulan);
             $row[] = $list->kode_verifikasi;
             $row[] = $list->tahun;
             $row[] = $list->tw;

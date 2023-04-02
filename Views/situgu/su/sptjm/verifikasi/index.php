@@ -51,6 +51,7 @@
                                     <th data-orderable="false">Aksi</th>
                                     <th>Nama</th>
                                     <th>Kecamatan/Subrayon</th>
+                                    <th>Jenis Usulan</th>
                                     <th>Kode Verifikasi</th>
                                     <th>Tahun</th>
                                     <th>TW</th>
