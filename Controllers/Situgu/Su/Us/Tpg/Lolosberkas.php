@@ -14,6 +14,7 @@ use App\Libraries\Situgu\Kehadiranptklib;
 use App\Libraries\Uuid;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+// use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Lolosberkas extends BaseController
 {
@@ -217,6 +218,8 @@ class Lolosberkas extends BaseController
 
             $spreadsheet = new Spreadsheet();
 
+            $spreadsheet->getDefaultStyle()->getNumberFormat()->setFormatCode(new \PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+            // $spreadsheet->getDefaultStyle()->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
             // Membuat objek worksheet
             $worksheet = $spreadsheet->getActiveSheet();
 
