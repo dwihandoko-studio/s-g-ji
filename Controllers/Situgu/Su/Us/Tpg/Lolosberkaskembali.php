@@ -182,43 +182,36 @@ class Lolosberkaskembali extends BaseController
                 ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
-                $sptjm = $this->_db->table('_tb_sptjm_verifikasi')->where(['kode_usulan' => $current->kode_usulan, 'id_ptks' => $current->id_ptk_usulan])->get()->getRowObject();
-                if (!$sptjm) {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Data SPTJM tidak ditemukan";
-                    return json_encode($response);
-                }
+                // $sptjm = $this->_db->table('_tb_sptjm_verifikasi')->where(['kode_usulan' => $current->kode_usulan, 'id_ptks' => $current->id_ptk_usulan])->get()->getRowObject();
+                // if (!$sptjm) {
+                //     $response = new \stdClass;
+                //     $response->status = 400;
+                //     $response->message = "Data SPTJM tidak ditemukan";
+                //     return json_encode($response);
+                // }
 
-                if ($sptjm->generate_sptjm == 1) {
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Data SPTJM telah digenerate.";
-                    return json_encode($response);
-                }
+                // if ($sptjm->generate_sptjm == 1) {
+                //     $response = new \stdClass;
+                //     $response->status = 400;
+                //     $response->message = "Data SPTJM telah digenerate.";
+                //     return json_encode($response);
+                // }
 
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('_tb_sptjm_verifikasi')->where('id', $sptjm->id)->delete();
+                    // $this->_db->table('_tb_sptjm_verifikasi')->where('id', $sptjm->id)->delete();
+                    // if ($this->_db->affectedRows() > 0) {
+                    $this->_db->table('_tb_usulan_detail_tpg')->where('id', $current->id_usulan)->update(['status_usulan' => 0, 'admin_approve' => NULL, 'date_approve' => NULL, 'keterangan_reject' => NULL]);
                     if ($this->_db->affectedRows() > 0) {
-                        $this->_db->table('_tb_usulan_detail_tpg')->where('id', $current->id_usulan)->update(['status_usulan' => 0, 'admin_approve' => NULL, 'date_approve' => NULL, 'keterangan_reject' => NULL]);
-                        if ($this->_db->affectedRows() > 0) {
-                            $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $current->id_ptk, 'id_tahun_tw' => $current->id_tahun_tw])->update(['is_locked' => 1]);
-                            $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $current->id_ptk, 'id_tahun_tw' => $current->id_tahun_tw])->update(['is_locked' => 1]);
-                            $this->_db->table('_ptk_tb')->where(['id_ptk' => $current->id_ptk])->update(['is_locked' => 1]);
+                        $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $current->id_ptk, 'id_tahun_tw' => $current->id_tahun_tw])->update(['is_locked' => 1]);
+                        $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $current->id_ptk, 'id_tahun_tw' => $current->id_tahun_tw])->update(['is_locked' => 1]);
+                        $this->_db->table('_ptk_tb')->where(['id_ptk' => $current->id_ptk])->update(['is_locked' => 1]);
 
-                            $this->_db->transCommit();
-                            $response = new \stdClass;
-                            $response->status = 200;
-                            $response->message = "Usulan $nama berhasil dikembalikan.";
-                            return json_encode($response);
-                        } else {
-                            $this->_db->transRollback();
-                            $response = new \stdClass;
-                            $response->status = 400;
-                            $response->message = "Gagal mengembalikan usulan $nama.";
-                            return json_encode($response);
-                        }
+                        $this->_db->transCommit();
+                        $response = new \stdClass;
+                        $response->status = 200;
+                        $response->message = "Usulan $nama berhasil dikembalikan.";
+                        return json_encode($response);
                     } else {
                         $this->_db->transRollback();
                         $response = new \stdClass;
@@ -226,6 +219,13 @@ class Lolosberkaskembali extends BaseController
                         $response->message = "Gagal mengembalikan usulan $nama.";
                         return json_encode($response);
                     }
+                    // } else {
+                    //     $this->_db->transRollback();
+                    //     $response = new \stdClass;
+                    //     $response->status = 400;
+                    //     $response->message = "Gagal mengembalikan usulan $nama.";
+                    //     return json_encode($response);
+                    // }
                 } catch (\Throwable $th) {
                     $this->_db->transRollback();
                     $response = new \stdClass;
