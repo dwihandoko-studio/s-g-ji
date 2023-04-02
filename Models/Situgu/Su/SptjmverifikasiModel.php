@@ -8,7 +8,7 @@ use CodeIgniter\Model;
 class SptjmverifikasiModel extends Model
 {
     protected $table = "_tb_sptjm_verifikasi a";
-    protected $column_order = array(null, null, 'a.kode_usulan', 'b.tahun', 'b.tw', 'a.jumlah_ptk', 'a.lampiran_sptjm');
+    protected $column_order = array(null, null, 'c.fullname', 'c.jabatan', 'a.kode_usulan', 'b.tahun', 'b.tw', 'a.jumlah_ptk', 'a.lampiran_sptjm');
     protected $column_search = array('a.kode_verifikasi', 'b.tahun', 'b.tw');
     protected $order = array('a.created_at' => 'desc');
     protected $request;
@@ -52,6 +52,7 @@ class SptjmverifikasiModel extends Model
     {
         $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
+        $this->dt->join('_profil_users_tb c', 'a.user_id = c.id');
         if ($this->request->getPost('tw')) {
             $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         }
@@ -68,6 +69,7 @@ class SptjmverifikasiModel extends Model
     {
         $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
+        $this->dt->join('_profil_users_tb c', 'a.user_id = c.id');
         if ($this->request->getPost('tw')) {
             $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         }
@@ -82,6 +84,7 @@ class SptjmverifikasiModel extends Model
     {
         $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
+        $this->dt->join('_profil_users_tb c', 'a.user_id = c.id');
         if ($this->request->getPost('tw')) {
             $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         }
