@@ -278,10 +278,10 @@ class Lolosberkas extends BaseController
 
                 $itemCreate = [
                     $key + 1,
-                    $item->nuptk,
+                    substr($item->nuptk, 0),
                     $item->nama,
                     $item->tempat_tugas,
-                    $item->nip,
+                    substr($item->nip, 0),
                     $item->us_pang_golongan,
                     $item->us_pang_mk_tahun,
                     $item->us_gaji_pokok,
@@ -290,7 +290,7 @@ class Lolosberkas extends BaseController
                     ($item->us_gaji_pokok * 3) * 0.01,
                     ($item->us_gaji_pokok * 3) * $pph21,
                     ($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21),
-                    $item->no_rekening,
+                    substr($item->no_rekening, 0),
                     $item->npsn,
                     $item->kecamatan,
                     $item->bentuk_pendidikan,
