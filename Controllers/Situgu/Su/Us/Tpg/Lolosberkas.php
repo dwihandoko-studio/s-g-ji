@@ -12,6 +12,8 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Situgu\Kehadiranptklib;
 use App\Libraries\Uuid;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Lolosberkas extends BaseController
 {
@@ -209,6 +211,106 @@ class Lolosberkas extends BaseController
         $tw = htmlspecialchars($this->request->getGet('tw'), true);
         if ($tw == "") {
             return view('404');
+        }
+
+        try {
+
+            $spreadsheet = new Spreadsheet();
+
+            // Membuat objek worksheet
+            $worksheet = $spreadsheet->getActiveSheet();
+
+            // Menulis nama kolom ke dalam baris pertama worksheet
+            $worksheet->fromArray(['NO', 'NUPTK', 'NAMA', 'TEMPAT TUGAS', 'NIP', 'GOL', 'MASA KERJA TAHUN', 'GAJI POKOK PP.15', 'JML. BLN', 'JML.UANG', 'IURAN BPJS 1%', 'PPH.21', 'JML. DITERIMA', 'NO REKENING', 'NPSN', 'KECAMATAN', 'JENJANG SEKOLAH', 'KETERANGAN', 'VERIFIKATOR'], NULL, 'A3');
+
+            // Mengambil data dari database
+            $dataTw = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->get()->getRowObject();
+            $query = $this->_db->table('_tb_usulan_detail_tpg a')
+                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nip, b.tempat_tugas, b.npsn, b.no_rekening, b.nuptk, b.jenis_ptk, b.kecamatan, c.bentuk_pendidikan, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
+                ->join('_ptk_tb b', 'a.id_ptk = b.id')
+                ->join('ref_sekolah c', 'b.npsn = c.npsn')
+                ->join('_profil_users_tb d', 'a.admin_approve = d.id')
+                ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
+                ->where('a.status_usulan', 2)
+                ->where('a.id_tahun_tw', $tw)
+                ->get();
+
+            // Menulis data ke dalam worksheet
+            $data = $query->getResult();
+            $row = 4;
+            foreach ($data as $key => $item) {
+                $keterangan = "";
+                $pph = "0%";
+                $pph21 = 1;
+                if ($item->us_pang_golongan == NULL || $item->us_pang_golongan == "") {
+                } else {
+                    $pang = explode("/", $item->us_pang_golongan);
+                    if ($pang[0] == "III" || $pang[0] == "IX") {
+                        $pph21 = (5 / 100);
+                        $pph = "5%";
+                    } else if ($pang[0] == "IV") {
+                        $pph21 = (15 / 100);
+                        $pph = "15%";
+                    } else {
+                        $pph21 = 0;
+                        $pph = "0%";
+                    }
+                }
+
+                if (($item->lampiran_cuti == NULL || $item->lampiran_cuti == "") && ($item->lampiran_pensiun == NULL || $item->lampiran_pensiun == "") && ($item->lampiran_kematian == NULL || $item->lampiran_kematian == "")) {
+                    $keterangan .= "- ";
+                }
+
+                if (!($item->lampiran_cuti == NULL || $item->lampiran_cuti == "")) {
+                    $keterangan .= "Cuti ";
+                }
+
+                if (!($item->lampiran_pensiun == NULL || $item->lampiran_pensiun == "")) {
+                    $keterangan .= "Pensiun ";
+                }
+
+                if (!($item->lampiran_kematian == NULL || $item->lampiran_kematian == "")) {
+                    $keterangan .= "Kematian ";
+                }
+
+                $itemCreate = [
+                    $key + 1,
+                    $item->nuptk,
+                    $item->nama,
+                    $item->tempat_tugas,
+                    $item->nip,
+                    $item->us_pang_golongan,
+                    $item->us_pang_mk_tahun,
+                    $item->us_gaji_pokok,
+                    3,
+                    $item->us_gaji_pokok * 3,
+                    ($item->us_gaji_pokok * 3) * 0.01,
+                    ($item->us_gaji_pokok * 3) * $pph21,
+                    ($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21),
+                    $item->no_rekening,
+                    $item->npsn,
+                    $item->kecamatan,
+                    $item->bentuk_pendidikan,
+                    $keterangan,
+                    $item->verifikator,
+                ];
+                $worksheet->fromArray($itemCreate, NULL, 'A' . $row);
+                $row++;
+            }
+
+            // Menyiapkan objek writer untuk menulis file Excel
+            $writer = new Xlsx($spreadsheet);
+
+            // Menuliskan file Excel
+            $filename = 'data_lolosberkas_usulan_tpg_tahun_' . $dataTw->tahun . '_tw_' . $dataTw->tw . '.xlsx';
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="' . $filename . '"');
+            header('Cache-Control: max-age=0');
+            $writer->save('php://output');
+            exit();
+            //code...
+        } catch (\Throwable $th) {
+            var_dump($th);
         }
     }
 }
