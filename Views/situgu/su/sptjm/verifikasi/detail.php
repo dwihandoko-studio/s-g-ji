@@ -31,7 +31,7 @@
                     </tbody>
                 </table>
             </div>
-            <?php if ($data[0]->lampiran_sptjm == NULL || $data[0]->lampiran_sptjm == "") { ?>
+            <?php if (!($data[0]->lampiran_sptjm == NULL || $data[0]->lampiran_sptjm == "")) { ?>
                 <div class="mt-4">
                     <a class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/verifikasi/sptjm') . '/' . $data[0]->lampiran_sptjm ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/verifikasi/sptjm') . '/' . $data[0]->lampiran_sptjm ?>" id="nik">
                         Lampiran SPTJM
