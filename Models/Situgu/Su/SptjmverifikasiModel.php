@@ -50,7 +50,7 @@ class SptjmverifikasiModel extends Model
 
     function get_datatables()
     {
-        $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
+        $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk, c.fullname, c.jabatan");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
         $this->dt->join('_profil_users_tb c', 'a.user_id = c.id');
         if ($this->request->getPost('tw')) {
@@ -67,7 +67,7 @@ class SptjmverifikasiModel extends Model
 
     function count_filtered()
     {
-        $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
+        $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk, c.fullname, c.jabatan");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
         $this->dt->join('_profil_users_tb c', 'a.user_id = c.id');
         if ($this->request->getPost('tw')) {
@@ -82,7 +82,7 @@ class SptjmverifikasiModel extends Model
 
     public function count_all()
     {
-        $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
+        $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk, c.fullname, c.jabatan");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
         $this->dt->join('_profil_users_tb c', 'a.user_id = c.id');
         if ($this->request->getPost('tw')) {
