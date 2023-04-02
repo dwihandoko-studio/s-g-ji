@@ -47,7 +47,8 @@ class SptjmverifikasiModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables($user_id, $jenis)
+
+    function get_datatables()
     {
         $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
@@ -62,7 +63,8 @@ class SptjmverifikasiModel extends Model
         $query = $this->dt->get();
         return $query->getResult();
     }
-    function count_filtered($user_id, $jenis)
+
+    function count_filtered()
     {
         $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
@@ -75,7 +77,8 @@ class SptjmverifikasiModel extends Model
 
         return $this->dt->countAllResults();
     }
-    public function count_all($user_id, $jenis)
+
+    public function count_all()
     {
         $this->dt->select("a.*, b.tahun, b.tw, count(*) as jumlah_ptk");
         $this->dt->join('_ref_tahun_tw b', 'a.id_tahun_tw = b.id');
