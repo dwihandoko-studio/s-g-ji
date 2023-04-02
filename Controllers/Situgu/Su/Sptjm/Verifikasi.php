@@ -199,7 +199,7 @@ class Verifikasi extends BaseController
             $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
 
             $currents = $this->_db->table('_tb_sptjm_verifikasi a')
-                ->select("a.id, a.kode_verifikasi, a.kode_usulan, a.id_ptks, a.id_tahun_tw, a.aksi, a.keterangan, a.created_at, b.nama as nama_ptk, b.nuptk, b.npsn, b.tempat_tugas as nama_sekolah")
+                ->select("a.id, a.kode_verifikasi, a.kode_usulan, a.lampiran_sptjm, a.id_ptks, a.id_tahun_tw, a.aksi, a.keterangan, a.created_at, b.nama as nama_ptk, b.nuptk, b.npsn, b.tempat_tugas as nama_sekolah")
                 ->join('_ptk_tb b', 'a.id_ptks = b.id')
                 ->where('kode_verifikasi', $id)
                 ->get()->getResult();
