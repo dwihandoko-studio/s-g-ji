@@ -80,11 +80,15 @@ class Atribut extends BaseController
             $row[] = $action;
             $row[] = $list->tahun;
             $row[] = $list->tw;
-            if ($list->pang_golongan == NULL || $list->pang_golongan == "") {
-                $row[] = '<a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->tw)) . '\');"><i class="bx bxs-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>';
-            } else {
+            // if ($list->pang_golongan == NULL || $list->pang_golongan == "") {
+            //     $row[] = '<a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->tw)) . '\');"><i class="bx bxs-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>';
+            // } else {
+            if ($list->is_locked == 1) {
                 $row[] = $list->pang_golongan;
+            } else {
+                $row[] = $list->pang_golongan . ' &nbsp;&nbsp;<a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->tahun . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->tw)) . '\');"><i class="bx bxs-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>';
             }
+            // }
             $row[] = $list->pang_no;
             $row[] = $list->pang_tmt;
             $row[] = $list->pang_tgl;
