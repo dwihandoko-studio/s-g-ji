@@ -527,11 +527,11 @@ class Ajukan extends BaseController
 
             if ($jenis === "tpg") {
 
-                $canUsulTpg = canUsulTpg();
+                // $canUsulTpg = canUsulTpg();
 
-                if ($canUsulTpg && $canUsulTpg->code !== 200) {
-                    return json_encode($canUsulTpg);
-                }
+                // if ($canUsulTpg && $canUsulTpg->code !== 200) {
+                //     return json_encode($canUsulTpg);
+                // }
 
                 $uuidLib = new Uuid();
                 $data = [
