@@ -118,7 +118,7 @@
 
 <script>
     function actionDownload(event) {
-        const tw = document.getElementsByName('filter_tw')[0].value;
+        const tw = document.getElementsByName('_filter_tw')[0].value;
 
         console.log(tw);
         if (tw === undefined || tw === "") {
