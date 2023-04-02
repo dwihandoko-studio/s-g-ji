@@ -20,11 +20,11 @@
                                 $i++; ?>
                                 <tr>
                                     <th scope="row"><?= $i ?></th>
-                                    <td><?= $nama_ptk ?></td>
-                                    <td><?= $nuptk ?></td>
-                                    <td><?= $npsn ?></td>
-                                    <td><?= $nama_sekolah ?></td>
-                                    <td><?= $aksi ?></td>
+                                    <td><?= $value->nama_ptk ?></td>
+                                    <td><?= $value->nuptk ?></td>
+                                    <td><?= $value->npsn ?></td>
+                                    <td><?= $value->nama_sekolah ?></td>
+                                    <td><?= $value->aksi ?></td>
                                 </tr>
                             <?php } ?>
                         <?php } ?>
