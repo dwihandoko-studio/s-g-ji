@@ -241,72 +241,74 @@ class Lolosberkas extends BaseController
             // Menulis data ke dalam worksheet
             $data = $query->getResult();
             $row = 4;
-            foreach ($data as $key => $item) {
-                $keterangan = "";
-                $pph = "0%";
-                $pph21 = 1;
-                if ($item->us_pang_golongan == NULL || $item->us_pang_golongan == "") {
-                } else {
-                    $pang = explode("/", $item->us_pang_golongan);
-                    if ($pang[0] == "III" || $pang[0] == "IX") {
-                        $pph21 = (5 / 100);
-                        $pph = "5%";
-                    } else if ($pang[0] == "IV") {
-                        $pph21 = (15 / 100);
-                        $pph = "15%";
+            if (count($data) > 0) {
+                foreach ($data as $key => $item) {
+                    $keterangan = "";
+                    $pph = "0%";
+                    $pph21 = 1;
+                    if ($item->us_pang_golongan == NULL || $item->us_pang_golongan == "") {
                     } else {
-                        $pph21 = 0;
-                        $pph = "0%";
+                        $pang = explode("/", $item->us_pang_golongan);
+                        if ($pang[0] == "III" || $pang[0] == "IX") {
+                            $pph21 = (5 / 100);
+                            $pph = "5%";
+                        } else if ($pang[0] == "IV") {
+                            $pph21 = (15 / 100);
+                            $pph = "15%";
+                        } else {
+                            $pph21 = 0;
+                            $pph = "0%";
+                        }
                     }
-                }
 
-                if (($item->lampiran_cuti == NULL || $item->lampiran_cuti == "") && ($item->lampiran_pensiun == NULL || $item->lampiran_pensiun == "") && ($item->lampiran_kematian == NULL || $item->lampiran_kematian == "")) {
-                    $keterangan .= "- ";
-                }
+                    if (($item->lampiran_cuti == NULL || $item->lampiran_cuti == "") && ($item->lampiran_pensiun == NULL || $item->lampiran_pensiun == "") && ($item->lampiran_kematian == NULL || $item->lampiran_kematian == "")) {
+                        $keterangan .= "- ";
+                    }
 
-                if (!($item->lampiran_cuti == NULL || $item->lampiran_cuti == "")) {
-                    $keterangan .= "Cuti ";
-                }
+                    if (!($item->lampiran_cuti == NULL || $item->lampiran_cuti == "")) {
+                        $keterangan .= "Cuti ";
+                    }
 
-                if (!($item->lampiran_pensiun == NULL || $item->lampiran_pensiun == "")) {
-                    $keterangan .= "Pensiun ";
-                }
+                    if (!($item->lampiran_pensiun == NULL || $item->lampiran_pensiun == "")) {
+                        $keterangan .= "Pensiun ";
+                    }
 
-                if (!($item->lampiran_kematian == NULL || $item->lampiran_kematian == "")) {
-                    $keterangan .= "Kematian ";
-                }
+                    if (!($item->lampiran_kematian == NULL || $item->lampiran_kematian == "")) {
+                        $keterangan .= "Kematian ";
+                    }
 
-                $itemCreate = [
-                    $key + 1,
-                    substr($item->nuptk, 0),
-                    $item->nama,
-                    $item->tempat_tugas,
-                    substr($item->nip, 0),
-                    $item->us_pang_golongan,
-                    $item->us_pang_mk_tahun,
-                    $item->us_gaji_pokok,
-                    3,
-                    $item->us_gaji_pokok * 3,
-                    ($item->us_gaji_pokok * 3) * 0.01,
-                    ($item->us_gaji_pokok * 3) * $pph21,
-                    ($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21),
-                    substr($item->no_rekening, 0),
-                    $item->npsn,
-                    $item->kecamatan,
-                    $item->bentuk_pendidikan,
-                    $keterangan,
-                    $item->verifikator,
-                ];
-                // $worksheet->getStyle('B' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                // $worksheet->getStyle('E' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                // $worksheet->getStyle('N' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                // $worksheet->getStyle('O' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                $worksheet->fromArray($itemCreate, NULL, 'A' . $row);
-                // $worksheet->getStyle('B' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                // $worksheet->getStyle('E' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                // $worksheet->getStyle('N' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                // $worksheet->getStyle('O' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                $row++;
+                    $itemCreate = [
+                        $key + 1,
+                        substr($item->nuptk, 0),
+                        $item->nama,
+                        $item->tempat_tugas,
+                        substr($item->nip, 0),
+                        $item->us_pang_golongan,
+                        $item->us_pang_mk_tahun,
+                        $item->us_gaji_pokok,
+                        3,
+                        $item->us_gaji_pokok * 3,
+                        ($item->us_gaji_pokok * 3) * 0.01,
+                        ($item->us_gaji_pokok * 3) * $pph21,
+                        ($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21),
+                        substr($item->no_rekening, 0),
+                        $item->npsn,
+                        $item->kecamatan,
+                        $item->bentuk_pendidikan,
+                        $keterangan,
+                        $item->verifikator,
+                    ];
+                    // $worksheet->getStyle('B' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    // $worksheet->getStyle('E' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    // $worksheet->getStyle('N' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    // $worksheet->getStyle('O' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    $worksheet->fromArray($itemCreate, NULL, 'A' . $row);
+                    // $worksheet->getStyle('B' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    // $worksheet->getStyle('E' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    // $worksheet->getStyle('N' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    // $worksheet->getStyle('O' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    $row++;
+                }
             }
 
             // Menyiapkan objek writer untuk menulis file Excel
