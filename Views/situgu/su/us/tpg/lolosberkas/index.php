@@ -28,15 +28,20 @@
                         <div class="row">
                             <div class="col-6">
                                 <h4 class="card-title">Data Usulan TPG Lolos Berkas</h4>
+                                <div><a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionDownload(this);"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download</a>&nbsp;&nbsp;</div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label for="_filter_tw" class="col-form-label">Filter Status:</label>
+                                    <label for="_filter_tw" class="col-form-label">Filter TW:</label>
                                     <select class="form-control filter-tw" id="_filter_tw" name="_filter_tw" required>
                                         <option value="">--Pilih--</option>
-                                        <option value="0">Antrian</option>
-                                        <option value="1">Ditolak</option>
-                                        <option value="pghm">PGHM</option>
+                                        <?php if (isset($tws)) {
+                                            if (count($tws) > 0) {
+                                                foreach ($tws as $key => $value) { ?>
+                                                    <option value="<?= $value->id ?>">Tahun <?= $value->tahun ?> - TW. <?= $value->tw ?></option>
+                                        <?php }
+                                            }
+                                        } ?>
                                     </select>
                                     <div class="help-block _filter_tw"></div>
                                 </div>
@@ -112,6 +117,29 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
+    function actionDownload(event) {
+        const tw = $('#filter_tw').val();
+        if (tw === undefined || tw === "") {
+            const linkSource = "<?= base_url('situgu/su/us/tpg/lolosberkas/download') ?>?tw=<?= $tw->id ?>";
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.onclick = function() {
+                window.open(this.href);
+                return false;
+            };
+            downloadLink.click();
+        } else {
+            const linkSource = "<?= base_url('situgu/su/us/tpg/lolosberkas/download') ?>?tw=" + tw;
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.onclick = function() {
+                window.open(this.href);
+                return false;
+            };
+            downloadLink.click();
+        }
+    }
+
     function actionDetail(id, id_ptk, tw, nama) {
         $.ajax({
             url: "./detail",
@@ -203,7 +231,8 @@
                 "url": "./getAll",
                 "type": "POST",
                 "data": function(data) {
-                    data.tw = '<?= $tw->id ?>';
+                    data.tw_active = '<?= $tw->id ?>';
+                    data.tw = $('#filter_tw').val();
                 }
             },
             language: {
