@@ -203,4 +203,12 @@ class Lolosberkas extends BaseController
             }
         }
     }
+
+    public function download()
+    {
+        $tw = htmlspecialchars($this->request->getGet('tw'), true);
+        if ($tw == "") {
+            return view('404');
+        }
+    }
 }
