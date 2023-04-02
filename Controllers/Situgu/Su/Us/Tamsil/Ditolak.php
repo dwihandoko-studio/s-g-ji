@@ -91,7 +91,7 @@ class Ditolak extends BaseController
             $row[] = $list->nik;
             $row[] = $list->nuptk;
             $row[] = $list->jenis_ptk;
-            $row[] = $list->created_at;
+            $row[] = $list->date_reject;
 
             $data[] = $row;
         }

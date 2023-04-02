@@ -97,6 +97,14 @@ class Dapodik extends BaseController
                 ->where('a.id_ptk', $user->data->ptk_id)->get()->getRowObject();
 
             if ($current) {
+                $tw = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
+                $canGrantedPengajuan = canGrantedPengajuan($current->id, $tw);
+
+                if ($canGrantedPengajuan && $canGrantedPengajuan->code !== 200) {
+                    return json_encode($canGrantedPengajuan);
+                }
+
+
                 $data['data'] = $current;
                 $response = new \stdClass;
                 $response->status = 200;
