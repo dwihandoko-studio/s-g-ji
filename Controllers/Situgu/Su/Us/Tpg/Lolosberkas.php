@@ -333,10 +333,10 @@ class Lolosberkas extends BaseController
         $util = \CodeIgniter\Database\Config::utils();
 
         // Get the data from the MySQL table
-        $query = $this->_db->query("SELECT * FROM _ptk_tb LIMIT 10");
+        $query = $this->_db->table('_ptk_tb')->limit(10)->get()->getResult();
 
         // Format the column as text
-        foreach ($query->get()->getResult() as $row) {
+        foreach ($query as $row) {
             $data[] = array(
                 'nama' => "\t" . $row->nama,
                 'nik' => "\t" . $row->nik,
