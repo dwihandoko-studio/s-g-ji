@@ -94,14 +94,13 @@
                 <input type="text" class="form-control" value="<?= $data->email ?>" readonly />
             </div>
             <div class="col-lg-6">
-                <label class="col-form-label">No Hanphone Dapodik:</label>
+                <label class="col-form-label">No Handphone Dapodik:</label>
                 <input type="text" class="form-control" value="<?= $data->no_hp ?>" readonly />
             </div>
         </div>
         <hr />
         <div class="row mt-2">
             <h2>DATA PENUGASAN</h2>
-
             <?php switch ($data->bidang_studi_sertifikasi) {
                 case '':
                     echo '<div class="col-lg-6">
@@ -164,7 +163,7 @@
                                             <td><?= $v->nomor_surat_tugas ?></td>
                                             <td><?= $v->tanggal_surat_tugas ?></td>
                                             <td><?= $v->ptk_induk == "1" ? '<span class="badge badge-pill badge-soft-success">INDUK</span>' : '<span class="badge badge-pill badge-soft-warning">NON INDUK</span>' ?></td>
-                                            <td><?= $v->jumlah_total_jam_mengajar_perminggu ?> Jam</td>
+                                            <td><?= $v->jumlah_total_jam_mengajar_perminggu == NULL ? ($v->jenis_ptk == 'Kepala Sekolah' && $v->status_keaktifan == 'Aktif' && $v->jenis_keluar == NULL && $v->ptk_induk == '1' ? '24' : $v->jumlah_total_jam_mengajar_perminggu) : $v->jumlah_total_jam_mengajar_perminggu ?> Jam</td>
                                         </tr>
                                     <?php }
                                 } else { ?>
@@ -180,6 +179,88 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">NPSN:</label>
+                <div><?= $data->npsn ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Tempat Tugas:</label>
+                <div><?= $data->tempat_tugas ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Status Tugas:</label>
+                <div><?= $data->status_tugas ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Kecamatan:</label>
+                <div><?= $data->kecamatan_sekolah ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Status PTK:</label>
+                <div><?= $data->status_kepegawaian ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Mapel Diajarkan:</label>
+                <div><?= $data->mapel_diajarkan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Pendidikan Terakhir:</label>
+                <div><?= $data->pendidikan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Bidang Studi Pendidikan:</label>
+                <div><?= $data->bidang_studi_pendidikan ?></div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">SK Pengangkatan:</label>
+                <input type="text" class="form-control" value="<?= $data->sk_pengangkatan ?>" readonly />
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">TMT Pengangkatan:</label>
+                <input type="text" class="form-control" value="<?php switch ($data->tmt_pengangkatan) {
+                                                                    case '':
+                                                                        echo '';
+                                                                        break;
+                                                                    case '-':
+                                                                        echo '';
+                                                                        break;
+                                                                    case NULL:
+                                                                        echo '';
+                                                                        break;
+                                                                    case '1900-01-01':
+                                                                        echo '';
+                                                                        break;
+
+                                                                    default:
+                                                                        echo $data->tmt_pengangkatan;
+                                                                        break;
+                                                                } ?>" readonly />
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">SK CPNS:</label>
+                <input type="text" class="form-control" value="<?= $data->sk_cpns ?>" readonly />
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Tanggal CPNS:</label>
+                <input type="text" class="form-control" value="<?php switch ($data->tgl_cpns) {
+                                                                    case '':
+                                                                        echo '';
+                                                                        break;
+                                                                    case '-':
+                                                                        echo '';
+                                                                        break;
+                                                                    case NULL:
+                                                                        echo '';
+                                                                        break;
+                                                                    case '1900-01-01':
+                                                                        echo '';
+                                                                        break;
+
+                                                                    default:
+                                                                        echo $data->tgl_cpns;
+                                                                        break;
+                                                                } ?>" readonly />
             </div>
         </div>
         <hr />
@@ -217,9 +298,10 @@
                         <label class="col-form-label">Pangkat Golongan:</label>
                         <div class="input-group">
                             <input type="text" class="form-control" aria-describedby="pangkat_golongan" aria-label="PANGKAT GOLONGAN" value="<?= $data->us_pang_golongan ?>" readonly />
-                            <?php if ($data->us_pang_jenis == 'pangkat') { ?>
+                            <?php if ($data->lampiran_pangkat !== NULL) { ?>
                                 <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pangkat') . '/' . $data->lampiran_pangkat ?>" id="nik">Lampiran Pangkat</a>
-                            <?php } else if ($data->us_pang_jenis == 'kgb') { ?>
+                            <?php } ?>
+                            <?php if ($data->lampiran_kgb !== NULL) { ?>
                                 <a class="btn btn-primary" target="popup" onclick="window.open('<?= base_url('upload/ptk/kgb') . '/' . $data->lampiran_kgb ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/kgb') . '/' . $data->lampiran_kgb ?>" id="nik">Lampiran KGB</a>
                             <?php } ?>
                         </div>
@@ -238,7 +320,7 @@
                     </div>
                     <div class="col-sm-3">
                         <label class="col-form-label">MK Tahun:</label>
-                        <input type="text" class="form-control" value="<?= rpAwalan($data->us_pang_mk_tahun) ?>" readonly />
+                        <input type="text" class="form-control" value="<?= $data->us_pang_mk_tahun ?>" readonly />
                     </div>
                     <div class="col-sm-3">
                         <label class="col-form-label">MK Bulan:</label>
@@ -246,7 +328,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label class="col-form-label">Gaji Pokok:</label>
-                        <input type="text" class="form-control" value="<?= rpAwalan($data->us_gaji_pokok) ?>" readonly />
+                        <input type="text" class="form-control" value="<?= rpAwalan($data->gaji_pokok_referensi) ?>" readonly />
                     </div>
                 </div>
             </div>
@@ -259,6 +341,18 @@
                 <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/sekolah/slip-gaji') . '/' . $data->lampiran_slip_gaji ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/slip-gaji') . '/' . $data->lampiran_slip_gaji ?>" id="nik">
                     Slip Gaji
                 </a>
+                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/pernyataanindividu') . '/' . $data->lampiran_pernyataan ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pernyataanindividu') . '/' . $data->lampiran_pernyataan ?>" id="nik">
+                    Pernyataan 24 Jam
+                </a>
+                <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/sekolah/sptjm') . '/' . $data->lampiran_sptjm ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/sptjm') . '/' . $data->lampiran_sptjm ?>" id="nik">
+                    SPTJM USULAN
+                </a>
+                <?php if ($data->lampiran_impassing === null || $data->lampiran_impassing === "") {
+                } else { ?>
+                    <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/impassing') . '/' . $data->lampiran_impassing ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/impassing') . '/' . $data->lampiran_impassing ?>" id="nik">
+                        Inpassing
+                    </a>
+                <?php } ?>
                 <?php if ($data->lampiran_cuti === null || $data->lampiran_cuti === "") {
                 } else { ?>
                     <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('upload/ptk/keterangancuti') . '/' . $data->lampiran_cuti ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/keterangancuti') . '/' . $data->lampiran_cuti ?>" id="nik">
@@ -302,6 +396,10 @@
             <div class="col-lg-12">
                 <label class="col-form-label">Keterangan Penolakan:</label>
                 <textarea role="10" class="form-control" readonly><?= $data->keterangan_reject ?></textarea>
+            </div>
+            <div class="col-lg-12 mt-2">
+                <label class="col-form-label">Verifikator:</label>
+                <input type="text" class="form-control" value="<?= $data->verifikator ?>" readonly />
             </div>
         </div>
     </div>

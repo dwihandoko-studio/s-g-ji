@@ -180,8 +180,9 @@ class Lolosberkas extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
             $current = $this->_db->table('v_lolosberkas_usulan_tpg a')
-                ->select("a.*, b.kecamatan as kecamatan_sekolah")
+                ->select("a.*, b.kecamatan as kecamatan_sekolah, c.fullname as verifikator")
                 ->join('ref_sekolah b', 'a.npsn = b.npsn')
+                ->join('_profil_users_tb c', 'a.admin_approve = c.id', 'LEFT')
                 ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
