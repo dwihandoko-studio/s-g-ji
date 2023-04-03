@@ -41,6 +41,7 @@
                             <div class="dropdown-menu" aria-labelledby="topnav-sptjm">
                                 <a href="<?= base_url('situgu/adm/sptjm/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-sptjm-tpg">Tunjangan Profesi Guru</a>
                                 <a href="<?= base_url('situgu/adm/sptjm/tamsil') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "tamsil") ? ' active-menu-href' : '' ?>" key="t-sptjm-tamsil">Tamsil</a>
+                                <a href="<?= base_url('situgu/adm/sptjm/verifikasi') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "verifikasi") ? ' active-menu-href' : '' ?>" key="t-sptjm-tamsil">Verifikasi</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
