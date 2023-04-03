@@ -8,9 +8,9 @@ use CodeIgniter\Model;
 class LolosberkasModel extends Model
 {
     protected $table = "_tb_usulan_detail_tamsil a";
-    protected $column_order = array(null, null, 'a.kode_usulan', 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'a.date_approve');
-    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama', 'a.kode_usulan');
-    protected $order = array('a.date_approve' => 'asc');
+    protected $column_order = array(null, null, 'a.kode_usulan', 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'a.admin_approve');
+    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
+    protected $order = array('a.admin_approve' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -54,8 +54,21 @@ class LolosberkasModel extends Model
         $this->dt->whereIn('a.status_usulan', [2]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
-
                 $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+            } else {
+                if ($this->request->getPost('tw_active')) {
+                    if ($this->request->getPost('tw_active') !== "") {
+
+                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                    }
+                }
+            }
+        } else {
+            if ($this->request->getPost('tw_active')) {
+                if ($this->request->getPost('tw_active') !== "") {
+
+                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                }
             }
         }
         $this->_get_datatables_query();
@@ -71,8 +84,21 @@ class LolosberkasModel extends Model
         $this->dt->whereIn('a.status_usulan', [2]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
-
                 $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+            } else {
+                if ($this->request->getPost('tw_active')) {
+                    if ($this->request->getPost('tw_active') !== "") {
+
+                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                    }
+                }
+            }
+        } else {
+            if ($this->request->getPost('tw_active')) {
+                if ($this->request->getPost('tw_active') !== "") {
+
+                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                }
             }
         }
         $this->_get_datatables_query();
@@ -86,8 +112,21 @@ class LolosberkasModel extends Model
         $this->dt->whereIn('a.status_usulan', [2]);
         if ($this->request->getPost('tw')) {
             if ($this->request->getPost('tw') !== "") {
-
                 $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+            } else {
+                if ($this->request->getPost('tw_active')) {
+                    if ($this->request->getPost('tw_active') !== "") {
+
+                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                    }
+                }
+            }
+        } else {
+            if ($this->request->getPost('tw_active')) {
+                if ($this->request->getPost('tw_active') !== "") {
+
+                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+                }
             }
         }
         $this->_get_datatables_query();
