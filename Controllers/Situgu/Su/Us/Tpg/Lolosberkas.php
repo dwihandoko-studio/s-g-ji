@@ -333,22 +333,22 @@ class Lolosberkas extends BaseController
         $util = \CodeIgniter\Database\Config::utils();
 
         // Get the data from the MySQL table
-        $query = $this->_db->table('_ptk_tb')->limit(10)->get()->getResult();
+        $query = $this->_db->table('_ptk_tb')->limit(10);
 
         // Format the column as text
-        foreach ($query as $row) {
-            $data[] = array(
-                'nama' => "\t" . $row->nama,
-                'nik' => "\t" . $row->nik,
-                'nuptk' => "\t" . $row->nuptk,
-                'nip' => "\t" . $row->nip,
-                'no_rekening' => "\t" . $row->no_rekening,
-                'cabang_bank' => "\t" . $row->cabang_bank
-            );
-        }
+        // foreach ($query as $row) {
+        //     $data[] = array(
+        //         'nama' => "\t" . $row->nama,
+        //         'nik' => "\t" . $row->nik,
+        //         'nuptk' => "\t" . $row->nuptk,
+        //         'nip' => "\t" . $row->nip,
+        //         'no_rekening' => "\t" . $row->no_rekening,
+        //         'cabang_bank' => "\t" . $row->cabang_bank
+        //     );
+        // }
 
         // Create an Excel file
-        $xls = $util->getXMLFromResult($data);
+        $xls = $util->getXMLFromResult($query->get());
         // $xls = $util->getXMLFromResult($data, "\t");
 
         // Set the headers to download the file
