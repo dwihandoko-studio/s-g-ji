@@ -339,7 +339,7 @@ class Lolosberkas extends BaseController
                     $worksheet->setCellValueExplicit("O" . $row, (string)$item->npsn, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
                     $worksheet->getCell('P' . $row)->setValue($item->kecamatan);
                     $worksheet->getCell('Q' . $row)->setValue($item->bentuk_pendidikan);
-                    $worksheet->getCell('R' . $row)->setValue($item->keterangan);
+                    $worksheet->getCell('R' . $row)->setValue($keterangan);
                     $worksheet->getCell('S' . $row)->setValue($item->verifikator);
 
                     // $worksheet->setCellValueExplicit("C" . $row, (string)$item->nama, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
