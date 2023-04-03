@@ -505,7 +505,7 @@ class Tpg extends BaseController
             $dataPtnya = [];
             foreach ($ptks as $key => $v) {
                 $pph = "0%";
-                $pph21 = 1;
+                $pph21 = 0;
                 if ($v->us_pang_golongan == NULL || $v->us_pang_golongan == "") {
                 } else {
                     $pang = explode("/", $v->us_pang_golongan);

@@ -245,7 +245,7 @@ class Lolosberkas extends BaseController
                 foreach ($data as $key => $item) {
                     $keterangan = "";
                     $pph = "0%";
-                    $pph21 = 1;
+                    $pph21 = 0;
                     if ($item->us_pang_golongan == NULL || $item->us_pang_golongan == "") {
                     } else {
                         $pang = explode("/", $item->us_pang_golongan);

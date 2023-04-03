@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Controllers\Situgu\Ks\Sptjm;
+namespace App\Controllers\Situgu\Adm\Sptjm;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Ks\SptjmModel;
+use App\Models\Situgu\Adm\SptjmverifikasiModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use App\Libraries\Profilelib;
-use App\Libraries\Apilib;
 use App\Libraries\Helplib;
-use App\Libraries\Situgu\Kehadiranptklib;
-use App\Libraries\Uuid;
 use App\Libraries\Downloadlib;
 // use Smalot\PdfParser\Parser;
 // use Smalot\PdfParser\Element\Image;
@@ -26,7 +23,7 @@ use PhpOffice\PhpWord\PhpWord;
 use mPDF;
 use PhpOffice\PhpWord\TemplateProcessor;
 
-class Tamsil extends BaseController
+class Verifikasi extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -43,7 +40,7 @@ class Tamsil extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new SptjmModel($request);
+        $datamodel = new SptjmverifikasiModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -75,10 +72,7 @@ class Tamsil extends BaseController
             }
         }
 
-
-        $npsn = $this->_helpLib->getNpsn($userId);
-
-        $lists = $datamodel->get_datatables($npsn, 'tamsil');
+        $lists = $datamodel->get_datatables();
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -89,14 +83,7 @@ class Tamsil extends BaseController
             $action = '<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->kode_usulan . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace("'", "", $list->nama) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>';
-            if ($list->is_locked !== 1) {
-                if ($list->lampiran_sptjm == null || $list->lampiran_sptjm == "") {
-                    $action .= '<a class="dropdown-item" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Upload Lampiran</a>';
-                } else {
-                    $action .= '<a class="dropdown-item" href="javascript:actionEditUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Edit Lampiran</a>';
-                }
-            }
+                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->kode_verifikasi . '\', \'' . $list->kode_usulan . '\', \'' . $list->id_tahun_tw . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>';
             $action .= '</div>
                     </div>';
             // $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->kode_usulan . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace("'", "", $list->nama) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -109,18 +96,20 @@ class Tamsil extends BaseController
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
             $row[] = $action;
-            $row[] = $list->kode_usulan;
+            $row[] = $list->fullname;
+            $row[] = $list->jabatan;
+            $row[] = strtoupper($list->jenis_usulan);
+            $row[] = $list->kode_verifikasi;
             $row[] = $list->tahun;
             $row[] = $list->tw;
             $row[] = $list->jumlah_ptk;
             if ($list->is_locked == 1) {
-                $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/verifikasi/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/verifikasi/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
             } else {
                 if ($list->lampiran_sptjm == null || $list->lampiran_sptjm == "") {
-                    $row[] = '<a class="btn btn-sm btn-primary waves-effect waves-light" target="_blank" href="' . base_url('situgu/ks/sptjm/tamsil/download') . '?id=' . $list->id . '"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download</a>&nbsp;&nbsp;'
-                        . '<a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload</a>';
+                    $row[] = '<span class="badge rounded-pill badge-soft-danger">Belum Generate / Upload</span>';
                 } else {
-                    $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                    $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/verifikasi/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/verifikasi/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
                 }
             }
 
@@ -128,8 +117,8 @@ class Tamsil extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsn, 'tamsil'),
-            "recordsFiltered" => $datamodel->count_filtered($npsn, 'tamsil'),
+            "recordsTotal" => $datamodel->count_all(),
+            "recordsFiltered" => $datamodel->count_filtered(),
             "data" => $data
         ];
         echo json_encode($output);
@@ -137,12 +126,12 @@ class Tamsil extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/ks/sptjm/tamsil/data'));
+        return redirect()->to(base_url('situgu/adm/sptjm/verifikasi/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'SPTJM USULAN TUNJANGAN TAMSIL';
+        $data['title'] = 'SPTJM VERIFIKASI ADMIN, OPK, DAN OPSR';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -153,10 +142,9 @@ class Tamsil extends BaseController
         $id = $this->_helpLib->getPtkId($user->data->id);
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        return view('situgu/ks/sptjm/tamsil/index', $data);
+        return view('situgu/adm/sptjm/verifikasi/index', $data);
     }
-
-    public function add()
+    public function detail()
     {
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -190,35 +178,46 @@ class Tamsil extends BaseController
                     'required' => 'TW tidak boleh kosong. ',
                 ]
             ],
+            'tahun' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tahun tidak boleh kosong. ',
+                ]
+            ],
         ];
 
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('id')
+                . $this->validator->getError('tahun')
                 . $this->validator->getError('tw');
             return json_encode($response);
         } else {
-            $jenis_tunjangan = htmlspecialchars($this->request->getVar('id'), true);
+            $id = htmlspecialchars($this->request->getVar('id'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
+            $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
 
-            $current = $this->_db->table('v_temp_usulan')
-                ->where(['jenis_tunjangan_usulan' => $jenis_tunjangan, 'npsn' => $user->data->npsn, 'status_usulan' => 2, 'id_tahun_tw' => $tw])->get()->getResult();
+            $currents = $this->_db->table('_tb_sptjm_verifikasi a')
+                ->select("a.id, a.kode_verifikasi, a.kode_usulan, a.lampiran_sptjm, a.id_ptks, a.id_tahun_tw, a.aksi, a.keterangan, a.created_at, b.nama as nama_ptk, b.nuptk, b.npsn, b.tempat_tugas as nama_sekolah")
+                ->join('_ptk_tb b', 'a.id_ptks = b.id')
+                ->where('kode_verifikasi', $id)
+                ->get()->getResult();
 
-            if (count($current) > 0) {
-                $data['data'] = $current;
-                $data['tw'] = $tw;
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/ks/sptjm/tamsil/add', $data);
-                return json_encode($response);
-            } else {
+            if (count($currents) < 1) {
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Tidak ada data untuk dibuatkan SPTJM.";
+                $response->message = "SPTJM tidak ditemukan. Silahkan Generate terlebih dahulu.";
                 return json_encode($response);
             }
+
+            $data['data'] = $currents;
+            $data['tw'] = $tw;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situgu/adm/sptjm/verifikasi/detail', $data);
+            return json_encode($response);
         }
     }
 
@@ -250,12 +249,6 @@ class Tamsil extends BaseController
                     'required' => 'TW tidak boleh kosong. ',
                 ]
             ],
-            'ptks' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'PTK terpilih tidak boleh kosong. ',
-                ]
-            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -263,8 +256,7 @@ class Tamsil extends BaseController
             $response->status = 400;
             $response->message = $this->validator->getError('jenis')
                 . $this->validator->getError('tw')
-                . $this->validator->getError('jumlah')
-                . $this->validator->getError('ptks');
+                . $this->validator->getError('jumlah');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -278,82 +270,44 @@ class Tamsil extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTamsil = canUsulTamsil();
-
-            if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
-                return json_encode($canUsulTamsil);
-            }
 
             $jenis = htmlspecialchars($this->request->getVar('jenis'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $jumlah = htmlspecialchars($this->request->getVar('jumlah'), true);
-            $ptks = $this->request->getVar('ptks');
-            if (count($ptks) < 1) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Belum ada data ptk yang dipilih.";
-                return json_encode($response);
-            }
 
             $twActive = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->get()->getRowObject();
             if (!$twActive) {
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Gagal mengenerate SPTJM usulan tamsil. TW active tidak ditemukan.";
+                $response->message = "Gagal mengenerate SPTJM verifikasi TPG. TW active tidak ditemukan.";
                 return json_encode($response);
             }
-
-            $id_ptks = implode(",", $ptks);
 
             $this->_db->transBegin();
 
             try {
-                $this->_db->table('_tb_temp_usulan_detail')->where(['status_usulan' => 2, 'id_tahun_tw' => $twActive->id, 'jenis_tunjangan' => 'tamsil'])->whereIn('id_ptk', $ptks)->update(['status_usulan' => 5, 'updated_at' => date('Y-m-d H:i:s')]);
-                if (!($this->_db->affectedRows() > 0)) {
-                    $this->_db->transRollback();
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal mengenerate SPTJM usulan tamsil. gagal mengupdate status.";
-                    return json_encode($response);
-                }
-            } catch (\Throwable $thU) {
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->error = var_dump($thU);
-                $response->message = "Gagal mengenerate SPTJM usulan tamsil. gagal mengupdate status.";
-                return json_encode($response);
-            }
+                $kodeVerifikasi = "VTPG-" . $twActive->tahun . '-' . $twActive->tw . '-' . time();
 
-            try {
-                $uuidLib = new Uuid();
-                $kodeUsulan = "TAMSIL-" . $twActive->tahun . '-' . $twActive->tw . '-' . $user->data->npsn . '-' . time();
-
-                $this->_db->table('_tb_sptjm')->insert(
-                    [
-                        'id' => $uuidLib->v4(),
-                        'kode_usulan' => $kodeUsulan,
-                        'jumlah_ptk' => $jumlah,
-                        'jenis_usulan' => 'tamsil',
-                        'id_ptks' => $id_ptks,
-                        'generate_sptjm' => 0,
-                        'id_tahun_tw' => $twActive->id,
-                        'npsn' => $user->data->npsn,
-                        'kecamatan' => $user->data->kecamatan,
-                        'created_at' => date('Y-m-d H:i:s'),
-                    ]
-                );
+                $this->_db->table('_tb_sptjm_verifikasi')
+                    ->where(['jenis_usulan' => 'tpg', 'generate_sptjm' => 0, 'user_id' => $user->data->id, 'id_tahun_tw' => $tw])
+                    ->update(
+                        [
+                            'generate_sptjm' => 1,
+                            'kode_verifikasi' => $kodeVerifikasi,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]
+                    );
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->message = "SPTJM Usulan Tamsil Tahun {$twActive->tahun} TW {$twActive->tw} berhasil digenerate.";
+                    $response->message = "SPTJM Verifikasi TPG Tahun {$twActive->tahun} TW {$twActive->tw} berhasil digenerate.";
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal Mengenerate SPTJM Usulan Tamsil.";
+                    $response->message = "Gagal Mengenerate SPTJM Verifikasi TPG.";
                     return json_encode($response);
                 }
             } catch (\Throwable $th) {
@@ -361,7 +315,7 @@ class Tamsil extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->error = var_dump($th);
-                $response->message = "Gagal Mengenerate SPTJM Usulan Tamsil.";
+                $response->message = "Gagal Mengenerate SPTJM Verifikasi TPG.";
                 return json_encode($response);
             }
         }
@@ -369,42 +323,6 @@ class Tamsil extends BaseController
 
     public function download()
     {
-        // if ($this->request->getMethod() != 'post') {
-        //     $response = new \stdClass;
-        //     $response->status = 400;
-        //     $response->message = "Permintaan tidak diizinkan";
-        //     return json_encode($response);
-        // }
-
-        // $rules = [
-        //     'id' => [
-        //         'rules' => 'required|trim',
-        //         'errors' => [
-        //             'required' => 'Id tidak boleh kosong. ',
-        //         ]
-        //     ],
-        //     'tahun' => [
-        //         'rules' => 'required|trim',
-        //         'errors' => [
-        //             'required' => 'Title tidak boleh kosong. ',
-        //         ]
-        //     ],
-        //     'tw' => [
-        //         'rules' => 'required|trim',
-        //         'errors' => [
-        //             'required' => 'Id PTK tidak boleh kosong. ',
-        //         ]
-        //     ],
-        // ];
-
-        // if (!$this->validate($rules)) {
-        //     $response = new \stdClass;
-        //     $response->status = 400;
-        //     $response->message = $this->validator->getError('id')
-        //         . $this->validator->getError('tahun')
-        //         . $this->validator->getError('tw');
-        //     return json_encode($response);
-        // } else {
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -417,130 +335,70 @@ class Tamsil extends BaseController
         }
 
         $id = htmlspecialchars($this->request->getGet('id'), true);
-        // $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
-        // $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
-        $current = $this->_db->table('_tb_sptjm')->where('id', $id)->get()->getRowObject();
-        if (!$current) {
+        $currents = $this->_db->table('_tb_sptjm_verifikasi a')
+            ->select("a.id, a.kode_verifikasi, a.kode_usulan, a.id_ptks, a.id_tahun_tw, a.aksi, a.keterangan, a.created_at, b.nama as nama_ptk, b.nuptk, b.npsn, b.tempat_tugas as nama_sekolah")
+            ->join('_ptk_tb b', 'a.id_ptks = b.id')
+            ->where('kode_verifikasi', $id)
+            ->where("lampiran_sptjm IS NULL")
+            ->get()->getResult();
+        if (count($currents) < 1) {
             $response = new \stdClass;
             $response->status = 400;
             $response->message = "SPTJM tidak ditemukan. Silahkan Generate terlebih dahulu.";
             return json_encode($response);
         }
 
-        $ptks = explode(",", $current->id_ptks);
-        $dataPtks = [];
-        foreach ($ptks as $key => $value) {
-            $ptk = $this->_db->table('v_temp_usulan')->where(['id_ptk_usulan' => $value, 'status_usulan' => 5, 'jenis_tunjangan_usulan' => 'tamsil'])->get()->getRowObject();
-            if ($ptk) {
-                $dataPtks[] = $ptk;
-            }
-        }
-
-        $sekolah = $this->_db->table('ref_sekolah')->where('npsn', $user->data->npsn)->get()->getRowObject();
-        if (!$sekolah) {
+        $twActive = $this->_db->table('_ref_tahun_tw')->where('id', $currents[0]->id_tahun_tw)->get()->getRowObject();
+        if (!$twActive) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = "Referensi sekolah tidak ditemukan.";
+            $response->message = "Gagal mendowload SPTJM verifikasi TPG. TW active tidak ditemukan.";
             return json_encode($response);
         }
 
-        $idUser = $this->_helpLib->getPtkId($user->data->id);
-        $ks = $this->_db->table('_ptk_tb')->where('id', $idUser)->get()->getRowObject();
+        $userDetail = $this->_db->table('_profil_users_tb')->where('id', $user->data->id)->get()->getRowObject();
 
-        return $this->_download($dataPtks, $sekolah, $ks, $current);
+        return $this->_download($currents, $user->data, $twActive, $userDetail);
         // }
     }
 
-    private function _download($ptks, $sekolah, $ks, $usulan)
+    private function _download($ptks, $user, $tw, $userDetail)
     {
         if (count($ptks) > 0) {
-            $file = FCPATH . "upload/template/sptjm-tamsil-new-1.docx";
+            $file = FCPATH . "upload/template/sptjm-verifikasi-tpg-new-1.docx";
             $template_processor = new TemplateProcessor($file);
-            $template_processor->setValue('NAMA_SEKOLAH', $sekolah->nama);
-            $template_processor->setValue('NPSN_SEKOLAH', $sekolah->npsn);
-            $alamat = $sekolah->alamat_jalan ? ($sekolah->alamat_jalan !== "" ? $sekolah->alamat_jalan : "-") : "-";
-            $template_processor->setValue('ALAMAT_SEKOLAH', $alamat);
-            $template_processor->setValue('KECAMATAN_SEKOLAH', $sekolah->kecamatan);
-            $template_processor->setValue('KABUPATEN_SEKOLAH', getenv('setting.utpg.kabupaten'));
-            $template_processor->setValue('PROV_SEKOLAH', getenv('setting.utpg.provinsi'));
-            $no_telp = $sekolah->no_telepon ? ($sekolah->no_telepon !== "" ? $sekolah->no_telepon : "-") : "-";
-            $template_processor->setValue('TELP_SEKOLAH', $no_telp);
-            $email = $sekolah->email ? ($sekolah->email !== "" ? $sekolah->email : "-") : "-";
-            $template_processor->setValue('EMAIL_SEKOLAH', $no_telp);
-            $template_processor->setValue('TW_TW', $ptks[0]->tw_tw);
-            $template_processor->setValue('TW_TAHUN', $ptks[0]->tw_tahun);
-            $template_processor->setValue('NOMOR_SPTJM', $usulan->kode_usulan);
-            $nama_ks = "";
-            if ($ks->gelar_depan && ($ks->gelar_depan !== "" || $ks->gelar_depan !== "-")) {
-                $nama_ks .= $ks->gelar_depan;
-            }
-            $nama_ks .= $ks->nama;
-            if ($ks->gelar_belakang && ($ks->gelar_belakang !== "" || $ks->gelar_belakang !== "-")) {
-                $nama_ks .= $ks->gelar_belakang;
-            }
-            $template_processor->setValue('NAMA_KS', $nama_ks);
-            $jabatan_ks = $ks->jabatan_ks_plt ? ($ks->jabatan_ks_plt == 0 ? "Kepala Sekolah" : "Plt. Kepala Sekolah") : "Kepala Sekolah";
-            $template_processor->setValue('JABATAN_KS', $jabatan_ks);
-            $template_processor->setValue('JUMLAH_PTK', $usulan->jumlah_ptk);
+            $template_processor->setValue('TW_TW', $tw->tw);
+            $template_processor->setValue('TW_TAHUN', $tw->tahun);
+            $template_processor->setValue('NOMOR_SPTJM', $ptks[0]->kode_verifikasi);
+
+            $template_processor->setValue('NAMA_ADMIN', $user->fullname);
+            $jabatan = $user->role_user == 3 ? 'Admin Kecamatan' : 'Admin Sub Rayon';
+            $template_processor->setValue('JABATAN_ADMIN', $jabatan);
+            $userD = $userDetail->jabatan == NULL || $userDetail->jabatan == "" ? '' : $userDetail->jabatan;
+            $template_processor->setValue('KECAMATAN_SUB._RAYON', $userD);
+            $template_processor->setValue('KECAMATAN_SUB_RAYON', $userD);
+            $template_processor->setValue('JUMLAH_PTK', count($ptks));
             $template_processor->setValue('TANGGAL_SPTJM', tgl_indo(date('Y-m-d')));
-            if ($ptks[0]->tw_tw == 1) {
-                $template_processor->setValue('BL_TO_BL', "Januari s/d Maret");
-            } else if ($ptks[0]->tw_tw == 2) {
-                $template_processor->setValue('BL_TO_BL', "Mei s/d Juni");
-            } else if ($ptks[0]->tw_tw == 3) {
-                $template_processor->setValue('BL_TO_BL', "Juli s/d September");
-            } else if ($ptks[0]->tw_tw == 4) {
-                $template_processor->setValue('BL_TO_BL', "Oktober s/d Desember");
-            }
-            $nipKs = "";
-            if ($ks->nip && ($ks->nip !== "" || $ks->nip !== "-")) {
-                $nipKs .= $ks->nip;
-            } else {
-                $nipKs .= "-";
-            }
-            $template_processor->setValue('NIP_KS', $nipKs);
 
             $dataPtnya = [];
             foreach ($ptks as $key => $v) {
-                $pph = "0%";
-                $pph21 = 0;
-                if ($v->us_pang_golongan == NULL || $v->us_pang_golongan == "") {
-                } else {
-                    $pang = explode("/", $v->us_pang_golongan);
-                    if ($pang[0] == "III" || $pang[0] == "IX") {
-                        $pph21 = (5 / 100);
-                        $pph = "5%";
-                    } else if ($pang[0] == "IV") {
-                        $pph21 = (15 / 100);
-                        $pph = "15%";
-                    } else {
-                        $pph21 = 0;
-                        $pph = "0%";
-                    }
-                }
-
                 $dataPtnya[] = [
                     'NO' => $key + 1,
+                    'KODE_USULAN' => $v->kode_usulan,
+                    'NAMA_PTK' => $v->nama_ptk,
                     'NUPTK' => $v->nuptk,
-                    'NIP' => $v->nip,
-                    'NAMA' => $v->nama,
-                    'GOL' => $v->us_pang_golongan,
-                    'TH' => $v->us_pang_mk_tahun,
-                    'BL' => $v->us_pang_mk_bulan,
-                    'JB' => 3,
-                    'JU' => rpTanpaAwalan(($v->us_gaji_pokok * 3)),
-                    'PPH' => $pph,
-                    'JD' => rpTanpaAwalan(($v->us_gaji_pokok * 3) - (($v->us_gaji_pokok * 3) * $pph21)),
-                    'NPWP' => $v->npwp,
-                    'NOREK' => $v->no_rekening,
-                    'BANK' => $v->cabang_bank,
+                    'NPSN' => $v->npsn,
+                    'NAMA_SEKOLAH' => $v->nama_sekolah,
+                    'STATUS' => $v->aksi,
+                    'KETERANGAN' => $v->keterangan,
+                    'WAKTU' => $v->created_at,
                 ];
             }
             $template_processor->cloneRowAndSetValues('NO', $dataPtnya);
-            $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.lampungtengahkab.go.id/verifiqrcode?token=' . $usulan->kode_usulan . '&choe=UTF-8', 'width' => 150, 'height' => 150, 'ratio' => false));
+            $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.lampungtengahkab.go.id/verifiqrcodev?token=' . $ptks[0]->kode_verifikasi . '&choe=UTF-8', 'width' => 150, 'height' => 150, 'ratio' => false));
 
-            $filed = FCPATH . "upload/generate/sptjm/tamsil/word/" . $usulan->kode_usulan . ".docx";
+            $filed = FCPATH . "upload/generate/verifikasi/tpg/word/" . $ptks[0]->kode_verifikasi . ".docx";
 
             $template_processor->saveAs($filed);
 
@@ -548,12 +406,12 @@ class Tamsil extends BaseController
 
             $downloadLib = new Downloadlib();
 
-            $responseD =  $downloadLib->downloaded($filed, $usulan->kode_usulan . ".pdf", "tamsil");
+            $responseD =  $downloadLib->downloaded($filed, $ptks[0]->kode_verifikasi . ".pdf", "tpg");
 
             return $responseD;
             // if ($responseD->status == 200) {
             //     $filePdf = $responseD->file;
-            $this->response->setHeader('Content-Type', 'application/octet-stream');
+            // $this->response->setHeader('Content-Type', 'application/octet-stream');
             //     $this->response->setHeader('Content-Disposition', 'attachment; filename="' . basename($filePdf) . '"');
             //     $this->response->setHeader('Content-Length', filesize($filePdf));
             //     return $this->response->download($filePdf, null);
@@ -614,20 +472,22 @@ class Tamsil extends BaseController
             $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
-            $current = $this->_db->table('_tb_sptjm')->where(['id' => $id])->get()->getRowObject();
+            $current = $this->_db->table('_tb_sptjm_verifikasi')->where(['kode_verifikasi' => $id])->get()->getResult();
 
-            if (!$current) {
+            if (count($current) < 1) {
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "SPTJM tidak ditemukan.";
                 return json_encode($response);
             }
 
-            if ($current->is_locked == 1) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data PTK dalam SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
-                return json_encode($response);
+            foreach ($current as $key => $value) {
+                if ($value->is_locked == 1) {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Data SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
+                    return json_encode($response);
+                }
             }
 
             $data['data'] = $current;
@@ -637,7 +497,7 @@ class Tamsil extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/ks/sptjm/tamsil/upload_edit', $data);
+            $response->data = view('situgu/adm/sptjm/tpg/upload_edit', $data);
             return json_encode($response);
         }
     }
@@ -704,29 +564,31 @@ class Tamsil extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_tb_sptjm')->where(['id' => $id])->get()->getRowObject();
+            $current = $this->_db->table('_tb_sptjm_verifikasi')->where(['kode_verifikasi' => $id])->get()->getResult();
 
-            if (!$current) {
+            if (count($current) < 1) {
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "SPTJM tidak ditemukan.";
                 return json_encode($response);
             }
 
-            if ($current->is_locked == 1) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data PTK dalam SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
-                return json_encode($response);
+            foreach ($current as $key => $value) {
+                if ($value->is_locked == 1) {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Data SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
+                    return json_encode($response);
+                }
             }
 
             $data = [
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
 
-            $dir = FCPATH . "upload/sekolah/sptjm";
+            $dir = FCPATH . "upload/verifikasi/sptjm";
             $field_db = 'lampiran_sptjm';
-            $table_db = '_tb_sptjm';
+            $table_db = '_tb_sptjm_verifikasi';
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
@@ -744,7 +606,7 @@ class Tamsil extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table($table_db)->where(['id' => $id, 'is_locked' => 0])->update($data);
+                $this->_db->table($table_db)->where(['kode_verifikasi' => $id, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
                 unlink($dir . '/' . $newNamelampiran);
 
@@ -759,7 +621,7 @@ class Tamsil extends BaseController
 
             if ($this->_db->affectedRows() > 0) {
                 try {
-                    unlink($dir . '/' . $current->lampiran_sptjm);
+                    unlink($dir . '/' . $current[0]->lampiran_sptjm);
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
@@ -828,7 +690,7 @@ class Tamsil extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/ks/sptjm/tamsil/upload', $data);
+            $response->data = view('situgu/opsr/sptjm/tpg/upload', $data);
             return json_encode($response);
         }
     }
@@ -895,9 +757,9 @@ class Tamsil extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_tb_sptjm')->where(['id' => $id])->get()->getRowObject();
+            $current = $this->_db->table('_tb_sptjm_verifikasi')->where(['kode_verifikasi' => $id])->get()->getResult();
 
-            if (!$current) {
+            if (count($current) < 1) {
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "SPTJM tidak ditemukan.";
@@ -908,9 +770,9 @@ class Tamsil extends BaseController
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
 
-            $dir = FCPATH . "upload/sekolah/sptjm";
+            $dir = FCPATH . "upload/verifikasi/sptjm";
             $field_db = 'lampiran_sptjm';
-            $table_db = '_tb_sptjm';
+            $table_db = '_tb_sptjm_verifikasi';
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
@@ -928,7 +790,7 @@ class Tamsil extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table($table_db)->where(['id' => $id, 'is_locked' => 0])->update($data);
+                $this->_db->table($table_db)->where(['kode_verifikasi' => $id, 'is_locked' => 0])->update($data);
             } catch (\Exception $e) {
                 unlink($dir . '/' . $newNamelampiran);
 
@@ -942,52 +804,6 @@ class Tamsil extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
-                $ptks = explode(",", $current->id_ptks);
-                $dataPtks = [];
-                foreach ($ptks as $key => $value) {
-                    $ptk = $this->_db->table('_tb_temp_usulan_detail')->where(['id_ptk' => $value, 'status_usulan' => 5, 'jenis_tunjangan' => 'tamsil'])->get()->getRowObject();
-                    if ($ptk) {
-                        $this->_db->table('_tb_usulan_detail_tamsil')->insert([
-                            'id' => $ptk->id,
-                            'kode_usulan' => $current->kode_usulan,
-                            'id_ptk' => $ptk->id_ptk,
-                            'id_tahun_tw' => $ptk->id_tahun_tw,
-                            'us_pang_golongan' => $ptk->us_pang_golongan,
-                            'us_pang_tmt' => $ptk->us_pang_tmt,
-                            'us_pang_tgl' => $ptk->us_pang_tgl,
-                            'us_pang_mk_tahun' => $ptk->us_pang_mk_tahun,
-                            'us_pang_mk_bulan' => $ptk->us_pang_mk_bulan,
-                            'us_pang_jenis' => $ptk->us_pang_jenis,
-                            'us_gaji_pokok' => $ptk->us_gaji_pokok,
-                            'status_usulan' => 0,
-                            'date_approve_ks' => $ptk->admin_approve,
-                            'date_approve_sptjm' => date('Y-m-d H:i:s'),
-                            'created_at' => $ptk->created_at,
-                        ]);
-                        if ($this->_db->affectedRows() > 0) {
-                            $this->_db->table('_tb_temp_usulan_detail')->where(['id' => $ptk->id, 'status_usulan' => 5, 'jenis_tunjangan' => 'tamsil'])->delete();
-                            if ($this->_db->affectedRows() > 0) {
-                                continue;
-                            } else {
-                                unlink($dir . '/' . $newNamelampiran);
-
-                                $this->_db->transRollback();
-                                $response = new \stdClass;
-                                $response->status = 400;
-                                $response->message = "Gagal memindahkan data usulan.";
-                                return json_encode($response);
-                            }
-                        } else {
-                            unlink($dir . '/' . $newNamelampiran);
-
-                            $this->_db->transRollback();
-                            $response = new \stdClass;
-                            $response->status = 400;
-                            $response->message = "Gagal mengupdate data usulan.";
-                            return json_encode($response);
-                        }
-                    }
-                }
 
                 $this->_db->transCommit();
                 $response = new \stdClass;

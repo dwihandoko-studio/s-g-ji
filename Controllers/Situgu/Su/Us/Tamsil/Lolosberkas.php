@@ -229,11 +229,12 @@ class Lolosberkas extends BaseController
             // Mengambil data dari database
             $dataTw = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->get()->getRowObject();
             $query = $this->_db->table('_tb_usulan_detail_tamsil a')
-                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, CONCAT('\'', b.nip) as nip, b.tempat_tugas, b.npsn, CONCAT('\'',b.no_rekening) as no_rekening, CONCAT('\'', b.nuptk) as nuptk, b.jenis_ptk, c.kecamatan, c.bentuk_pendidikan, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
+                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, CONCAT('\'', b.nip) as nip, b.tempat_tugas, b.npsn, CONCAT('\'',b.no_rekening) as no_rekening, CONCAT('\'', b.nuptk) as nuptk, b.jenis_ptk, c.kecamatan, c.bentuk_pendidikan, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian, f.gaji_pokok as gaji_pokok_referensi")
                 ->join('_ptk_tb b', 'a.id_ptk = b.id')
                 ->join('ref_sekolah c', 'b.npsn = c.npsn')
                 ->join('_profil_users_tb d', 'a.admin_approve = d.id')
                 ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
+                ->join('ref_gaji f', 'a.us_pang_golongan = f.pangkat AND (a.us_pang_mk_tahun = f.masa_kerja)', 'LEFT')
                 ->where('a.status_usulan', 2)
                 ->where('a.id_tahun_tw', $tw)
                 ->get();
@@ -245,7 +246,7 @@ class Lolosberkas extends BaseController
                 foreach ($data as $key => $item) {
                     $keterangan = "";
                     $pph = "0%";
-                    $pph21 = 1;
+                    $pph21 = 0;
                     if ($item->us_pang_golongan == NULL || $item->us_pang_golongan == "") {
                     } else {
                         $pang = explode("/", $item->us_pang_golongan);
