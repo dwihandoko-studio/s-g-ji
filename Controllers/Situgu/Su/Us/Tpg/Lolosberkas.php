@@ -330,10 +330,10 @@ class Lolosberkas extends BaseController
 
     public function test()
     {
-        $this->load->dbutil();
+        $util = \CodeIgniter\Database\Config::utils();
 
         // Get the data from the MySQL table
-        $query = $this->db->query("SELECT * FROM _ptk_tb LIMIT 10");
+        $query = $this->_db->query("SELECT * FROM _ptk_tb LIMIT 10");
 
         // Format the column as text
         foreach ($query->result() as $row) {
@@ -348,7 +348,7 @@ class Lolosberkas extends BaseController
         }
 
         // Create an Excel file
-        $xls = $this->dbutil->csv_from_result($data, "\t");
+        $xls = $util->getXMLFromResult($data, "\t");
 
         // Set the headers to download the file
         header('Content-Type: application/vnd.ms-excel');
