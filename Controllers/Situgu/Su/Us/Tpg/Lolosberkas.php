@@ -13,6 +13,7 @@ use App\Libraries\Helplib;
 use App\Libraries\Situgu\Kehadiranptklib;
 use App\Libraries\Uuid;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 // use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
@@ -312,7 +313,7 @@ class Lolosberkas extends BaseController
             }
 
             // Menyiapkan objek writer untuk menulis file Excel
-            $writer = new Xlsx($spreadsheet);
+            $writer = new Xls($spreadsheet);
 
             // Menuliskan file Excel
             $filename = 'data_lolosberkas_usulan_tpg_tahun_' . $dataTw->tahun . '_tw_' . $dataTw->tw . '.xlsx';
@@ -325,5 +326,53 @@ class Lolosberkas extends BaseController
         } catch (\Throwable $th) {
             var_dump($th);
         }
+    }
+
+    public function test()
+    {
+        $this->load->dbutil();
+
+        // Get the data from the MySQL table
+        $query = $this->db->query("SELECT * FROM _ptk_tb LIMIT 10");
+
+        // Format the column as text
+        foreach ($query->result() as $row) {
+            $data[] = array(
+                'nama' => "\t" . $row->nama,
+                'nik' => "\t" . $row->nik,
+                'nuptk' => "\t" . $row->nuptk,
+                'nip' => "\t" . $row->nip,
+                'no_rekening' => "\t" . $row->no_rekening,
+                'cabang_bank' => "\t" . $row->cabang_bank
+            );
+        }
+
+        // Create an Excel file
+        $xls = $this->dbutil->csv_from_result($data, "\t");
+
+        // Set the headers to download the file
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="mytable.xls"');
+        header('Cache-Control: max-age=0');
+
+        // Output the Excel file
+        echo $xls;
+
+        // $this->load->dbutil();
+        // $this->load->helper('download');
+
+        // // Query the database to retrieve the data
+        // $query = $this->db->query("SELECT * FROM your_table");
+        // $data = $this->dbutil->csv_from_result($query);
+
+        // // Modify the data to include formatting column as text
+        // $data = "\t" . str_replace("\n", "\n\t", $data);
+
+        // // Set the appropriate headers for the Excel file, and force the browser to download the file
+        // $filename = 'your_file.xls';
+        // header('Content-Type: application/vnd.ms-excel');
+        // header('Content-Disposition: attachment; filename="' . $filename . '"');
+        // echo $data;
+        // exit;
     }
 }
