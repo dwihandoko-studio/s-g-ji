@@ -348,7 +348,8 @@ class Lolosberkas extends BaseController
         }
 
         // Create an Excel file
-        $xls = $util->getXMLFromResult($data, "\t");
+        $xls = $util->getXMLFromResult($data);
+        // $xls = $util->getXMLFromResult($data, "\t");
 
         // Set the headers to download the file
         header('Content-Type: application/vnd.ms-excel');
