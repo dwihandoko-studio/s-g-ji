@@ -7,7 +7,7 @@
                     <?php if (isset($user)) { ?>
                         <li class="nav-item">
                             <a class="nav-link <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "home") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situgu/su/home') ?>">
-                                <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Dashboards</span>
+                                <i class="bx bx-home-circle me-2"></i>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -28,7 +28,7 @@
                                 <div class="arrow-down"></div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="topnav-verifikasi">
-                                <a href="<?= base_url('situgu/su/verifikasi/pengguna') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pengguna") ? ' active-menu-href' : '' ?>" key="t-verifikasi-pengguna">Pengguna suin Sekolah</a>
+                                <a href="<?= base_url('situgu/su/verifikasi/pengguna') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "pengguna") ? ' active-menu-href' : '' ?>" key="t-verifikasi-pengguna">Pengguna Sekolah</a>
                                 <a href="<?= base_url('situgu/su/verifikasi/ptk') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "ptk") ? ' active-menu-href' : '' ?>" key="t-verifikasi-ptk">Penghapusan PTK</a>
                                 <a href="<?= base_url('situgu/su/verifikasi/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tpg">Tunjangan Profesi Guru</a>
                                 <a href="<?= base_url('situgu/su/verifikasi/tamsil') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tamsil") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tamsil">Tamsil</a>
@@ -62,6 +62,33 @@
                                             <a href="<?= base_url('situgu/su/us/tamsil/ditolak') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "ditolak") ? ' active-menu-href' : '' ?>" key="t-us-ditolak">Ditolak</a>
                                             <a href="<?= base_url('situgu/su/us/tamsil/lolosberkas') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "lolosberkas") ? ' active-menu-href' : '' ?>" key="t-us-lolosberkas">Lolos Verifikasi</a>
                                             <a href="<?= base_url('situgu/su/us/tamsil/prosestransfer') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "us" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "prosestransfer") ? ' active-menu-href' : '' ?>" key="t-us-prosestransfer">Proses Transfer</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "upload") ? ' active-menu-href' : '' ?>" href="javascript:;" id="topnav-upload" role="button">
+                                <i class="bx bx-cloud-upload me-2"></i>
+                                <span key="t-upload"> UPLOAD</span>
+                                <div class="arrow-down"></div>
+                            </a>
+
+                            <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl" aria-labelledby="topnav-upload">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h6> TPG (Sertifikasi)</h6>
+                                        <div>
+                                            <a href="<?= base_url('situgu/su/upload/tpg/matching') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "upload" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "matching") ? ' active-menu-href' : '' ?>" key="t-upload-tpg-matching">Matching Simtun</a>
+                                            <a href="<?= base_url('situgu/su/upload/tpg/skterbit') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "upload" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "skterbit") ? ' active-menu-href' : '' ?>" key="t-upload-tpg-skterbit">SK Terbit</a>
+                                            <a href="<?= base_url('situgu/su/upload/tpg/prosestransfer') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "upload" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "prosestransfer") ? ' active-menu-href' : '' ?>" key="t-upload-tpg-prosestransfer">Proses Transfer</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <h6> TAMSIL</h6>
+                                        <div>
+                                            <a href="<?= base_url('situgu/su/upload/tamsil/prosestransfer') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "upload" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "prosestransfer") ? ' active-menu-href' : '' ?>" key="t-upload-tamsil-prosestransfer">Proses Transfer</a>
                                         </div>
                                     </div>
                                 </div>
