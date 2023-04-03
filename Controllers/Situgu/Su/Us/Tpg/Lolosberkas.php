@@ -218,6 +218,25 @@ class Lolosberkas extends BaseController
             return view('404');
         }
 
+        $dataTw = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->get()->getRowObject();
+        $query = $this->_db->table('_tb_usulan_detail_tpg a')
+            ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nip, b.tempat_tugas, b.npsn, b.no_rekening, b.nuptk, b.jenis_ptk, c.kecamatan, c.bentuk_pendidikan, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
+            ->join('_ptk_tb b', 'a.id_ptk = b.id')
+            ->join('ref_sekolah c', 'b.npsn = c.npsn')
+            ->join('_profil_users_tb d', 'a.admin_approve = d.id')
+            ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
+            ->where('a.status_usulan', 2)
+            ->where('a.id_tahun_tw', $tw)
+            ->get();
+
+        // Menulis data ke dalam worksheet
+        $data = $query->getResult();
+
+        $data['datas'] = $data;
+        $data['tw'] = $dataTw;
+
+        return view('situgu/su/us/tpg/lolosberkas/download', $data);
+
         try {
 
             $spreadsheet = new Spreadsheet();
