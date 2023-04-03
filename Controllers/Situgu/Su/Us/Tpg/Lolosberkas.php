@@ -336,7 +336,7 @@ class Lolosberkas extends BaseController
         $query = $this->_db->query("SELECT * FROM _ptk_tb LIMIT 10");
 
         // Format the column as text
-        foreach ($query->result() as $row) {
+        foreach ($query->get()->getResult() as $row) {
             $data[] = array(
                 'nama' => "\t" . $row->nama,
                 'nik' => "\t" . $row->nik,
