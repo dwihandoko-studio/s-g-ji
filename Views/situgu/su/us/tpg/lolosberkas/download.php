@@ -26,6 +26,7 @@
             <th>NIP</th>
             <th>GOL</th>
             <th>MASA KERJA TAHUN</th>
+            <th>GAJI POKOK PP.15</th>
             <th>JML. BLN</th>
             <th>ML. Uang</th>
             <th>IURAN BPJS 1%</th>
