@@ -413,7 +413,7 @@ class Matching extends BaseController
                     $item['us_keterangan'] = "";
                     $item['keterangan'] = "Belum Mengusulkan";
                     $item['aksi'] = "Aksi";
-                    $item['status'] = "table-light";
+                    $item['status'] = "table-info";
                     $gagal += 1;
                 } else {
                     $keterangan = "";
@@ -528,7 +528,7 @@ class Matching extends BaseController
                         $item['us_keterangan'] = $keterangan;
                         $item['keterangan'] = "Belum Memenuhi Syarat";
                         $item['aksi'] = "Aksi";
-                        $item['status'] = "table-danger";
+                        $item['status'] = "table-warning";
                         $gagal += 1;
                     }
                 }
