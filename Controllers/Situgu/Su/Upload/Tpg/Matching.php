@@ -398,7 +398,7 @@ class Matching extends BaseController
             foreach ($datas['data'] as $key => $v) {
                 $item = [];
                 if ($v['data_usulan'] == NULL || $v['data_usulan'] == "") {
-                    $item['id'] = $key + 1;
+                    $item['number'] = $key + 1;
                     $item['nuptk'] = $v['nuptk'];
                     $item['nama'] = $v['nama'];
                     $item['golongan_code'] = $v['golongan_code'];
@@ -437,7 +437,7 @@ class Matching extends BaseController
 
                         if ($v['golongan'] == "" && !($v['nip'] == NULL || $v['nip'] == "")) {
                             if ("IX" == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
-                                $item['id'] = $key + 1;
+                                $item['number'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
                                 $item['nama'] = $v['nama'];
                                 $item['golongan_code'] = $v['golongan_code'];
@@ -455,7 +455,7 @@ class Matching extends BaseController
                                 $item['status'] = "table-success";
                                 $lolos += 1;
                             } else {
-                                $item['id'] = $key + 1;
+                                $item['number'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
                                 $item['nama'] = $v['nama'];
                                 $item['golongan_code'] = $v['golongan_code'];
@@ -475,7 +475,7 @@ class Matching extends BaseController
                             }
                         } else {
                             if ($v['golongan'] == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
-                                $item['id'] = $key + 1;
+                                $item['number'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
                                 $item['nama'] = $v['nama'];
                                 $item['golongan_code'] = $v['golongan_code'];
@@ -493,7 +493,7 @@ class Matching extends BaseController
                                 $item['status'] = "table-success";
                                 $lolos += 1;
                             } else {
-                                $item['id'] = $key + 1;
+                                $item['number'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
                                 $item['nama'] = $v['nama'];
                                 $item['golongan_code'] = $v['golongan_code'];
@@ -513,7 +513,7 @@ class Matching extends BaseController
                             }
                         }
                     } else {
-                        $item['id'] = $key + 1;
+                        $item['number'] = $key + 1;
                         $item['nuptk'] = $v['nuptk'];
                         $item['nama'] = $v['nama'];
                         $item['golongan_code'] = $v['golongan_code'];
