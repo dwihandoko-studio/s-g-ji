@@ -467,7 +467,7 @@ class Matching extends BaseController
                                 $item['status'] = "danger";
                             }
                         } else {
-                            if ($v->golongan == $v->data_usulan->us_pang_golongan && $v->masa_kerja == $v->data_usulan->us_pang_mk_tahun && $v->gaji_pokok == $v->data_usulan->us_gaji_pokok) {
+                            if ($v['golongan'] == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
                                 $item['id'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
                                 $item['nama'] = $v['nama'];
