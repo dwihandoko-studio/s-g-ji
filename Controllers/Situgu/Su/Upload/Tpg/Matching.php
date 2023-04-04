@@ -93,7 +93,7 @@ class Matching extends BaseController
             //     </a>';
             $row[] = $action;
             // $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
-            $row[] = $list->fullname;
+            $row[] = $list->filename;
             $row[] = 'Tahun ' . $list->tahun . ' - TW.' . $list->tw;
             $row[] = $list->jumlah;
             $row[] = $list->lolos;
