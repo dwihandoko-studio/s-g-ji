@@ -278,7 +278,7 @@
                 });
             };
 
-            sendToServer(data.aksi, 0);
+            sendToServer(dataSendMatching.aksi, 0);
         }
     </script>
 <?php } ?>
