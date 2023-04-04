@@ -93,6 +93,8 @@ class Matching extends BaseController
             $row[] = $action;
             // $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
             $row[] = $list->fullname;
+            $row[] = 'Tahun ' . $list->tahun . ' - TW.' . $list->tw;
+            $row[] = $list->jumlah;
             $row[] = $list->lolos;
             $row[] = $list->gagal;
             $row[] = $list->done;

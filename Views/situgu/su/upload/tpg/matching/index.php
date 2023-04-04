@@ -54,11 +54,13 @@
                                 <tr>
                                     <th data-orderable="false">#</th>
                                     <th data-orderable="false">Aksi</th>
-                                    <th>NAMA</th>
-                                    <th>NIK</th>
-                                    <th>NUPTK</th>
-                                    <th>JENIS PTK</th>
-                                    <th>TANGGAL USULAN</th>
+                                    <th>FILENAME</th>
+                                    <th>TAHUN TW</th>
+                                    <th>JUMLAH</th>
+                                    <th>LOLOS</th>
+                                    <th>GAGAL</th>
+                                    <th>STATUS</th>
+                                    <th>UPLOADED</th>
                                 </tr>
                             </thead>
                         </table>
