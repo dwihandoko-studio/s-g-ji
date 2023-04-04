@@ -186,7 +186,7 @@ class Matching extends BaseController
                 ]
             ],
             '_file' => [
-                'rules' => 'uploaded[_file]|max_size[_file,5120]|mime_in[_file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip,text/html]',
+                'rules' => 'uploaded[_file]|max_size[_file,5120]|mime_in[_file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip]',
                 'errors' => [
                     'uploaded' => 'Pilih file terlebih dahulu. ',
                     'max_size' => 'Ukuran file terlalu besar, Maximum 5Mb. ',
@@ -272,7 +272,8 @@ class Matching extends BaseController
                     'jam_tugas_tambahan' => $data[14],
                     'total_jjm_sesuai' => $data[15],
                     'masa_kerja' => $data[16],
-                    'golongan' => $data[17],
+                    'golongan_code' => $data[17],
+                    'golongan' => getCodePangkatFromMatching($data[17]),
                     'gaji_pokok' => $data[18],
                     'no_rekening' => $data[19],
                     'nama_bank' => $data[20],
@@ -281,8 +282,9 @@ class Matching extends BaseController
                 ];
 
                 $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_detail_tpg a')
-                    ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan")
+                    ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
                     ->join('_ptk_tb b', 'a.id_ptk = b.id')
+                    ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                     ->where('a.status_usulan', 2)
                     ->where('a.id_tahun_tw', $tw)
                     ->where('b.nuptk', $data[5])
@@ -356,7 +358,7 @@ class Matching extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->data = $dataResult;
+                $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $$dataResult);
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {

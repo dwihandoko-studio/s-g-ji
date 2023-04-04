@@ -1262,3 +1262,64 @@ function canVerifikasiTpg()
 		return $response;
 	}
 }
+
+function getCodePangkatFromMatching($code = "")
+{
+	switch ($code) {
+		case '1A - Juru Muda':
+			return 'I/a';
+			break;
+		case '1B - Juru Muda Tingkat I':
+			return 'I/b';
+			break;
+		case '1C - Juru':
+			return 'I/c';
+			break;
+		case '1D - Juru Tingkat I':
+			return 'I/d';
+			break;
+		case '2A - Pengatur Muda':
+			return 'II/a';
+			break;
+		case '2B - Pengatur Muda Tingkat I':
+			return 'II/b';
+			break;
+		case '2C - Pengatur':
+			return 'II/c';
+			break;
+		case '2D - Pengatur Tingkat I':
+			return 'II/d';
+			break;
+		case '3A - Penata Muda':
+			return 'III/a';
+			break;
+		case '3B - Penata Muda Tingkat I':
+			return 'III/b';
+			break;
+		case '3C - Penata':
+			return 'III/c';
+			break;
+		case '3D - Penata Tingkat I':
+			return 'III/d';
+			break;
+		case '4A - Pembina':
+			return 'IV/a';
+			break;
+		case '4B - Pembina Tingkat I':
+			return 'IV/b';
+			break;
+		case '4C - Pembina Utama Muda':
+			return 'IV/c';
+			break;
+		case '4D - Pembina Utama Madya':
+			return 'IV/d';
+			break;
+		case '4E - Pembina Utama':
+			return 'IV/e';
+			break;
+
+		default:
+			return $code;
+			break;
+	}
+}

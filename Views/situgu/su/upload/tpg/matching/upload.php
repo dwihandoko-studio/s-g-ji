@@ -158,15 +158,17 @@
                         }
                     } else {
                         // ambilId("status").innerHTML = resul.message;
-                        ambilId("status").style.color = "green";
-                        ambilId("progressBar").value = 100;
-                        Swal.fire(
-                            'SELAMAT!',
-                            resul.message,
-                            'success'
-                        ).then((valRes) => {
-                            reloadPage();
-                        })
+                        // ambilId("status").style.color = "green";
+                        // ambilId("progressBar").value = 100;
+                        // Swal.fire(
+                        //     'SELAMAT!',
+                        //     resul.message,
+                        //     'success'
+                        // ).then((valRes) => {
+                        //     reloadPage();
+                        // })
+
+                        $('.contentBodyModal').html(resul.data);
                     }
                 },
                 error: function(erro) {
