@@ -1,37 +1,41 @@
 <?php if (isset($data)) { ?>
     <div class="modal-body">
         <div class="row">
-            <div class="col-lg-6 align-self-center">
-                <div class="text-lg-center mt-4 mt-lg-0">
-                    <div class="row">
-                        <div class="col-4">
-                            <div>
-                                <p class="text-muted text-truncate mb-2">Jumlah Data Matching</p>
-                                <h5 class="mb-0 text-info result_total" id="result_total">0</h5>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div>
-                                <p class="text-muted text-truncate mb-2">Jumlah Lolos</p>
-                                <h5 class="mb-0 text-success result_lolos" id="result_lolos">0</h5>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div>
-                                <p class="text-muted text-truncate mb-2">Jumlah Gagal</p>
-                                <h5 class="mb-0 text-danger result_gagal" id="result_gagal">0</h5>
+            <div class="col-lg-12 mb-4">
+                <div class="row">
+                    <div class="col-lg-6 align-self-center">
+                        <div class="text-lg-center mt-4 mt-lg-0">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div>
+                                        <p class="text-muted text-truncate mb-2">Jumlah Data Matching</p>
+                                        <h5 class="mb-0 text-info result_total" id="result_total">0</h5>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div>
+                                        <p class="text-muted text-truncate mb-2">Jumlah Lolos</p>
+                                        <h5 class="mb-0 text-success result_lolos" id="result_lolos">0</h5>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div>
+                                        <p class="text-muted text-truncate mb-2">Jumlah Gagal</p>
+                                        <h5 class="mb-0 text-danger result_gagal" id="result_gagal">0</h5>
 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4 d-none d-lg-block">
-                <div class="clearfix mt-4 mt-lg-0">
-                    <div class="dropdown float-end">
-                        <button class="btn btn-primary" type="button">
-                            <i class="mdi mdi-relation-zero-or-many-to-zero-or-many align-middle me-1"></i> Proses Data
-                        </button>
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="clearfix mt-4 mt-lg-0">
+                            <div class="dropdown float-end content_button_aksi" id="content_button_aksi">
+                                <button class="btn btn-primary" type="button" onclick="aksiMatching(this)">
+                                    <i class="mdi mdi-relation-zero-or-many-to-zero-or-many align-middle me-1"></i> Proses Data
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -230,10 +234,12 @@
         const table = document.getElementById("modals-datatables-datanya");
         const tbody = table.getElementsByTagName("tbody")[0];
 
+        let dataSendMatching;
+
         fetch("./get_data_json?id=<?= $id ?>")
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                dataSendMatching = data;
                 const result_total = document.getElementById("result_total");
                 result_total.textContent = data.total.toString();
                 const result_lolos = document.getElementById("result_lolos");
@@ -298,5 +304,10 @@
                     tbody.appendChild(row);
                 }
             });
+
+        function aksiMatching(event) {
+            event.attr("disabled", "disabled");
+            console.log(dataSendMatching);
+        }
     </script>
 <?php } ?>
