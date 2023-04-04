@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table mb-0 modals-datatables-datanya" id="modals-datatables-datanya">
+                    <table class="table table-bordered border-primary mb-0 modals-datatables-datanya" id="modals-datatables-datanya">
                         <thead>
                             <tr>
                                 <th rowspan="2">#</th>
@@ -216,7 +216,7 @@
                     const usKetCell = document.createElement("td");
                     const ketCell = document.createElement("td");
                     const aksiCell = document.createElement("td");
-                    numberCell.textContent = 0 + i;
+                    numberCell.textContent = data[i].id;
                     nuptkCell.textContent = data[i].nuptk;
                     namaCell.textContent = data[i].nama;
                     golonganCodeCell.textContent = data[i].golongan_code;
@@ -245,6 +245,7 @@
                     row.appendChild(usKetCell);
                     row.appendChild(ketCell);
                     row.appendChild(aksiCell);
+                    row.classList.add(data[i].status);
                     tbody.appendChild(row);
                 }
             });

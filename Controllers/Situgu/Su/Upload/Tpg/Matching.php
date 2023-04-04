@@ -409,7 +409,7 @@ class Matching extends BaseController
                     $item['us_keterangan'] = "";
                     $item['keterangan'] = "Belum Mengusulkan";
                     $item['aksi'] = "Aksi";
-                    $item['status'] = "light";
+                    $item['status'] = "table-light";
                 } else {
                     $keterangan = "";
                     if (($v['data_usulan']['lampiran_cuti'] == NULL || $v['data_usulan']['lampiran_cuti'] == "") && ($v['data_usulan']['lampiran_pensiun'] == NULL || $v['data_usulan']['lampiran_pensiun'] == "") && ($v['data_usulan']['lampiran_kematian'] == NULL || $v['data_usulan']['lampiran_kematian'] == "")) {
@@ -447,7 +447,7 @@ class Matching extends BaseController
                                 $item['us_keterangan'] = $keterangan;
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
-                                $item['status'] = "success";
+                                $item['status'] = "table-success";
                             } else {
                                 $item['id'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
@@ -464,7 +464,7 @@ class Matching extends BaseController
                                 $item['us_keterangan'] = $keterangan;
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
-                                $item['status'] = "danger";
+                                $item['status'] = "table-danger";
                             }
                         } else {
                             if ($v['golongan'] == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
@@ -483,7 +483,7 @@ class Matching extends BaseController
                                 $item['us_keterangan'] = $keterangan;
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
-                                $item['status'] = "success";
+                                $item['status'] = "table-success";
                             } else {
                                 $item['id'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
@@ -500,7 +500,7 @@ class Matching extends BaseController
                                 $item['us_keterangan'] = $keterangan;
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
-                                $item['status'] = "danger";
+                                $item['status'] = "table-danger";
                             }
                         }
                     } else {
@@ -519,7 +519,7 @@ class Matching extends BaseController
                         $item['us_keterangan'] = $keterangan;
                         $item['keterangan'] = "Belum Memenuhi Syarat";
                         $item['aksi'] = "Aksi";
-                        $item['status'] = "danger";
+                        $item['status'] = "table-danger";
                     }
                 }
 
