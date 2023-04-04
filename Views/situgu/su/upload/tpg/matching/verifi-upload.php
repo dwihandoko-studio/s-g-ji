@@ -31,7 +31,7 @@
                     <div class="col-lg-4 d-none d-lg-block">
                         <div class="clearfix mt-4 mt-lg-0">
                             <div class="dropdown float-end">
-                                <button class="btn btn-primary button_aksi_matching" id="button_aksi_matching" type="button" onclick="aksiMatching()" disabled>
+                                <button class="btn btn-primary button_aksi_matching" id="button_aksi_matching" type="button" onclick="aksiMatching()">
                                     <i class="mdi mdi-relation-zero-or-many-to-zero-or-many align-middle me-1"></i> Proses Data
                                 </button>
                             </div>
@@ -93,6 +93,8 @@
     <script>
         const table = document.getElementById("modals-datatables-datanya");
         const tbody = table.getElementsByTagName("tbody")[0];
+        const buttonAksiMatching = document.getElementById("button_aksi_matching");
+        buttonAksiMatching.setAttribute("disabled", true);
 
         let dataSendMatching;
 
@@ -100,8 +102,8 @@
             .then(response => response.json())
             .then(data => {
                 dataSendMatching = data;
-                const buttonAksiMatching1 = document.getElementById("button_aksi_matching");
-                buttonAksiMatching1.setAttribute("disabled", false);
+
+                buttonAksiMatching.setAttribute("disabled", false);
 
                 const result_total = document.getElementById("result_total");
                 result_total.textContent = data.total.toString();
@@ -169,7 +171,7 @@
             });
 
         function aksiMatching() {
-            const buttonAksiMatching = document.getElementById("button_aksi_matching");
+            // const buttonAksiMatching = document.getElementById("button_aksi_matching");
             buttonAksiMatching.setAttribute("disabled", true);
             console.log(dataSendMatching);
         }
