@@ -722,7 +722,7 @@ class Matching extends BaseController
                         return json_encode($response);
                     }
                 } else {
-                    $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $ptk->id_usulan)->update(['status_usulan' => 4, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id, 'keterangan_reject' => $keterangan]);
+                    $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $current->id_usulan)->update(['status_usulan' => 4, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id, 'keterangan_reject' => $keterangan]);
                     if ($this->_db->affectedRows() > 0) {
                         $this->_db->transCommit();
                         $response = new \stdClass;
