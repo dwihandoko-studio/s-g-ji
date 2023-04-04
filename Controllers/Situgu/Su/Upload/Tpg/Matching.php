@@ -415,10 +415,10 @@ class Matching extends BaseController
                     $item['keterangan'] = "Belum Mengusulkan";
                     $item['aksi'] = "Aksi";
                     $item['status'] = "table-info";
-                    $item['id_usulan'] = $v['total_jjm_sesuai'];
-                    $item['kode_usulan'] = $v['total_jjm_sesuai'];
-                    $item['id_ptk'] = $v['total_jjm_sesuai'];
-                    $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
+                    $item['id_usulan'] = $v['id_usulan'];
+                    $item['kode_usulan'] = $v['kode_usulan'];
+                    $item['id_ptk'] = $v['id_ptk'];
+                    $item['id_tahun_tw'] = $v['id_tahun_tw'];
                     $gagal += 1;
                 } else {
                     $keterangan = "";
@@ -458,10 +458,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-success";
-                                $item['id_usulan'] = $v['total_jjm_sesuai'];
-                                $item['kode_usulan'] = $v['total_jjm_sesuai'];
-                                $item['id_ptk'] = $v['total_jjm_sesuai'];
-                                $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
+                                $item['id_usulan'] = $v['id_usulan'];
+                                $item['kode_usulan'] = $v['kode_usulan'];
+                                $item['id_ptk'] = $v['id_ptk'];
+                                $item['id_tahun_tw'] = $v['id_tahun_tw'];
                                 $lolos += 1;
                             } else {
                                 $item['number'] = $key + 1;
@@ -480,10 +480,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-danger";
-                                $item['id_usulan'] = $v['total_jjm_sesuai'];
-                                $item['kode_usulan'] = $v['total_jjm_sesuai'];
-                                $item['id_ptk'] = $v['total_jjm_sesuai'];
-                                $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
+                                $item['id_usulan'] = $v['id_usulan'];
+                                $item['kode_usulan'] = $v['kode_usulan'];
+                                $item['id_ptk'] = $v['id_ptk'];
+                                $item['id_tahun_tw'] = $v['id_tahun_tw'];
                                 $gagal += 1;
                             }
                         } else {
@@ -504,10 +504,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-success";
-                                $item['id_usulan'] = $v['total_jjm_sesuai'];
-                                $item['kode_usulan'] = $v['total_jjm_sesuai'];
-                                $item['id_ptk'] = $v['total_jjm_sesuai'];
-                                $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
+                                $item['id_usulan'] = $v['id_usulan'];
+                                $item['kode_usulan'] = $v['kode_usulan'];
+                                $item['id_ptk'] = $v['id_ptk'];
+                                $item['id_tahun_tw'] = $v['id_tahun_tw'];
                                 $lolos += 1;
                             } else {
                                 $item['number'] = $key + 1;
@@ -526,10 +526,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-danger";
-                                $item['id_usulan'] = $v['total_jjm_sesuai'];
-                                $item['kode_usulan'] = $v['total_jjm_sesuai'];
-                                $item['id_ptk'] = $v['total_jjm_sesuai'];
-                                $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
+                                $item['id_usulan'] = $v['id_usulan'];
+                                $item['kode_usulan'] = $v['kode_usulan'];
+                                $item['id_ptk'] = $v['id_ptk'];
+                                $item['id_tahun_tw'] = $v['id_tahun_tw'];
                                 $gagal += 1;
                             }
                         }
@@ -550,10 +550,10 @@ class Matching extends BaseController
                         $item['keterangan'] = "Belum Memenuhi Syarat";
                         $item['aksi'] = "Aksi";
                         $item['status'] = "table-warning";
-                        $item['id_usulan'] = $v['total_jjm_sesuai'];
-                        $item['kode_usulan'] = $v['total_jjm_sesuai'];
-                        $item['id_ptk'] = $v['total_jjm_sesuai'];
-                        $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
+                        $item['id_usulan'] = $v['id_usulan'];
+                        $item['kode_usulan'] = $v['kode_usulan'];
+                        $item['id_ptk'] = $v['id_ptk'];
+                        $item['id_tahun_tw'] = $v['id_tahun_tw'];
                         $gagal += 1;
                     }
                     $response_aksi[] = $item;
@@ -584,23 +584,11 @@ class Matching extends BaseController
             return json_encode($response);
         }
 
-        var_dump($this->request->getVar());
-    }
-
-    public function detail()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
         $rules = [
-            'id' => [
+            'id_usulan' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
+                    'required' => 'Id usulan tidak boleh kosong. ',
                 ]
             ],
             'id_ptk' => [
@@ -609,16 +597,22 @@ class Matching extends BaseController
                     'required' => 'Id PTK tidak boleh kosong. ',
                 ]
             ],
-            'tw' => [
+            'id_tahun_tw' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'TW tidak boleh kosong. ',
                 ]
             ],
-            'nama' => [
+            'kode_usulan' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
+                    'required' => 'Kode usulan tidak boleh kosong. ',
+                ]
+            ],
+            'status' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Status tidak boleh kosong. ',
                 ]
             ],
         ];
@@ -626,39 +620,113 @@ class Matching extends BaseController
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('id')
+            $response->message = $this->validator->getError('id_usulan')
                 . $this->validator->getError('id_ptk')
-                . $this->validator->getError('tw')
-                . $this->validator->getError('nama');
+                . $this->validator->getError('id_tahun_tw')
+                . $this->validator->getError('status')
+                . $this->validator->getError('kode_usulan');
             return json_encode($response);
         } else {
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
-            $tw = htmlspecialchars($this->request->getVar('tw'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-
-            $current = $this->_db->table('v_lolosberkas_usulan_tpg a')
-                ->select("a.*, b.kecamatan as kecamatan_sekolah, c.lampiran_sptjm, d.gaji_pokok as gaji_pokok_referensi, e.fullname as verifikator")
-                ->join('ref_sekolah b', 'a.npsn = b.npsn')
-                ->join('_tb_sptjm c', 'a.kode_usulan = c.kode_usulan')
-                ->join('ref_gaji d', 'a.us_pang_golongan = d.pangkat AND (a.us_pang_mk_tahun = d.masa_kerja)', 'LEFT')
-                ->join('_profil_users_tb e', 'a.admin_approve = e.id', 'LEFT')
-                ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
-
-            if ($current) {
-                $data['data'] = $current;
-                $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
-                    ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
-                    ->join('ref_sekolah b', 'a.sekolah_id = b.id')
-                    ->where('a.ptk_id', $current->id_ptk)
-                    ->where("a.jenis_keluar IS NULL")
-                    ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
-                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk)->get()->getRowObject();
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
                 $response = new \stdClass;
-                $response->status = 200;
-                $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/upload/tpg/matching/detail', $data);
+                $response->status = 401;
+                $response->message = "Session expired";
                 return json_encode($response);
+            }
+
+            $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
+            $status = htmlspecialchars($this->request->getVar('status'), true);
+            $id_usulan = htmlspecialchars($this->request->getVar('id_usulan'), true);
+            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
+            $tw = htmlspecialchars($this->request->getVar('id_tahun_tw'), true);
+            $kode_usulan = htmlspecialchars($this->request->getVar('kode_usulan'), true);
+
+            $ptk = $this->_db->table('_tb_usulan_detail_tpg_test a')
+                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
+                ->join('_ptk_tb b', 'a.id_ptk = b.id')
+                ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
+                ->where('a.id', $id_usulan)
+                ->where('a.id_tahun_tw', $tw)
+                ->get()->getRowObject();
+
+            if ($ptk) {
+                $this->_db->transBegin();
+
+                if ($status == "table-success") {
+                    $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $ptk->id_usulan)->update(['status_usulan' => 5, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id]);
+
+                    if ($this->_db->affectedRows() > 0) {
+                        $this->_db->table('_tb_usulan_tpg_siap_sk_test')->insert([
+                            'id' => $ptk->id,
+                            'kode_usulan' => $ptk->kode_usulan,
+                            'id_ptk' => $ptk->id_ptk,
+                            'id_tahun_tw' => $ptk->id_tahun_tw,
+                            'us_pang_golongan' => $ptk->us_pang_golongan,
+                            'us_pang_tmt' => $ptk->us_pang_tmt,
+                            'us_pang_tgl' => $ptk->us_pang_tgl,
+                            'us_pang_mk_tahun' => $ptk->us_pang_mk_tahun,
+                            'us_pang_mk_bulan' => $ptk->us_pang_mk_bulan,
+                            'us_pang_jenis' => $ptk->us_pang_jenis,
+                            'us_gaji_pokok' => $ptk->us_gaji_pokok,
+                            'status_usulan' => 5,
+                            'date_approve_ks' => $ptk->date_approve_ks,
+                            'date_approve_sptjm' => $ptk->date_approve_sptjm,
+                            'admin_approve' => $ptk->admin_approve,
+                            'date_approve' => $ptk->date_approve,
+                            'admin_matching' => $user->data->id,
+                            'date_matching' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                        if ($this->_db->affectedRows() > 0) {
+                            $this->_db->table('_tb_usulan_detail_tpg_test')->where(['id' => $ptk->id])->delete();
+                            if ($this->_db->affectedRows() > 0) {
+
+                                $this->_db->transCommit();
+                                $response = new \stdClass;
+                                $response->status = 200;
+                                $response->message = "Data berhasil disimpan.";
+                                return json_encode($response);
+                            } else {
+                                $this->_db->transRollback();
+                                $response = new \stdClass;
+                                $response->status = 400;
+                                $response->message = "Gagal memindahkan data usulan.";
+                                return json_encode($response);
+                            }
+                        } else {
+                            $this->_db->transRollback();
+                            $response = new \stdClass;
+                            $response->status = 400;
+                            $response->message = "Gagal memindahkan data usulan.";
+                            return json_encode($response);
+                        }
+                    } else {
+                        $this->_db->transRollback();
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = "Gagal mengupdate data usulan.";
+                        return json_encode($response);
+                    }
+                } else {
+                    $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $ptk->id_usulan)->update(['status_usulan' => 4, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id, 'keterangan_reject' => $keterangan]);
+                    if ($this->_db->affectedRows() > 0) {
+                        $this->_db->transCommit();
+                        $response = new \stdClass;
+                        $response->status = 200;
+                        $response->message = "Data berhasil disimpan.";
+                        return json_encode($response);
+                    } else {
+                        $this->_db->transRollback();
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = "Gagal menyimpan data usulan.";
+                        return json_encode($response);
+                    }
+                }
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -666,175 +734,5 @@ class Matching extends BaseController
                 return json_encode($response);
             }
         }
-    }
-
-
-    public function download()
-    {
-        $tw = htmlspecialchars($this->request->getGet('tw'), true);
-        if ($tw == "") {
-            return view('404');
-        }
-
-        try {
-
-            $spreadsheet = new Spreadsheet();
-
-            // $spreadsheet->getDefaultStyle()->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-            // $spreadsheet->getDefaultStyle()->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
-            // Membuat objek worksheet
-            $worksheet = $spreadsheet->getActiveSheet();
-
-            // Menulis nama kolom ke dalam baris pertama worksheet
-            $worksheet->fromArray(['NO', 'NUPTK', 'NAMA', 'TEMPAT TUGAS', 'NIP', 'GOL', 'MASA KERJA TAHUN', 'GAJI POKOK PP.15', 'JML. BLN', 'JML.UANG', 'IURAN BPJS 1%', 'PPH.21', 'JML. DITERIMA', 'NO REKENING', 'NPSN', 'KECAMATAN', 'JENJANG SEKOLAH', 'KETERANGAN', 'VERIFIKATOR'], NULL, 'A3');
-
-            // Mengambil data dari database
-            $dataTw = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->get()->getRowObject();
-            $query = $this->_db->table('_tb_usulan_detail_tpg a')
-                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, CONCAT(b.nip) as nip, b.tempat_tugas, b.npsn, CONCAT(b.no_rekening) as no_rekening, CONCAT(b.nuptk) as nuptk, b.jenis_ptk, c.kecamatan, c.bentuk_pendidikan, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
-                ->join('_ptk_tb b', 'a.id_ptk = b.id')
-                ->join('ref_sekolah c', 'b.npsn = c.npsn')
-                ->join('_profil_users_tb d', 'a.admin_approve = d.id')
-                ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
-                ->where('a.status_usulan', 2)
-                ->where('a.id_tahun_tw', $tw)
-                ->get();
-
-            // Menulis data ke dalam worksheet
-            $data = $query->getResult();
-            $row = 4;
-            if (count($data) > 0) {
-                foreach ($data as $key => $item) {
-                    $keterangan = "";
-                    $pph = "0%";
-                    $pph21 = 0;
-                    if ($item->us_pang_golongan == NULL || $item->us_pang_golongan == "") {
-                    } else {
-                        $pang = explode("/", $item->us_pang_golongan);
-                        if ($pang[0] == "III" || $pang[0] == "IX") {
-                            $pph21 = (5 / 100);
-                            $pph = "5%";
-                        } else if ($pang[0] == "IV") {
-                            $pph21 = (15 / 100);
-                            $pph = "15%";
-                        } else {
-                            $pph21 = 0;
-                            $pph = "0%";
-                        }
-                    }
-
-                    if (($item->lampiran_cuti == NULL || $item->lampiran_cuti == "") && ($item->lampiran_pensiun == NULL || $item->lampiran_pensiun == "") && ($item->lampiran_kematian == NULL || $item->lampiran_kematian == "")) {
-                        $keterangan .= "- ";
-                    }
-
-                    if (!($item->lampiran_cuti == NULL || $item->lampiran_cuti == "")) {
-                        $keterangan .= "Cuti ";
-                    }
-
-                    if (!($item->lampiran_pensiun == NULL || $item->lampiran_pensiun == "")) {
-                        $keterangan .= "Pensiun ";
-                    }
-
-                    if (!($item->lampiran_kematian == NULL || $item->lampiran_kematian == "")) {
-                        $keterangan .= "Kematian ";
-                    }
-
-                    $itemCreate = [
-                        $key + 1,
-                        substr($item->nuptk, 0),
-                        $item->nama,
-                        $item->tempat_tugas,
-                        substr($item->nip, 0),
-                        $item->us_pang_golongan,
-                        $item->us_pang_mk_tahun,
-                        $item->us_gaji_pokok,
-                        3,
-                        $item->us_gaji_pokok * 3,
-                        ($item->us_gaji_pokok * 3) * 0.01,
-                        ($item->us_gaji_pokok * 3) * $pph21,
-                        ($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21),
-                        substr($item->no_rekening, 0),
-                        $item->npsn,
-                        $item->kecamatan,
-                        $item->bentuk_pendidikan,
-                        $keterangan,
-                        $item->verifikator,
-                    ];
-                    // $worksheet->getStyle('B' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    // $worksheet->getStyle('E' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    // $worksheet->getStyle('N' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    // $worksheet->getStyle('O' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    $worksheet->fromArray($itemCreate, NULL, 'A' . $row);
-                    // $worksheet->getStyle('B' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    // $worksheet->getStyle('E' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    // $worksheet->getStyle('N' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    // $worksheet->getStyle('O' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    $row++;
-                }
-            }
-
-            // Menyiapkan objek writer untuk menulis file Excel
-            $writer = new Xls($spreadsheet);
-
-            // Menuliskan file Excel
-            $filename = 'data_lolosberkas_usulan_tpg_tahun_' . $dataTw->tahun . '_tw_' . $dataTw->tw . '.xlsx';
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="' . $filename . '"');
-            header('Cache-Control: max-age=0');
-            $writer->save('php://output');
-            exit();
-            //code...
-        } catch (\Throwable $th) {
-            var_dump($th);
-        }
-    }
-
-    public function test()
-    {
-        $util = \CodeIgniter\Database\Config::utils();
-
-        // Get the data from the MySQL table
-        $query = $this->_db->table('_ptk_tb')->limit(10);
-
-        // Format the column as text
-        // foreach ($query as $row) {
-        //     $data[] = array(
-        //         'nama' => "\t" . $row->nama,
-        //         'nik' => "\t" . $row->nik,
-        //         'nuptk' => "\t" . $row->nuptk,
-        //         'nip' => "\t" . $row->nip,
-        //         'no_rekening' => "\t" . $row->no_rekening,
-        //         'cabang_bank' => "\t" . $row->cabang_bank
-        //     );
-        // }
-
-        // Create an Excel file
-        $xls = $util->getXMLFromResult($query->get());
-        // $xls = $util->getXMLFromResult($data, "\t");
-
-        // Set the headers to download the file
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="mytable.xls"');
-        header('Cache-Control: max-age=0');
-
-        // Output the Excel file
-        echo $xls;
-
-        // $this->load->dbutil();
-        // $this->load->helper('download');
-
-        // // Query the database to retrieve the data
-        // $query = $this->db->query("SELECT * FROM your_table");
-        // $data = $this->dbutil->csv_from_result($query);
-
-        // // Modify the data to include formatting column as text
-        // $data = "\t" . str_replace("\n", "\n\t", $data);
-
-        // // Set the appropriate headers for the Excel file, and force the browser to download the file
-        // $filename = 'your_file.xls';
-        // header('Content-Type: application/vnd.ms-excel');
-        // header('Content-Disposition: attachment; filename="' . $filename . '"');
-        // echo $data;
-        // exit;
     }
 }
