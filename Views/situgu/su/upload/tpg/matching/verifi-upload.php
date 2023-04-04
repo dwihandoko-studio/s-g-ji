@@ -1,4 +1,4 @@
-<?php if (isset($import)) { ?>
+<?php if (isset($data)) { ?>
     <div class="modal-body">
         <div class="row">
             <div class="col-lg-12">
@@ -28,8 +28,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (count($import) > 0) { ?>
-                                <?php foreach ($import as $key => $v) { ?>
+                            <?php if (count($data) > 0) { ?>
+                                <?php foreach ($data as $key => $v) { ?>
                                     <?php if ($v->data_usulan == NULL || $v->data_usulan == "") { ?>
                                         <tr class="table-light">
                                             <th scope="row"><?= $key + 1 ?></th>

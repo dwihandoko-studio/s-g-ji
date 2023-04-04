@@ -307,9 +307,7 @@ class Matching extends BaseController
                 return json_encode($response);
             }
 
-            $dataResult = [
-                'import' => $dataImports
-            ];
+            // $x['import'] = $dataImports;
 
             $data = [
                 'id_tahun_tw' => $tw,
@@ -359,7 +357,7 @@ class Matching extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                // $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $dataResult);
+                $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $dataImports);
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
