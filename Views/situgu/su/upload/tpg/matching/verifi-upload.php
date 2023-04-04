@@ -233,6 +233,7 @@
         fetch("./get_data_json?id=<?= $id ?>")
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 const result_total = document.getElementById("result_total");
                 result_total.textContent = data.total.toString();
                 const result_lolos = document.getElementById("result_lolos");
