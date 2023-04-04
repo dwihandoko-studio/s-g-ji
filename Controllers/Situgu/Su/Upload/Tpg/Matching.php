@@ -280,6 +280,14 @@ class Matching extends BaseController
                     'an_rekening' => $data[22],
                 ];
 
+                $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_detail_tpg a')
+                    ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan")
+                    ->join('_ptk_tb b', 'a.id_ptk = b.id')
+                    ->where('a.status_usulan', 2)
+                    ->where('a.id_tahun_tw', $tw)
+                    ->where('b.nuptk', $data[5])
+                    ->get()->getRowObject();
+
                 $dataImport[] = $dataInsert;
                 $nuptkImport[] = $data[5];
             }
@@ -320,13 +328,13 @@ class Matching extends BaseController
                 return json_encode($response);
             }
 
-            $dataResult['us_ptk'] = $this->_db->table('_tb_usulan_detail_tpg a')
-                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan")
-                ->join('_ptk_tb b', 'a.id_ptk = b.id')
-                ->where('a.status_usulan', 2)
-                ->where('a.id_tahun_tw', $tw)
-                ->whereIn('b.nuptk', $nuptkImport)
-                ->get()->getResult();
+            // $dataResult['us_ptk'] = $this->_db->table('_tb_usulan_detail_tpg a')
+            //     ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan")
+            //     ->join('_ptk_tb b', 'a.id_ptk = b.id')
+            //     ->where('a.status_usulan', 2)
+            //     ->where('a.id_tahun_tw', $tw)
+            //     ->whereIn('b.nuptk', $nuptkImport)
+            //     ->get()->getResult();
 
             $this->_db->transBegin();
             try {
