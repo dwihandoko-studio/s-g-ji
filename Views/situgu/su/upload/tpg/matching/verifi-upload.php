@@ -102,8 +102,7 @@
             .then(response => response.json())
             .then(data => {
                 dataSendMatching = data;
-
-                buttonAksiMatching.setAttribute("disabled", false);
+                buttonAksiMatching.removeAttribute("disabled");
 
                 const result_total = document.getElementById("result_total");
                 result_total.textContent = data.total.toString();
