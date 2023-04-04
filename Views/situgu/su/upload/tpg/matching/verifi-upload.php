@@ -3,14 +3,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table mb-0">
+                    <table class="table mb-0 modals-datatables-datanya" id="modals-datatables-datanya">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th rowspan="2">#</th>
                                 <th colspan="6">DATA SIMTUN</th>
                                 <th colspan="6">DATA USULAN</th>
-                                <th>KETERANGAN</th>
-                                <th>AKSI</th>
+                                <th rowspan="2">KETERANGAN</th>
+                                <th rowspan="2">AKSI</th>
                             </tr>
                             <tr>
                                 <th>NUPTK</th>
@@ -168,34 +168,6 @@
                                     <?php } ?>
                                 <?php } ?>
                             <?php } ?>
-
-                            <!-- <tr class="table-success">
-                                <th scope="row">2</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-
-                            <tr class="table-info">
-                                <th scope="row">3</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-
-                            <tr class="table-warning">
-                                <th scope="row">4</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr>
-
-                            <tr class="table-danger">
-                                <th scope="row">5</th>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                                <td>Column content</td>
-                            </tr> -->
                         </tbody>
                     </table>
 
@@ -221,6 +193,60 @@
     </form>
 
     <script>
+        const table = document.getElementById("modals-datatables-datanya");
+        const tbody = table.getElementsByTagName("tbody")[0];
 
+        fetch("./get_data_json?id=<?= $id ?>")
+            .then(response => response.json())
+            .then(data => {
+                for (let i = 0; i < data.length; i++) {
+                    const row = document.createElement("tr");
+                    const numberCell = document.createElement("td");
+                    const nuptkCell = document.createElement("td");
+                    const namaCell = document.createElement("td");
+                    const golonganCodeCell = document.createElement("td");
+                    const masaKerjaCell = document.createElement("td");
+                    const gajiPokokCell = document.createElement("td");
+                    const totalJjmCell = document.createElement("td");
+                    const usNuptkCell = document.createElement("td");
+                    const usNamaCell = document.createElement("td");
+                    const usGolonganCell = document.createElement("td");
+                    const usMkCell = document.createElement("td");
+                    const usGapokCell = document.createElement("td");
+                    const usKetCell = document.createElement("td");
+                    const ketCell = document.createElement("td");
+                    const aksiCell = document.createElement("td");
+                    numberCell.textContent = 0 + i;
+                    nuptkCell.textContent = data[i].nuptk;
+                    namaCell.textContent = data[i].nama;
+                    golonganCodeCell.textContent = data[i].golongan_code;
+                    masaKerjaCell.textContent = data[i].masa_kerja;
+                    gajiPokokCell.textContent = data[i].gaji_pokok;
+                    totalJjmCell.textContent = data[i].total_jjm_sesuai;
+                    usNuptkCell.textContent = data[i].us_nuptk;
+                    usNamaCell.textContent = data[i].us_nama;
+                    usGolonganCell.textContent = data[i].us_golongan;
+                    usMkCell.textContent = data[i].us_masa_kerja;
+                    usGapokCell.textContent = data[i].us_gaji_pokok;
+                    usKetCell.textContent = data[i].us_keterangan;
+                    ketCell.textContent = data[i].keterangan;
+                    aksiCell.textContent = data[i].aksi;
+                    row.appendChild(numberCell);
+                    row.appendChild(nuptkCell);
+                    row.appendChild(namaCell);
+                    row.appendChild(golonganCodeCell);
+                    row.appendChild(masaKerjaCell);
+                    row.appendChild(gajiPokokCell);
+                    row.appendChild(totalJjmCell);
+                    row.appendChild(usNuptkCell);
+                    row.appendChild(usNamaCell);
+                    row.appendChild(usGolonganCell);
+                    row.appendChild(usGapokCell);
+                    row.appendChild(usKetCell);
+                    row.appendChild(ketCell);
+                    row.appendChild(aksiCell);
+                    tbody.appendChild(row);
+                }
+            });
     </script>
 <?php } ?>

@@ -369,6 +369,7 @@ class Matching extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $x['data'] = [];
+                $x['id'] = $newNamelampiran;
                 $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $x);
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
@@ -384,6 +385,13 @@ class Matching extends BaseController
         }
     }
 
+    public function get_data_json()
+    {
+        $id = htmlspecialchars($this->request->getGet('id'), true);
+        $datas = json_decode(file_get_contents(FCPATH . "upload/matching/$id.json"), true);
+        var_dump($datas);
+        die;
+    }
 
     public function detail()
     {
