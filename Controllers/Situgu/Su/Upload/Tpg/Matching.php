@@ -222,6 +222,7 @@ class Matching extends BaseController
             // die;
             $extension = $lampiran->getClientExtension();
             $filesNamelampiran = $lampiran->getName();
+            $newNamelampiran = _create_name_file($filesNamelampiran);
             $fileLocation = $lampiran->getTempName();
 
             if ('xls' == $extension) {
@@ -321,8 +322,8 @@ class Matching extends BaseController
             $table_db = 'tb_matching';
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir, $filesNamelampiran);
-                $data[$field_db] = $filesNamelampiran;
+                $lampiran->move($dir, $newNamelampiran);
+                $data[$field_db] = $newNamelampiran;
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -342,7 +343,7 @@ class Matching extends BaseController
             try {
                 $cekCurrent = $this->_db->table($table_db)->insert($data);
             } catch (\Exception $e) {
-                unlink($dir . '/' . $filesNamelampiran);
+                unlink($dir . '/' . $newNamelampiran);
 
                 $this->_db->transRollback();
 
@@ -362,7 +363,7 @@ class Matching extends BaseController
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
-                unlink($dir . '/' . $filesNamelampiran);
+                unlink($dir . '/' . $newNamelampiran);
 
                 $this->_db->transRollback();
                 $response = new \stdClass;
