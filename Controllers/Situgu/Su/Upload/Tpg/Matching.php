@@ -645,51 +645,61 @@ class Matching extends BaseController
             $tw = htmlspecialchars($this->request->getVar('id_tahun_tw'), true);
             $kode_usulan = htmlspecialchars($this->request->getVar('kode_usulan'), true);
 
-            $ptk = $this->_db->table('_tb_usulan_detail_tpg_test a')
+            $current = $this->_db->table('_tb_usulan_detail_tpg_test a')
                 ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
                 ->join('_ptk_tb b', 'a.id_ptk = b.id')
                 ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                 ->where('a.id', $id_usulan)
+                ->where('a.status_usulan', 2)
                 ->where('a.id_tahun_tw', $tw)
                 ->get()->getRowObject();
 
-            if ($ptk) {
+            if ($current) {
                 $this->_db->transBegin();
 
                 if ($status == "table-success") {
-                    $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $ptk->id_usulan)->update(['status_usulan' => 5, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id]);
-
+                    $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $current->id_usulan)->update(['status_usulan' => 5, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id]);
                     if ($this->_db->affectedRows() > 0) {
-                        $this->_db->table('_tb_usulan_tpg_siap_sk_test')->insert([
-                            'id' => $ptk->id,
-                            'kode_usulan' => $ptk->kode_usulan,
-                            'id_ptk' => $ptk->id_ptk,
-                            'id_tahun_tw' => $ptk->id_tahun_tw,
-                            'us_pang_golongan' => $ptk->us_pang_golongan,
-                            'us_pang_tmt' => $ptk->us_pang_tmt,
-                            'us_pang_tgl' => $ptk->us_pang_tgl,
-                            'us_pang_mk_tahun' => $ptk->us_pang_mk_tahun,
-                            'us_pang_mk_bulan' => $ptk->us_pang_mk_bulan,
-                            'us_pang_jenis' => $ptk->us_pang_jenis,
-                            'us_gaji_pokok' => $ptk->us_gaji_pokok,
-                            'status_usulan' => 5,
-                            'date_approve_ks' => $ptk->date_approve_ks,
-                            'date_approve_sptjm' => $ptk->date_approve_sptjm,
-                            'admin_approve' => $ptk->admin_approve,
-                            'date_approve' => $ptk->date_approve,
-                            'admin_matching' => $user->data->id,
-                            'date_matching' => date('Y-m-d H:i:s'),
-                            'updated_at' => date('Y-m-d H:i:s'),
-                        ]);
-                        if ($this->_db->affectedRows() > 0) {
-                            $this->_db->table('_tb_usulan_detail_tpg_test')->where(['id' => $ptk->id])->delete();
-                            if ($this->_db->affectedRows() > 0) {
 
-                                $this->_db->transCommit();
-                                $response = new \stdClass;
-                                $response->status = 200;
-                                $response->message = "Data berhasil disimpan.";
-                                return json_encode($response);
+                        $ptk = $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $current->id_usulan)->get()->getRowObject();
+                        if ($ptk) {
+                            $this->_db->table('_tb_usulan_tpg_siap_sk_test')->insert([
+                                'id' => $ptk->id,
+                                'kode_usulan' => $ptk->kode_usulan,
+                                'id_ptk' => $ptk->id_ptk,
+                                'id_tahun_tw' => $ptk->id_tahun_tw,
+                                'us_pang_golongan' => $ptk->us_pang_golongan,
+                                'us_pang_tmt' => $ptk->us_pang_tmt,
+                                'us_pang_tgl' => $ptk->us_pang_tgl,
+                                'us_pang_mk_tahun' => $ptk->us_pang_mk_tahun,
+                                'us_pang_mk_bulan' => $ptk->us_pang_mk_bulan,
+                                'us_pang_jenis' => $ptk->us_pang_jenis,
+                                'us_gaji_pokok' => $ptk->us_gaji_pokok,
+                                'status_usulan' => 5,
+                                'date_approve_ks' => $ptk->date_approve_ks,
+                                'date_approve_sptjm' => $ptk->date_approve_sptjm,
+                                'admin_approve' => $ptk->admin_approve,
+                                'date_approve' => $ptk->date_approve,
+                                'admin_matching' => $user->data->id,
+                                'date_matching' => date('Y-m-d H:i:s'),
+                                'updated_at' => date('Y-m-d H:i:s'),
+                            ]);
+                            if ($this->_db->affectedRows() > 0) {
+                                $this->_db->table('_tb_usulan_detail_tpg_test')->where(['id' => $ptk->id])->delete();
+                                if ($this->_db->affectedRows() > 0) {
+
+                                    $this->_db->transCommit();
+                                    $response = new \stdClass;
+                                    $response->status = 200;
+                                    $response->message = "Data berhasil disimpan.";
+                                    return json_encode($response);
+                                } else {
+                                    $this->_db->transRollback();
+                                    $response = new \stdClass;
+                                    $response->status = 400;
+                                    $response->message = "Gagal memindahkan data usulan.";
+                                    return json_encode($response);
+                                }
                             } else {
                                 $this->_db->transRollback();
                                 $response = new \stdClass;
@@ -701,7 +711,7 @@ class Matching extends BaseController
                             $this->_db->transRollback();
                             $response = new \stdClass;
                             $response->status = 400;
-                            $response->message = "Gagal memindahkan data usulan.";
+                            $response->message = "Gagal mengupdate data usulan.";
                             return json_encode($response);
                         }
                     } else {
