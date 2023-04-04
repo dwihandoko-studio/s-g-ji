@@ -415,10 +415,10 @@ class Matching extends BaseController
                     $item['keterangan'] = "Belum Mengusulkan";
                     $item['aksi'] = "Aksi";
                     $item['status'] = "table-info";
-                    $item['id_usulan'] = $v['data_usulan']['id_usulan'];
-                    $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
-                    $item['id_ptk'] = $v['data_usulan']['id_ptk'];
-                    $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                    $item['id_usulan'] = "";
+                    $item['kode_usulan'] = "";
+                    $item['id_ptk'] = "";
+                    $item['id_tahun_tw'] = "";
                     $gagal += 1;
                 } else {
                     $keterangan = "";
