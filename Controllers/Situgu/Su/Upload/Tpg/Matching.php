@@ -275,7 +275,7 @@ class Matching extends BaseController
                     'masa_kerja' => $data[16],
                     'golongan_code' => $data[17],
                     'golongan' => getCodePangkatFromMatching($data[17]),
-                    'gaji_pokok' => $data[18],
+                    'gaji_pokok' => str_replace(",", "", $data[18]),
                     'no_rekening' => $data[19],
                     'nama_bank' => $data[20],
                     'cabang_bank' => $data[21],

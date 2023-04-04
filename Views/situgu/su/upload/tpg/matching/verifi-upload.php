@@ -241,6 +241,7 @@
                     row.appendChild(usNuptkCell);
                     row.appendChild(usNamaCell);
                     row.appendChild(usGolonganCell);
+                    row.appendChild(usMkCell);
                     row.appendChild(usGapokCell);
                     row.appendChild(usKetCell);
                     row.appendChild(ketCell);
