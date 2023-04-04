@@ -119,29 +119,46 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionDownload(event) {
-        const tw = document.getElementsByName('_filter_tw')[0].value;
-
-        console.log(tw);
-        if (tw === undefined || tw === "") {
-            const linkSource = "<?= base_url('situgu/su/us/tpg/lolosberkas/download') ?>?tw=<?= $tw->id ?>";
-            const downloadLink = document.createElement("a");
-            downloadLink.href = linkSource;
-            downloadLink.onclick = function() {
-                window.open(this.href);
-                return false;
-            };
-            downloadLink.click();
-        } else {
-            const linkSource = "<?= base_url('situgu/su/us/tpg/lolosberkas/download') ?>?tw=" + tw;
-            const downloadLink = document.createElement("a");
-            downloadLink.href = linkSource;
-            downloadLink.onclick = function() {
-                window.open(this.href);
-                return false;
-            };
-            downloadLink.click();
-        }
+    function actionUpload(event) {
+        $.ajax({
+            url: "./upload",
+            type: 'POST',
+            data: {
+                id: 'upload',
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                $('div.main-content').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.main-content').unblock();
+                if (resul.status !== 200) {
+                    Swal.fire(
+                        'Failed!',
+                        resul.message,
+                        'warning'
+                    );
+                } else {
+                    $('#content-detailModalLabel').html('UPLOAD DATA MATCHING SIMTUN');
+                    $('.contentBodyModal').html(resul.data);
+                    $('.content-detailModal').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                    });
+                    $('.content-detailModal').modal('show');
+                }
+            },
+            error: function() {
+                $('div.main-content').unblock();
+                Swal.fire(
+                    'Failed!',
+                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
+            }
+        });
     }
 
     function actionDetail(id, id_ptk, tw, nama) {

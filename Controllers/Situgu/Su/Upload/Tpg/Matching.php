@@ -15,6 +15,7 @@ use App\Libraries\Uuid;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 // use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Matching extends BaseController
@@ -133,6 +134,232 @@ class Matching extends BaseController
         return view('situgu/su/upload/tpg/matching/index', $data);
     }
 
+    public function upload()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
+            $data['tws'] = $this->_db->table('_ref_tahun_tw')->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getResult();
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situgu/su/upload/tpg/matching/upload', $data);
+            return json_encode($response);
+        }
+    }
+
+    public function uploadSave()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'tw' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tw tidak boleh kosong. ',
+                ]
+            ],
+            '_file' => [
+                'rules' => 'uploaded[_file]|max_size[_file,5120]|mime_in[_file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip]',
+                'errors' => [
+                    'uploaded' => 'Pilih file terlebih dahulu. ',
+                    'max_size' => 'Ukuran file terlalu besar, Maximum 5Mb. ',
+                    'mime_in' => 'Ekstensi yang anda upload harus berekstensi xls atau xlsx. '
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('tw')
+                . $this->validator->getError('_file');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session expired";
+                return json_encode($response);
+            }
+
+            $tw = htmlspecialchars($this->request->getVar('tw'), true);
+
+            $lampiran = $this->request->getFile('file');
+            $extension = $lampiran->getClientExtension();
+            $filesNamelampiran = $lampiran->getName();
+            $fileLocation = $lampiran->getTempName();
+
+            if ('xls' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+
+            $spreadsheet = $reader->load($fileLocation);
+            $sheet = $spreadsheet->getActiveSheet()->toArray();
+
+            $total_line = (count($sheet) > 0) ? count($sheet) - 12 : 0;
+
+            $dataImport = [];
+
+            $nuptkImport = [];
+
+            unset($sheet[0]);
+            unset($sheet[1]);
+            unset($sheet[2]);
+            unset($sheet[3]);
+            unset($sheet[4]);
+            unset($sheet[5]);
+            unset($sheet[6]);
+            unset($sheet[7]);
+            unset($sheet[8]);
+            unset($sheet[9]);
+            unset($sheet[10]);
+            unset($sheet[11]);
+
+            foreach ($sheet as $key => $data) {
+
+                if ($data[1] == "" || strlen($data[1]) < 5) {
+                    // if($data[1] == "") {
+                    continue;
+                }
+
+                $dataInsert = [
+                    'nrg' => $data[3],
+                    'no_peserta' => $data[4],
+                    'nuptk' => $data[5],
+                    'nama' => $data[6],
+                    'tgl_lahir' => $data[7],
+                    'nip' => $data[11],
+                    'tempat_tugas' => $data[10],
+                    'jjm_sesuai' => $data[12],
+                    'tugas_tambahan' => $data[13],
+                    'jam_tugas_tambahan' => $data[14],
+                    'total_jjm_sesuai' => $data[15],
+                    'masa_kerja' => $data[16],
+                    'golongan' => $data[17],
+                    'gaji_pokok' => $data[18],
+                    'no_rekening' => $data[19],
+                    'nama_bank' => $data[20],
+                    'cabang_bank' => $data[21],
+                    'an_rekening' => $data[22],
+                ];
+
+                $dataImport[] = $dataInsert;
+                $nuptkImport[] = $data[5];
+            }
+
+            $dataImports = [
+                'total_line' => $total_line,
+                'data' => $dataImport,
+            ];
+
+            if (count($nuptkImport) < 1) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Tidak ada data yang di import.";
+                return json_encode($response);
+            }
+
+            $dataResult = [
+                'import' => $dataImports
+            ];
+
+            $data = [
+                'id_tahun_tw' => $tw,
+                'jumlah' => $total_line,
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+
+            $dir = FCPATH . "upload/matching";
+            $field_db = 'filename';
+            $table_db = 'tb_matching';
+
+            if ($lampiran->isValid() && !$lampiran->hasMoved()) {
+                $lampiran->move($dir, $filesNamelampiran);
+                $data[$field_db] = $filesNamelampiran;
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupload file.";
+                return json_encode($response);
+            }
+
+            $dataResult['us_ptk'] = $this->_db->table('_tb_usulan_detail_tpg a')
+                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan")
+                ->join('_ptk_tb b', 'a.id_ptk = b.id')
+                ->where('a.status_usulan', 2)
+                ->where('a.id_tahun_tw', $tw)
+                ->whereIn('b.nuptk', $nuptkImport)
+                ->get()->getResult();
+
+            $this->_db->transBegin();
+            try {
+                $cekCurrent = $this->_db->table($table_db)->insert($data);
+            } catch (\Exception $e) {
+                unlink($dir . '/' . $filesNamelampiran);
+
+                $this->_db->transRollback();
+
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($e);
+                $response->message = "Gagal menyimpan data.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                createAktifitas($user->data->id, "Mengupload matching simtun $filesNamelampiran", "Mengupload Matching Simtun filesNamelampiran", "upload", $tw);
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->data = $dataResult;
+                $response->message = "Data berhasil disimpan.";
+                return json_encode($response);
+            } else {
+                unlink($dir . '/' . $filesNamelampiran);
+
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan data";
+                return json_encode($response);
+            }
+        }
+    }
+
+
     public function detail()
     {
         if ($this->request->getMethod() != 'post') {
@@ -213,6 +440,7 @@ class Matching extends BaseController
             }
         }
     }
+
 
     public function download()
     {
