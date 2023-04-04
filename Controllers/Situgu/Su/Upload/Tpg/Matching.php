@@ -353,11 +353,22 @@ class Matching extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
+                if (write_file($dir . '/' . $newNamelampiran . '.json', $dataImports)) {
+                } else {
+                    $this->_db->transRollback();
+
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->error = "Gagal membuat file json";
+                    $response->message = "Gagal menyimpan data.";
+                    return json_encode($response);
+                }
+
                 // createAktifitas($user->data->id, "Mengupload matching simtun $filesNamelampiran", "Mengupload Matching Simtun filesNamelampiran", "upload", $tw);
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $dataImports);
+                // $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $dataImports);
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
