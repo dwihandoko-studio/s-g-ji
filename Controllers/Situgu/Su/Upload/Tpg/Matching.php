@@ -415,10 +415,10 @@ class Matching extends BaseController
                     $item['keterangan'] = "Belum Mengusulkan";
                     $item['aksi'] = "Aksi";
                     $item['status'] = "table-info";
-                    $item['id_usulan'] = $v['id_usulan'];
-                    $item['kode_usulan'] = $v['kode_usulan'];
-                    $item['id_ptk'] = $v['id_ptk'];
-                    $item['id_tahun_tw'] = $v['id_tahun_tw'];
+                    $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                    $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                    $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                    $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
                     $gagal += 1;
                 } else {
                     $keterangan = "";
@@ -458,10 +458,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-success";
-                                $item['id_usulan'] = $v['id_usulan'];
-                                $item['kode_usulan'] = $v['kode_usulan'];
-                                $item['id_ptk'] = $v['id_ptk'];
-                                $item['id_tahun_tw'] = $v['id_tahun_tw'];
+                                $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
                                 $lolos += 1;
                             } else {
                                 $item['number'] = $key + 1;
@@ -480,10 +480,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-danger";
-                                $item['id_usulan'] = $v['id_usulan'];
-                                $item['kode_usulan'] = $v['kode_usulan'];
-                                $item['id_ptk'] = $v['id_ptk'];
-                                $item['id_tahun_tw'] = $v['id_tahun_tw'];
+                                $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
                                 $gagal += 1;
                             }
                         } else {
@@ -504,10 +504,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-success";
-                                $item['id_usulan'] = $v['id_usulan'];
-                                $item['kode_usulan'] = $v['kode_usulan'];
-                                $item['id_ptk'] = $v['id_ptk'];
-                                $item['id_tahun_tw'] = $v['id_tahun_tw'];
+                                $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
                                 $lolos += 1;
                             } else {
                                 $item['number'] = $key + 1;
@@ -526,10 +526,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-danger";
-                                $item['id_usulan'] = $v['id_usulan'];
-                                $item['kode_usulan'] = $v['kode_usulan'];
-                                $item['id_ptk'] = $v['id_ptk'];
-                                $item['id_tahun_tw'] = $v['id_tahun_tw'];
+                                $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
                                 $gagal += 1;
                             }
                         }
@@ -550,10 +550,10 @@ class Matching extends BaseController
                         $item['keterangan'] = "Belum Memenuhi Syarat";
                         $item['aksi'] = "Aksi";
                         $item['status'] = "table-warning";
-                        $item['id_usulan'] = $v['id_usulan'];
-                        $item['kode_usulan'] = $v['kode_usulan'];
-                        $item['id_ptk'] = $v['id_ptk'];
-                        $item['id_tahun_tw'] = $v['id_tahun_tw'];
+                        $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                        $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                        $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                        $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
                         $gagal += 1;
                     }
                     $response_aksi[] = $item;
