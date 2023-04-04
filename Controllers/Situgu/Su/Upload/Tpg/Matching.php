@@ -186,7 +186,7 @@ class Matching extends BaseController
                 ]
             ],
             '_file' => [
-                'rules' => 'uploaded[_file]|max_size[_file,5120]|mime_in[_file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip]',
+                'rules' => 'uploaded[_file]|max_size[_file,5120]|mime_in[_file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/vnd.ms-office,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]',
                 'errors' => [
                     'uploaded' => 'Pilih file terlebih dahulu. ',
                     'max_size' => 'Ukuran file terlalu besar, Maximum 5Mb. ',
@@ -215,7 +215,7 @@ class Matching extends BaseController
 
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
-            $lampiran = $this->request->getFile('file');
+            $lampiran = $this->request->getFile('_file');
             $extension = $lampiran->getClientExtension();
             $filesNamelampiran = $lampiran->getName();
             $fileLocation = $lampiran->getTempName();
