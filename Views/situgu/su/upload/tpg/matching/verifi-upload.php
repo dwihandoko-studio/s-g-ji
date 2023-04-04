@@ -234,11 +234,11 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                const result_total = document.getElementById(".result_total");
+                const result_total = document.getElementById("result_total");
                 result_total.textContent = data.total.toString();
-                const result_lolos = document.getElementById(".result_lolos");
+                const result_lolos = document.getElementById("result_lolos");
                 result_lolos.textContent = data.lolos.toString();
-                const result_gagal = document.getElementById(".result_gagal");
+                const result_gagal = document.getElementById("result_gagal");
                 result_gagal.textContent = data.gagal.toString();
                 // const result_total = document.querySelector(".result_total");
                 // result_total.textContent = data.total.toString();
