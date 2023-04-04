@@ -282,7 +282,7 @@ class Matching extends BaseController
                     'an_rekening' => $data[22],
                 ];
 
-                $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_detail_tpg a')
+                $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_detail_tpg_test a')
                     ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
                     ->join('_ptk_tb b', 'a.id_ptk = b.id')
                     ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
@@ -393,6 +393,7 @@ class Matching extends BaseController
         if (isset($datas['data']) && count($datas['data']) > 0) {
             $result['total'] = count($datas['data']);
             $response = [];
+            $response_aksi = [];
             $lolos = 0;
             $gagal = 0;
             foreach ($datas['data'] as $key => $v) {
@@ -414,6 +415,10 @@ class Matching extends BaseController
                     $item['keterangan'] = "Belum Mengusulkan";
                     $item['aksi'] = "Aksi";
                     $item['status'] = "table-info";
+                    $item['id_usulan'] = $v['total_jjm_sesuai'];
+                    $item['kode_usulan'] = $v['total_jjm_sesuai'];
+                    $item['id_ptk'] = $v['total_jjm_sesuai'];
+                    $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
                     $gagal += 1;
                 } else {
                     $keterangan = "";
@@ -453,6 +458,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-success";
+                                $item['id_usulan'] = $v['total_jjm_sesuai'];
+                                $item['kode_usulan'] = $v['total_jjm_sesuai'];
+                                $item['id_ptk'] = $v['total_jjm_sesuai'];
+                                $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
                                 $lolos += 1;
                             } else {
                                 $item['number'] = $key + 1;
@@ -471,6 +480,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-danger";
+                                $item['id_usulan'] = $v['total_jjm_sesuai'];
+                                $item['kode_usulan'] = $v['total_jjm_sesuai'];
+                                $item['id_ptk'] = $v['total_jjm_sesuai'];
+                                $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
                                 $gagal += 1;
                             }
                         } else {
@@ -491,6 +504,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-success";
+                                $item['id_usulan'] = $v['total_jjm_sesuai'];
+                                $item['kode_usulan'] = $v['total_jjm_sesuai'];
+                                $item['id_ptk'] = $v['total_jjm_sesuai'];
+                                $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
                                 $lolos += 1;
                             } else {
                                 $item['number'] = $key + 1;
@@ -509,6 +526,10 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-danger";
+                                $item['id_usulan'] = $v['total_jjm_sesuai'];
+                                $item['kode_usulan'] = $v['total_jjm_sesuai'];
+                                $item['id_ptk'] = $v['total_jjm_sesuai'];
+                                $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
                                 $gagal += 1;
                             }
                         }
@@ -529,8 +550,13 @@ class Matching extends BaseController
                         $item['keterangan'] = "Belum Memenuhi Syarat";
                         $item['aksi'] = "Aksi";
                         $item['status'] = "table-warning";
+                        $item['id_usulan'] = $v['total_jjm_sesuai'];
+                        $item['kode_usulan'] = $v['total_jjm_sesuai'];
+                        $item['id_ptk'] = $v['total_jjm_sesuai'];
+                        $item['id_tahun_tw'] = $v['total_jjm_sesuai'];
                         $gagal += 1;
                     }
+                    $response_aksi[] = $item;
                 }
 
                 $response[] = $item;
@@ -538,6 +564,7 @@ class Matching extends BaseController
             $result['lolos'] = $lolos;
             $result['gagal'] = $gagal;
             $result['data'] = $response;
+            $result['aksi'] = $response_aksi;
         } else {
             $result['total'] = 0;
             $result['lolos'] = 0;
@@ -548,151 +575,17 @@ class Matching extends BaseController
         return json_encode($result);
     }
 
-    // public function get_data_json()
-    // {
-    //     $id = htmlspecialchars($this->request->getGet('id'), true);
-    //     $datas = json_decode(file_get_contents(FCPATH . "upload/matching/$id.json"), true);
+    public function prosesmatching()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
 
-    //     if (isset($datas['data']) && count($datas['data']) > 0) {
-    //         foreach ($datas['data'] as $key => $v) {
-    //             if ($v->data_usulan == NULL || $v->data_usulan == "") {
-    //                 <tr class="table-light">
-    //                     <th scope="row">$key + 1</th>
-    //                     <td>$v->nuptk</td>
-    //                     <td>$v->nama</td>
-    //                     <td>$v->golongan_code</td>
-    //                     <td>$v->masa_kerja</td>
-    //                     <td>$v->gaji_pokok</td>
-    //                     <td>$v->total_jjm_sesuai</td>
-    //                     <td>&nbsp;</td>
-    //                     <td>&nbsp;</td>
-    //                     <td>&nbsp;</td>
-    //                     <td>&nbsp;</td>
-    //                     <td>&nbsp;</td>
-    //                     <td>&nbsp;</td>
-    //                     <td>Belum Mengusulkan</td>
-    //                     <td>Aksi</td>
-    //                 </tr>
-    //             } else {
-    //                 $keterangan = "";
-    //                 if (($v->data_usulan->lampiran_cuti == NULL || $v->data_usulan->lampiran_cuti == "") && ($v->data_usulan->lampiran_pensiun == NULL || $v->data_usulan->lampiran_pensiun == "") && ($v->data_usulan->lampiran_kematian == NULL || $v->data_usulan->lampiran_kematian == "")) {
-    //                     $keterangan .= "- ";
-    //                 }
-
-    //                 if (!($v->data_usulan->lampiran_cuti == NULL || $v->data_usulan->lampiran_cuti == "")) {
-    //                     $keterangan .= "Cuti ";
-    //                 }
-
-    //                 if (!($v->data_usulan->lampiran_pensiun == NULL || $v->data_usulan->lampiran_pensiun == "")) {
-    //                     $keterangan .= "Pensiun ";
-    //                 }
-
-    //                 if (!($v->data_usulan->lampiran_kematian == NULL || $v->data_usulan->lampiran_kematian == "")) {
-    //                     $keterangan .= "Kematian ";
-    //                 }
-
-    //                 if ($v->total_jjm_sesuai >= 24 && $v->total_jjm_sesuai <= 40) {
-
-    //                     if ($v->golongan == "" && !($v->nip == NULL || $v->nip == "")) {
-    //                         if ("IX" == $v->data_usulan->us_pang_golongan && $v->masa_kerja == $v->data_usulan->us_pang_mk_tahun && $v->gaji_pokok == $v->data_usulan->us_gaji_pokok) {
-    //                             <tr class="table-success">
-    //                                 <th scope="row">$key + 1</th>
-    //                                 <td>$v->nuptk</td>
-    //                                 <td>$v->nama</td>
-    //                                 <td>$v->golongan_code</td>
-    //                                 <td>$v->masa_kerja</td>
-    //                                 <td>$v->gaji_pokok</td>
-    //                                 <td>$v->total_jjm_sesuai</td>
-    //                                 <td>$v->data_usulan->nuptk</td>
-    //                                 <td>$v->data_usulan->nama</td>
-    //                                 <td>$v->data_usulan->us_pang_golongan</td>
-    //                                 <td>$v->data_usulan->us_pang_mk_tahun</td>
-    //                                 <td>$v->data_usulan->us_gaji_pokok</td>
-    //                                 <td>$keterangan</td>
-    //                                 <td>Siap Diusulkan SKTP</td>
-    //                                 <td>Aksi</td>
-    //                             </tr>
-    //                         } else {
-    //                             <tr class="table-danger">
-    //                                 <th scope="row">$key + 1</th>
-    //                                 <td>$v->nuptk</td>
-    //                                 <td>$v->nama</td>
-    //                                 <td>$v->golongan_code</td>
-    //                                 <td>$v->masa_kerja</td>
-    //                                 <td>$v->gaji_pokok</td>
-    //                                 <td>$v->total_jjm_sesuai</td>
-    //                                 <td>$v->data_usulan->nuptk</td>
-    //                                 <td>$v->data_usulan->nama</td>
-    //                                 <td>$v->data_usulan->us_pang_golongan</td>
-    //                                 <td>$v->data_usulan->us_pang_mk_tahun</td>
-    //                                 <td>$v->data_usulan->us_gaji_pokok</td>
-    //                                 <td>$keterangan</td>
-    //                                 <td>Belum Update Dapodik</td>
-    //                                 <td>Aksi</td>
-    //                             </tr>
-    //                         }
-    //                     } else {
-    //                         if ($v->golongan == $v->data_usulan->us_pang_golongan && $v->masa_kerja == $v->data_usulan->us_pang_mk_tahun && $v->gaji_pokok == $v->data_usulan->us_gaji_pokok) {
-    //                             <tr class="table-success">
-    //                                 <th scope="row">$key + 1</th>
-    //                                 <td>$v->nuptk</td>
-    //                                 <td>$v->nama</td>
-    //                                 <td>$v->golongan_code</td>
-    //                                 <td>$v->masa_kerja</td>
-    //                                 <td>$v->gaji_pokok</td>
-    //                                 <td>$v->total_jjm_sesuai</td>
-    //                                 <td>$v->data_usulan->nuptk</td>
-    //                                 <td>$v->data_usulan->nama</td>
-    //                                 <td>$v->data_usulan->us_pang_golongan</td>
-    //                                 <td>$v->data_usulan->us_pang_mk_tahun</td>
-    //                                 <td>$v->data_usulan->us_gaji_pokok</td>
-    //                                 <td>$keterangan</td>
-    //                                 <td>Siap Diusulkan SKTP</td>
-    //                                 <td>Aksi</td>
-    //                             </tr>
-    //                         } else {
-    //                             <tr class="table-danger">
-    //                                 <th scope="row">$key + 1</th>
-    //                                 <td>$v->nuptk</td>
-    //                                 <td>$v->nama</td>
-    //                                 <td>$v->golongan_code</td>
-    //                                 <td>$v->masa_kerja</td>
-    //                                 <td>$v->gaji_pokok</td>
-    //                                 <td>$v->total_jjm_sesuai</td>
-    //                                 <td>$v->data_usulan->nuptk</td>
-    //                                 <td>$v->data_usulan->nama</td>
-    //                                 <td>$v->data_usulan->us_pang_golongan</td>
-    //                                 <td>$v->data_usulan->us_pang_mk_tahun</td>
-    //                                 <td>$v->data_usulan->us_gaji_pokok</td>
-    //                                 <td>$keterangan</td>
-    //                                 <td>Belum Update Dapodik</td>
-    //                                 <td>Aksi</td>
-    //                             </tr>
-    //                         }
-    //                     }
-    //                 } else {
-    //                     <tr class="table-danger">
-    //                         <th scope="row">$key + 1</th>
-    //                         <td>$v->nuptk</td>
-    //                         <td>$v->nama</td>
-    //                         <td>$v->golongan_code</td>
-    //                         <td>$v->masa_kerja</td>
-    //                         <td>$v->gaji_pokok</td>
-    //                         <td>$v->total_jjm_sesuai</td>
-    //                         <td>$v->data_usulan->nuptk</td>
-    //                         <td>$v->data_usulan->nama</td>
-    //                         <td>$v->data_usulan->us_pang_golongan</td>
-    //                         <td>$v->data_usulan->us_pang_mk_tahun</td>
-    //                         <td>$v->data_usulan->us_gaji_pokok</td>
-    //                         <td>$keterangan</td>
-    //                         <td>Belum Memenuhi Syarat</td>
-    //                         <td>Aksi</td>
-    //                     </tr>
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+        var_dump($this->request->getVar());
+    }
 
     public function detail()
     {

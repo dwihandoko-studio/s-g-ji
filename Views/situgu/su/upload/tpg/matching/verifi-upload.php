@@ -37,6 +37,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div>
+                            <progress id="progressBar" value="0" max="100" style="width:100%; display: none;"></progress>
+                        </div>
+                        <div>
+                            <h3 id="status" style="font-size: 15px; margin: 8px auto;"></h3>
+                        </div>
+                        <div>
+                            <p id="loaded_n_total" style="margin-bottom: 0px;"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -170,9 +181,104 @@
             });
 
         function aksiMatching() {
-            // const buttonAksiMatching = document.getElementById("button_aksi_matching");
             buttonAksiMatching.setAttribute("disabled", true);
             console.log(dataSendMatching);
+
+            ambilId("status").innerHTML = "Menyimpan Data . . .";
+
+            let jumlahDataBerhasil = 0;
+            let jumlahDataGagal = 0;
+
+            let sendToServer = function(lines, index) {
+                if (index > lines.length - 1) {
+                    ambilId("progressBar").style.display = "none";
+                    ambilId("status").innerHTML = "Proses Matching Berhasil.";
+                    ambilId("status").style.color = "green";
+                    ambilId("progressBar").value = 0;
+
+                    Swal.fire(
+                        'SELAMAT!',
+                        "Proses Matching Data Berhasil.",
+                        'success'
+                    ).then((valRes) => {
+                        document.location.href = "<?= base_url('situgu/su/us/tpg/siapsk'); ?>";
+                    })
+                    return; // guard condition
+                }
+
+                item = lines[index];
+                let total = ((index + 1) / lines.length) * 100;
+                total = total.toFixed(2);
+
+                $.ajax({
+                    url: "./prosesmatching",
+                    type: 'POST',
+                    data: item,
+                    dataType: 'JSON',
+                    success: function(msg) {
+                        if (msg.code != 200) {
+                            ambilId("status").style.color = "blue";
+                            ambilId("progressBar").value = total;
+                            ambilId("loaded_n_total").innerHTML = total + '%';
+                            console.log(msg.message);
+                            if (index + 1 === lines.length) {
+                                ambilId("progressBar").style.display = "none";
+                                ambilId("status").innerHTML = msg.message;
+                                ambilId("status").style.color = "green";
+                                ambilId("progressBar").value = 0;
+
+                                Swal.fire(
+                                    'SELAMAT!',
+                                    "Proses Matching Data Berhasil.",
+                                    'success'
+                                ).then((valRes) => {
+                                    document.location.href = "<?= base_url('situgu/su/us/tpg/siapsk'); ?>";
+                                })
+                            }
+                        } else {
+                            ambilId("status").style.color = "blue";
+                            ambilId("progressBar").value = total;
+                            ambilId("loaded_n_total").innerHTML = total + '%';
+
+                            if (index + 1 === lines.length) {
+                                ambilId("progressBar").style.display = "none";
+                                ambilId("status").innerHTML = msg.message;
+                                ambilId("status").style.color = "green";
+                                ambilId("progressBar").value = 0;
+
+                                Swal.fire(
+                                    'SELAMAT!',
+                                    "Proses Matching Data Berhasil.",
+                                    'success'
+                                ).then((valRes) => {
+                                    document.location.href = "<?= base_url('situgu/su/us/tpg/siapsk'); ?>";
+                                })
+                            }
+                        }
+
+                        setTimeout(
+                            function() {
+                                sendToServer(lines, index + 1);
+                            },
+                            350 // delay in ms
+                        );
+                    },
+                    error: function(error) {
+                        ambilId("progressBar").style.display = "none";
+                        ambilId("status").innerHTML = msg.message;
+                        ambilId("status").style.color = "green";
+                        ambilId("progressBar").value = 0;
+                        buttonAksiMatching.removeAttribute("disabled");
+                        Swal.fire(
+                            'Failed!',
+                            "Gagal.",
+                            'warning'
+                        );
+                    }
+                });
+            };
+
+            sendToServer(data.aksi, 0);
         }
     </script>
 <?php } ?>
