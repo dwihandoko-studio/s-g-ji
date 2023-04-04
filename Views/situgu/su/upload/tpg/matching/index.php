@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <h4 class="card-title">Data Usulan TPG Lolos Berkas</h4>
-                                <div><a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionDownload(this);"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download <i class="mdi mdi-file-excel font-size-16 align-middle me-2"></i></a>&nbsp;&nbsp;</div>
+                                <div><a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(this);"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload <i class="mdi mdi-file-excel font-size-16 align-middle me-2"></i></a>&nbsp;&nbsp;</div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
