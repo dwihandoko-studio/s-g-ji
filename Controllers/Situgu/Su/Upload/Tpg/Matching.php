@@ -185,21 +185,21 @@ class Matching extends BaseController
                     'required' => 'Tw tidak boleh kosong. ',
                 ]
             ],
-            '_file' => [
-                'rules' => 'uploaded[_file]|max_size[_file,5120]|mime_in[_file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip]',
-                'errors' => [
-                    'uploaded' => 'Pilih file terlebih dahulu. ',
-                    'max_size' => 'Ukuran file terlalu besar, Maximum 5Mb. ',
-                    'mime_in' => 'Ekstensi yang anda upload harus berekstensi xls atau xlsx. '
-                ]
-            ],
+            // '_file' => [
+            //     'rules' => 'uploaded[_file]|max_size[_file,5120]|mime_in[_file,application/vnd.ms-excel,application/msexcel,application/x-msexcel,application/x-ms-excel,application/x-excel,application/x-dos_ms_excel,application/xls,application/x-xls,application/excel,application/download,application/vnd.ms-office,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/zip,application/x-zip]',
+            //     'errors' => [
+            //         'uploaded' => 'Pilih file terlebih dahulu. ',
+            //         'max_size' => 'Ukuran file terlalu besar, Maximum 5Mb. ',
+            //         'mime_in' => 'Ekstensi yang anda upload harus berekstensi xls atau xlsx. '
+            //     ]
+            // ],
         ];
 
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('tw')
-                . $this->validator->getError('_file');
+            $response->message = $this->validator->getError('tw');
+            // . $this->validator->getError('_file');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -216,6 +216,10 @@ class Matching extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
             $lampiran = $this->request->getFile('_file');
+            $mimeType = $lampiran->getMimeType();
+
+            var_dump($mimeType);
+            die;
             $extension = $lampiran->getClientExtension();
             $filesNamelampiran = $lampiran->getName();
             $fileLocation = $lampiran->getTempName();
