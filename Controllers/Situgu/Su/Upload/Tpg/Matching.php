@@ -353,7 +353,7 @@ class Matching extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
-                if (write_file($dir . '/' . $newNamelampiran . '.json', $dataImports)) {
+                if (write_file($dir . '/' . $newNamelampiran . '.json', json_encode($dataImports))) {
                 } else {
                     $this->_db->transRollback();
 
@@ -368,7 +368,8 @@ class Matching extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                // $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $dataImports);
+                $x['data'] = [];
+                $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $x);
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
