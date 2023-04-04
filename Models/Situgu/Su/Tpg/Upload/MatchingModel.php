@@ -7,10 +7,10 @@ use CodeIgniter\Model;
 
 class MatchingModel extends Model
 {
-    protected $table = "_tb_usulan_detail_tpg a";
-    protected $column_order = array(null, null, 'a.kode_usulan', 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'a.admin_approve');
-    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
-    protected $order = array('a.admin_approve' => 'asc');
+    protected $table = "tb_matching";
+    protected $column_order = array(null, null);
+    protected $column_search = array('filename');
+    protected $order = array('filename' => 'desc');
     protected $request;
     protected $db;
     protected $dt;
@@ -49,28 +49,28 @@ class MatchingModel extends Model
     }
     function get_datatables()
     {
-        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
-        $this->dt->whereIn('a.status_usulan', [2]);
-        if ($this->request->getPost('tw')) {
-            if ($this->request->getPost('tw') !== "") {
-                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-            } else {
-                if ($this->request->getPost('tw_active')) {
-                    if ($this->request->getPost('tw_active') !== "") {
+        // $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        // $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        // $this->dt->whereIn('a.status_usulan', [2]);
+        // if ($this->request->getPost('tw')) {
+        //     if ($this->request->getPost('tw') !== "") {
+        //         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+        //     } else {
+        //         if ($this->request->getPost('tw_active')) {
+        //             if ($this->request->getPost('tw_active') !== "") {
 
-                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
-                    }
-                }
-            }
-        } else {
-            if ($this->request->getPost('tw_active')) {
-                if ($this->request->getPost('tw_active') !== "") {
+        //                 $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     if ($this->request->getPost('tw_active')) {
+        //         if ($this->request->getPost('tw_active') !== "") {
 
-                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
-                }
-            }
-        }
+        //             $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+        //         }
+        //     }
+        // }
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -79,56 +79,56 @@ class MatchingModel extends Model
     }
     function count_filtered()
     {
-        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
-        $this->dt->whereIn('a.status_usulan', [2]);
-        if ($this->request->getPost('tw')) {
-            if ($this->request->getPost('tw') !== "") {
-                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-            } else {
-                if ($this->request->getPost('tw_active')) {
-                    if ($this->request->getPost('tw_active') !== "") {
+        // $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        // $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        // $this->dt->whereIn('a.status_usulan', [2]);
+        // if ($this->request->getPost('tw')) {
+        //     if ($this->request->getPost('tw') !== "") {
+        //         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+        //     } else {
+        //         if ($this->request->getPost('tw_active')) {
+        //             if ($this->request->getPost('tw_active') !== "") {
 
-                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
-                    }
-                }
-            }
-        } else {
-            if ($this->request->getPost('tw_active')) {
-                if ($this->request->getPost('tw_active') !== "") {
+        //                 $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     if ($this->request->getPost('tw_active')) {
+        //         if ($this->request->getPost('tw_active') !== "") {
 
-                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
-                }
-            }
-        }
+        //             $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+        //         }
+        //     }
+        // }
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
     public function count_all()
     {
-        $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
-        $this->dt->whereIn('a.status_usulan', [2]);
-        if ($this->request->getPost('tw')) {
-            if ($this->request->getPost('tw') !== "") {
-                $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-            } else {
-                if ($this->request->getPost('tw_active')) {
-                    if ($this->request->getPost('tw_active') !== "") {
+        // $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan");
+        // $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        // $this->dt->whereIn('a.status_usulan', [2]);
+        // if ($this->request->getPost('tw')) {
+        //     if ($this->request->getPost('tw') !== "") {
+        //         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
+        //     } else {
+        //         if ($this->request->getPost('tw_active')) {
+        //             if ($this->request->getPost('tw_active') !== "") {
 
-                        $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
-                    }
-                }
-            }
-        } else {
-            if ($this->request->getPost('tw_active')) {
-                if ($this->request->getPost('tw_active') !== "") {
+        //                 $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     if ($this->request->getPost('tw_active')) {
+        //         if ($this->request->getPost('tw_active') !== "") {
 
-                    $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
-                }
-            }
-        }
+        //             $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw_active'));
+        //         }
+        //     }
+        // }
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();

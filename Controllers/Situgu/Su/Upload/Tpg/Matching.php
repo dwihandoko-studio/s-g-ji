@@ -81,7 +81,7 @@ class Matching extends BaseController
             //                 <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Sync Dapodik</a>
             //             </div>
             //         </div>';
-            $action = '<a href="javascript:actionDetail(\'' . $list->id_usulan . '\', \'' . $list->id_ptk . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->fullname . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                 <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
                 </a>';
             //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -91,11 +91,12 @@ class Matching extends BaseController
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
             $row[] = $action;
-            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
-            $row[] = $list->nik;
-            $row[] = $list->nuptk;
-            $row[] = $list->jenis_ptk;
-            $row[] = $list->date_approve;
+            // $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
+            $row[] = $list->fullname;
+            $row[] = $list->lolos;
+            $row[] = $list->gagal;
+            $row[] = $list->done;
+            $row[] = $list->created_at;
 
             $data[] = $row;
         }
@@ -115,7 +116,7 @@ class Matching extends BaseController
 
     public function data()
     {
-        $data['title'] = 'USULAN LOLOS BERKAS TUNJANGAN PROFESI GURU';
+        $data['title'] = 'DATA MATCHING SIMTUN';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
