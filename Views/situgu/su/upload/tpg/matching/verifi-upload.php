@@ -30,8 +30,8 @@
                     </div>
                     <div class="col-lg-4 d-none d-lg-block">
                         <div class="clearfix mt-4 mt-lg-0">
-                            <div class="dropdown float-end content_button_aksi" id="content_button_aksi">
-                                <button class="btn btn-primary" type="button" onclick="aksiMatching(this)">
+                            <div class="dropdown float-end">
+                                <button class="btn btn-primary button_aksi_matching" id="button_aksi_matching" type="button" onclick="aksiMatching()" disabled>
                                     <i class="mdi mdi-relation-zero-or-many-to-zero-or-many align-middle me-1"></i> Proses Data
                                 </button>
                             </div>
@@ -66,146 +66,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (count($data) > 0) { ?>
-                                <?php foreach ($data as $key => $v) { ?>
-                                    <?php if ($v->data_usulan == NULL || $v->data_usulan == "") { ?>
-                                        <tr class="table-light">
-                                            <th scope="row"><?= $key + 1 ?></th>
-                                            <td><?= $v->nuptk ?></td>
-                                            <td><?= $v->nama ?></td>
-                                            <td><?= $v->golongan_code ?></td>
-                                            <td><?= $v->masa_kerja ?></td>
-                                            <td><?= $v->gaji_pokok ?></td>
-                                            <td><?= $v->total_jjm_sesuai ?></td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>&nbsp;</td>
-                                            <td>Belum Mengusulkan</td>
-                                            <td>Aksi</td>
-                                        </tr>
-                                    <?php } else { ?>
-                                        <?php $keterangan = "";
-                                        if (($v->data_usulan->lampiran_cuti == NULL || $v->data_usulan->lampiran_cuti == "") && ($v->data_usulan->lampiran_pensiun == NULL || $v->data_usulan->lampiran_pensiun == "") && ($v->data_usulan->lampiran_kematian == NULL || $v->data_usulan->lampiran_kematian == "")) {
-                                            $keterangan .= "- ";
-                                        }
-
-                                        if (!($v->data_usulan->lampiran_cuti == NULL || $v->data_usulan->lampiran_cuti == "")) {
-                                            $keterangan .= "Cuti ";
-                                        }
-
-                                        if (!($v->data_usulan->lampiran_pensiun == NULL || $v->data_usulan->lampiran_pensiun == "")) {
-                                            $keterangan .= "Pensiun ";
-                                        }
-
-                                        if (!($v->data_usulan->lampiran_kematian == NULL || $v->data_usulan->lampiran_kematian == "")) {
-                                            $keterangan .= "Kematian ";
-                                        }
-                                        ?>
-
-                                        <?php if ($v->total_jjm_sesuai >= 24 && $v->total_jjm_sesuai <= 40) { ?>
-
-                                            <?php if ($v->golongan == "" && !($v->nip == NULL || $v->nip == "")) { ?>
-                                                <?php if ("IX" == $v->data_usulan->us_pang_golongan && $v->masa_kerja == $v->data_usulan->us_pang_mk_tahun && $v->gaji_pokok == $v->data_usulan->us_gaji_pokok) { ?>
-                                                    <tr class="table-success">
-                                                        <th scope="row"><?= $key + 1 ?></th>
-                                                        <td><?= $v->nuptk ?></td>
-                                                        <td><?= $v->nama ?></td>
-                                                        <td><?= $v->golongan_code ?></td>
-                                                        <td><?= $v->masa_kerja ?></td>
-                                                        <td><?= $v->gaji_pokok ?></td>
-                                                        <td><?= $v->total_jjm_sesuai ?></td>
-                                                        <td><?= $v->data_usulan->nuptk ?></td>
-                                                        <td><?= $v->data_usulan->nama ?></td>
-                                                        <td><?= $v->data_usulan->us_pang_golongan ?></td>
-                                                        <td><?= $v->data_usulan->us_pang_mk_tahun ?></td>
-                                                        <td><?= $v->data_usulan->us_gaji_pokok ?></td>
-                                                        <td><?= $keterangan ?></td>
-                                                        <td>Siap Diusulkan SKTP</td>
-                                                        <td>Aksi</td>
-                                                    </tr>
-                                                <?php } else { ?>
-                                                    <tr class="table-danger">
-                                                        <th scope="row"><?= $key + 1 ?></th>
-                                                        <td><?= $v->nuptk ?></td>
-                                                        <td><?= $v->nama ?></td>
-                                                        <td><?= $v->golongan_code ?></td>
-                                                        <td><?= $v->masa_kerja ?></td>
-                                                        <td><?= $v->gaji_pokok ?></td>
-                                                        <td><?= $v->total_jjm_sesuai ?></td>
-                                                        <td><?= $v->data_usulan->nuptk ?></td>
-                                                        <td><?= $v->data_usulan->nama ?></td>
-                                                        <td><?= $v->data_usulan->us_pang_golongan ?></td>
-                                                        <td><?= $v->data_usulan->us_pang_mk_tahun ?></td>
-                                                        <td><?= $v->data_usulan->us_gaji_pokok ?></td>
-                                                        <td><?= $keterangan ?></td>
-                                                        <td>Belum Update Dapodik</td>
-                                                        <td>Aksi</td>
-                                                    </tr>
-                                                <?php } ?>
-                                            <?php } else { ?>
-                                                <?php if ($v->golongan == $v->data_usulan->us_pang_golongan && $v->masa_kerja == $v->data_usulan->us_pang_mk_tahun && $v->gaji_pokok == $v->data_usulan->us_gaji_pokok) { ?>
-                                                    <tr class="table-success">
-                                                        <th scope="row"><?= $key + 1 ?></th>
-                                                        <td><?= $v->nuptk ?></td>
-                                                        <td><?= $v->nama ?></td>
-                                                        <td><?= $v->golongan_code ?></td>
-                                                        <td><?= $v->masa_kerja ?></td>
-                                                        <td><?= $v->gaji_pokok ?></td>
-                                                        <td><?= $v->total_jjm_sesuai ?></td>
-                                                        <td><?= $v->data_usulan->nuptk ?></td>
-                                                        <td><?= $v->data_usulan->nama ?></td>
-                                                        <td><?= $v->data_usulan->us_pang_golongan ?></td>
-                                                        <td><?= $v->data_usulan->us_pang_mk_tahun ?></td>
-                                                        <td><?= $v->data_usulan->us_gaji_pokok ?></td>
-                                                        <td><?= $keterangan ?></td>
-                                                        <td>Siap Diusulkan SKTP</td>
-                                                        <td>Aksi</td>
-                                                    </tr>
-                                                <?php } else { ?>
-                                                    <tr class="table-danger">
-                                                        <th scope="row"><?= $key + 1 ?></th>
-                                                        <td><?= $v->nuptk ?></td>
-                                                        <td><?= $v->nama ?></td>
-                                                        <td><?= $v->golongan_code ?></td>
-                                                        <td><?= $v->masa_kerja ?></td>
-                                                        <td><?= $v->gaji_pokok ?></td>
-                                                        <td><?= $v->total_jjm_sesuai ?></td>
-                                                        <td><?= $v->data_usulan->nuptk ?></td>
-                                                        <td><?= $v->data_usulan->nama ?></td>
-                                                        <td><?= $v->data_usulan->us_pang_golongan ?></td>
-                                                        <td><?= $v->data_usulan->us_pang_mk_tahun ?></td>
-                                                        <td><?= $v->data_usulan->us_gaji_pokok ?></td>
-                                                        <td><?= $keterangan ?></td>
-                                                        <td>Belum Update Dapodik</td>
-                                                        <td>Aksi</td>
-                                                    </tr>
-                                                <?php } ?>
-                                            <?php } ?>
-                                        <?php } else { ?>
-                                            <tr class="table-danger">
-                                                <th scope="row"><?= $key + 1 ?></th>
-                                                <td><?= $v->nuptk ?></td>
-                                                <td><?= $v->nama ?></td>
-                                                <td><?= $v->golongan_code ?></td>
-                                                <td><?= $v->masa_kerja ?></td>
-                                                <td><?= $v->gaji_pokok ?></td>
-                                                <td><?= $v->total_jjm_sesuai ?></td>
-                                                <td><?= $v->data_usulan->nuptk ?></td>
-                                                <td><?= $v->data_usulan->nama ?></td>
-                                                <td><?= $v->data_usulan->us_pang_golongan ?></td>
-                                                <td><?= $v->data_usulan->us_pang_mk_tahun ?></td>
-                                                <td><?= $v->data_usulan->us_gaji_pokok ?></td>
-                                                <td><?= $keterangan ?></td>
-                                                <td>Belum Memenuhi Syarat</td>
-                                                <td>Aksi</td>
-                                            </tr>
-                                        <?php } ?>
-                                    <?php } ?>
-                                <?php } ?>
-                            <?php } ?>
                         </tbody>
                     </table>
 
@@ -240,6 +100,9 @@
             .then(response => response.json())
             .then(data => {
                 dataSendMatching = data;
+                const buttonAksiMatching1 = document.getElementById("button_aksi_matching");
+                buttonAksiMatching1.setAttribute("disabled", false);
+
                 const result_total = document.getElementById("result_total");
                 result_total.textContent = data.total.toString();
                 const result_lolos = document.getElementById("result_lolos");
@@ -305,8 +168,9 @@
                 }
             });
 
-        function aksiMatching(event) {
-            event.attr("disabled", "disabled");
+        function aksiMatching() {
+            const buttonAksiMatching = document.getElementById("button_aksi_matching");
+            buttonAksiMatching.setAttribute("disabled", true);
             console.log(dataSendMatching);
         }
     </script>
