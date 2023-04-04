@@ -234,11 +234,11 @@
             .then(response => response.json())
             .then(data => {
                 const result_total = document.getElementById("result_total");
-                result_total.textContent = data.total;
+                result_total.textContent = data.total.toString();
                 const result_lolos = document.getElementById("result_lolos");
-                result_lolos.textContent = data.lolos;
+                result_lolos.textContent = data.lolos.toString();
                 const result_gagal = document.getElementById("result_gagal");
-                result_gagal.textContent = data.gagal;
+                result_gagal.textContent = data.gagal.toString();
 
                 for (let i = 0; i < data.data.length; i++) {
                     const row = document.createElement("tr");

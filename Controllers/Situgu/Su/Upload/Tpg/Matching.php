@@ -535,14 +535,14 @@ class Matching extends BaseController
 
                 $response[] = $item;
             }
-            $result['data'] = $response;
             $result['lolos'] = $lolos;
             $result['gagal'] = $gagal;
+            $result['data'] = $response;
         } else {
-            $result['data'] = [];
             $result['total'] = 0;
             $result['lolos'] = 0;
             $result['gagal'] = 0;
+            $result['data'] = [];
         }
 
         return json_encode($result);
