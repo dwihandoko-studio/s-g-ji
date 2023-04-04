@@ -354,11 +354,11 @@ class Matching extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
-                createAktifitas($user->data->id, "Mengupload matching simtun $filesNamelampiran", "Mengupload Matching Simtun filesNamelampiran", "upload", $tw);
+                // createAktifitas($user->data->id, "Mengupload matching simtun $filesNamelampiran", "Mengupload Matching Simtun filesNamelampiran", "upload", $tw);
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $$dataResult);
+                // $response->data = view('situgu/su/upload/tpg/matching/verifi-upload', $dataResult);
                 $response->message = "Data berhasil disimpan.";
                 return json_encode($response);
             } else {
