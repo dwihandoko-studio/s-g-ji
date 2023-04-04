@@ -74,7 +74,8 @@
 
 <!-- Modal -->
 <div id="content-detailModal" class="modal fade content-detailModal" tabindex="-1" role="dialog" aria-labelledby="content-detailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-dialog modal-fullscreen" role="document">
+        <!-- <div class="modal-dialog modal-dialog-centered modal-xl" role="document"> -->
         <div class="modal-content modal-content-loading">
             <div class="modal-header">
                 <h5 class="modal-title" id="content-detailModalLabel">Details</h5>

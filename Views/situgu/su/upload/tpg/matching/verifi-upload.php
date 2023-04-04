@@ -1,6 +1,40 @@
 <?php if (isset($data)) { ?>
     <div class="modal-body">
         <div class="row">
+            <div class="col-lg-6 align-self-center">
+                <div class="text-lg-center mt-4 mt-lg-0">
+                    <div class="row">
+                        <div class="col-4">
+                            <div>
+                                <p class="text-muted text-truncate mb-2">Jumlah Data Matching</p>
+                                <h5 class="mb-0 text-info result_total_data" id="result_total_data">0</h5>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <p class="text-muted text-truncate mb-2">Jumlah Lolos</p>
+                                <h5 class="mb-0 text-success result_lolos" id="result_lolos">0</h5>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <p class="text-muted text-truncate mb-2">Jumlah Gagal</p>
+                                <h5 class="mb-0 text-danger result_gagal" id="result_gagal">0</h5>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="clearfix mt-4 mt-lg-0">
+                    <div class="dropdown float-end">
+                        <button class="btn btn-primary" type="button">
+                            <i class="mdi mdi-relation-zero-or-many-to-zero-or-many align-middle me-1"></i> Proses Data
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="table-responsive">
                     <table class="table table-bordered border-primary mb-0 modals-datatables-datanya" id="modals-datatables-datanya">
@@ -199,7 +233,14 @@
         fetch("./get_data_json?id=<?= $id ?>")
             .then(response => response.json())
             .then(data => {
-                for (let i = 0; i < data.length; i++) {
+                const result_total = document.getElementById("result_total");
+                result_total.textContent = data.total;
+                const result_lolos = document.getElementById("result_lolos");
+                result_lolos.textContent = data.lolos;
+                const result_gagal = document.getElementById("result_gagal");
+                result_gagal.textContent = data.gagal;
+
+                for (let i = 0; i < data.data.length; i++) {
                     const row = document.createElement("tr");
                     const numberCell = document.createElement("td");
                     const nuptkCell = document.createElement("td");

@@ -389,8 +389,12 @@ class Matching extends BaseController
     {
         $id = htmlspecialchars($this->request->getGet('id'), true);
         $datas = json_decode(file_get_contents(FCPATH . "upload/matching/$id.json"), true);
-        $response = [];
+        $result = [];
         if (isset($datas['data']) && count($datas['data']) > 0) {
+            $result['total'] = count($datas['data']);
+            $response = [];
+            $lolos = 0;
+            $gagal = 0;
             foreach ($datas['data'] as $key => $v) {
                 $item = [];
                 if ($v['data_usulan'] == NULL || $v['data_usulan'] == "") {
@@ -410,6 +414,7 @@ class Matching extends BaseController
                     $item['keterangan'] = "Belum Mengusulkan";
                     $item['aksi'] = "Aksi";
                     $item['status'] = "table-light";
+                    $gagal += 1;
                 } else {
                     $keterangan = "";
                     if (($v['data_usulan']['lampiran_cuti'] == NULL || $v['data_usulan']['lampiran_cuti'] == "") && ($v['data_usulan']['lampiran_pensiun'] == NULL || $v['data_usulan']['lampiran_pensiun'] == "") && ($v['data_usulan']['lampiran_kematian'] == NULL || $v['data_usulan']['lampiran_kematian'] == "")) {
@@ -448,6 +453,7 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-success";
+                                $lolos += 1;
                             } else {
                                 $item['id'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
@@ -465,6 +471,7 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-danger";
+                                $gagal += 1;
                             }
                         } else {
                             if ($v['golongan'] == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
@@ -484,6 +491,7 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Siap Diusulkan SKTP";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-success";
+                                $lolos += 1;
                             } else {
                                 $item['id'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
@@ -501,6 +509,7 @@ class Matching extends BaseController
                                 $item['keterangan'] = "Belum Update Dapodik";
                                 $item['aksi'] = "Aksi";
                                 $item['status'] = "table-danger";
+                                $gagal += 1;
                             }
                         }
                     } else {
@@ -520,14 +529,23 @@ class Matching extends BaseController
                         $item['keterangan'] = "Belum Memenuhi Syarat";
                         $item['aksi'] = "Aksi";
                         $item['status'] = "table-danger";
+                        $gagal += 1;
                     }
                 }
 
                 $response[] = $item;
             }
+            $result['data'] = $response;
+            $result['lolos'] = $lolos;
+            $result['gagal'] = $gagal;
+        } else {
+            $result['data'] = [];
+            $result['total'] = 0;
+            $result['lolos'] = 0;
+            $result['gagal'] = 0;
         }
 
-        return json_encode($response);
+        return json_encode($result);
     }
 
     // public function get_data_json()
