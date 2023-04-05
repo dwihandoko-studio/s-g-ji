@@ -240,6 +240,11 @@ class Matching extends BaseController
 
             $nuptkImport = [];
 
+            $ketSimtunDokumen = $sheet[7][5];
+
+            var_dump($ketSimtunDokumen);
+            die;
+
             unset($sheet[0]);
             unset($sheet[1]);
             unset($sheet[2]);
