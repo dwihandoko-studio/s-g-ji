@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12 mb-4">
                 <div class="row">
-                    <div class="col-lg-6 align-self-center">
+                    <div class="col-lg-10 align-self-center">
                         <div class="text-lg-center mt-4 mt-lg-0">
                             <div class="row">
                                 <div class="col-4">
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 d-none d-lg-block">
+                    <div class="col-lg-2 d-none d-lg-block">
                         <div class="clearfix mt-4 mt-lg-0">
                             <div class="dropdown float-end">
                                 <button class="btn btn-primary button_aksi_matching" id="button_aksi_matching" type="button" onclick="aksiMatching()">
