@@ -42,7 +42,7 @@
                             <progress id="progressBar" value="0" max="100" style="width:100%; display: none;"></progress>
                         </div>
                         <div>
-                            <h3 id="status" style="font-size: 15px; margin: 8px auto;"></h3>
+                            <h3 id="status" style="font-size: 12px; margin: 8px auto;"></h3>
                         </div>
                         <div>
                             <p id="loaded_n_total" style="margin-bottom: 0px;"></p>
@@ -183,6 +183,9 @@
         function aksiMatching() {
             buttonAksiMatching.setAttribute("disabled", true);
             console.log(dataSendMatching);
+            const progBar = document.getElementById("progressBar");
+
+            progBar.style.display = "block";
 
             ambilId("status").innerHTML = "Menyimpan Data . . .";
 
