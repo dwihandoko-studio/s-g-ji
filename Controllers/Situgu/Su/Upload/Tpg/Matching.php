@@ -242,8 +242,8 @@ class Matching extends BaseController
 
             $ketSimtunDokumen = $sheet[7][5];
 
-            var_dump($ketSimtunDokumen);
-            die;
+            // var_dump($ketSimtunDokumen);
+            // die;
 
             unset($sheet[0]);
             unset($sheet[1]);
@@ -285,6 +285,7 @@ class Matching extends BaseController
                     'nama_bank' => $data[20],
                     'cabang_bank' => $data[21],
                     'an_rekening' => $data[22],
+                    'keterangan_doc_simtun' => str_replace(": ", "", $ketSimtunDokumen),
                 ];
 
                 $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_detail_tpg_test a')
@@ -443,32 +444,152 @@ class Matching extends BaseController
                         $keterangan .= "Kematian ";
                     }
 
-                    if ($v['total_jjm_sesuai'] >= 24 && $v['total_jjm_sesuai'] <= 40) {
+                    if ($v['keterangan_doc_simtun'] == "Siap Diusulkan") {
+                        if ($v['total_jjm_sesuai'] >= 24 && $v['total_jjm_sesuai'] <= 50) {
 
-                        if ($v['golongan'] == "" && !($v['nip'] == NULL || $v['nip'] == "")) {
-                            if ("IX" == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
-                                $item['number'] = $key + 1;
-                                $item['nuptk'] = $v['nuptk'];
-                                $item['nama'] = $v['nama'];
-                                $item['golongan_code'] = $v['golongan_code'];
-                                $item['masa_kerja'] = $v['masa_kerja'];
-                                $item['gaji_pokok'] = $v['gaji_pokok'];
-                                $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
-                                $item['us_nuptk'] = $v['data_usulan']['nuptk'];
-                                $item['us_nama'] = $v['data_usulan']['nama'];
-                                $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
-                                $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
-                                $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
-                                $item['us_keterangan'] = $keterangan;
-                                $item['keterangan'] = "Siap Diusulkan SKTP";
-                                $item['aksi'] = "Aksi";
-                                $item['status'] = "table-success";
-                                $item['id_usulan'] = $v['data_usulan']['id_usulan'];
-                                $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
-                                $item['id_ptk'] = $v['data_usulan']['id_ptk'];
-                                $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
-                                $lolos += 1;
+                            if ($v['golongan'] == "" && !($v['nip'] == NULL || $v['nip'] == "")) {
+                                if ("IX" == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
+                                    $item['number'] = $key + 1;
+                                    $item['nuptk'] = $v['nuptk'];
+                                    $item['nama'] = $v['nama'];
+                                    $item['golongan_code'] = $v['golongan_code'];
+                                    $item['masa_kerja'] = $v['masa_kerja'];
+                                    $item['gaji_pokok'] = $v['gaji_pokok'];
+                                    $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
+                                    $item['us_nuptk'] = $v['data_usulan']['nuptk'];
+                                    $item['us_nama'] = $v['data_usulan']['nama'];
+                                    $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
+                                    $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
+                                    $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
+                                    $item['us_keterangan'] = $keterangan;
+                                    $item['keterangan'] = "Siap Diusulkan SKTP";
+                                    $item['aksi'] = "Aksi";
+                                    $item['status'] = "table-success";
+                                    $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                    $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                    $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                    $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                    $lolos += 1;
+                                } else {
+                                    $item['number'] = $key + 1;
+                                    $item['nuptk'] = $v['nuptk'];
+                                    $item['nama'] = $v['nama'];
+                                    $item['golongan_code'] = $v['golongan_code'];
+                                    $item['masa_kerja'] = $v['masa_kerja'];
+                                    $item['gaji_pokok'] = $v['gaji_pokok'];
+                                    $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
+                                    $item['us_nuptk'] = $v['data_usulan']['nuptk'];
+                                    $item['us_nama'] = $v['data_usulan']['nama'];
+                                    $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
+                                    $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
+                                    $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
+                                    $item['us_keterangan'] = $keterangan;
+                                    $item['keterangan'] = "Belum Update Dapodik";
+                                    $item['aksi'] = "Aksi";
+                                    $item['status'] = "table-danger";
+                                    $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                    $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                    $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                    $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                    $gagal += 1;
+                                }
                             } else {
+                                if ($v['nip'] == NULL || $v['nip'] == "") {
+                                    if ($v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
+                                        $item['number'] = $key + 1;
+                                        $item['nuptk'] = $v['nuptk'];
+                                        $item['nama'] = $v['nama'];
+                                        $item['golongan_code'] = $v['golongan_code'];
+                                        $item['masa_kerja'] = $v['masa_kerja'];
+                                        $item['gaji_pokok'] = $v['gaji_pokok'];
+                                        $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
+                                        $item['us_nuptk'] = $v['data_usulan']['nuptk'];
+                                        $item['us_nama'] = $v['data_usulan']['nama'];
+                                        $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
+                                        $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
+                                        $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
+                                        $item['us_keterangan'] = $keterangan;
+                                        $item['keterangan'] = "Siap Diusulkan SKTP";
+                                        $item['aksi'] = "Aksi";
+                                        $item['status'] = "table-success";
+                                        $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                        $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                        $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                        $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                        $lolos += 1;
+                                    } else {
+                                        $item['number'] = $key + 1;
+                                        $item['nuptk'] = $v['nuptk'];
+                                        $item['nama'] = $v['nama'];
+                                        $item['golongan_code'] = $v['golongan_code'];
+                                        $item['masa_kerja'] = $v['masa_kerja'];
+                                        $item['gaji_pokok'] = $v['gaji_pokok'];
+                                        $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
+                                        $item['us_nuptk'] = $v['data_usulan']['nuptk'];
+                                        $item['us_nama'] = $v['data_usulan']['nama'];
+                                        $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
+                                        $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
+                                        $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
+                                        $item['us_keterangan'] = $keterangan;
+                                        $item['keterangan'] = "Belum Update Dapodik";
+                                        $item['aksi'] = "Aksi";
+                                        $item['status'] = "table-danger";
+                                        $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                        $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                        $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                        $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                        $gagal += 1;
+                                    }
+                                } else {
+                                    if ($v['golongan'] == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
+                                        $item['number'] = $key + 1;
+                                        $item['nuptk'] = $v['nuptk'];
+                                        $item['nama'] = $v['nama'];
+                                        $item['golongan_code'] = $v['golongan_code'];
+                                        $item['masa_kerja'] = $v['masa_kerja'];
+                                        $item['gaji_pokok'] = $v['gaji_pokok'];
+                                        $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
+                                        $item['us_nuptk'] = $v['data_usulan']['nuptk'];
+                                        $item['us_nama'] = $v['data_usulan']['nama'];
+                                        $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
+                                        $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
+                                        $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
+                                        $item['us_keterangan'] = $keterangan;
+                                        $item['keterangan'] = "Siap Diusulkan SKTP";
+                                        $item['aksi'] = "Aksi";
+                                        $item['status'] = "table-success";
+                                        $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                        $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                        $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                        $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                        $lolos += 1;
+                                    } else {
+                                        $item['number'] = $key + 1;
+                                        $item['nuptk'] = $v['nuptk'];
+                                        $item['nama'] = $v['nama'];
+                                        $item['golongan_code'] = $v['golongan_code'];
+                                        $item['masa_kerja'] = $v['masa_kerja'];
+                                        $item['gaji_pokok'] = $v['gaji_pokok'];
+                                        $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
+                                        $item['us_nuptk'] = $v['data_usulan']['nuptk'];
+                                        $item['us_nama'] = $v['data_usulan']['nama'];
+                                        $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
+                                        $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
+                                        $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
+                                        $item['us_keterangan'] = $keterangan;
+                                        $item['keterangan'] = "Belum Update Dapodik";
+                                        $item['aksi'] = "Aksi";
+                                        $item['status'] = "table-danger";
+                                        $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                        $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                        $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                        $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                        $gagal += 1;
+                                    }
+                                }
+                            }
+                        } else {
+                            if ($v['total_jjm_sesuai'] == 0) {
                                 $item['number'] = $key + 1;
                                 $item['nuptk'] = $v['nuptk'];
                                 $item['nama'] = $v['nama'];
@@ -482,108 +603,36 @@ class Matching extends BaseController
                                 $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
                                 $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
                                 $item['us_keterangan'] = $keterangan;
-                                $item['keterangan'] = "Belum Update Dapodik";
+                                $item['keterangan'] = "Belum Memenuhi Syarat";
                                 $item['aksi'] = "Aksi";
-                                $item['status'] = "table-danger";
+                                $item['status'] = "table-warning";
                                 $item['id_usulan'] = $v['data_usulan']['id_usulan'];
                                 $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                 $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                 $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
                                 $gagal += 1;
-                            }
-                        } else {
-                            if ($v['nip'] == NULL || $v['nip'] == "") {
-                                if ($v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
-                                    $item['number'] = $key + 1;
-                                    $item['nuptk'] = $v['nuptk'];
-                                    $item['nama'] = $v['nama'];
-                                    $item['golongan_code'] = $v['golongan_code'];
-                                    $item['masa_kerja'] = $v['masa_kerja'];
-                                    $item['gaji_pokok'] = $v['gaji_pokok'];
-                                    $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
-                                    $item['us_nuptk'] = $v['data_usulan']['nuptk'];
-                                    $item['us_nama'] = $v['data_usulan']['nama'];
-                                    $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
-                                    $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
-                                    $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
-                                    $item['us_keterangan'] = $keterangan;
-                                    $item['keterangan'] = "Siap Diusulkan SKTP";
-                                    $item['aksi'] = "Aksi";
-                                    $item['status'] = "table-success";
-                                    $item['id_usulan'] = $v['data_usulan']['id_usulan'];
-                                    $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
-                                    $item['id_ptk'] = $v['data_usulan']['id_ptk'];
-                                    $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
-                                    $lolos += 1;
-                                } else {
-                                    $item['number'] = $key + 1;
-                                    $item['nuptk'] = $v['nuptk'];
-                                    $item['nama'] = $v['nama'];
-                                    $item['golongan_code'] = $v['golongan_code'];
-                                    $item['masa_kerja'] = $v['masa_kerja'];
-                                    $item['gaji_pokok'] = $v['gaji_pokok'];
-                                    $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
-                                    $item['us_nuptk'] = $v['data_usulan']['nuptk'];
-                                    $item['us_nama'] = $v['data_usulan']['nama'];
-                                    $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
-                                    $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
-                                    $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
-                                    $item['us_keterangan'] = $keterangan;
-                                    $item['keterangan'] = "Belum Update Dapodik";
-                                    $item['aksi'] = "Aksi";
-                                    $item['status'] = "table-danger";
-                                    $item['id_usulan'] = $v['data_usulan']['id_usulan'];
-                                    $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
-                                    $item['id_ptk'] = $v['data_usulan']['id_ptk'];
-                                    $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
-                                    $gagal += 1;
-                                }
                             } else {
-                                if ($v['golongan'] == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
-                                    $item['number'] = $key + 1;
-                                    $item['nuptk'] = $v['nuptk'];
-                                    $item['nama'] = $v['nama'];
-                                    $item['golongan_code'] = $v['golongan_code'];
-                                    $item['masa_kerja'] = $v['masa_kerja'];
-                                    $item['gaji_pokok'] = $v['gaji_pokok'];
-                                    $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
-                                    $item['us_nuptk'] = $v['data_usulan']['nuptk'];
-                                    $item['us_nama'] = $v['data_usulan']['nama'];
-                                    $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
-                                    $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
-                                    $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
-                                    $item['us_keterangan'] = $keterangan;
-                                    $item['keterangan'] = "Siap Diusulkan SKTP";
-                                    $item['aksi'] = "Aksi";
-                                    $item['status'] = "table-success";
-                                    $item['id_usulan'] = $v['data_usulan']['id_usulan'];
-                                    $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
-                                    $item['id_ptk'] = $v['data_usulan']['id_ptk'];
-                                    $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
-                                    $lolos += 1;
-                                } else {
-                                    $item['number'] = $key + 1;
-                                    $item['nuptk'] = $v['nuptk'];
-                                    $item['nama'] = $v['nama'];
-                                    $item['golongan_code'] = $v['golongan_code'];
-                                    $item['masa_kerja'] = $v['masa_kerja'];
-                                    $item['gaji_pokok'] = $v['gaji_pokok'];
-                                    $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
-                                    $item['us_nuptk'] = $v['data_usulan']['nuptk'];
-                                    $item['us_nama'] = $v['data_usulan']['nama'];
-                                    $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
-                                    $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
-                                    $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
-                                    $item['us_keterangan'] = $keterangan;
-                                    $item['keterangan'] = "Belum Update Dapodik";
-                                    $item['aksi'] = "Aksi";
-                                    $item['status'] = "table-danger";
-                                    $item['id_usulan'] = $v['data_usulan']['id_usulan'];
-                                    $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
-                                    $item['id_ptk'] = $v['data_usulan']['id_ptk'];
-                                    $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
-                                    $gagal += 1;
-                                }
+                                $item['number'] = $key + 1;
+                                $item['nuptk'] = $v['nuptk'];
+                                $item['nama'] = $v['nama'];
+                                $item['golongan_code'] = $v['golongan_code'];
+                                $item['masa_kerja'] = $v['masa_kerja'];
+                                $item['gaji_pokok'] = $v['gaji_pokok'];
+                                $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
+                                $item['us_nuptk'] = $v['data_usulan']['nuptk'];
+                                $item['us_nama'] = $v['data_usulan']['nama'];
+                                $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
+                                $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
+                                $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
+                                $item['us_keterangan'] = $keterangan;
+                                $item['keterangan'] = "Belum Memenuhi Syarat";
+                                $item['aksi'] = "Aksi";
+                                $item['status'] = "table-warning";
+                                $item['id_usulan'] = $v['data_usulan']['id_usulan'];
+                                $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
+                                $item['id_ptk'] = $v['data_usulan']['id_ptk'];
+                                $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                $gagal += 1;
                             }
                         }
                     } else {
@@ -600,9 +649,23 @@ class Matching extends BaseController
                         $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
                         $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
                         $item['us_keterangan'] = $keterangan;
-                        $item['keterangan'] = "Belum Memenuhi Syarat";
+                        $item['keterangan'] = $v['keterangan_doc_simtun'];
                         $item['aksi'] = "Aksi";
-                        $item['status'] = "table-warning";
+                        switch ($v['keterangan_doc_simtun']) {
+                            case 'Belum Update Data/Dapodik':
+                                $item['status'] = "table-danger";
+                                break;
+                            case 'Tidak Memenuhi Syarat':
+                                $item['status'] = "table-danger";
+                                break;
+                            case 'Belum Memenuhi Syarat':
+                                $item['status'] = "table-warning";
+                                break;
+
+                            default:
+                                $item['status'] = "table-warning";
+                                break;
+                        }
                         $item['id_usulan'] = $v['data_usulan']['id_usulan'];
                         $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                         $item['id_ptk'] = $v['data_usulan']['id_ptk'];
