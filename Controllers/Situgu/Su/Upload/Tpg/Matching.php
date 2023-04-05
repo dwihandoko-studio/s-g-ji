@@ -395,6 +395,9 @@ class Matching extends BaseController
     {
         $id = htmlspecialchars($this->request->getGet('id'), true);
         $datas = json_decode(file_get_contents(FCPATH . "upload/matching/$id.json"), true);
+
+        var_dump($datas);
+        die;
         $result = [];
         if (isset($datas['data']) && count($datas['data']) > 0) {
             $result['total'] = count($datas['data']);
