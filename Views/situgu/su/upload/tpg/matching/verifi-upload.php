@@ -6,26 +6,26 @@
                     <div class="col-lg-10 align-self-center">
                         <div class="text-lg-center mt-4 mt-lg-0">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div>
                                         <p class="text-muted text-truncate mb-2">Jumlah Data Matching</p>
                                         <h5 class="mb-0 text-info result_total" id="result_total"><i class="mdi mdi-reload mdi-spin"></i></h5>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div>
                                         <p class="text-muted text-truncate mb-2">Jumlah Lolos</p>
                                         <h5 class="mb-0 text-success result_lolos" id="result_lolos"><i class="mdi mdi-reload mdi-spin"></i></h5>
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div>
                                         <p class="text-muted text-truncate mb-2">Jumlah Gagal</p>
                                         <h5 class="mb-0 text-danger result_gagal" id="result_gagal"><i class="mdi mdi-reload mdi-spin"></i></h5>
 
                                     </div>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <div>
                                         <p class="text-muted text-truncate mb-2">Jumlah Belum Usul</p>
                                         <h5 class="mb-0 text-warning result_belumusul" id="result_belumusul"><i class="mdi mdi-reload mdi-spin"></i></h5>
