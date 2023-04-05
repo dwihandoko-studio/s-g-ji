@@ -405,6 +405,7 @@ class Matching extends BaseController
             $response_aksi = [];
             $lolos = 0;
             $gagal = 0;
+            $belumusul = 0;
             foreach ($datas['data'] as $key => $v) {
                 $item = [];
                 $tgl_lahir = explode("/", $v['tgl_lahir']);
@@ -430,7 +431,7 @@ class Matching extends BaseController
                     $item['kode_usulan'] = "";
                     $item['id_ptk'] = "";
                     $item['id_tahun_tw'] = "";
-                    $gagal += 1;
+                    $belumusul += 1;
                 } else {
                     $keterangan = "";
                     if (($v['data_usulan']['lampiran_cuti'] == NULL || $v['data_usulan']['lampiran_cuti'] == "") && ($v['data_usulan']['lampiran_pensiun'] == NULL || $v['data_usulan']['lampiran_pensiun'] == "") && ($v['data_usulan']['lampiran_kematian'] == NULL || $v['data_usulan']['lampiran_kematian'] == "")) {
@@ -715,12 +716,14 @@ class Matching extends BaseController
             }
             $result['lolos'] = $lolos;
             $result['gagal'] = $gagal;
+            $result['belumusul'] = $belumusul;
             $result['data'] = $response;
             $result['aksi'] = $response_aksi;
         } else {
             $result['total'] = 0;
             $result['lolos'] = 0;
             $result['gagal'] = 0;
+            $result['belumusul'] = 0;
             $result['data'] = [];
         }
 

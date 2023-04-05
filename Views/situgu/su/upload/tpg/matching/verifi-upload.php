@@ -9,19 +9,26 @@
                                 <div class="col-4">
                                     <div>
                                         <p class="text-muted text-truncate mb-2">Jumlah Data Matching</p>
-                                        <h5 class="mb-0 text-info result_total" id="result_total">0</h5>
+                                        <h5 class="mb-0 text-info result_total" id="result_total"><i class="mdi mdi-reload mdi-spin"></i></h5>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div>
                                         <p class="text-muted text-truncate mb-2">Jumlah Lolos</p>
-                                        <h5 class="mb-0 text-success result_lolos" id="result_lolos">0</h5>
+                                        <h5 class="mb-0 text-success result_lolos" id="result_lolos"><i class="mdi mdi-reload mdi-spin"></i></h5>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div>
                                         <p class="text-muted text-truncate mb-2">Jumlah Gagal</p>
-                                        <h5 class="mb-0 text-danger result_gagal" id="result_gagal">0</h5>
+                                        <h5 class="mb-0 text-danger result_gagal" id="result_gagal"><i class="mdi mdi-reload mdi-spin"></i></h5>
+
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div>
+                                        <p class="text-muted text-truncate mb-2">Jumlah Belum Usul</p>
+                                        <h5 class="mb-0 text-warning result_belumusul" id="result_belumusul"><i class="mdi mdi-reload mdi-spin"></i></h5>
 
                                     </div>
                                 </div>
@@ -121,6 +128,8 @@
                 result_lolos.textContent = data.lolos.toString();
                 const result_gagal = document.getElementById("result_gagal");
                 result_gagal.textContent = data.gagal.toString();
+                const result_belumusul = document.getElementById("result_belumusul");
+                result_belumusul.textContent = data.belumusul.toString();
                 // const result_total = document.querySelector(".result_total");
                 // result_total.textContent = data.total.toString();
                 // const result_lolos = document.querySelector(".result_lolos");
