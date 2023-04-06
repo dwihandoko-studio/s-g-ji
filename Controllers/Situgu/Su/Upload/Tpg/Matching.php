@@ -454,7 +454,7 @@ class Matching extends BaseController
                         if ($v['total_jjm_sesuai'] >= 24 && $v['total_jjm_sesuai'] <= 50) {
 
                             if ($v['golongan'] == "" && !($v['nip'] == NULL || $v['nip'] == "")) {
-                                if ("IX" == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
+                                if ("IX" == $v['data_usulan']['us_pang_golongan'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
                                     $item['number'] = $key + 1;
                                     $item['nuptk'] = $v['nuptk'];
                                     $item['nama'] = $v['nama'];
