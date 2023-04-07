@@ -154,7 +154,7 @@
                     const usKetCell = document.createElement("td");
                     const ketCell = document.createElement("td");
                     const aksiCell = document.createElement("td");
-                    numberCell.textContent = data.data[i].number;
+                    numberCell.textContent = 1 + i;
                     nuptkCell.textContent = data.data[i].nuptk;
                     namaCell.textContent = data.data[i].nama;
                     golonganCodeCell.textContent = data.data[i].golongan_code;
