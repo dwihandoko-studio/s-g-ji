@@ -668,11 +668,11 @@ class Matching extends BaseController
                             }
                         } else {
                             if ($v['total_jjm_sesuai'] == 0) {
-                                $awal = (int)(date('Y') . '0101');
-                                $akhir = (int)(date('Y') . '0701');
+                                $awal = ((int)(date('Y') - 60) . '0101');
+                                $akhir = ((int)(date('Y') - 60) . '0701');
                                 if ((int)date('m') > 6) {
-                                    $awal = (int)(date('Y') . '0701');
-                                    $akhir = (int)(((int)date('Y') + 1) . '0101');
+                                    $awal = ((int)(date('Y') - 60) . '0701');
+                                    $akhir = (int)((((int)date('Y') + 1) - 60) . '0101');
                                 }
 
                                 if ((int)$tgl_lhr > $awal && (int)$tgl_lhr < $akhir) {
