@@ -431,6 +431,7 @@ class Matching extends BaseController
                     $item['kode_usulan'] = "";
                     $item['id_ptk'] = "";
                     $item['id_tahun_tw'] = "";
+                    $item['sort'] = "99";
                     $belumusul += 1;
                 } else {
                     $keterangan = "";
@@ -475,6 +476,7 @@ class Matching extends BaseController
                                     $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                     $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                     $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                    $item['sort'] = "88";
                                     $lolos += 1;
                                 } else {
                                     $item['number'] = $key + 1;
@@ -497,6 +499,7 @@ class Matching extends BaseController
                                     $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                     $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                     $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                    $item['sort'] = "1";
                                     $gagal += 1;
                                 }
                             } else {
@@ -522,6 +525,7 @@ class Matching extends BaseController
                                         $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                         $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                         $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                        $item['sort'] = "88";
                                         $lolos += 1;
                                     } else {
                                         $item['number'] = $key + 1;
@@ -544,6 +548,7 @@ class Matching extends BaseController
                                         $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                         $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                         $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                        $item['sort'] = "1";
                                         $gagal += 1;
                                     }
                                 } else {
@@ -568,6 +573,7 @@ class Matching extends BaseController
                                         $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                         $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                         $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                        $item['sort'] = "88";
                                         $lolos += 1;
                                     } else {
                                         if ($v['golongan'] == $v['data_usulan']['us_pang_golongan'] && $v['masa_kerja'] == $v['data_usulan']['us_pang_mk_tahun'] && $v['gaji_pokok'] == $v['data_usulan']['us_gaji_pokok']) {
@@ -591,6 +597,7 @@ class Matching extends BaseController
                                             $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                             $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                             $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                            $item['sort'] = "88";
                                             $lolos += 1;
                                         } else {
                                             if ($v['data_usulan']['us_pang_mk_tahun'] > 32) {
@@ -615,6 +622,7 @@ class Matching extends BaseController
                                                     $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                                     $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                                     $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                                    $item['sort'] = "88";
                                                     $lolos += 1;
                                                 } else {
                                                     $item['number'] = $key + 1;
@@ -637,6 +645,7 @@ class Matching extends BaseController
                                                     $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                                     $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                                     $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                                    $item['sort'] = "1";
                                                     $gagal += 1;
                                                 }
                                             } else {
@@ -660,6 +669,7 @@ class Matching extends BaseController
                                                 $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                                 $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                                 $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                                $item['sort'] = "1";
                                                 $gagal += 1;
                                             }
                                         }
@@ -696,6 +706,7 @@ class Matching extends BaseController
                                     $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                     $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                     $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                    $item['sort'] = "88";
                                     $lolos += 1;
                                 } else {
                                     $item['number'] = $key + 1;
@@ -718,6 +729,7 @@ class Matching extends BaseController
                                     $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                     $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                     $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                    $item['sort'] = "0";
                                     $gagal += 1;
                                 }
                             } else {
@@ -741,6 +753,7 @@ class Matching extends BaseController
                                 $item['kode_usulan'] = $v['data_usulan']['kode_usulan'];
                                 $item['id_ptk'] = $v['data_usulan']['id_ptk'];
                                 $item['id_tahun_tw'] = $v['data_usulan']['id_tahun_tw'];
+                                $item['sort'] = "0";
                                 $gagal += 1;
                             }
                         }
@@ -763,16 +776,20 @@ class Matching extends BaseController
                         switch ($v['keterangan_doc_simtun']) {
                             case 'Belum Update Data/Dapodik':
                                 $item['status'] = "table-danger";
+                                $item['sort'] = "1";
                                 break;
                             case 'Tidak Memenuhi Syarat':
                                 $item['status'] = "table-danger";
+                                $item['sort'] = "1";
                                 break;
                             case 'Belum Memenuhi Syarat':
                                 $item['status'] = "table-warning";
+                                $item['sort'] = "0";
                                 break;
 
                             default:
                                 $item['status'] = "table-warning";
+                                $item['sort'] = "0";
                                 break;
                         }
                         $item['id_usulan'] = $v['data_usulan']['id_usulan'];
@@ -786,6 +803,10 @@ class Matching extends BaseController
 
                 $response[] = $item;
             }
+            usort($response, function ($a, $b) {
+                return $a['sort'] - $b['sort'];
+            });
+
             $result['lolos'] = $lolos;
             $result['gagal'] = $gagal;
             $result['belumusul'] = $belumusul;
