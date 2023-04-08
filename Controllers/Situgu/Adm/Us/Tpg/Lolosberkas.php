@@ -218,6 +218,175 @@ class Lolosberkas extends BaseController
         }
     }
 
+    public function editSave()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id_usulan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id Usulan tidak boleh kosong. ',
+                ]
+            ],
+            'id_ptk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+            'id_tahun_tw' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id Tahun TW tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id_usulan')
+                . $this->validator->getError('id_tahun_tw')
+                . $this->validator->getError('id_ptk');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $id_usulan = htmlspecialchars($this->request->getVar('id_usulan'), true);
+            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
+            $id_tahun_tw = htmlspecialchars($this->request->getVar('id_tahun_tw'), true);
+
+            $us_pang_jenis = htmlspecialchars($this->request->getVar('us_pang_jenis'), true);
+            $us_pang_golongan = htmlspecialchars($this->request->getVar('us_pang_golongan'), true);
+            $us_pang_tmt = htmlspecialchars($this->request->getVar('us_pang_tmt'), true);
+            $us_pang_tgl = htmlspecialchars($this->request->getVar('us_pang_tgl'), true);
+            $us_pang_mk_tahun = htmlspecialchars($this->request->getVar('us_pang_mk_tahun'), true);
+            $us_pang_mk_bulan = htmlspecialchars($this->request->getVar('us_pang_mk_bulan'), true);
+            $us_gaji_pokok = htmlspecialchars($this->request->getVar('us_gaji_pokok'), true);
+
+            $attr_pang_jenis = htmlspecialchars($this->request->getVar('attr_pang_jenis'), true);
+            $attr_pang_golongan = htmlspecialchars($this->request->getVar('attr_pang_golongan'), true);
+            $attr_pang_no = htmlspecialchars($this->request->getVar('attr_pang_no'), true);
+            $attr_pang_tmt = htmlspecialchars($this->request->getVar('attr_pang_tmt'), true);
+            $attr_pang_tgl = htmlspecialchars($this->request->getVar('attr_pang_tgl'), true);
+            $attr_pang_mk_tahun = htmlspecialchars($this->request->getVar('attr_pang_mk_tahun'), true);
+            $attr_pang_mk_bulan = htmlspecialchars($this->request->getVar('attr_pang_mk_bulan'), true);
+
+            $oldData =  $this->_db->table('_tb_usulan_detail_tpg')->where('id', $id_usulan)->get()->getRowObject();
+
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $data = [
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            if ($us_pang_jenis !== "") {
+                $data['us_pang_jenis'] = $us_pang_jenis;
+            }
+            if ($us_pang_golongan !== "") {
+                $data['us_pang_golongan'] = $us_pang_golongan;
+            }
+            if ($us_pang_tmt !== "") {
+                $data['us_pang_tmt'] = $us_pang_tmt;
+            }
+            if ($us_pang_tgl !== "") {
+                $data['us_pang_tgl'] = $us_pang_tgl;
+            }
+            if ($us_pang_mk_tahun !== "") {
+                $data['us_pang_mk_tahun'] = $us_pang_mk_tahun;
+            }
+            if ($us_pang_mk_bulan !== "") {
+                $data['us_pang_mk_bulan'] = $us_pang_mk_bulan;
+            }
+            if ($us_gaji_pokok !== "") {
+                $data['us_gaji_pokok'] = $us_gaji_pokok;
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update($data);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengubah data baru.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+
+                $dataAttr = [
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
+
+                if ($attr_pang_jenis !== "") {
+                    $data['pang_jenis'] = $attr_pang_jenis;
+                }
+                if ($attr_pang_golongan !== "") {
+                    $data['pang_golongan'] = $attr_pang_golongan;
+                }
+                if ($attr_pang_no !== "") {
+                    $data['pang_no'] = $attr_pang_no;
+                }
+                if ($attr_pang_tmt !== "") {
+                    $data['pang_tmt'] = $attr_pang_tmt;
+                }
+                if ($attr_pang_tgl !== "") {
+                    $data['pang_tgl'] = $attr_pang_tgl;
+                }
+                if ($attr_pang_mk_tahun !== "") {
+                    $data['pang_tahun'] = $attr_pang_mk_tahun;
+                }
+                if ($attr_pang_mk_bulan !== "") {
+                    $data['pang_bulan'] = $attr_pang_mk_bulan;
+                }
+
+                $this->_db->transBegin();
+                try {
+                    $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $id_ptk, 'id_tahun_tw' => $id_tahun_tw])->update($data);
+                } catch (\Exception $e) {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengubah data baru.";
+                    return json_encode($response);
+                }
+
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data berhasil diupdate.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupate data";
+                return json_encode($response);
+            }
+        }
+    }
+
     public function detail()
     {
         if ($this->request->getMethod() != 'post') {
