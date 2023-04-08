@@ -192,7 +192,7 @@ class Lolosberkas extends BaseController
                 ->join('_ptk_tb b', 'a.id_ptk = b.id')
                 ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                 ->where('a.status_usulan', 2)
-                ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])
+                ->where(['a.id' => $id, 'a.id_tahun_tw' => $tw])
                 ->get()->getRowObject();
 
             if ($current) {
