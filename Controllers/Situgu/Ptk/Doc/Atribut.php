@@ -71,7 +71,18 @@ class Atribut extends BaseController
             $row[] = $no;
             $row[] = $list->tahun;
             $row[] = $list->tw;
-            $row[] = $list->pang_golongan;
+            if ($list->status_kepegawaian == "GTY/PTY") {
+                switch ($list->is_locked) {
+                    case 1:
+                        $row[] = $list->pang_golongan;
+                        break;
+                    default:
+                        $row[] = $list->pang_golongan . '&nbsp; <a href="javascript:actionEditPang(\'' . $list->id . '\')" class="badge rounded-pill bg-info float-end" key="t-edit-inpassing">Edit</a>';
+                        break;
+                }
+            } else {
+                $row[] = $list->pang_golongan;
+            }
             $row[] = $list->pang_no;
             $row[] = $list->pang_tmt;
             $row[] = $list->pang_tgl;
@@ -306,6 +317,52 @@ class Atribut extends BaseController
         return json_encode($response);
     }
 
+    public function edit()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $current = $this->_db->table('_upload_data_attribut')->where('id', $id)->get()->getRowObject();
+
+            if (!$current) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+
+            $data['data'] = $current;
+            $data['pangkats'] = $this->_db->table('ref_gaji')->select("*, count(pangkat) as jumlah")->groupBy('pangkat')->orderBy('pangkat', 'asc')->get()->getResult();
+
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "Permintaan diizinkan";
+            $response->data = view('situgu/ptk/doc/atribut/edit', $data);
+            return json_encode($response);
+        }
+    }
+
     public function addSave()
     {
         if ($this->request->getMethod() != 'post') {
@@ -403,6 +460,109 @@ class Atribut extends BaseController
                 $response->status = 400;
                 $response->error = var_dump($th);
                 $response->message = "Gagal menyimpan data.";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function editSave()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+            'pangkat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pangkat tidak boleh kosong. ',
+                ]
+            ],
+            'no_sk' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No SK inpassing tidak boleh kosong. ',
+                ]
+            ],
+            'mkt_pangkat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Masa Kerja inpassing tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('no_sk')
+                . $this->validator->getError('mkt_pangkat');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $pangkat = htmlspecialchars($this->request->getVar('pangkat'), true);
+            $no_sk = htmlspecialchars($this->request->getVar('no_sk'), true);
+            $mkt_pangkat = htmlspecialchars($this->request->getVar('mkt_pangkat'), true);
+
+            $oldData =  $this->_db->table('_upload_data_attribut')->where('id', $id)->get()->getRowObject();
+
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $data = [
+                'pang_golongan' => $pangkat,
+                'pang_no' => $no_sk,
+                'pang_tahun' => $mkt_pangkat,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('_upload_data_attribut')->where('id', $oldData->id)->update($data);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan pangkat.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data berhasil diupdate.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupate data";
                 return json_encode($response);
             }
         }
