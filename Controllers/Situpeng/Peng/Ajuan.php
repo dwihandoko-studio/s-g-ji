@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Situgu\Ptk\Us;
+namespace App\Controllers\Situpeng\Peng;
 
 use App\Controllers\BaseController;
 use Config\Services;
@@ -9,7 +9,6 @@ use Firebase\JWT\Key;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
-use App\Libraries\Situgu\Kehadiranptklib;
 use App\Libraries\Uuid;
 
 class Ajukan extends BaseController
@@ -28,7 +27,7 @@ class Ajukan extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/ptk/us/ajukan/data'));
+        return redirect()->to(base_url('situpeng/peng/ajukan/data'));
     }
 
     public function data()
@@ -44,18 +43,14 @@ class Ajukan extends BaseController
         $id = $this->_helpLib->getPtkId($user->data->id);
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        $data['data_antrian_tamsil'] = $this->_db->table('_tb_usulan_detail_tamsil')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_tpg'] = $this->_db->table('_tb_usulan_detail_tpg')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_pghm'] = $this->_db->table('_tb_usulan_detail_pghm')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_tamsil_transfer'] = $this->_db->table('_tb_usulan_tamsil_transfer')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_tpg_transfer'] = $this->_db->table('_tb_usulan_tpg_siap_sk')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_pghm_transfer'] = $this->_db->table('_tb_usulan_pghm_transfer')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $aa = $this->_db->table('_tb_temp_usulan_detail')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getResult();
+        $data['data_antrian_tpg'] = $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
+        $data['data_antrian_tpg_transfer'] = $this->_db->table('_tb_usulan_tpg_siap_sk_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
+        $aa = $this->_db->table('_tb_temp_usulan_detail_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getResult();
         if (count($aa) > 0) {
             if ($aa[0]->status_usulan == 1) {
                 // var_dump($data['data_antrian_tamsil']);
                 // die;
-                if ($data['data_antrian_tamsil'] || $data['data_antrian_tpg'] || $data['data_antrian_pghm'] || $data['data_antrian_tamsil_transfer'] || $data['data_antrian_tpg_transfer'] || $data['data_antrian_pghm_transfer']) {
+                if ($data['data_antrian_tpg'] || $data['data_antrian_tpg_transfer']) {
                     $data['data'] = false;
                 } else {
                     $data['data'] = $aa[0];
@@ -67,7 +62,7 @@ class Ajukan extends BaseController
             $data['data'] = false;
         }
 
-        return view('situgu/ptk/us/ajukan/index', $data);
+        return view('situpeng/peng/ajukan/index', $data);
     }
 
     public function aksiajukan()
