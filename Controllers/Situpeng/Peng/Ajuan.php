@@ -140,7 +140,15 @@ class Ajuan extends BaseController
             // }
             $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
             // $data['absen'] = $oldDataAbsen;
-            $data['pengawas'] = $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
+            $pengawas = $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
+
+            if (!$pengawas) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data Pengawas Tidak Ditemukan.";
+                return json_encode($response);
+            }
+            $data['pengawas'] = $pengawas;
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
