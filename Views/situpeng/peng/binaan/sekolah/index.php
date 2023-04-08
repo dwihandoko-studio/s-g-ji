@@ -141,7 +141,7 @@
         });
     }
 
-    function actionHapus(id, nama) {
+    function actionHapus(id, nama, npsn) {
         Swal.fire({
             title: 'Apakah anda yakin ingin menghapus data ini?',
             text: "Hapus Sekolah Binaan : " + nama,
@@ -158,6 +158,7 @@
                     data: {
                         id: id,
                         nama: nama,
+                        npsn: npsn,
                     },
                     dataType: 'JSON',
                     beforeSend: function() {

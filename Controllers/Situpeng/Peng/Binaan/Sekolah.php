@@ -75,7 +75,7 @@ class Sekolah extends BaseController
             $action = '<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
+                            <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\',\'' . $list->npsn . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
                         </div>
                     </div>';
             $row[] = $action;
@@ -360,10 +360,10 @@ class Sekolah extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
-            'nama' => [
+            'npsn' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
+                    'required' => 'NPSN tidak boleh kosong. ',
                 ]
             ],
         ];
@@ -372,11 +372,11 @@ class Sekolah extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('id')
-                . $this->validator->getError('nama');
+                . $this->validator->getError('npsn');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
 
             $Profilelib = new Profilelib();
             $user = $Profilelib->user();
@@ -388,38 +388,47 @@ class Sekolah extends BaseController
                 $response->message = "Permintaan diizinkan";
                 return json_encode($response);
             }
+            $id_user = $user->data->id;
             $current = $this->_db->table('__pengawas_tb')
-                ->where('id', $user->data->ptk_id)->get()->getRowObject();
+                ->select("id, npsn_naungan")
+                ->where("id = (SELECT ptk_id FROM v_user_pengawas where id = '$id_user')")
+                ->get()->getRowObject();
 
             if ($current) {
 
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('_users_tb')->where('uid', $id)->delete();
+                    $gurus = explode(",", $current->npsn_naungan);
+
+                    for ($i = 0; $i < count($gurus); $i++) {
+                        if ($gurus[$i] === $npsn) {
+                            unset($gurus[$i]);
+                        }
+                    }
+
+                    $fix_gurus = implode(",", $gurus);
+
+                    $this->_db->table('__pengawas_tb')->where('id', $current->id)->update(['npsn_naungan' => $fix_gurus, 'updated_at' => date('Y-m-d H:i:s')]);
 
                     if ($this->_db->affectedRows() > 0) {
-                        try {
-                            $dir = FCPATH . "uploads/user";
-                            unlink($dir . '/' . $current->image);
-                        } catch (\Throwable $err) {
-                        }
                         $this->_db->transCommit();
                         $response = new \stdClass;
                         $response->status = 200;
-                        $response->message = "Data berhasil dihapus.";
+                        $response->message = "Data sekolah binaan berhasil dihapus.";
                         return json_encode($response);
                     } else {
                         $this->_db->transRollback();
                         $response = new \stdClass;
                         $response->status = 400;
-                        $response->message = "Data gagal dihapus.";
+                        $response->message = "Data sekolah binaan gagal dihapus.";
                         return json_encode($response);
                     }
                 } catch (\Throwable $th) {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Data gagal dihapus.";
+                    $response->error = var_dump($th);
+                    $response->message = "Data sekolah binaan gagal dihapus.";
                     return json_encode($response);
                 }
             } else {
