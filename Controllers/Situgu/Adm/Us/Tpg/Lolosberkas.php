@@ -330,7 +330,7 @@ class Lolosberkas extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->error = var_dump($e);
-                $response->message = "Gagal mengubah data baru.";
+                $response->message = "Gagal mengubah data usulan.";
                 return json_encode($response);
             }
 
@@ -370,20 +370,28 @@ class Lolosberkas extends BaseController
                     $response = new \stdClass;
                     $response->status = 400;
                     $response->error = var_dump($e);
-                    $response->message = "Gagal mengubah data baru.";
+                    $response->message = "Gagal mengubah data baru pada atribut.";
                     return json_encode($response);
                 }
+                if ($this->_db->affectedRows() > 0) {
 
-                $this->_db->transCommit();
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->message = "Data berhasil diupdate.";
-                return json_encode($response);
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Data berhasil diupdate.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupate data pada atribut";
+                    return json_encode($response);
+                }
             } else {
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Gagal mengupate data";
+                $response->message = "Gagal mengupate data usulan";
                 return json_encode($response);
             }
         }
