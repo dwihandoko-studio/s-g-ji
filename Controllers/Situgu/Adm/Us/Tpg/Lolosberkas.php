@@ -187,7 +187,7 @@ class Lolosberkas extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $nuptk = htmlspecialchars($this->request->getVar('nuptk'), true);
 
-            $current = $this->_db->table('_tb_usulan_detail_tpg_test a')
+            $current = $this->_db->table('_tb_usulan_detail_tpg a')
                 ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_jenis, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian, e.pang_golongan as attr_pang_golongan, e.pang_jenis as attr_pang_jenis, e.pang_no as attr_pang_no, e.pang_tmt as attr_pang_tmt, e.pang_tgl as attr_pang_tgl, e.pang_tahun as attr_pang_mk_tahun, e.pang_bulan as attr_pang_mk_bulan")
                 ->join('_ptk_tb b', 'a.id_ptk = b.id')
                 ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
