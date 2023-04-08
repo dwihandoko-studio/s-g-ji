@@ -305,18 +305,28 @@ class Lolosberkas extends BaseController
             }
             if ($us_pang_golongan !== "") {
                 $data['us_pang_golongan'] = $us_pang_golongan;
+            } else {
+                $data['us_pang_golongan'] = NULL;
             }
             if ($us_pang_tmt !== "") {
                 $data['us_pang_tmt'] = $us_pang_tmt;
+            } else {
+                $data['us_pang_tmt'] = null;
             }
             if ($us_pang_tgl !== "") {
                 $data['us_pang_tgl'] = $us_pang_tgl;
+            } else {
+                $data['us_pang_tgl'] = NULL;
             }
             if ($us_pang_mk_tahun !== "") {
                 $data['us_pang_mk_tahun'] = $us_pang_mk_tahun;
+            } else {
+                $data['us_pang_mk_tahun'] = 0;
             }
             if ($us_pang_mk_bulan !== "") {
                 $data['us_pang_mk_bulan'] = $us_pang_mk_bulan;
+            } else {
+                $data['us_pang_mk_bulan'] = 0;
             }
             if ($us_gaji_pokok !== "") {
                 $data['us_gaji_pokok'] = $us_gaji_pokok;
@@ -345,24 +355,35 @@ class Lolosberkas extends BaseController
                 }
                 if ($attr_pang_golongan !== "") {
                     $dataAttr['pang_golongan'] = $attr_pang_golongan;
+                } else {
+                    $dataAttr['pang_golongan'] = NULL;
                 }
                 if ($attr_pang_no !== "") {
                     $dataAttr['pang_no'] = $attr_pang_no;
+                } else {
+                    $dataAttr['pang_no'] = NULL;
                 }
                 if ($attr_pang_tmt !== "") {
                     $dataAttr['pang_tmt'] = $attr_pang_tmt;
+                } else {
+                    $dataAttr['pang_tmt'] = NULL;
                 }
                 if ($attr_pang_tgl !== "") {
                     $dataAttr['pang_tgl'] = $attr_pang_tgl;
+                } else {
+                    $dataAttr['pang_tgl'] = NULL;
                 }
                 if ($attr_pang_mk_tahun !== "") {
                     $dataAttr['pang_tahun'] = $attr_pang_mk_tahun;
+                } else {
+                    $dataAttr['pang_tahun'] = 0;
                 }
                 if ($attr_pang_mk_bulan !== "") {
                     $dataAttr['pang_bulan'] = $attr_pang_mk_bulan;
+                } else {
+                    $dataAttr['pang_bulan'] = 0;
                 }
 
-                $this->_db->transBegin();
                 try {
                     $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $id_ptk, 'id_tahun_tw' => $id_tahun_tw])->update($dataAttr);
                 } catch (\Exception $e) {
