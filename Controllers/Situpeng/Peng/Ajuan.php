@@ -118,33 +118,33 @@ class Ajuan extends BaseController
                 return json_encode($canGrantedPengajuan);
             }
 
-            $oldDataAbsen = $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $id, 'id_tahun_tw' => $tw])->orderBy('created_at', 'desc')->get()->getRowObject();
-            if (!$oldDataAbsen) {
-                $response = new \stdClass;
-                $response->status = 201;
-                $response->message = "Anda tidak dapat mengajukan Usulan Tujangan, dikarenakan Admin Sekolah belum melengkapi/mengunggah dokumen Absensi Kehadiran. Silahkan Hubungi Admin Sekolah.";
-                return json_encode($response);
-            }
+            // $oldDataAbsen = $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $id, 'id_tahun_tw' => $tw])->orderBy('created_at', 'desc')->get()->getRowObject();
+            // if (!$oldDataAbsen) {
+            //     $response = new \stdClass;
+            //     $response->status = 201;
+            //     $response->message = "Anda tidak dapat mengajukan Usulan Tujangan, dikarenakan Admin Sekolah belum melengkapi/mengunggah dokumen Absensi Kehadiran. Silahkan Hubungi Admin Sekolah.";
+            //     return json_encode($response);
+            // }
 
-            if (((int)$oldDataAbsen->bulan_1 + (int)$oldDataAbsen->bulan_2 + (int)$oldDataAbsen->bulan_3) < 1) {
-                $response = new \stdClass;
-                $response->status = 201;
-                $response->message = "Anda tidak dapat mengajukan Usulan Tujangan, dikarenakan Admin Sekolah belum melengkapi/mengunggah dokumen Absensi Kehadiran. Silahkan Hubungi Admin Sekolah.";
-                return json_encode($response);
-            }
-            if (!$oldDataAbsen->lampiran_absen1 || !$oldDataAbsen->lampiran_absen2 || !$oldDataAbsen->lampiran_absen3 || !$oldDataAbsen->pembagian_tugas || !$oldDataAbsen->slip_gaji) {
-                $response = new \stdClass;
-                $response->status = 201;
-                $response->message = "Silahkan lengkapi dokumen absensi anda.";
-                return json_encode($response);
-            }
+            // if (((int)$oldDataAbsen->bulan_1 + (int)$oldDataAbsen->bulan_2 + (int)$oldDataAbsen->bulan_3) < 1) {
+            //     $response = new \stdClass;
+            //     $response->status = 201;
+            //     $response->message = "Anda tidak dapat mengajukan Usulan Tujangan, dikarenakan Admin Sekolah belum melengkapi/mengunggah dokumen Absensi Kehadiran. Silahkan Hubungi Admin Sekolah.";
+            //     return json_encode($response);
+            // }
+            // if (!$oldDataAbsen->lampiran_absen1 || !$oldDataAbsen->lampiran_absen2 || !$oldDataAbsen->lampiran_absen3 || !$oldDataAbsen->pembagian_tugas || !$oldDataAbsen->slip_gaji) {
+            //     $response = new \stdClass;
+            //     $response->status = 201;
+            //     $response->message = "Silahkan lengkapi dokumen absensi anda.";
+            //     return json_encode($response);
+            // }
             $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-            $data['absen'] = $oldDataAbsen;
-            $data['ptk'] = $this->_db->table('_ptk_tb')->where('id', $id)->get()->getRowObject();
+            // $data['absen'] = $oldDataAbsen;
+            $data['pengawas'] = $this->_db->table('__pengawas_tb')->where('id', $id)->get()->getRowObject();
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/ptk/us/ajuan/pilihan', $data);
+            $response->data = view('situpeng/peng/ajuan/pilihan', $data);
             return json_encode($response);
         }
     }

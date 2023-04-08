@@ -1,6 +1,6 @@
-<?php if (isset($ptk)) { ?>
+<?php if (isset($pengawas)) { ?>
     <form id="formEditModalData" action="./prosesajukan" method="post">
-        <input type="hidden" id="_id" name="_id" value="<?= $ptk->id ?>" />
+        <input type="hidden" id="_id" name="_id" value="<?= $pengawas->id ?>" />
         <input type="hidden" id="_tw" name="_tw" value="<?= $tw->id ?>" />
         <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
             <div class="mb-3">
@@ -33,7 +33,7 @@
                     type: 'POST',
                     data: {
                         id: event.value,
-                        id_ptk: '<?= $ptk->id ?>',
+                        id_ptk: '<?= $pengawas->id ?>',
                         tw: '<?= $tw->id ?>',
                     },
                     dataType: 'JSON',
