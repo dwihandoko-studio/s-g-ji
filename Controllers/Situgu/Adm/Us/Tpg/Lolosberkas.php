@@ -329,6 +329,7 @@ class Lolosberkas extends BaseController
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->error = var_dump($e);
                 $response->message = "Gagal mengubah data baru.";
                 return json_encode($response);
             }
@@ -368,6 +369,7 @@ class Lolosberkas extends BaseController
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
+                    $response->error = var_dump($e);
                     $response->message = "Gagal mengubah data baru.";
                     return json_encode($response);
                 }
