@@ -218,6 +218,9 @@ class Guru extends BaseController
         $datas = array();
         if (count($gurus) > 0) {
             foreach ($gurus as $kel) {
+                if ($kel->id_ptk === NULL || $kel->id_ptk === "") {
+                    continue;
+                }
                 $npsnN = $kel->id_ptk;
                 $hasNaungan = $this->_db->table('__pengawas_tb')->where("guru_naungan LIKE '%$npsnN%'")->get()->getRowObject();
 
