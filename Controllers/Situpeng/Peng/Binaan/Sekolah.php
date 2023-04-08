@@ -191,6 +191,13 @@ class Sekolah extends BaseController
         $datas = array();
         if (count($sekolahs) > 0) {
             foreach ($sekolahs as $kel) {
+                $npsnN = $kel->npsn;
+                $hasNaungan = $this->_db->table('__pengawas_tb')->where("npsn_naungan LIKE '%$npsnN%'")->get()->getRowObject();
+
+                if ($hasNaungan) {
+                    continue;
+                }
+
                 $datas[] = array("id" => $kel->npsn, "text" => $kel->nama . ' (' . $kel->npsn . ' - ' . $kel->bentuk_pendidikan . ')');
             }
         }
@@ -233,15 +240,6 @@ class Sekolah extends BaseController
             }
 
             $npsns = $this->request->getVar('npsns');
-
-            $hasNaungan = $this->_db->table('__pengawas_tb')->where("npsn_naungan LIKE '%$npsns%'")->get()->getRowObject();
-
-            if ($hasNaungan) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Sekolah ini sudah dibina oleh pengawas " . $hasNaungan->nama;
-                return json_encode($response);
-            }
 
             $oldData =  $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
 

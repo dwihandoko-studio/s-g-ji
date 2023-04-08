@@ -193,6 +193,13 @@ class Guru extends BaseController
         $datas = array();
         if (count($sekolahs) > 0) {
             foreach ($sekolahs as $kel) {
+                $npsnN = $kel->npsn;
+                $hasNaungan = $this->_db->table('__pengawas_tb')->where("npsn_naungan LIKE '%$npsnN%'")->get()->getRowObject();
+
+                if ($hasNaungan) {
+                    continue;
+                }
+
                 $datas[] = array("id" => $kel->npsn, "text" => $kel->nama . ' (' . $kel->npsn . ' - ' . $kel->bentuk_pendidikan . ')');
             }
         }
@@ -211,6 +218,13 @@ class Guru extends BaseController
         $datas = array();
         if (count($gurus) > 0) {
             foreach ($gurus as $kel) {
+                $npsnN = $kel->id_ptk;
+                $hasNaungan = $this->_db->table('__pengawas_tb')->where("guru_naungan LIKE '%$npsnN%'")->get()->getRowObject();
+
+                if ($hasNaungan) {
+                    continue;
+                }
+
                 $datas[] = array("id" => $kel->id_ptk, "text" => $kel->nama . ' (' . $kel->nuptk . ' - ' . $kel->jenis_ptk . ')');
             }
         }
