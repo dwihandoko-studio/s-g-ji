@@ -341,30 +341,30 @@ class Lolosberkas extends BaseController
                 ];
 
                 if ($attr_pang_jenis !== "") {
-                    $data['pang_jenis'] = $attr_pang_jenis;
+                    $dataAttr['pang_jenis'] = $attr_pang_jenis;
                 }
                 if ($attr_pang_golongan !== "") {
-                    $data['pang_golongan'] = $attr_pang_golongan;
+                    $dataAttr['pang_golongan'] = $attr_pang_golongan;
                 }
                 if ($attr_pang_no !== "") {
-                    $data['pang_no'] = $attr_pang_no;
+                    $dataAttr['pang_no'] = $attr_pang_no;
                 }
                 if ($attr_pang_tmt !== "") {
-                    $data['pang_tmt'] = $attr_pang_tmt;
+                    $dataAttr['pang_tmt'] = $attr_pang_tmt;
                 }
                 if ($attr_pang_tgl !== "") {
-                    $data['pang_tgl'] = $attr_pang_tgl;
+                    $dataAttr['pang_tgl'] = $attr_pang_tgl;
                 }
                 if ($attr_pang_mk_tahun !== "") {
-                    $data['pang_tahun'] = $attr_pang_mk_tahun;
+                    $dataAttr['pang_tahun'] = $attr_pang_mk_tahun;
                 }
                 if ($attr_pang_mk_bulan !== "") {
-                    $data['pang_bulan'] = $attr_pang_mk_bulan;
+                    $dataAttr['pang_bulan'] = $attr_pang_mk_bulan;
                 }
 
                 $this->_db->transBegin();
                 try {
-                    $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $id_ptk, 'id_tahun_tw' => $id_tahun_tw])->update($data);
+                    $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $id_ptk, 'id_tahun_tw' => $id_tahun_tw])->update($dataAttr);
                 } catch (\Exception $e) {
                     $this->_db->transRollback();
                     $response = new \stdClass;
