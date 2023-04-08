@@ -51,7 +51,7 @@
                                 <tr>
                                     <th rowspan="2">Tahun</th>
                                     <th rowspan="2">TW</th>
-                                    <th rowspan="2">Pangkat</th>
+                                    <th rowspan="2">Golongan</th>
                                     <th rowspan="2">No SK</th>
                                     <th rowspan="2">TMT</th>
                                     <th rowspan="2">Tanggal</th>

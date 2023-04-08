@@ -212,9 +212,9 @@ class Ajuan extends BaseController
             $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
 
             $ptk = $this->_db->table('_upload_data_attribut a')
-                ->select("b.*, a.id_tahun_tw, a.pang_jenis, a.pang_golongan, a.pang_no, a.pang_tmt, a.pang_tgl, a.pang_tahun, a.pang_bulan, a.pangkat_terakhir as lampiran_pangkat, a.kgb_terakhir as lampiran_kgb, a.pernyataan_24jam as lampiran_pernyataan24, a.cuti as lampiran_cuti, a.pensiun as lampiran_pensiun, a.kematian as lampiran_kematian, a.lainnya as lampiran_att_lain, c.bulan_1, c.bulan_2, c.bulan_3, c.lampiran_absen1, c.lampiran_absen2, c.lampiran_absen3, c.pembagian_tugas as lampiran_pembagian_tugas, c.slip_gaji as lampiran_slip_gaji, c.doc_lainnya as lampiran_doc_absen_lain")
-                ->join('_ptk_tb b', 'a.id_ptk = b.id')
-                ->join('_absen_kehadiran c', 'a.id_ptk = c.id_ptk AND c.id_tahun_tw = a.id_tahun_tw')
+                ->select("b.*, a.id_tahun_tw, a.pang_jenis, a.pang_golongan, a.pang_no, a.pang_tmt, a.pang_tgl, a.pang_tahun, a.pang_bulan, a.pangkat_terakhir as lampiran_pangkat, a.kgb_terakhir as lampiran_kgb, a.pernyataan_24jam as lampiran_pernyataan24, a.penugasan as lampiran_penugasan, a.kunjungan_binaan as lampiran_kunjungan_binaan, a.cuti as lampiran_cuti, a.pensiun as lampiran_pensiun, a.kematian as lampiran_kematian, a.lainnya as lampiran_att_lain")
+                ->join('__pengawas_tb b', 'a.id_ptk = b.id')
+                // ->join('_absen_kehadiran c', 'a.id_ptk = c.id_ptk AND c.id_tahun_tw = a.id_tahun_tw')
                 ->where(['a.id_ptk' => $id_ptk, 'a.id_tahun_tw' => $tw])
                 ->get()->getRowObject();
 
@@ -222,7 +222,7 @@ class Ajuan extends BaseController
                 $response = new \stdClass;
                 $response->status = 404;
                 $response->message = "Atribut Dokumen Terbaru tidak ditemukan, Silahkan untuk melengkapi terlebih dahulu.";
-                $response->redirrect = base_url("situgu/ptk/doc/atribut");
+                $response->redirrect = base_url("situpeng/peng/doc/atribut");
                 return json_encode($response);
             }
 
@@ -235,7 +235,7 @@ class Ajuan extends BaseController
             if ($ptk->no_rekening === null || $ptk->no_rekening === "" || $ptk->cabang_bank === null || $ptk->cabang_bank === "") {
                 $response->status = 404;
                 $response->message = "No Rekening dan Cabang tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                $response->redirrect = base_url("situgu/ptk/masterdata/dapodik");
+                $response->redirrect = base_url("situpeng/peng/masterdata/individu");
                 return json_encode($response);
             }
 
