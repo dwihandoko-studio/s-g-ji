@@ -43,9 +43,9 @@ class Ajuan extends BaseController
         $id = $this->_helpLib->getPtkId($user->data->id);
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        $data['data_antrian_tpg'] = $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $data['data_antrian_tpg_transfer'] = $this->_db->table('_tb_usulan_tpg_siap_sk_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
-        $aa = $this->_db->table('_tb_temp_usulan_detail_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_ptk' => $id])->orderBy('created_at', 'desc')->get()->getResult();
+        $data['data_antrian_tpg'] = $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_pengawas' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
+        $data['data_antrian_tpg_transfer'] = $this->_db->table('_tb_usulan_tpg_siap_sk_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_pengawas' => $id])->orderBy('created_at', 'desc')->get()->getRowObject();
+        $aa = $this->_db->table('_tb_temp_usulan_detail_pengawas')->where(['id_tahun_tw' => $data['tw']->id, 'id_pengawas' => $id])->orderBy('created_at', 'desc')->get()->getResult();
         if (count($aa) > 0) {
             if ($aa[0]->status_usulan == 1) {
                 // var_dump($data['data_antrian_tamsil']);
