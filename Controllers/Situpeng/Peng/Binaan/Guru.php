@@ -254,6 +254,15 @@ class Guru extends BaseController
 
             $gurus = $this->request->getVar('gurus');
 
+            $hasNaungan = $this->_db->table('__pengawas_tb')->where("guru_naungan LIKE '%$gurus%'")->get()->getRowObject();
+
+            if ($hasNaungan) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Guru ini sudah dibina oleh pengawas " . $hasNaungan->nama;
+                return json_encode($response);
+            }
+
             $oldData =  $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
 
             if ($oldData) {

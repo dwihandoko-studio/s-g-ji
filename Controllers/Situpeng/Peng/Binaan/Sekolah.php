@@ -234,6 +234,15 @@ class Sekolah extends BaseController
 
             $npsns = $this->request->getVar('npsns');
 
+            $hasNaungan = $this->_db->table('__pengawas_tb')->where("npsn_naungan LIKE '%$npsns%'")->get()->getRowObject();
+
+            if ($hasNaungan) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Sekolah ini sudah dibina oleh pengawas " . $hasNaungan->nama;
+                return json_encode($response);
+            }
+
             $oldData =  $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
 
             if ($oldData) {
@@ -363,7 +372,7 @@ class Sekolah extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('id')
-            . $this->validator->getError('nama');
+                . $this->validator->getError('nama');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
@@ -383,7 +392,7 @@ class Sekolah extends BaseController
                 ->where('id', $user->data->ptk_id)->get()->getRowObject();
 
             if ($current) {
-                
+
                 $this->_db->transBegin();
                 try {
                     $this->_db->table('_users_tb')->where('uid', $id)->delete();
