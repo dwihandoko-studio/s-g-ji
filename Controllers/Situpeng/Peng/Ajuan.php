@@ -11,7 +11,7 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
 
-class Ajukan extends BaseController
+class Ajuan extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -27,7 +27,7 @@ class Ajukan extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situpeng/peng/ajukan/data'));
+        return redirect()->to(base_url('situpeng/peng/ajuan/data'));
     }
 
     public function data()
@@ -62,7 +62,7 @@ class Ajukan extends BaseController
             $data['data'] = false;
         }
 
-        return view('situpeng/peng/ajukan/index', $data);
+        return view('situpeng/peng/ajuan/index', $data);
     }
 
     public function aksiajukan()
@@ -144,7 +144,7 @@ class Ajukan extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/ptk/us/ajukan/pilihan', $data);
+            $response->data = view('situgu/ptk/us/ajuan/pilihan', $data);
             return json_encode($response);
         }
     }
