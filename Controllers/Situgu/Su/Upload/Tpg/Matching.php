@@ -10,7 +10,7 @@ use Firebase\JWT\Key;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
-use App\Libraries\Situgu\Kehadiranptklib;
+use App\Libraries\Situgu\NotificationLib;
 use App\Libraries\Uuid;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
@@ -288,7 +288,7 @@ class Matching extends BaseController
                     'keterangan_doc_simtun' => str_replace(": ", "", $ketSimtunDokumen),
                 ];
 
-                $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_detail_tpg_test a')
+                $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_detail_tpg a')
                     ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
                     ->join('_ptk_tb b', 'a.id_ptk = b.id')
                     ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
@@ -893,7 +893,7 @@ class Matching extends BaseController
             $tw = htmlspecialchars($this->request->getVar('id_tahun_tw'), true);
             $kode_usulan = htmlspecialchars($this->request->getVar('kode_usulan'), true);
 
-            $current = $this->_db->table('_tb_usulan_detail_tpg_test a')
+            $current = $this->_db->table('_tb_usulan_detail_tpg a')
                 ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
                 ->join('_ptk_tb b', 'a.id_ptk = b.id')
                 ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
@@ -906,12 +906,12 @@ class Matching extends BaseController
                 $this->_db->transBegin();
 
                 if ($status == "table-success") {
-                    $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $current->id_usulan)->update(['status_usulan' => 5, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id]);
+                    $this->_db->table('_tb_usulan_detail_tpg')->where('id', $current->id_usulan)->update(['status_usulan' => 5, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id]);
                     if ($this->_db->affectedRows() > 0) {
 
-                        $ptk = $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $current->id_usulan)->get()->getRowObject();
+                        $ptk = $this->_db->table('_tb_usulan_detail_tpg')->where('id', $current->id_usulan)->get()->getRowObject();
                         if ($ptk) {
-                            $this->_db->table('_tb_usulan_tpg_siap_sk_test')->insert([
+                            $this->_db->table('_tb_usulan_tpg_siap_sk')->insert([
                                 'id' => $ptk->id,
                                 'kode_usulan' => $ptk->kode_usulan,
                                 'id_ptk' => $ptk->id_ptk,
@@ -933,10 +933,17 @@ class Matching extends BaseController
                                 'updated_at' => date('Y-m-d H:i:s'),
                             ]);
                             if ($this->_db->affectedRows() > 0) {
-                                $this->_db->table('_tb_usulan_detail_tpg_test')->where(['id' => $ptk->id])->delete();
+                                $this->_db->table('_tb_usulan_detail_tpg')->where(['id' => $ptk->id])->delete();
                                 if ($this->_db->affectedRows() > 0) {
 
                                     $this->_db->transCommit();
+
+                                    try {
+                                        $notifLib = new NotificationLib();
+                                        $notifLib->create("Lolos Matching Simtun", "Usulan " . $ptk->kode_usulan . " telah lolos matching simtun.", "success", $user->data->id, $ptk->id_ptk, base_url('situgu/ptk/us/tpg/siapsk'));
+                                    } catch (\Throwable $th) {
+                                        //throw $th;
+                                    }
                                     $response = new \stdClass;
                                     $response->status = 200;
                                     $response->message = "Data berhasil disimpan.";
@@ -970,9 +977,15 @@ class Matching extends BaseController
                         return json_encode($response);
                     }
                 } else {
-                    $this->_db->table('_tb_usulan_detail_tpg_test')->where('id', $current->id_usulan)->update(['status_usulan' => 4, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id, 'keterangan_reject' => $keterangan]);
+                    $this->_db->table('_tb_usulan_detail_tpg')->where('id', $current->id_usulan)->update(['status_usulan' => 4, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id, 'keterangan_reject' => $keterangan]);
                     if ($this->_db->affectedRows() > 0) {
                         $this->_db->transCommit();
+                        try {
+                            $notifLib = new NotificationLib();
+                            $notifLib->create("Gagal Matching Simtun", "Usulan " . $current->kode_usulan . " gagal untuk lolos matching simtun dengan keterangan: " . $keterangan, "danger", $user->data->id, $current->id_ptk, base_url('situgu/ptk/us/tpg/siapsk'));
+                        } catch (\Throwable $th) {
+                            //throw $th;
+                        }
                         $response = new \stdClass;
                         $response->status = 200;
                         $response->message = "Data berhasil disimpan.";
