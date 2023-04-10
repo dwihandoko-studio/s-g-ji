@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Situpeng\Ks\Verifikasi;
+namespace App\Controllers\Situpeng\Peng\Verifikasi;
 
 use App\Controllers\BaseController;
 use App\Models\Situpeng\Peng\VerifikasiModel;
