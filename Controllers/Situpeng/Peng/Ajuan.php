@@ -557,7 +557,7 @@ class Ajuan extends BaseController
                 $uuidLib = new Uuid();
                 $data = [
                     'id' => $uuidLib->v4(),
-                    'id_ptk' => $id,
+                    'id_pengawas' => $id,
                     'id_tahun_tw' => $tw,
                     'jenis_tunjangan' => $jenis,
                     'us_pang_golongan' => $ptk->pang_golongan,
