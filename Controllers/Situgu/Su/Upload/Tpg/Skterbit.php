@@ -437,7 +437,6 @@ class Skterbit extends BaseController
                     $item['nama'] = $v['nama'];
                     $item['golongan_code'] = $v['golongan_code'];
                     $item['gaji_pokok'] = $v['gaji_pokok'];
-                    $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
                     $item['us_nuptk'] = $v['data_usulan']['nuptk'];
                     $item['us_nama'] = $v['data_usulan']['nama'];
                     $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
