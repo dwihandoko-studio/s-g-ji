@@ -3725,609 +3725,7 @@
                         <?php } ?>
                     <?php } else if ($data->status_usulan == 5) { ?>
                         <?php if ($data->jenis_tunjangan == 'tpg') { ?>
-                            <?php if ($data_antrian_tpg) { ?>
-                                <?php if ($data_antrian_tpg->status_usulan == 0 || $data_antrian_tpg->status_usulan == 1) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list active">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1">...</div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-repost h1 text-primary down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">6</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">7</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else if ($data_antrian_tpg->status_usulan == 2) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve ?></div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list active">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1">...</div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-repost h1 text-primary down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">6</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">7</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else if ($data_antrian_tpg->status_usulan == 3) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_reject ?></div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-no-entry h1 text-danger"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin. (Ditolak karena : <?= $data_antrian_tpg->keterangan_reject ?></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1">...</div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-repost h1 text-primary"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">6</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">7</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else if ($data_antrian_tpg->status_usulan == 4) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve ?></div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1">...</div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-no-entry h1 text-danger"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN. (Ditolak karena : <?= $data_antrian_tpg->keterangan_reject ?></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">6</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">7</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else if ($data_antrian_tpg->status_usulan == 5) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve ?></div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_matching ?></div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list active">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1">...</div>
-                                                                <h5 class="mb-4">6</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-repost h1 text-primary  down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">7</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            <?php } else if ($data_antrian_tpg_transfer) { ?>
+                            <?php if ($data_antrian_tpg_transfer) { ?>
                                 <?php if ($data_antrian_tpg_transfer->status_usulan == 0 || $data_antrian_tpg_transfer->status_usulan == 1) { ?>
                                     <div class="card">
                                         <div class="card-body">
@@ -5169,6 +4567,608 @@
                                         </div>
                                     </div>
                                 <?php } ?>
+                            <?php } else if ($data_antrian_tpg) { ?>
+                                <?php if ($data_antrian_tpg->status_usulan == 0 || $data_antrian_tpg->status_usulan == 1) { ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list active">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1">...</div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-repost h1 text-primary down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">6</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">7</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } else if ($data_antrian_tpg->status_usulan == 2) { ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve ?></div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list active">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1">...</div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-repost h1 text-primary down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">6</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">7</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } else if ($data_antrian_tpg->status_usulan == 3) { ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_reject ?></div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-no-entry h1 text-danger"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin. (Ditolak karena : <?= $data_antrian_tpg->keterangan_reject ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1">...</div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-repost h1 text-primary"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">6</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">7</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } else if ($data_antrian_tpg->status_usulan == 4) { ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve ?></div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1">...</div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-no-entry h1 text-danger"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Matching Dengan SIMTUN. (Ditolak karena : <?= $data_antrian_tpg->keterangan_reject ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">6</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">7</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } else if ($data_antrian_tpg->status_usulan == 5) { ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan TPG Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan TPG</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_approve ?></div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tpg->date_matching ?></div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list active">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1">...</div>
+                                                                <h5 class="mb-4">6</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-repost h1 text-primary  down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Penerbitan SKTP.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">7</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             <?php } else { ?>
                                 <div class="card">
                                     <div class="card-body">
@@ -5291,370 +5291,7 @@
                                 </div>
                             <?php } ?>
                         <?php } else if ($data->jenis_tunjangan == 'tamsil') { ?>
-                            <?php if ($data_antrian_tamsil) { ?>
-                                <?php if ($data_antrian_tamsil->status_usulan == 0 || $data_antrian_tamsil->status_usulan == 1) { ?>
-
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan Tunjangan Tamsil Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan Tunjangan Tamsil</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list active">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1">...</div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-repost h1 text-primary down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-Opacity mb-1">...</div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-timer h1 text-Opacity"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else if ($data_antrian_tamsil->status_usulan == 2) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan Tunjangan Tamsil Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan Tunjangan Tamsil</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve ?></div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list active">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1">...</div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-repost h1 text-primary down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else if ($data_antrian_tamsil->status_usulan == 3) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan Tunjangan Tamsil Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan Tunjangan Tamsil</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_reject ?></div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-no-entry h1 text-danger"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin. (Ditolak Karena : <?= $data_antrian_tamsil->keterangan_reject ?></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1">...</div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-repost h1 text-primary"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } else if ($data_antrian_tamsil->status_usulan == 4) { ?>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan Tunjangan Tamsil Anda</h4>
-
-                                            <div class="hori-timeline">
-                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->created_at ?></div>
-                                                                <h5 class="mb-4">1</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Mengajukan Usulan Tunjangan Tamsil</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_ks ?></div>
-                                                                <h5 class="mb-4">2</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_sptjm ?></div>
-                                                                <h5 class="mb-4">3</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve ?></div>
-                                                                <h5 class="mb-4">4</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-check-circle h1 text-success"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="item event-list">
-                                                        <div>
-                                                            <div class="event-date">
-                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_reject ?></div>
-                                                                <h5 class="mb-4">5</h5>
-                                                            </div>
-                                                            <div class="event-down-icon">
-                                                                <i class="bx bx-no-entry h1 text-danger"></i>
-                                                            </div>
-
-                                                            <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan. (Ditolak Karena : <?= $data_antrian_tamsil->keterangan_reject ?></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            <?php } else if ($data_antrian_tamsil_transfer) { ?>
+                            <?php if ($data_antrian_tamsil_transfer) { ?>
                                 <?php if ($data_antrian_tamsil_transfer->status_usulan == 0 || $data_antrian_tamsil_transfer->status_usulan == 1) { ?>
                                     <div class="card">
                                         <div class="card-body">
@@ -6098,6 +5735,369 @@
 
                                                             <div class="mt-3 px-3">
                                                                 <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            <?php } else if ($data_antrian_tamsil) { ?>
+                                <?php if ($data_antrian_tamsil->status_usulan == 0 || $data_antrian_tamsil->status_usulan == 1) { ?>
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan Tunjangan Tamsil Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan Tunjangan Tamsil</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list active">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1">...</div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-repost h1 text-primary down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-Opacity mb-1">...</div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-timer h1 text-Opacity"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } else if ($data_antrian_tamsil->status_usulan == 2) { ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan Tunjangan Tamsil Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan Tunjangan Tamsil</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve ?></div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list active">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1">...</div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-repost h1 text-primary down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } else if ($data_antrian_tamsil->status_usulan == 3) { ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan Tunjangan Tamsil Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan Tunjangan Tamsil</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_reject ?></div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-no-entry h1 text-danger"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin. (Ditolak Karena : <?= $data_antrian_tamsil->keterangan_reject ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1">...</div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-repost h1 text-primary"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } else if ($data_antrian_tamsil->status_usulan == 4) { ?>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Progress Pengajuan Usulan Tunjangan Tamsil Anda</h4>
+
+                                            <div class="hori-timeline">
+                                                <div class="owl-carousel owl-theme  navs-carousel events" id="timeline-carousel">
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->created_at ?></div>
+                                                                <h5 class="mb-4">1</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success down-arrow-icon"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Mengajukan Usulan Tunjangan Tamsil</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_ks ?></div>
+                                                                <h5 class="mb-4">2</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve_sptjm ?></div>
+                                                                <h5 class="mb-4">3</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_approve ?></div>
+                                                                <h5 class="mb-4">4</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-check-circle h1 text-success"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Verifikasi dan Validasi oleh Admin.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="item event-list">
+                                                        <div>
+                                                            <div class="event-date">
+                                                                <div class="text-primary mb-1"><?= $data_antrian_tamsil->date_reject ?></div>
+                                                                <h5 class="mb-4">5</h5>
+                                                            </div>
+                                                            <div class="event-down-icon">
+                                                                <i class="bx bx-no-entry h1 text-danger"></i>
+                                                            </div>
+
+                                                            <div class="mt-3 px-3">
+                                                                <p class="text-muted">Proses Transfer Pembayaran Tunjangan. (Ditolak Karena : <?= $data_antrian_tamsil->keterangan_reject ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -6595,9 +6595,9 @@
                         <?php } ?>
                     <?php } ?>
                 <?php } ?>
-                <?php if (!$data) {
-                    if ($data_antrian_tamsil) {
-                        if ($data_antrian_tamsil->status_usulan == 0 || $data_antrian_tamsil->status_usulan == 1 || $data_antrian_tamsil->status_usulan == 2 || $data_antrian_tamsil->status_usulan == 5) { ?>
+                <?php if (!$data) { ?>
+                    <?php if ($data_antrian_tamsil_transfer) { ?>
+                        <?php if ($data_antrian_tamsil_transfer->status_usulan == 0 || $data_antrian_tamsil_transfer->status_usulan == 1 || $data_antrian_tamsil_transfer->status_usulan == 2 || $data_antrian_tamsil_transfer->status_usulan == 5) { ?>
                         <?php } else { ?>
                             <div class="card">
                                 <div class="card-body">
@@ -6607,8 +6607,8 @@
                                 </div>
                             </div>
                         <?php } ?>
-                        <?php } else if ($data_antrian_tpg) {
-                        if ($data_antrian_tpg->status_usulan == 0 || $data_antrian_tpg->status_usulan == 1 || $data_antrian_tpg->status_usulan == 2 || $data_antrian_tpg->status_usulan == 5 || $data_antrian_tpg->status_usulan == 6 || $data_antrian_tpg->status_usulan == 7) { ?>
+                    <?php } else if ($data_antrian_tpg_transfer) { ?>
+                        <?php if ($data_antrian_tpg_transfer->status_usulan == 0 || $data_antrian_tpg_transfer->status_usulan == 1 || $data_antrian_tpg_transfer->status_usulan == 2 || $data_antrian_tpg_transfer->status_usulan == 5 || $data_antrian_tpg_transfer->status_usulan == 6 || $data_antrian_tpg_transfer->status_usulan == 7) { ?>
                         <?php } else { ?>
                             <div class="card">
                                 <div class="card-body">
@@ -6618,8 +6618,8 @@
                                 </div>
                             </div>
                         <?php } ?>
-                        <?php } else if ($data_antrian_pghm) {
-                        if ($data_antrian_pghm->status_usulan == 0 || $data_antrian_pghm->status_usulan == 1 || $data_antrian_pghm->status_usulan == 2 || $data_antrian_pghm->status_usulan == 5) { ?>
+                    <?php } else if ($data_antrian_pghm_transfer) { ?>
+                        <?php if ($data_antrian_pghm_transfer->status_usulan == 0 || $data_antrian_pghm_transfer->status_usulan == 1 || $data_antrian_pghm_transfer->status_usulan == 2 || $data_antrian_pghm_transfer->status_usulan == 5) { ?>
                         <?php } else { ?>
                             <div class="card">
                                 <div class="card-body">
@@ -6629,8 +6629,8 @@
                                 </div>
                             </div>
                         <?php } ?>
-                        <?php } else if ($data_antrian_tamsil_transfer) {
-                        if ($data_antrian_tamsil_transfer->status_usulan == 0 || $data_antrian_tamsil_transfer->status_usulan == 1 || $data_antrian_tamsil_transfer->status_usulan == 2 || $data_antrian_tamsil_transfer->status_usulan == 5) { ?>
+                    <?php } else if ($data_antrian_tamsil) { ?>
+                        <?php if ($data_antrian_tamsil->status_usulan == 0 || $data_antrian_tamsil->status_usulan == 1 || $data_antrian_tamsil->status_usulan == 2 || $data_antrian_tamsil->status_usulan == 5) { ?>
                         <?php } else { ?>
                             <div class="card">
                                 <div class="card-body">
@@ -6640,8 +6640,8 @@
                                 </div>
                             </div>
                         <?php } ?>
-                        <?php } else if ($data_antrian_tpg_transfer) {
-                        if ($data_antrian_tpg_transfer->status_usulan == 0 || $data_antrian_tpg_transfer->status_usulan == 1 || $data_antrian_tpg_transfer->status_usulan == 2 || $data_antrian_tpg_transfer->status_usulan == 5 || $data_antrian_tpg_transfer->status_usulan == 6 || $data_antrian_tpg_transfer->status_usulan == 7) { ?>
+                    <?php } else if ($data_antrian_tpg) { ?>
+                        <?php if ($data_antrian_tpg->status_usulan == 0 || $data_antrian_tpg->status_usulan == 1 || $data_antrian_tpg->status_usulan == 2 || $data_antrian_tpg->status_usulan == 5 || $data_antrian_tpg->status_usulan == 6 || $data_antrian_tpg->status_usulan == 7) { ?>
                         <?php } else { ?>
                             <div class="card">
                                 <div class="card-body">
@@ -6651,8 +6651,8 @@
                                 </div>
                             </div>
                         <?php } ?>
-                        <?php } else if ($data_antrian_pghm_transfer) {
-                        if ($data_antrian_pghm_transfer->status_usulan == 0 || $data_antrian_pghm_transfer->status_usulan == 1 || $data_antrian_pghm_transfer->status_usulan == 2 || $data_antrian_pghm_transfer->status_usulan == 5) { ?>
+                    <?php } else if ($data_antrian_pghm) { ?>
+                        <?php if ($data_antrian_pghm->status_usulan == 0 || $data_antrian_pghm->status_usulan == 1 || $data_antrian_pghm->status_usulan == 2 || $data_antrian_pghm->status_usulan == 5) { ?>
                         <?php } else { ?>
                             <div class="card">
                                 <div class="card-body">
@@ -6682,8 +6682,8 @@
                         </div>
                     <?php } else if ($data->status_usulan == 2) { ?>
                     <?php } else if ($data->status_usulan == 5) { ?>
-                        <?php if ($data_antrian_tamsil) {
-                            if ($data_antrian_tamsil->status_usulan == 0 || $data_antrian_tamsil->status_usulan == 1 || $data_antrian_tamsil->status_usulan == 2 || $data_antrian_tamsil->status_usulan == 5) { ?>
+                        <?php if ($data_antrian_tamsil_transfer) { ?>
+                            <?php if ($data_antrian_tamsil_transfer->status_usulan == 0 || $data_antrian_tamsil_transfer->status_usulan == 1 || $data_antrian_tamsil_transfer->status_usulan == 2 || $data_antrian_tamsil_transfer->status_usulan == 5) { ?>
                             <?php } else { ?>
                                 <div class="card">
                                     <div class="card-body">
@@ -6693,41 +6693,8 @@
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php } else if ($data_antrian_tpg) {
-                            if ($data_antrian_tpg->status_usulan == 0 || $data_antrian_tpg->status_usulan == 1 || $data_antrian_tpg->status_usulan == 2 || $data_antrian_tpg->status_usulan == 5 || $data_antrian_tpg->status_usulan == 6 || $data_antrian_tpg->status_usulan == 7) { ?>
-                            <?php } else { ?>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-grid gap-2">
-                                            <a href="<?= base_url('situgu/ptk/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                            <?php } else if ($data_antrian_pghm) {
-                            if ($data_antrian_pghm->status_usulan == 0 || $data_antrian_pghm->status_usulan == 1 || $data_antrian_pghm->status_usulan == 2 || $data_antrian_pghm->status_usulan == 5) { ?>
-                            <?php } else { ?>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-grid gap-2">
-                                            <a href="<?= base_url('situgu/ptk/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                            <?php } else if ($data_antrian_tamsil_transfer) {
-                            if ($data_antrian_tamsil_transfer->status_usulan == 0 || $data_antrian_tamsil_transfer->status_usulan == 1 || $data_antrian_tamsil_transfer->status_usulan == 2 || $data_antrian_tamsil_transfer->status_usulan == 5) { ?>
-                            <?php } else { ?>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-grid gap-2">
-                                            <a href="<?= base_url('situgu/ptk/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                            <?php } else if ($data_antrian_tpg_transfer) {
-                            if ($data_antrian_tpg_transfer->status_usulan == 0 || $data_antrian_tpg_transfer->status_usulan == 1 || $data_antrian_tpg_transfer->status_usulan == 2 || $data_antrian_tpg_transfer->status_usulan == 5 || $data_antrian_tpg_transfer->status_usulan == 6 || $data_antrian_tpg_transfer->status_usulan == 7) { ?>
+                        <?php } else if ($data_antrian_tpg_transfer) { ?>
+                            <?php if ($data_antrian_tpg_transfer->status_usulan == 0 || $data_antrian_tpg_transfer->status_usulan == 1 || $data_antrian_tpg_transfer->status_usulan == 2 || $data_antrian_tpg_transfer->status_usulan == 5 || $data_antrian_tpg_transfer->status_usulan == 6 || $data_antrian_tpg_transfer->status_usulan == 7) { ?>
                             <?php } else { ?>
                                 <div class="card">
                                     <div class="card-body">
@@ -6737,8 +6704,41 @@
                                     </div>
                                 </div>
                             <?php } ?>
-                            <?php } else if ($data_antrian_pghm_transfer) {
-                            if ($data_antrian_pghm_transfer->status_usulan == 0 || $data_antrian_pghm_transfer->status_usulan == 1 || $data_antrian_pghm_transfer->status_usulan == 2 || $data_antrian_pghm_transfer->status_usulan == 5) { ?>
+                        <?php } else if ($data_antrian_pghm_transfer) { ?>
+                            <?php if ($data_antrian_pghm_transfer->status_usulan == 0 || $data_antrian_pghm_transfer->status_usulan == 1 || $data_antrian_pghm_transfer->status_usulan == 2 || $data_antrian_pghm_transfer->status_usulan == 5) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <a href="<?= base_url('situgu/ptk/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        <?php } else if ($data_antrian_tamsil) { ?>
+                            <?php if ($data_antrian_tamsil->status_usulan == 0 || $data_antrian_tamsil->status_usulan == 1 || $data_antrian_tamsil->status_usulan == 2 || $data_antrian_tamsil->status_usulan == 5) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <a href="<?= base_url('situgu/ptk/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        <?php } else if ($data_antrian_tpg) { ?>
+                            <?php if ($data_antrian_tpg->status_usulan == 0 || $data_antrian_tpg->status_usulan == 1 || $data_antrian_tpg->status_usulan == 2 || $data_antrian_tpg->status_usulan == 5 || $data_antrian_tpg->status_usulan == 6 || $data_antrian_tpg->status_usulan == 7) { ?>
+                            <?php } else { ?>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <a href="<?= base_url('situgu/ptk/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        <?php } else if ($data_antrian_pghm) { ?>
+                            <?php if ($data_antrian_pghm->status_usulan == 0 || $data_antrian_pghm->status_usulan == 1 || $data_antrian_pghm->status_usulan == 2 || $data_antrian_pghm->status_usulan == 5) { ?>
                             <?php } else { ?>
                                 <div class="card">
                                     <div class="card-body">
