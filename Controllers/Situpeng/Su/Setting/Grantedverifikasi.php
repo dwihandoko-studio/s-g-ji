@@ -37,7 +37,7 @@ class Grantedverifikasi extends BaseController
             $row[] = $list->fullname;
             $row[] = $list->email;
             $row[] = $list->role_name;
-            $row[] = $list->nama_kecamatan;
+            $row[] = $list->kecamatan;
             if (cekGrantedVerifikasi($list->id)) {
                 $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\')" id="' . $list->id . '" switch="none" checked />
                         <label for="' . $list->id . '" data-on-label="On" data-off-label="Off"></label>';
