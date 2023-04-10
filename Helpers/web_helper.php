@@ -834,7 +834,7 @@ function getDetailGuruNaungan($idPtk)
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
 	$db      = \Config\Database::connect();
 
-	$grandted = $db->table('_ptk_tb')->where('id', $idPtk)->get()->getRowObject();
+	$grandted = $db->table('_ptk_tb')->where('id_ptk', $idPtk)->get()->getRowObject();
 	if (!$grandted) {
 		return false;
 	}
