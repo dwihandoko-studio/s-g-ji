@@ -24,7 +24,7 @@
                             <div class="d-flex">
                                 <div class="avatar-xs me-3">
                                     <span class="avatar-title bg-<?= $value->token ?> rounded-circle font-size-16">
-                                        <i class="bx bx-user-voice"></i>
+                                        <i class="bx bx-badge-check"></i>
                                     </span>
                                 </div>
                                 <div class="flex-grow-1">

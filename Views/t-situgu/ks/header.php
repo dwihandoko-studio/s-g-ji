@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div data-simplebar style="max-height: 230px;">
-                        <p>Belum ada notifikasi.</p>
+                        <p>Belum ada</p>
                     </div>
                     <div class="p-2 border-top d-grid">
                         <a class="btn btn-sm btn-link font-size-14 text-center" href="javascript:void(0)">
