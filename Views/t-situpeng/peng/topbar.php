@@ -44,7 +44,26 @@
                                 <i class="bx bx-columns me-2"></i><span key="t-absen">USUL VERVAL</span>
                             </a>
                         </li>
-
+                        <?php if (grantedVerifikasiPengawas($user->id)) { ?>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "verifikasi") ? ' active-menu-href' : '' ?>" href="#" id="topnav-verifikasi" role="button">
+                                    <i class="bx bx-rename me-2"></i><span key="t-verifikasi">Verifikasi</span>
+                                    <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-verifikasi">
+                                    <a href="<?= base_url('situpeng/peng/verifikasi/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "verifikasi" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-verifikasi-tpg">Tunjangan Profesi Guru</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "sptjm") ? ' active-menu-href' : '' ?>" href="#" id="topnav-sptjm" role="button">
+                                    <i class="bx bx-spreadsheet me-2"></i><span key="t-sptjm">SPTJM</span>
+                                    <div class="arrow-down"></div>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="topnav-sptjm">
+                                    <a href="<?= base_url('situpeng/peng/sptjm/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-sptjm-tpg">Tunjangan Profesi Guru</a>
+                                </div>
+                            </li>
+                        <?php } ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-spj" role="button">
                                 <i class="bx bx-task me-2"></i>

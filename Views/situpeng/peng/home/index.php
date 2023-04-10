@@ -3426,7 +3426,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-grid gap-2">
-                                        <a href="<?= base_url('situpeng/peng/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        <a href="<?= base_url('situpeng/peng/ajuan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
                                     </div>
                                 </div>
                             </div>
@@ -3437,7 +3437,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-grid gap-2">
-                                        <a href="<?= base_url('situpeng/peng/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                        <a href="<?= base_url('situpeng/peng/ajuan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
                                     </div>
                                 </div>
                             </div>
@@ -3447,7 +3447,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-grid gap-2">
-                                    <a href="<?= base_url('situpeng/peng/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN USULAN TUNJANGAN</a>
+                                    <a href="<?= base_url('situpeng/peng/ajuan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN USULAN TUNJANGAN</a>
                                 </div>
                             </div>
                         </div>
@@ -3457,7 +3457,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-grid gap-2">
-                                    <a href="<?= base_url('situpeng/peng/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                    <a href="<?= base_url('situpeng/peng/ajuan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
                                 </div>
                             </div>
                         </div>
@@ -3480,7 +3480,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="d-grid gap-2">
-                                            <a href="<?= base_url('situpeng/peng/us/ajukan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
+                                            <a href="<?= base_url('situpeng/peng/ajuan') ?>" class="btn btn-primary btn-lg waves-effect waves-light">AJUKAN KEMBALI USULAN TUNJANGAN</a>
                                         </div>
                                     </div>
                                 </div>
