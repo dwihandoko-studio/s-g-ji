@@ -200,6 +200,7 @@
                 // },
                 success: function(resul) {
                     console.log(resul);
+                    $('.loading_content_notification').html(resul.content);
                     // $('div.loading_content_notification').unblock();
                     // const buttonTextNotif = document.getElementById('page-header-notifications-dropdown');
                     // if (resul.status !== 200) {
