@@ -325,7 +325,7 @@ class Ajuan extends BaseController
 
             if ($jenis_tunjangan === "tpg") {
 
-                $canUsulTpg = canUsulTpg();
+                $canUsulTpg = canUsulTpgPengawas();
 
                 if ($canUsulTpg && $canUsulTpg->code !== 200) {
                     return json_encode($canUsulTpg);
