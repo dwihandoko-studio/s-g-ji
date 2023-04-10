@@ -188,7 +188,7 @@ class Helplib
 
         $user = $this->_db->table('v_user_pengawas a')
             ->select("a.ptk_id, a.id, b.jenjang_pengawas")
-            ->join('__pengawas_t b', 'a.ptk_id = b.id')
+            ->join('__pengawas_tb b', 'a.ptk_id = b.id')
             ->where('a.id', $userId)
             ->get()->getRowObject();
 
