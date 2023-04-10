@@ -269,7 +269,7 @@ class Skterbit extends BaseController
                     'no_urut' => $data[11],
                 ];
 
-                $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_tpg_siap_sk_test_terbit a')
+                $dataInsert['data_usulan'] = $this->_db->table('_tb_usulan_tpg_siap_sk a')
                     ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
                     ->join('_ptk_tb b', 'a.id_ptk = b.id')
                     ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
@@ -565,7 +565,7 @@ class Skterbit extends BaseController
             $no_sktp = htmlspecialchars($this->request->getVar('no_sktp'), true);
             $no_urut = htmlspecialchars($this->request->getVar('no_urut'), true);
 
-            $current = $this->_db->table('_tb_usulan_tpg_siap_sk_test_terbit a')
+            $current = $this->_db->table('_tb_usulan_tpg_siap_sk a')
                 ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
                 ->join('_ptk_tb b', 'a.id_ptk = b.id')
                 ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
@@ -578,28 +578,28 @@ class Skterbit extends BaseController
                 $this->_db->transBegin();
 
                 if ($status == "table-success") {
-                    $this->_db->table('_tb_usulan_tpg_siap_sk_test_terbit')->where('id', $current->id_usulan)->update(['status_usulan' => 6, 'no_sk_dirjen' => $no_sktp, 'no_urut_sk' => $no_urut, 'updated_at' => date('Y-m-d H:i:s'), 'date_terbitsk' => date('Y-m-d H:i:s'), 'admin_terbitsk' => $user->data->id]);
+                    $this->_db->table('_tb_usulan_tpg_siap_sk')->where('id', $current->id_usulan)->update(['status_usulan' => 6, 'no_sk_dirjen' => $no_sktp, 'no_urut_sk' => $no_urut, 'updated_at' => date('Y-m-d H:i:s'), 'date_terbitsk' => date('Y-m-d H:i:s'), 'admin_terbitsk' => $user->data->id]);
                     if ($this->_db->affectedRows() > 0) {
 
-                        $ptk = $this->_db->table('_tb_usulan_tpg_siap_sk_test_terbit')->where('id', $current->id_usulan)->get()->getRowObject();
+                        $ptk = $this->_db->table('_tb_usulan_tpg_siap_sk')->where('id', $current->id_usulan)->get()->getRowObject();
                         if ($ptk) {
                             if ($this->_db->affectedRows() > 0) {
                                 $this->_db->transCommit();
 
-                                $dataNotif = [
-                                    "SKTP Telah Terbit", "Usulan " . $ptk->kode_usulan . " telah Terbit dengan No SK: " . $no_sktp . " No Urut: " . $no_urut, "success", $user->data->id, $ptk->id_ptk, base_url('situgu/ptk/us/tpg/skterbit')
-                                ];
+                                // $dataNotif = [
+                                //     "SKTP Telah Terbit", "Usulan " . $ptk->kode_usulan . " telah Terbit dengan No SK: " . $no_sktp . " No Urut: " . $no_urut, "success", $user->data->id, $ptk->id_ptk, base_url('situgu/ptk/us/tpg/skterbit')
+                                // ];
 
-                                // try {
-                                //     $notifLib = new NotificationLib();
-                                //     $notifLib->create("SKTP Telah Terbit", "Usulan " . $ptk->kode_usulan . " telah Terbit dengan No SK: " . $no_sktp . " No Urut: " . $no_urut, "success", $user->data->id, $ptk->id_ptk, base_url('situgu/ptk/us/tpg/skterbit'));
-                                // } catch (\Throwable $th) {
-                                //     //throw $th;
-                                // }
+                                try {
+                                    $notifLib = new NotificationLib();
+                                    $notifLib->create("SKTP Telah Terbit", "Usulan " . $ptk->kode_usulan . " telah Terbit dengan No SK: " . $no_sktp . " No Urut: " . $no_urut, "success", $user->data->id, $ptk->id_ptk, base_url('situgu/ptk/us/tpg/skterbit'));
+                                } catch (\Throwable $th) {
+                                    //throw $th;
+                                }
                                 $response = new \stdClass;
                                 $response->status = 200;
                                 $response->message = "Data berhasil disimpan.";
-                                $response->suce = $dataNotif;
+                                // $response->suce = $dataNotif;
                                 return json_encode($response);
                             } else {
                                 $this->_db->transRollback();
