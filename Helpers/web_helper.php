@@ -817,6 +817,30 @@ function cekGrantedVerifikasi($user_id)
 	return true;
 }
 
+function getDetailSekolahNaungan($npsn)
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('ref_sekolah')->where('npsn', $npsn)->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+	return $grandted;
+}
+
+function getDetailGuruNaungan($idPtk)
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('_ptk_tb')->where('id', $idPtk)->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+	return $grandted;
+}
+
 function canGrantedPengajuan($id_ptk, $tw)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
