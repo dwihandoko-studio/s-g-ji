@@ -66,7 +66,7 @@ class Notification extends BaseController
         $data['user'] = $user->data;
         $id = $this->_helpLib->getPtkId($user->data->id);
         $notifs = $this->_db->table('_notification_tb a')
-            ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.nama")
+            ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.fullname")
             ->join('_profil_users_tb b', 'a.send_from = b.id', 'LEFT')
             ->where('a.send_to', $id)
             ->limit(5)
