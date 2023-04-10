@@ -64,7 +64,7 @@ class VerifikasiModel extends Model
     function count_filtered($jenjangPengawas, $jenis)
     {
         $this->dt->select("a.*, b.nama, b.nuptk, b.nik");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->join('__pengawas_tb b', 'a.id_pengawas = b.id');
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
@@ -76,7 +76,7 @@ class VerifikasiModel extends Model
     public function count_all($jenjangPengawas, $jenis)
     {
         $this->dt->select("a.*, b.nama, b.nuptk, b.nik");
-        $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
+        $this->dt->join('__pengawas_tb b', 'a.id_pengawas = b.id');
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
