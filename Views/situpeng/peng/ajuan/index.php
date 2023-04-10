@@ -42,7 +42,7 @@
                                                             echo '<span class="badge rounded-pill bg-dark">Lolos Verifikasi Admin</span>';
                                                             break;
                                                         case 5:
-                                                            echo '<span class="badge rounded-pill bg-dark">Proses Matching Dengan SIMTUN</span>';
+                                                            echo '<span class="badge rounded-pill bg-dark">Proses Matching Dengan SIMTENDIK</span>';
                                                             break;
                                                         case 6:
                                                             echo '<span class="badge rounded-pill bg-dark">Terbit SKTP</span>';
@@ -99,7 +99,7 @@
                                                             echo '<span class="badge rounded-pill bg-dark">Lolos Verifikasi Admin</span>';
                                                             break;
                                                         case 5:
-                                                            echo '<span class="badge rounded-pill bg-dark">Proses Matching Dengan Simtun</span>';
+                                                            echo '<span class="badge rounded-pill bg-dark">Proses Matching Dengan SIMTENDIK</span>';
                                                             break;
                                                         case 6:
                                                             echo '<span class="badge rounded-pill bg-dark">Terbit SKTP</span>';
@@ -208,7 +208,7 @@
                                                                 echo '<span class="badge rounded-pill bg-dark">Lolos Verifikasi Admin</span>';
                                                                 break;
                                                             case 5:
-                                                                echo '<span class="badge rounded-pill bg-dark">Proses Matching Dengan SIMTUN</span>';
+                                                                echo '<span class="badge rounded-pill bg-dark">Proses Matching Dengan SIMTENDIK</span>';
                                                                 break;
                                                             case 6:
                                                                 echo '<span class="badge rounded-pill bg-dark">Terbit SKTP</span>';
@@ -268,7 +268,7 @@
                                                                 echo '<span class="badge rounded-pill bg-dark">Lolos Verifikasi Admin</span>';
                                                                 break;
                                                             case 5:
-                                                                echo '<span class="badge rounded-pill bg-dark">Proses Matching Dengan Simtun</span>';
+                                                                echo '<span class="badge rounded-pill bg-dark">Proses Matching Dengan SIMTENDIK</span>';
                                                                 break;
                                                             case 6:
                                                                 echo '<span class="badge rounded-pill bg-dark">Terbit SKTP</span>';
@@ -332,8 +332,8 @@
                                 </div>
                             </div>
                         </div>
-                <?php }
-                } ?>
+                    <?php } ?>
+                <?php } ?>
             </div>
             <?php if (!$data) { ?>
                 <?php if ($data_antrian_tpg_transfer) { ?>
@@ -420,7 +420,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -542,7 +542,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -664,7 +664,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -786,7 +786,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN. (Ditolak karena : <?= $data_antrian_tpg_transfer->keterangan_reject ?></p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK. (Ditolak karena : <?= $data_antrian_tpg_transfer->keterangan_reject ?></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -908,7 +908,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1030,7 +1030,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1152,7 +1152,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1276,7 +1276,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1398,7 +1398,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1520,7 +1520,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1642,7 +1642,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN. (Ditolak karena : <?= $data_antrian_tpg->keterangan_reject ?></p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK. (Ditolak karena : <?= $data_antrian_tpg->keterangan_reject ?></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1764,7 +1764,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1892,7 +1892,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2017,7 +2017,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2144,7 +2144,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2266,7 +2266,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2388,7 +2388,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2510,7 +2510,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN. (Ditolak karena : <?= $data_antrian_tpg->keterangan_reject ?></p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK. (Ditolak karena : <?= $data_antrian_tpg->keterangan_reject ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2632,7 +2632,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2756,7 +2756,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2878,7 +2878,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3000,7 +3000,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3122,7 +3122,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN. (Ditolak karena : <?= $data_antrian_tpg_transfer->keterangan_reject ?></p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK. (Ditolak karena : <?= $data_antrian_tpg_transfer->keterangan_reject ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3244,7 +3244,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3366,7 +3366,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3488,7 +3488,7 @@
                                                             </div>
 
                                                             <div class="mt-3 px-3">
-                                                                <p class="text-muted">Proses Matching Dengan SIMTUN.</p>
+                                                                <p class="text-muted">Proses Matching Dengan SIMTENDIK.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3611,7 +3611,7 @@
                                                         </div>
 
                                                         <div class="mt-3 px-3">
-                                                            <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                            <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3737,7 +3737,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Proses Matching Dengan SIMTUN</p>
+                                                        <p class="text-muted">Proses Matching Dengan SIMTENDIK</p>
                                                     </div>
                                                 </div>
                                             </div>
