@@ -228,8 +228,8 @@ class Ajuan extends BaseController
 
             $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
             $data['ptk'] = $ptk;
-            $igdD = $this->_db->table('_info_gtk')->where('ptk_id', $ptk->id_ptk)->get()->getRowObject();
-            $data['igd'] = $igdD;
+            // $igdD = $this->_db->table('_info_gtk')->where('ptk_id', $ptk->id_ptk)->get()->getRowObject();
+            // $data['igd'] = $igdD;
             $response = new \stdClass;
 
             if ($ptk->no_rekening === null || $ptk->no_rekening === "" || $ptk->cabang_bank === null || $ptk->cabang_bank === "") {
@@ -242,47 +242,85 @@ class Ajuan extends BaseController
             if ($ptk->lampiran_ktp === null || $ptk->lampiran_ktp === "") {
                 $response->status = 404;
                 $response->message = "Lampiran Dokumen Master KTP tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                $response->redirrect = base_url("situgu/ptk/doc/master");
+                $response->redirrect = base_url("situpeng/peng/doc/master");
                 return json_encode($response);
             }
 
             if ($ptk->lampiran_npwp === null || $ptk->lampiran_npwp === "") {
                 $response->status = 404;
                 $response->message = "Lampiran Dokumen Master NPWP tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                $response->redirrect = base_url("situgu/ptk/doc/master");
+                $response->redirrect = base_url("situpeng/peng/doc/master");
                 return json_encode($response);
             }
 
-            if ($ptk->lampiran_ijazah === null || $ptk->lampiran_ijazah === "") {
+            if ($ptk->lampiran_nrg === null || $ptk->lampiran_nrg === "") {
                 $response->status = 404;
-                $response->message = "Lampiran Dokumen Master Ijazah tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                $response->redirrect = base_url("situgu/ptk/doc/master");
+                $response->message = "Lampiran Dokumen Master NRG tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/master");
+                return json_encode($response);
+            }
+
+            if ($ptk->lampiran_nuptk === null || $ptk->lampiran_nuptk === "") {
+                $response->status = 404;
+                $response->message = "Lampiran Dokumen Master NUPTK tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/master");
+                return json_encode($response);
+            }
+
+            if ($ptk->lampiran_sk80 === null || $ptk->lampiran_sk80 === "") {
+                $response->status = 404;
+                $response->message = "Lampiran Dokumen Master SK 80% tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/master");
+                return json_encode($response);
+            }
+
+            if ($ptk->lampiran_sk100 === null || $ptk->lampiran_sk100 === "") {
+                $response->status = 404;
+                $response->message = "Lampiran Dokumen Master SK 100% tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/master");
+                return json_encode($response);
+            }
+
+            if ($ptk->lampiran_serdik === null || $ptk->lampiran_serdik === "") {
+                $response->status = 404;
+                $response->message = "Lampiran Dokumen Master Sertifikat Pendidik tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/master");
+                return json_encode($response);
+            }
+
+            if ($ptk->lampiran_serpeng === null || $ptk->lampiran_serpeng === "") {
+                $response->status = 404;
+                $response->message = "Lampiran Dokumen Master Sertifikat Pengawas tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/master");
                 return json_encode($response);
             }
 
             if ($ptk->lampiran_buku_rekening === null || $ptk->lampiran_buku_rekening === "") {
                 $response->status = 404;
                 $response->message = "Lampiran Dokumen Master Buku Rekening tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                $response->redirrect = base_url("situgu/ptk/doc/master");
+                $response->redirrect = base_url("situpeng/peng/doc/master");
                 return json_encode($response);
             }
 
-            if ($ptk->lampiran_pernyataan24 === null || $ptk->lampiran_pernyataan24 === "" || $ptk->lampiran_slip_gaji === null || $ptk->lampiran_slip_gaji === "" || $ptk->lampiran_pembagian_tugas === null || $ptk->lampiran_pembagian_tugas === "" || $ptk->lampiran_absen1 === null || $ptk->lampiran_absen1 === "" || $ptk->lampiran_absen2 === null || $ptk->lampiran_absen2 === "" || $ptk->lampiran_absen3 === null || $ptk->lampiran_absen3 === "") {
+            if ($ptk->lampiran_penugasan === null || $ptk->lampiran_penugasan === "") {
                 $response->status = 404;
-                $response->message = "Lampiran Dokumen Atibut Pernyataan 24 Jam, Pembagian Tugas, Slip Gaji, Absen 1, Absen 2 dan Absen 3 tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                $response->redirrect = base_url("situgu/ptk/doc/atribut");
+                $response->message = "Lampiran Dokumen Atibut Penugasan tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/atribut");
                 return json_encode($response);
             }
 
-            if (!$igdD) {
-                if ($ptk->lampiran_att_lain === null || $ptk->lampiran_att_lain === "") {
-                    if ($ptk->lampiran_doc_absen_lain === null || $ptk->lampiran_doc_absen_lain === "") {
-                        $response->status = 404;
-                        $response->message = "Anda terdeteksi belum menautkan info GTK Digital. Bagi yang belum mempunyai info GTK Digital, Diwajibkan mengupload Print Out Info GTK pada menu dokumen atrribut lainnya!!";
-                        $response->redirrect = base_url("situgu/ptk/doc/atribut");
-                        return json_encode($response);
-                    }
-                }
+            if ($ptk->lampiran_penugasan === null || $ptk->lampiran_penugasan === "") {
+                $response->status = 404;
+                $response->message = "Lampiran Dokumen Atibut Penugasan tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/atribut");
+                return json_encode($response);
+            }
+
+            if ($ptk->lampiran_kunjungan_binaan === null || $ptk->lampiran_kunjungan_binaan === "") {
+                $response->status = 404;
+                $response->message = "Lampiran Dokumen Atibut Kunjungan Binaan tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+                $response->redirrect = base_url("situpeng/peng/doc/atribut");
+                return json_encode($response);
             }
 
             if ($jenis_tunjangan === "tpg") {
@@ -307,49 +345,29 @@ class Ajuan extends BaseController
                 //     return json_encode($response);
                 // }
 
-                if ($ptk->lampiran_nrg === null || $ptk->lampiran_nrg === "" || $ptk->lampiran_nuptk === null || $ptk->lampiran_nuptk === "" || $ptk->lampiran_serdik === null || $ptk->lampiran_serdik === "") {
-                    $response->status = 404;
-                    $response->message = "Lampiran Dokumen Master NRG, NUPTK, dan Serdik tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                    $response->redirrect = base_url("situgu/ptk/doc/master");
+                if ($ptk->pang_golongan == NULL || $ptk->pang_golongan == "") {
+                    $response->status = 400;
+                    $response->message = "Data attribut kepegawaian masih kosong.";
                     return json_encode($response);
                 }
 
-                if ($ptk->status_kepegawaian === "PNS" || $ptk->status_kepegawaian === "PPPK" || $ptk->status_kepegawaian === "PNS Diperbantukan" || $ptk->status_kepegawaian === "PNS Depag" || $ptk->status_kepegawaian === "CPNS") {
+                if ($ptk->lampiran_pangkat === null || $ptk->lampiran_pangkat === "") {
 
-                    if ($ptk->pang_golongan == NULL || $ptk->pang_golongan == "") {
-                        $response->status = 400;
-                        $response->message = "Data attribut kepegawaian masih kosong.";
-                        return json_encode($response);
-                    }
-
-                    if ($ptk->lampiran_pangkat === null || $ptk->lampiran_pangkat === "") {
-
-                        $response->status = 400;
-                        $response->message = "Lampiran Dokumen Atribut Pangkat tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
-                        $response->redirrect = base_url("situgu/ptk/doc/atribut");
-                        return json_encode($response);
-                    }
-
-                    if ($ptk->pang_jenis === "kgb") {
-                        if ($ptk->lampiran_kgb === null || $ptk->lampiran_kgb === "") {
-                            $response->status = 400;
-                            $response->message = "Lampiran Dokumen Atribut KGB tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
-                            $response->redirrect = base_url("situgu/ptk/doc/atribut");
-                            return json_encode($response);
-                        }
-                    }
-                    $response->data = view('situgu/ptk/us/ajukan/tpg-asn', $data);
-                } else {
-                    if ($ptk->nomor_sk_impassing !== null) {
-                        if ($ptk->lampiran_impassing === null || $ptk->lampiran_impassing === "") {
-                            $response->status = 404;
-                            $response->message = "Lampiran Dokumen Master Impassing tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
-                            $response->redirrect = base_url("situgu/ptk/doc/master");
-                            return json_encode($response);
-                        }
-                    }
-                    $response->data = view('situgu/ptk/us/ajukan/tpg-honor', $data);
+                    $response->status = 400;
+                    $response->message = "Lampiran Dokumen Atribut Pangkat tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
+                    $response->redirrect = base_url("situpeng/peng/doc/atribut");
+                    return json_encode($response);
                 }
+
+                if ($ptk->pang_jenis === "kgb") {
+                    if ($ptk->lampiran_kgb === null || $ptk->lampiran_kgb === "") {
+                        $response->status = 400;
+                        $response->message = "Lampiran Dokumen Atribut KGB tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
+                        $response->redirrect = base_url("situpeng/peng/doc/atribut");
+                        return json_encode($response);
+                    }
+                }
+                $response->data = view('situpeng/peng/ajuan/tpg-asn', $data);
             } else if ($jenis_tunjangan === "tamsil") {
 
                 $canUsulTamsil = canUsulTamsil();
@@ -375,7 +393,7 @@ class Ajuan extends BaseController
                 if ($ptk->lampiran_nuptk === null || $ptk->lampiran_nuptk === "") {
                     $response->status = 404;
                     $response->message = "Lampiran Dokumen Master NUPTK tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                    $response->redirrect = base_url("situgu/ptk/doc/master");
+                    $response->redirrect = base_url("situpeng/peng/doc/master");
                     return json_encode($response);
                 }
 
@@ -389,7 +407,7 @@ class Ajuan extends BaseController
                     // if ($ptk->lampiran_pangkat === null || $ptk->lampiran_pangkat === "" || $ptk->lampiran_kgb === null || $ptk->lampiran_kgb === "") {
                     //     $response->status = 404;
                     //     $response->message = "Lampiran Dokumen Atribut Pangkat dan KGB tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
-                    //     $response->redirrect = base_url("situgu/ptk/doc/atribut");
+                    //     $response->redirrect = base_url("situpeng/peng/doc/atribut");
                     //     return json_encode($response);
                     // }
                     if ($ptk->pang_golongan == NULL || $ptk->pang_golongan == "") {
@@ -402,7 +420,7 @@ class Ajuan extends BaseController
 
                         $response->status = 400;
                         $response->message = "Lampiran Dokumen Atribut Pangkat tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
-                        $response->redirrect = base_url("situgu/ptk/doc/atribut");
+                        $response->redirrect = base_url("situpeng/peng/doc/atribut");
                         return json_encode($response);
                     }
 
@@ -410,11 +428,11 @@ class Ajuan extends BaseController
                         if ($ptk->lampiran_kgb === null || $ptk->lampiran_kgb === "") {
                             $response->status = 400;
                             $response->message = "Lampiran Dokumen Atribut KGB tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!.";
-                            $response->redirrect = base_url("situgu/ptk/doc/atribut");
+                            $response->redirrect = base_url("situpeng/peng/doc/atribut");
                             return json_encode($response);
                         }
                     }
-                    $response->data = view('situgu/ptk/us/ajukan/tamsil', $data);
+                    $response->data = view('situpeng/peng/us/ajukan/tamsil', $data);
                 } else {
                     $response->status = 400;
                     $response->message = "Tunjangan Tamsil hanya diperuntukan bagi PNS / PPPK.";
@@ -442,7 +460,7 @@ class Ajuan extends BaseController
                         $response->message = "Untuk mendapatkan Tunjangan PGHM, harus wajib memiliki Pendidikan minimal S1.";
                         return json_encode($response);
                     }
-                    $response->data = view('situgu/ptk/us/ajukan/pghm', $data);
+                    $response->data = view('situpeng/peng/us/ajukan/pghm', $data);
                 } else {
                     $response->status = 400;
                     $response->message = "Tunjangan PGHM hanya diperuntukan bagi Guru Honorer.";

@@ -1,6 +1,6 @@
 <?php if (isset($ptk)) { ?>
     <div class="table-responsive">
-        <h4>Konfirmasi Pengajuan Usulan Tunjangan Profesi Guru untuk ASN.</h4>
+        <h4>Konfirmasi Pengajuan Usulan Tunjangan Profesi Guru untuk Pengawas.</h4>
         <table class="table mb-0">
             <thead>
                 <tr>
@@ -71,16 +71,6 @@
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_pendidikan_terakhir" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td><label class="form-check-label" for="_bidang_studi_sertifikasi">Bidang Studi Sertifikasi</label></td>
-                    <td><label class="form-check-label" for="_bidang_studi_sertifikasi"><?= $ptk->bidang_studi_sertifikasi ?></label></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_bidang_studi_sertifikasi" onchange="changeChecked()" name="hasil[]">
                         </div>
                     </td>
                 </tr>
@@ -158,75 +148,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td scope="row" colspan="4">Data Absensi</td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><label class="form-check-label" for="_absen_1">Absen 1</label></td>
-                    <td><label class="form-check-label" for="_absen_1"><?= $ptk->bulan_1 ?></label></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_absen_1" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td><label class="form-check-label" for="_absen_2">Absen 2</label></td>
-                    <td><label class="form-check-label" for="_absen_2"><?= $ptk->bulan_2 ?></label></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_absen_2" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td><label class="form-check-label" for="_absen_3">Absen 3</label></td>
-                    <td><label class="form-check-label" for="_absen_3"><?= $ptk->bulan_3 ?></label></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_absen_3" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td><label class="form-check-label" for="_cuti">Cuti</label></td>
-                    <td><label class="form-check-label" for="_cuti"><?= $ptk->lampiran_cuti == null || $ptk->lampiran_cuti == "-" ? 'Tidak' : 'Ya' ?></label></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_cuti" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td><label class="form-check-label" for="_pensiun">Pensiun</label></td>
-                    <td><label class="form-check-label" for="_pensiun"><?= $ptk->lampiran_pensiun == null || $ptk->lampiran_pensiun == "-" ? 'Tidak' : 'Ya' ?></label></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_pensiun" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td><label class="form-check-label" for="_kematian">Kematian</label></td>
-                    <td><label class="form-check-label" for="_kematian"><?= $ptk->lampiran_kematian == null || $ptk->lampiran_kematian == "-" ? 'Tidak' : 'Ya' ?></label></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_kematian" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
                     <td scope="row" colspan="4">Lampiran Dokumen</td>
                 </tr>
                 <tr>
                     <th scope="row">1</th>
                     <td><label class="form-check-label" for="_lampiran_ktp">KTP</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/ktp') . '/' . $ptk->lampiran_ktp ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/ktp') . '/' . $ptk->lampiran_ktp ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/ktp') . '/' . $ptk->lampiran_ktp ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/ktp') . '/' . $ptk->lampiran_ktp ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_ktp" onchange="changeChecked()" name="hasil[]">
@@ -236,7 +163,7 @@
                 <tr>
                     <th scope="row">2</th>
                     <td><label class="form-check-label" for="_lampiran_nuptk">NUPTK</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/nuptk') . '/' . $ptk->lampiran_nuptk ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/nuptk') . '/' . $ptk->lampiran_nuptk ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/nuptk') . '/' . $ptk->lampiran_nuptk ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/nuptk') . '/' . $ptk->lampiran_nuptk ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_nuptk" onchange="changeChecked()" name="hasil[]">
@@ -246,7 +173,7 @@
                 <tr>
                     <th scope="row">3</th>
                     <td><label class="form-check-label" for="_lampiran_karpeg">Karpeg</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/karpeg') . '/' . $ptk->lampiran_karpeg ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/karpeg') . '/' . $ptk->lampiran_karpeg ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/karpeg') . '/' . $ptk->lampiran_karpeg ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/karpeg') . '/' . $ptk->lampiran_karpeg ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_karpeg" onchange="changeChecked()" name="hasil[]">
@@ -256,7 +183,7 @@
                 <tr>
                     <th scope="row">4</th>
                     <td><label class="form-check-label" for="_lampiran_serdik">Serdik</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/serdik') . '/' . $ptk->lampiran_serdik ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/serdik') . '/' . $ptk->lampiran_serdik ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/serdik') . '/' . $ptk->lampiran_serdik ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/serdik') . '/' . $ptk->lampiran_serdik ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_serdik" onchange="changeChecked()" name="hasil[]">
@@ -266,7 +193,7 @@
                 <tr>
                     <th scope="row">5</th>
                     <td><label class="form-check-label" for="_lampiran_npwp">NPWP</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/npwp') . '/' . $ptk->lampiran_npwp ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/npwp') . '/' . $ptk->lampiran_npwp ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/npwp') . '/' . $ptk->lampiran_npwp ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/npwp') . '/' . $ptk->lampiran_npwp ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_npwp" onchange="changeChecked()" name="hasil[]">
@@ -275,8 +202,8 @@
                 </tr>
                 <tr>
                     <th scope="row">6</th>
-                    <td><label class="form-check-label" for="_lampiran_ijazah">Ijazah</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/ijazah') . '/' . $ptk->lampiran_ijazah ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/ijazah') . '/' . $ptk->lampiran_ijazah ?>">Lihat Lampiran</a></td>
+                    <td><label class="form-check-label" for="_lampiran_ijazah">Sertifikat Pengawas</label></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/serpeng') . '/' . $ptk->lampiran_serpeng ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/serpeng') . '/' . $ptk->lampiran_serpeng ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_ijazah" onchange="changeChecked()" name="hasil[]">
@@ -286,7 +213,7 @@
                 <tr>
                     <th scope="row">7</th>
                     <td><label class="form-check-label" for="_lampiran_buku_rekening">Buku Rekening</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/bukurekening') . '/' . $ptk->lampiran_buku_rekening ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/bukurekening') . '/' . $ptk->lampiran_buku_rekening ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/bukurekening') . '/' . $ptk->lampiran_buku_rekening ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/bukurekening') . '/' . $ptk->lampiran_buku_rekening ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_buku_rekening" onchange="changeChecked()" name="hasil[]">
@@ -295,38 +222,8 @@
                 </tr>
                 <tr>
                     <th scope="row">8</th>
-                    <td><label class="form-check-label" for="_lampiran_absen_1">Absen 1</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/sekolah/kehadiran') . '/' . $ptk->lampiran_absen1 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/kehadiran') . '/' . $ptk->lampiran_absen1 ?>">Lihat Lampiran</a></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_lampiran_absen_1" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">9</th>
-                    <td><label class="form-check-label" for="_lampiran_absen_2">Absen 2</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/sekolah/kehadiran') . '/' . $ptk->lampiran_absen2 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/kehadiran') . '/' . $ptk->lampiran_absen2 ?>">Lihat Lampiran</a></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_lampiran_absen_2" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">10</th>
-                    <td><label class="form-check-label" for="_lampiran_absen_3">Absen 3</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/sekolah/kehadiran') . '/' . $ptk->lampiran_absen3 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/kehadiran') . '/' . $ptk->lampiran_absen3 ?>">Lihat Lampiran</a></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_lampiran_absen_3" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">11</th>
-                    <td><label class="form-check-label" for="_lampiran_pembagian_tugas">Pembagian Tugas</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/sekolah/pembagian-tugas') . '/' . $ptk->lampiran_pembagian_tugas ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/pembagian-tugas') . '/' . $ptk->lampiran_pembagian_tugas ?>">Lihat Lampiran</a></td>
+                    <td><label class="form-check-label" for="_lampiran_pembagian_tugas">Penugasan</label></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/penugasan') . '/' . $ptk->lampiran_penugasan ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/penugasan') . '/' . $ptk->lampiran_penugasan ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_pembagian_tugas" onchange="changeChecked()" name="hasil[]">
@@ -334,9 +231,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">12</th>
-                    <td><label class="form-check-label" for="_lampiran_slip_gaji">Slip Gaji</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/sekolah/slip-gaji') . '/' . $ptk->lampiran_slip_gaji ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/slip-gaji') . '/' . $ptk->lampiran_slip_gaji ?>">Lihat Lampiran</a></td>
+                    <th scope="row">9</th>
+                    <td><label class="form-check-label" for="_lampiran_slip_gaji">Kunjungan Binaan</label></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/kunjunganbinaan') . '/' . $ptk->lampiran_kunjungan_binaan ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/kunjunganbinaan') . '/' . $ptk->lampiran_kunjungan_binaan ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_slip_gaji" onchange="changeChecked()" name="hasil[]">
@@ -344,9 +241,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">13</th>
+                    <th scope="row">10</th>
                     <td><label class="form-check-label" for="_lampiran_pangkat">Pangkat</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/pangkat') . '/' . $ptk->lampiran_pangkat ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pangkat') . '/' . $ptk->lampiran_pangkat ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/pangkat') . '/' . $ptk->lampiran_pangkat ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/pangkat') . '/' . $ptk->lampiran_pangkat ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_pangkat" onchange="changeChecked()" name="hasil[]">
@@ -354,9 +251,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">14</th>
+                    <th scope="row">11</th>
                     <td><label class="form-check-label" for="_lampiran_kgb">KGB (Berkala)</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/kgb') . '/' . $ptk->lampiran_kgb ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/kgb') . '/' . $ptk->lampiran_kgb ?>">Lihat Lampiran</a></td>
+                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/kgb') . '/' . $ptk->lampiran_kgb ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/kgb') . '/' . $ptk->lampiran_kgb ?>">Lihat Lampiran</a></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_kgb" onchange="changeChecked()" name="hasil[]">
@@ -364,23 +261,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">15</th>
-                    <td><label class="form-check-label" for="_lampiran_pernyataan24">Pernyataan 24Jam</label></td>
-                    <td><a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/pernyataanindividu') . '/' . $ptk->lampiran_pernyataan24 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pernyataanindividu') . '/' . $ptk->lampiran_pernyataan24 ?>">Lihat Lampiran</a></td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_lampiran_pernyataan24" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">16</th>
+                    <th scope="row">12</th>
                     <td><label class="form-check-label" for="_lampiran_cuti">Cuti</label></td>
                     <td>
                         <?php if ($ptk->lampiran_cuti == null || $ptk->lampiran_cuti == "") {
                             echo 'Tidak ada';
                         } else { ?>
-                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/keterangancuti') . '/' . $ptk->lampiran_cuti ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/keterangancuti') . '/' . $ptk->lampiran_cuti ?>">Lihat Lampiran</a>
+                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/keterangancuti') . '/' . $ptk->lampiran_cuti ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/keterangancuti') . '/' . $ptk->lampiran_cuti ?>">Lihat Lampiran</a>
                         <?php } ?>
                     </td>
                     <td>
@@ -390,13 +277,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">17</th>
+                    <th scope="row">13</th>
                     <td><label class="form-check-label" for="_lampiran_pensiun">Pensiun</label></td>
                     <td>
                         <?php if ($ptk->lampiran_pensiun == null || $ptk->lampiran_pensiun == "") {
                             echo 'Tidak ada';
                         } else { ?>
-                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/pensiun') . '/' . $ptk->lampiran_pensiun ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/pensiun') . '/' . $ptk->lampiran_pensiun ?>">Lihat Lampiran</a>
+                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/pensiun') . '/' . $ptk->lampiran_pensiun ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/pensiun') . '/' . $ptk->lampiran_pensiun ?>">Lihat Lampiran</a>
                         <?php } ?>
                     </td>
                     <td>
@@ -406,13 +293,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">18</th>
+                    <th scope="row">14</th>
                     <td><label class="form-check-label" for="_lampiran_kematian">Kematian</label></td>
                     <td>
                         <?php if ($ptk->lampiran_kematian == null || $ptk->lampiran_kematian == "") {
                             echo 'Tidak ada';
                         } else { ?>
-                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/kematian') . '/' . $ptk->lampiran_kematian ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/kematian') . '/' . $ptk->lampiran_kematian ?>">Lihat Lampiran</a>
+                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/kematian') . '/' . $ptk->lampiran_kematian ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/kematian') . '/' . $ptk->lampiran_kematian ?>">Lihat Lampiran</a>
                         <?php } ?>
                     </td>
                     <td>
@@ -422,54 +309,18 @@
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">19</th>
+                    <th scope="row">15</th>
                     <td><label class="form-check-label" for="_lampiran_atribut_lainnya">Atribut Lainnya</label></td>
                     <td>
                         <?php if ($ptk->lampiran_att_lain == null || $ptk->lampiran_att_lain == "") {
                             echo 'Tidak ada';
                         } else { ?>
-                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/ptk/lainnya') . '/' . $ptk->lampiran_att_lain ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/ptk/lainnya') . '/' . $ptk->lampiran_att_lain ?>">Lihat Lampiran</a>
+                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/pengawas/lainnya') . '/' . $ptk->lampiran_att_lain ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/pengawas/lainnya') . '/' . $ptk->lampiran_att_lain ?>">Lihat Lampiran</a>
                         <?php } ?>
                     </td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_lampiran_atribut_lainnya" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">20</th>
-                    <td><label class="form-check-label" for="_lampiran_igd">Info GTK Digital</label></td>
-                    <td>
-                        <?php if (isset($igd)) { ?>
-                            <?php if ($igd) { ?>
-                                <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= $igd->qrcode ?>','popup','width=600,height=600'); return false;" href="<?= $igd->qrcode ?>">Lihat Info GTK Digital</a>
-                            <?php } else { ?>
-                                Tidak ada
-                            <?php } ?>
-                        <?php } else { ?>
-                            Tidak ada
-                        <?php } ?>
-                    </td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_lampiran_igd" onchange="changeChecked()" name="hasil[]">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">21</th>
-                    <td><label class="form-check-label" for="_lampiran_absen_lain">Lainnya</label></td>
-                    <td>
-                        <?php if ($ptk->lampiran_doc_absen_lain == null || $ptk->lampiran_doc_absen_lain == "") {
-                            echo 'Tidak ada';
-                        } else { ?>
-                            <a class="badge rounded-pill badge-soft-dark" target="popup" onclick="window.open('<?= base_url('upload/sekolah/doc-lainnya') . '/' . $ptk->lampiran_doc_absen_lain ?>','popup','width=600,height=600'); return false;" href="<?= base_url('upload/sekolah/doc-lainnya') . '/' . $ptk->lampiran_doc_absen_lain ?>">Lihat Lampiran</a>
-                        <?php } ?>
-                    </td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="_lampiran_absen_lain" onchange="changeChecked()" name="hasil[]">
                         </div>
                     </td>
                 </tr>
