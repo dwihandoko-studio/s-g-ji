@@ -253,12 +253,12 @@ class Ajuan extends BaseController
                 return json_encode($response);
             }
 
-            if ($ptk->lampiran_nrg === null || $ptk->lampiran_nrg === "") {
-                $response->status = 404;
-                $response->message = "Lampiran Dokumen Master NRG tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
-                $response->redirrect = base_url("situpeng/peng/doc/master");
-                return json_encode($response);
-            }
+            // if ($ptk->lampiran_nrg === null || $ptk->lampiran_nrg === "") {
+            //     $response->status = 404;
+            //     $response->message = "Lampiran Dokumen Master NRG tidak boleh kosong. Silahkan untuk melengkapi terlebih dahulu!!";
+            //     $response->redirrect = base_url("situpeng/peng/doc/master");
+            //     return json_encode($response);
+            // }
 
             if ($ptk->lampiran_nuptk === null || $ptk->lampiran_nuptk === "") {
                 $response->status = 404;
