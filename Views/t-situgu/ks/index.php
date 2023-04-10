@@ -200,7 +200,7 @@
                 // },
                 success: function(resul) {
                     // $('div.loading_content_notification').unblock();
-                    const buttonTextNotif = document.getElementById('content_button_notification_show');
+                    const buttonTextNotif = document.getElementById('page-header-notifications-dropdown');
                     if (resul.status !== 200) {
                         console.log(resul);
                         buttonTextNotif.textContent = '<i class="bx bx-bell bx-tada"></i>';
