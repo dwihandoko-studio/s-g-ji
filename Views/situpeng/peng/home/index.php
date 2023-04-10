@@ -3520,18 +3520,6 @@
                             <div data-countdown="<?= isset($cut_off_spj) ? (count($cut_off_spj) > 0 ? $cut_off_spj[0]->max_upload_spj : '2020/02/08 00:00:00') : '2020/02/08 00:00:00' ?>" class="counter-number"></div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="alert alert-warning" role="alert">
-                            <center><b>CUT OFF UPLOAD SPJ TAMSIL TAHAP 1</b></center>
-                            <div data-countdown="<?= isset($cut_off_spj) ? (count($cut_off_spj) > 0 ? $cut_off_spj[1]->max_upload_spj : '2020/02/08 00:00:00') : '2020/02/08 00:00:00' ?>" class="counter-number"></div>
-                        </div>
-                    </div>
-                    <!-- <div class="col-md-4">
-                <div class="alert alert-success" role="alert">
-                    <center><b>CUT OFF UPLOAD SPJ PGHM TAHAP 1</b></center>
-                    <div data-countdown="<?= isset($cut_off_spj) ? (count($cut_off_spj) > 0 ? $cut_off_spj[2]->max_upload_spj : '2020/02/08 00:00:00') : '2020/02/08 00:00:00' ?>" class="counter-number"></div>
-                </div>
-            </div> -->
                 </div>
             </div>
             <div class="col-xl-8">
