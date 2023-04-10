@@ -93,7 +93,7 @@ class Tpg extends BaseController
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
             $row[] = $list->nik;
             $row[] = $list->nuptk;
-            $row[] = $list->jenis_ptk;
+            $row[] = $list->jenis_pengawas;
             $row[] = $list->created_at;
 
             $data[] = $row;
