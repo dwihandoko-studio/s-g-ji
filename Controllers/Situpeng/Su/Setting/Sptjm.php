@@ -21,7 +21,7 @@ class Sptjm extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/su/setting/sptjm/data'));
+        return redirect()->to(base_url('situpeng/su/setting/sptjm/data'));
     }
 
     public function data()
@@ -37,11 +37,9 @@ class Sptjm extends BaseController
 
         $data['user'] = $user->data;
 
-        $data['sptjm'] = $this->_db->table('_setting_sptjm_tb')->whereIn('id', [2])->get()->getRowObject();
-        $data['sptjmTamsil'] = $this->_db->table('_setting_sptjm_tb')->whereIn('id', [3])->get()->getRowObject();
-        $data['sptjmPghm'] = $this->_db->table('_setting_sptjm_tb')->whereIn('id', [4])->get()->getRowObject();
+        $data['sptjm'] = $this->_db->table('_setting_sptjm_tb_pengawas')->whereIn('id', [2])->get()->getRowObject();
 
-        return view('situgu/su/setting/sptjm/index', $data);
+        return view('situpeng/su/setting/sptjm/index', $data);
     }
 
     public function edit()
@@ -70,7 +68,7 @@ class Sptjm extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_setting_sptjm_tb')
+            $current = $this->_db->table('_setting_sptjm_tb_pengawas')
                 ->where('id', $id)->get()->getRowObject();
 
             if ($current) {
@@ -78,7 +76,7 @@ class Sptjm extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/setting/sptjm/edit', $data);
+                $response->data = view('situpeng/su/setting/sptjm/edit', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -142,7 +140,7 @@ class Sptjm extends BaseController
             $awal = htmlspecialchars($this->request->getVar('awal'), true);
             $akhir = htmlspecialchars($this->request->getVar('akhir'), true);
 
-            $this->_db->table('_setting_sptjm_tb')->where('id', $id)->update(['max_upload_sptjm' => str_replace("T", " ", $akhir), 'max_download_sptjm' => str_replace("T", " ", $awal), 'updated_at' => date('Y-m-d H:i:s')]);
+            $this->_db->table('_setting_sptjm_tb_pengawas')->where('id', $id)->update(['max_upload_sptjm' => str_replace("T", " ", $akhir), 'max_download_sptjm' => str_replace("T", " ", $awal), 'updated_at' => date('Y-m-d H:i:s')]);
 
 
             if ($this->_db->affectedRows() > 0) {

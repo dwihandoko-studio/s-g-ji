@@ -13,8 +13,6 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript:settingTpg(this);" class="btn btn-primary btn-rounded waves-effect waves-light">Setting SPTJM TPG</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:settingTamsil(this);" class="btn btn-dark btn-rounded waves-effect waves-light">Setting SPTJM TAMSIL</a></li>
-                            <li class="breadcrumb-item"><a href="javascript:settingPghm(this);" class="btn btn-info btn-rounded waves-effect waves-light">Setting SPTJM PGHM</a></li>
                         </ol>
                     </div>
 
@@ -49,42 +47,6 @@
                                         <td>1</td>
                                         <td><?= $sptjm->max_download_sptjm ?></td>
                                         <td><?= $sptjm->max_upload_sptjm ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <hr />
-                            <h4 class="mb-2 mt-2">SPTJM TAMSIL</h4>
-                            <table class="table table-bordered border-info mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Maksimal Download SPTJM</th>
-                                        <th>Maksimal Upload SPTJM</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><?= $sptjmTamsil->max_download_sptjm ?></td>
-                                        <td><?= $sptjmTamsil->max_upload_sptjm ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <hr />
-                            <h4 class="mb-2 mt-2">SPTJM PGHM</h4>
-                            <table class="table table-bordered border-warning mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Maksimal Download SPTJM</th>
-                                        <th>Maksimal Upload SPTJM</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><?= $sptjmPghm->max_download_sptjm ?></td>
-                                        <td><?= $sptjmPghm->max_upload_sptjm ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -132,118 +94,6 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionSync(id, nama, kecamatan) {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin pembaharuan data sekolah ini dari backbone dapodik?',
-            text: "Tarik Data Dari Backbone Untuk Sekolah : " + nama,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Syncrone Data!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "<?= base_url('situpeng/su/masterdata/sekolah/sync') ?>",
-                    type: 'POST',
-                    data: {
-                        id: id,
-                        nama: nama,
-                        kecamatan: kecamatan,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
-
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
-
-    function actionHapus(event, title = "") {
-        Swal.fire({
-            title: 'Apakah anda yakin ingin menghapus data ini?',
-            text: "Hapus pengguna : " + title,
-            showCancelButton: true,
-            icon: 'question',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!'
-        }).then((result) => {
-            if (result.value) {
-                $.ajax({
-                    url: "<?= base_url('situpeng/su/masterdata/sekolah/delete') ?>",
-                    type: 'POST',
-                    data: {
-                        id: event,
-                    },
-                    dataType: 'JSON',
-                    beforeSend: function() {
-                        $('div.main-content').block({
-                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        });
-                    },
-                    success: function(resul) {
-                        $('div.main-content').unblock();
-
-                        if (resul.status !== 200) {
-                            Swal.fire(
-                                'Failed!',
-                                resul.message,
-                                'warning'
-                            );
-                        } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        }
-                    },
-                    error: function() {
-                        $('div.main-content').unblock();
-                        Swal.fire(
-                            'Failed!',
-                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                            'warning'
-                        );
-                    }
-                });
-            }
-        })
-    }
-
     function settingTpg(event) {
         $.ajax({
             url: "./edit",
@@ -267,90 +117,6 @@
                     );
                 } else {
                     $('#content-detailModalLabel').html('SETTING SPTJM TPG');
-                    $('.contentBodyModal').html(resul.data);
-                    $('.content-detailModal').modal({
-                        backdrop: 'static',
-                        keyboard: false,
-                    });
-                    $('.content-detailModal').modal('show');
-                }
-            },
-            error: function() {
-                $('div.main-content').unblock();
-                Swal.fire(
-                    'Failed!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
-    }
-
-    function settingTamsil(event) {
-        $.ajax({
-            url: "./edit",
-            type: 'POST',
-            data: {
-                id: '3',
-            },
-            dataType: 'JSON',
-            beforeSend: function() {
-                $('div.main-content').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.main-content').unblock();
-                if (resul.status !== 200) {
-                    Swal.fire(
-                        'Failed!',
-                        resul.message,
-                        'warning'
-                    );
-                } else {
-                    $('#content-detailModalLabel').html('SETTING SPTJM TAMSIL');
-                    $('.contentBodyModal').html(resul.data);
-                    $('.content-detailModal').modal({
-                        backdrop: 'static',
-                        keyboard: false,
-                    });
-                    $('.content-detailModal').modal('show');
-                }
-            },
-            error: function() {
-                $('div.main-content').unblock();
-                Swal.fire(
-                    'Failed!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
-    }
-
-    function settingPghm(event) {
-        $.ajax({
-            url: "./edit",
-            type: 'POST',
-            data: {
-                id: '4',
-            },
-            dataType: 'JSON',
-            beforeSend: function() {
-                $('div.main-content').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.main-content').unblock();
-                if (resul.status !== 200) {
-                    Swal.fire(
-                        'Failed!',
-                        resul.message,
-                        'warning'
-                    );
-                } else {
-                    $('#content-detailModalLabel').html('SETTING SPTJM PGHM');
                     $('.contentBodyModal').html(resul.data);
                     $('.content-detailModal').modal({
                         backdrop: 'static',
@@ -408,23 +174,23 @@
 
     $(document).ready(function() {
 
-        let tableDatatables = $('#data-datatables').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "order": [],
-            "ajax": {
-                "url": "<?= base_url('situpeng/su/setting/role/getAll') ?>",
-                "type": "POST",
+        // let tableDatatables = $('#data-datatables').DataTable({
+        //     "processing": true,
+        //     "serverSide": true,
+        //     "order": [],
+        //     "ajax": {
+        //         "url": "<?= base_url('situpeng/su/setting/role/getAll') ?>",
+        //         "type": "POST",
 
-            },
-            language: {
-                processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
-            },
-            "columnDefs": [{
-                "targets": 0,
-                "orderable": false,
-            }],
-        });
+        //     },
+        //     language: {
+        //         processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+        //     },
+        //     "columnDefs": [{
+        //         "targets": 0,
+        //         "orderable": false,
+        //     }],
+        // });
 
     });
 </script>
