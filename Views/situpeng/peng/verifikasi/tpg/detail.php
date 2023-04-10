@@ -178,8 +178,8 @@
                 <?php } ?>
             </div>
             <div class="col-lg-6">
-                <label class="col-form-label">Kecamatan:</label>
-                <div><?= $data->kecamatan ?></div>
+                <label class="col-form-label">Jenis Pengawas:</label>
+                <div><?= $data->jenis_pengawas ?></div>
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Pendidikan Terakhir:</label>
