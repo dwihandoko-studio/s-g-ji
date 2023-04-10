@@ -62,7 +62,7 @@ class Home extends BaseController
         } else {
             $data['data'] = false;
         }
-        $data['cut_off_pengajuan'] = $this->_db->table('_setting_sptjm_tb')->get()->getResult();
+        $data['cut_off_pengajuan'] = $this->_db->table('_setting_sptjm_tb_pengawas')->get()->getResult();
         $data['cut_off_spj'] = $this->_db->table('_setting_upspj_tb')->get()->getResult();
         $data['informasis'] = $this->_db->table('_tb_infopop')->select("*, (SELECT count(*) FROM _tb_infopop WHERE tampil = 1 AND tujuan_role LIKE '%PTK%') as jumlah_all")->where("tampil = 1 AND tujuan_role LIKE '%PTK%'")->orderBy('created_at', 'DESC')->limit(5)->get()->getResult();
 
