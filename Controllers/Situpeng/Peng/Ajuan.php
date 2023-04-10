@@ -331,9 +331,9 @@ class Ajuan extends BaseController
                     return json_encode($canUsulTpg);
                 }
 
-                if ($ptk->nuptk === null || $ptk->nuptk === "" || $ptk->nrg === null || $ptk->nrg === "" || $ptk->no_peserta === ""  || $ptk->no_peserta === null || $ptk->bidang_studi_sertifikasi === null || $ptk->bidang_studi_sertifikasi === "") {
+                if ($ptk->nuptk === null || $ptk->nuptk === "" || $ptk->no_peserta === ""  || $ptk->no_peserta === null) {
                     $response->status = 400;
-                    $response->message = "Untuk mendapatkan Tunjangan Sertifikasi Guru, Harus Wajib mempunyai NUPTK, NRG, No Peserta, dan Bidang Studi Sertifikasi!!";
+                    $response->message = "Untuk mendapatkan Tunjangan Sertifikasi Guru, Harus Wajib mempunyai NUPTK dan No Peserta!!";
                     return json_encode($response);
                 }
 
