@@ -40,7 +40,7 @@
                                     <th>NAMA</th>
                                     <th>EMAIL</th>
                                     <th>ROLE PENGGUNA</th>
-                                    <th>KECAMTAN</th>
+                                    <th>KECAMATAN</th>
                                     <th>AKTIF</th>
                                 </tr>
                             </thead>
