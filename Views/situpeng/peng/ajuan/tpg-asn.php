@@ -56,8 +56,8 @@
                 </tr>
                 <tr>
                     <th scope="row">3</th>
-                    <td><label class="form-check-label" for="_status_kepegawaian">Jenjang Kepengawasan</label></td>
-                    <td><label class="form-check-label" for="_status_kepegawaian"><?= $ptk->jenjang_kepengawasan ?></label></td>
+                    <td><label class="form-check-label" for="_status_kepegawaian">Jenjang Pengawas</label></td>
+                    <td><label class="form-check-label" for="_status_kepegawaian"><?= $ptk->jenjang_pengawas ?></label></td>
                     <td>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="_status_kepegawaian" onchange="changeChecked()" name="hasil[]">
