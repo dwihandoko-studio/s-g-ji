@@ -7,7 +7,7 @@
                     <?php if (isset($user)) { ?>
                         <li class="nav-item">
                             <a class="nav-link <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "home") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situpeng/su/home') ?>">
-                                <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Dashboards</span>
+                                <i class="bx bx-home-circle me-2"></i>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
