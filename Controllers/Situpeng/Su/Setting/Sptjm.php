@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Situgu\Su\Setting;
+namespace App\Controllers\Situpeng\Su\Setting;
 
 use App\Controllers\BaseController;
 use Config\Services;
