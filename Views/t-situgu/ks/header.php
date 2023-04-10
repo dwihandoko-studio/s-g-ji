@@ -55,12 +55,13 @@
                     </form>
                 </div>
             </div>
-            <div class="dropdown d-inline-block">
-                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="bx bx-bell bx-tada"></i>
-                    <span class="badge bg-danger rounded-pill">3</span>
+            <div class="dropdown d-inline-block loading_content_notification" id="loading_content_notification">
+                <button type="button" class="btn header-item noti-icon waves-effect content_button_notification_show" id="content_button_notification_show" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mdi mdi-reload mdi-spin">
+                        <!-- <i class="bx bx-bell bx-tada"></i>
+                    <span class="badge bg-danger rounded-pill">3</span> -->
                 </button>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="content_button_notification_show">
                     <div class="p-3">
                         <div class="row align-items-center">
                             <div class="col">

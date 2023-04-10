@@ -187,6 +187,39 @@
                 }
             })
         };
+
+        $(document).ready(function() {
+            $.ajax({
+                url: "<?= base_url('situgu/ks/notification/getNotifShowed') ?>",
+                type: 'GET',
+                dataType: 'JSON',
+                // beforeSend: function() {
+                //     $('div.loading_content_notification').block({
+                //         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                //     });
+                // },
+                success: function(resul) {
+                    // $('div.loading_content_notification').unblock();
+                    const buttonTextNotif = document.getElementById('content_button_notification_show');
+                    if (resul.status !== 200) {
+                        console.log(resul);
+                        buttonTextNotif.textContent = '<i class="bx bx-bell bx-tada"></i>';
+                    } else {
+                        buttonTextNotif.textContent = '<i class="bx bx-bell bx-tada"></i><span class="badge bg-danger rounded-pill">' + resul.jumlah + '</span>';
+
+                    }
+                },
+                error: function(e) {
+                    console.log(e);
+                    // $('div.loading_content_notification').unblock();
+                    // Swal.fire(
+                    //     'Failed!',
+                    //     "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    //     'warning'
+                    // );
+                }
+            });
+        });
     </script>
 </body>
 
