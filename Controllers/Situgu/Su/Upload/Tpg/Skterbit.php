@@ -396,12 +396,10 @@ class Skterbit extends BaseController
                     $item['nuptk'] = $v['nuptk'];
                     $item['nama'] = $v['nama'];
                     $item['golongan_code'] = $v['golongan_code'];
-                    $item['masa_kerja'] = $v['masa_kerja'];
                     $item['gaji_pokok'] = $v['gaji_pokok'];
                     $item['us_nuptk'] = "";
                     $item['us_nama'] = "";
                     $item['us_golongan'] = "";
-                    $item['us_masa_kerja'] = "";
                     $item['us_gaji_pokok'] = "";
                     $item['us_keterangan'] = "";
                     $item['keterangan'] = "Belum Terbit";
@@ -438,13 +436,11 @@ class Skterbit extends BaseController
                     $item['nuptk'] = $v['nuptk'];
                     $item['nama'] = $v['nama'];
                     $item['golongan_code'] = $v['golongan_code'];
-                    $item['masa_kerja'] = $v['masa_kerja'];
                     $item['gaji_pokok'] = $v['gaji_pokok'];
                     $item['total_jjm_sesuai'] = $v['total_jjm_sesuai'];
                     $item['us_nuptk'] = $v['data_usulan']['nuptk'];
                     $item['us_nama'] = $v['data_usulan']['nama'];
                     $item['us_golongan'] = $v['data_usulan']['us_pang_golongan'];
-                    $item['us_masa_kerja'] = $v['data_usulan']['us_pang_mk_tahun'];
                     $item['us_gaji_pokok'] = $v['data_usulan']['us_gaji_pokok'];
                     $item['us_keterangan'] = $keterangan;
                     $item['keterangan'] = "Sudah Terbit SKTP";
