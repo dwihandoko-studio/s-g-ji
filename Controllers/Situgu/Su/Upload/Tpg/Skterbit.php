@@ -570,7 +570,7 @@ class Skterbit extends BaseController
                 ->join('_ptk_tb b', 'a.id_ptk = b.id')
                 ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                 ->where('a.id', $id_usulan)
-                ->where('a.status_usulan', 2)
+                ->where('a.status_usulan', 5)
                 ->where('a.id_tahun_tw', $tw)
                 ->get()->getRowObject();
 
