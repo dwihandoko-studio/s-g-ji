@@ -275,11 +275,11 @@ class Skterbit extends BaseController
                     ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                     ->where('a.status_usulan', 5)
                     ->where('a.id_tahun_tw', $tw)
-                    ->where('b.nuptk', $data[5])
+                    ->where('b.nuptk', $data[1])
                     ->get()->getRowObject();
 
                 $dataImport[] = $dataInsert;
-                $nuptkImport[] = $data[5];
+                $nuptkImport[] = $data[1];
             }
 
             $dataImports = [
