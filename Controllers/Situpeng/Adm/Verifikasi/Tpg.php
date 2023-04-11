@@ -616,7 +616,7 @@ class Tpg extends BaseController
                 ->get()->getRowObject();
             $this->_db->table('_tb_temp_usulan_detail_pengawas_backup_change')->where('id', $value->id)->update(
                 [
-                    'us_gaji_pokok' => $gajiPokok ? $gajiPokok : 0
+                    'us_gaji_pokok' => $gajiPokok ? $gajiPokok->gaji_pokok : 0
                 ]
             );
         }
