@@ -770,21 +770,13 @@ class Pengawas extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_ptk_tb a')
-                ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.wa_verified, b.image, c.kecamatan as kecamatan_sekolah")
-                ->join('v_user b', 'a.id_ptk = b.ptk_id', 'left')
-                ->join('ref_sekolah c', 'a.npsn = c.npsn')
+            $current = $this->_db->table('__pengawas_tb a')
+                ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.image")
+                ->join('_profil_users_tb b', 'a.id = b.ptk_id', 'left')
                 ->where('a.id', $id)->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
-                $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
-                    ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
-                    ->join('ref_sekolah b', 'a.sekolah_id = b.id')
-                    ->where('a.ptk_id', $current->id_ptk)
-                    ->where("a.jenis_keluar IS NULL")
-                    ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
-                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk)->get()->getRowObject();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
