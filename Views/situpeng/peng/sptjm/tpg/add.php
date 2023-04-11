@@ -15,7 +15,7 @@
                     <tbody>
                         <?php foreach ($data as $key => $value) { ?>
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row"><?= $key + 1 ?></th>
                                 <td><?= $value->nama ?></td>
                                 <!-- <td><label class="form-check-label" for="_nama"><?= $value->nama ?></label></td> -->
                                 <td><?= $value->nuptk ?></td>
