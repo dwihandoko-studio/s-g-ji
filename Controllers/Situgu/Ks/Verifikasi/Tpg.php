@@ -181,7 +181,7 @@ class Tpg extends BaseController
             $current = $this->_db->table('v_temp_usulan a')
                 ->select("a.*, b.kecamatan as kecamatan_sekolah, c.gaji_pokok as gaji_pokok_referensi")
                 ->join('ref_sekolah b', 'a.npsn = b.npsn')
-                ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND ((IF(a.us_pang_mk_tahun > 32, 32, a.us_pang_mk_tahun)) = c.masa_kerja)', 'LEFT')
+                ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (c.masa_kerja = (IF(a.us_pang_mk_tahun > 32, 32, a.us_pang_mk_tahun)))', 'LEFT')
                 ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
