@@ -203,12 +203,14 @@ class Tpg extends BaseController
             $jenis_tunjangan = htmlspecialchars($this->request->getVar('id'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
+            $jenjangPengawas = $this->_helpLib->getJenjangPengawas($user->data->id);
+
             $current = $this->_db->table('_tb_temp_usulan_detail_pengawas a')
-                ->select("b.*, a.id as id_usulan, a.id_tahun_tw, a.jenis_tunjangan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya")
+                ->select("b.*, a.id_pengawas, a.id as id_usulan, a.id_tahun_tw, a.jenis_tunjangan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya")
                 ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
                 ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
                 ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (a.us_pang_mk_tahun = c.masa_kerja)', 'LEFT')
-                ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'npsn' => $user->data->npsn, 'status_usulan' => 2, 'id_tahun_tw' => $tw])
+                ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'b.jenjang_pengawas' => $jenjangPengawas, 'status_usulan' => 2, 'id_tahun_tw' => $tw])
                 ->get()->getResult();
 
             if (count($current) > 0) {
@@ -284,11 +286,13 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
-            $canUsulTpg = canUsulTpg();
+            $canUsulTpg = canUsulTpgPengawas();
 
             if ($canUsulTpg && $canUsulTpg->code !== 200) {
                 return json_encode($canUsulTpg);
             }
+
+            $jenjangPengawas = $this->_helpLib->getJenjangPengawas($user->data->id);
 
             $jenis = htmlspecialchars($this->request->getVar('jenis'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
@@ -314,7 +318,7 @@ class Tpg extends BaseController
             $this->_db->transBegin();
 
             try {
-                $this->_db->table('_tb_temp_usulan_detail')->where(['status_usulan' => 2, 'id_tahun_tw' => $twActive->id, 'jenis_tunjangan' => 'tpg'])->whereIn('id_ptk', $ptks)->update(['status_usulan' => 5, 'updated_at' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_tb_temp_usulan_detail_pengawas')->where(['status_usulan' => 2, 'id_tahun_tw' => $twActive->id, 'jenis_tunjangan' => 'tpg'])->whereIn('id_pengawas', $ptks)->update(['status_usulan' => 5, 'updated_at' => date('Y-m-d H:i:s')]);
                 if (!($this->_db->affectedRows() > 0)) {
                     $this->_db->transRollback();
                     $response = new \stdClass;
@@ -335,17 +339,17 @@ class Tpg extends BaseController
                 $uuidLib = new Uuid();
                 $kodeUsulan = "TPG-" . $twActive->tahun . '-' . $twActive->tw . '-' . $user->data->npsn . '-' . time();
 
-                $this->_db->table('_tb_sptjm')->insert(
+                $this->_db->table('_tb_sptjm_pengawas')->insert(
                     [
                         'id' => $uuidLib->v4(),
                         'kode_usulan' => $kodeUsulan,
-                        'jumlah_ptk' => $jumlah,
+                        'jumlah_pengawas' => $jumlah,
                         'jenis_usulan' => 'tpg',
-                        'id_ptks' => $id_ptks,
+                        'id_pengawass' => $id_ptks,
                         'generate_sptjm' => 0,
                         'id_tahun_tw' => $twActive->id,
-                        'npsn' => $user->data->npsn,
-                        'kecamatan' => $user->data->kecamatan,
+                        'jenjang_pengawas' => $jenjangPengawas,
+                        'user_id' => $user->data->id,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]
                 );
@@ -426,7 +430,7 @@ class Tpg extends BaseController
         // $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
         // $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
-        $current = $this->_db->table('_tb_sptjm')->where('id', $id)->get()->getRowObject();
+        $current = $this->_db->table('_tb_sptjm_pengawas')->where('id', $id)->get()->getRowObject();
         if (!$current) {
             $response = new \stdClass;
             $response->status = 400;
@@ -434,34 +438,37 @@ class Tpg extends BaseController
             return json_encode($response);
         }
 
-        $ptks = explode(",", $current->id_ptks);
+        $ptks = explode(",", $current->id_pengawass);
         $dataPtks = [];
         foreach ($ptks as $key => $value) {
-            $ptk = $this->_db->table('v_temp_usulan')->where(['id_ptk_usulan' => $value, 'status_usulan' => 5, 'jenis_tunjangan_usulan' => 'tpg'])->get()->getRowObject();
+            $ptk = $this->_db->table('_tb_temp_usulan_detail_pengawas a')
+                ->select("b.*, a.id_pengawas, a.id as id_usulan, a.id_tahun_tw, a.jenis_tunjangan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya")
+                ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
+                ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
+                ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (a.us_pang_mk_tahun = c.masa_kerja)', 'LEFT')
+                ->where(['a.id_pengawas' => $value, 'a.status_usulan' => 5, 'a.jenis_tunjangan' => 'tpg'])
+                ->get()->getRowObject();
             if ($ptk) {
                 $dataPtks[] = $ptk;
             }
         }
 
-        $sekolah = $this->_db->table('ref_sekolah')->where('npsn', $user->data->npsn)->get()->getRowObject();
+        $sekolah = $this->_db->table('__pengawas_tb')->where('id', $user->data->id)->get()->getRowObject();
         if (!$sekolah) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = "Referensi sekolah tidak ditemukan.";
+            $response->message = "Referensi pengawas tidak ditemukan.";
             return json_encode($response);
         }
 
-        $idUser = $this->_helpLib->getPtkId($user->data->id);
-        $ks = $this->_db->table('_ptk_tb')->where('id', $idUser)->get()->getRowObject();
-
-        return $this->_download($dataPtks, $sekolah, $ks, $current);
+        return $this->_download($dataPtks, $sekolah, $current);
         // }
     }
 
-    private function _download($ptks, $sekolah, $ks, $usulan)
+    private function _download($ptks, $sekolah, $usulan)
     {
         if (count($ptks) > 0) {
-            $file = FCPATH . "upload/template/sptjm-tpg-new-1.docx";
+            $file = FCPATH . "upload/template/sptjm-tpg-pengawas-new-1.docx";
             $template_processor = new TemplateProcessor($file);
             $template_processor->setValue('NAMA_SEKOLAH', $sekolah->nama);
             $template_processor->setValue('NPSN_SEKOLAH', $sekolah->npsn);
