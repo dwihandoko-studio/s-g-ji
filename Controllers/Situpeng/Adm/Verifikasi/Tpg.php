@@ -606,7 +606,7 @@ class Tpg extends BaseController
 
     public function tester()
     {
-        $data = $this->_db->table('_tb_temp_usulan_detail_pengawas_backup_change')->get()->getResult();
+        $data = $this->_db->table('_tb_temp_usulan_detail_pengawas')->get()->getResult();
 
         foreach ($data as $key => $value) {
             $mk = ((int)$value->us_pang_mk_tahun > 32) ? '32' : $value->us_pang_mk_tahun;
@@ -614,7 +614,7 @@ class Tpg extends BaseController
                 ->where('pangkat', $value->us_pang_golongan)
                 ->where('masa_kerja', $mk)
                 ->get()->getRowObject();
-            $this->_db->table('_tb_temp_usulan_detail_pengawas_backup_change')->where('id', $value->id)->update(
+            $this->_db->table('_tb_temp_usulan_detail_pengawas')->where('id', $value->id)->update(
                 [
                     'us_gaji_pokok' => $gajiPokok ? $gajiPokok->gaji_pokok : 0
                 ]
