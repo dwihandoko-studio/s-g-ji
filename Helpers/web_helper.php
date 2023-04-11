@@ -961,6 +961,19 @@ function createAktifitas($user_id, $keterangan, $aksi, $icon, $tw = "")
 	return true;
 }
 
+function grantAccessSitugu($user_id)
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('granted_situgu')->where('id', $user_id)->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+
+	return true;
+}
+
 function grantedVerifikasiPengawas($user_id)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
