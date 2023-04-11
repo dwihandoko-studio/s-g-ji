@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a class="btn btn-primary btn-rounded waves-effect waves-light" href="javascript:actionImport();">Import Data</a></li>
+                            <li class="breadcrumb-item"><a class="btn btn-primary btn-rounded waves-effect waves-light" href="javascript:actionAdd();">Tambah Pengawas</a></li>
                         </ol>
                     </div>
 
@@ -243,12 +243,12 @@
         });
     }
 
-    function actionImport() {
+    function actionAdd() {
         $.ajax({
-            url: "./import",
+            url: "./add",
             type: 'POST',
             data: {
-                id: 'import',
+                id: 'add',
             },
             dataType: 'JSON',
             beforeSend: function() {
@@ -265,7 +265,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-detailModalLabel').html('IMPORT PENGAWAS');
+                    $('#content-detailModalLabel').html('TAMBAH PENGAWAS');
                     $('.contentBodyModal').html(resul.data);
                     $('.content-detailModal').modal({
                         backdrop: 'static',
