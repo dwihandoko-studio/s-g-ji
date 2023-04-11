@@ -10,7 +10,7 @@ use Firebase\JWT\Key;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
-use App\Libraries\Situgu\Kehadiranptklib;
+use App\Libraries\Situpeng\NotificationLib;
 use App\Libraries\Uuid;
 
 class Tpg extends BaseController
@@ -286,6 +286,14 @@ class Tpg extends BaseController
                 $this->_db->table('_tb_temp_usulan_detail_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
+
+                    try {
+                        $notifLib = new NotificationLib();
+                        $notifLib->create("Lolos Verifikasi Koordinator Pengawas Kabupaten", "Usulan anda telah lolos verifikasi koordinator pengawas kabupaten.", "success", $user->data->id, $oldData->id_pengawas, base_url('situpeng/peng/ajuan'));
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
+
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->message = "Usulan $nama berhasil diverifikasi dan disetujui.";
@@ -461,6 +469,14 @@ class Tpg extends BaseController
                 $this->_db->table('_tb_temp_usulan_detail_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 1, 'keterangan_reject' => $keterangan, 'date_reject' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
+
+                    try {
+                        $notifLib = new NotificationLib();
+                        $notifLib->create("Tidak Lolos Verifikasi Koordinator Pengawas Kabupaten", "Usulan anda tidak lolos verifikasi koordinator pengawas kabupaten dengan keterangan: " . $keterangan, "danger", $user->data->id, $oldData->id_pengawas, base_url('situpeng/peng/ajuan'));
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
+
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->message = "Usulan $nama berhasil diverifikasi dan ditolak.";
