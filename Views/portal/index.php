@@ -250,8 +250,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <?php if (isset($layanans)) {
-                            if (count($layanans) > 0) {
+                        <?php if (isset($layanans)) { ?>
+                            <?php if (count($layanans) > 0) {
                                 foreach ($layanans as $key => $value) { ?>
                                     <?php if ($value['layanan_nama'] == "SITUPENG") { ?>
                                         <?php if ($user->role_user == 8 || $user->role_user == 1 || $user->role_user == 2) { ?>
@@ -269,14 +269,14 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                        <?php } else {
-                                            continue;
-                                        } ?>
+                                        <?php } else { ?>
+                                            <?php continue; ?>
+                                        <?php } ?>
 
                                     <?php } else { ?>
-                                        <?php if ($value['layanan_nama'] == "SITUGU" && $user->role_user == 8) {
-                                            continue;
-                                        } else { ?>
+                                        <?php if ($value['layanan_nama'] == "SITUGU" && $user->role_user == 8) { ?>
+                                            <?php continue; ?>
+                                        <?php } else { ?>
                                             <?php if ($value['layanan_nama'] == "SITUGU" && $user->role_user == 2) { ?>
                                                 <?php if (grantAccessSitugu($user->id)) { ?>
                                                     <div class="col-xl-3 col-sm-6">
@@ -293,12 +293,17 @@
                                                             </a>
                                                         </div>
                                                     </div>
+                                                <?php } else { ?>
+                                                    <?php continue; ?>
                                                 <?php } ?>
+                                            <?php } else { ?>
+                                                <?php continue; ?>
+                                            <?php } ?>
                                         <?php } ?>
                                     <?php } ?>
-                        <?php }
-                            }
-                        } ?>
+                                <?php } ?>
+                            <?php } ?>
+                        <?php } ?>
 
                     </div>
                 </div>
