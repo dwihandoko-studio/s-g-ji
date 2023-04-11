@@ -533,7 +533,7 @@ class Ajuan extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
             $ptk = $this->_db->table('__pengawas_upload_data_attribut a')
-                ->select("b.*, (SELECT gaji_pokok FROM ref_gaji WHERE pangkat = a.pang_golongan AND masa_kerja = a.pang_tahun LIMIT 1) as gajiPokok, a.id_tahun_tw, a.pang_jenis, a.pang_golongan, a.pang_no, a.pang_tmt, a.pang_tgl, a.pang_tahun, a.pang_bulan, a.pangkat_terakhir as lampiran_pangkat, a.kgb_terakhir as lampiran_kgb, a.pernyataan_24jam as lampiran_pernyataan24, a.cuti as lampiran_cuti, a.pensiun as lampiran_pensiun, a.kematian as lampiran_kematian, a.lainnya as lampiran_att_lain, a.penugasan as lampiran_penugasan, a.kunjungan_binaan as lampiran_kunjungan_binaan")
+                ->select("b.*, (SELECT gaji_pokok FROM ref_gaji WHERE pangkat = a.pang_golongan AND masa_kerja = (IF(a.pang_tahun > 32, 32, a.pang_tahun)) LIMIT 1) as gajiPokok, a.id_tahun_tw, a.pang_jenis, a.pang_golongan, a.pang_no, a.pang_tmt, a.pang_tgl, a.pang_tahun, a.pang_bulan, a.pangkat_terakhir as lampiran_pangkat, a.kgb_terakhir as lampiran_kgb, a.pernyataan_24jam as lampiran_pernyataan24, a.cuti as lampiran_cuti, a.pensiun as lampiran_pensiun, a.kematian as lampiran_kematian, a.lainnya as lampiran_att_lain, a.penugasan as lampiran_penugasan, a.kunjungan_binaan as lampiran_kunjungan_binaan")
                 ->join('__pengawas_tb b', 'a.id_ptk = b.id')
                 // ->join('_absen_kehadiran c', 'a.id_ptk = c.id_ptk AND c.id_tahun_tw = a.id_tahun_tw')
                 ->where(['a.id_ptk' => $id, 'a.id_tahun_tw' => $tw])
