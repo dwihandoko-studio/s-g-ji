@@ -211,7 +211,7 @@ class Tpg extends BaseController
                     ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
                     ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
                     ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND ((IF(a.us_pang_mk_tahun > 32, 32, a.us_pang_mk_tahun)) = c.masa_kerja)', 'LEFT')
-                    ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'status_usulan' => 2, 'id_tahun_tw' => $tw])
+                    ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'a.status_usulan' => 2, 'a.id_tahun_tw' => $tw])
                     ->whereIn('b.jenjang_pengawas', ['SD', 'TK'])
                     ->get()->getResult();
             } else {
@@ -220,7 +220,7 @@ class Tpg extends BaseController
                     ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
                     ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
                     ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND ((IF(a.us_pang_mk_tahun > 32, 32, a.us_pang_mk_tahun)) = c.masa_kerja)', 'LEFT')
-                    ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'b.jenjang_pengawas' => $jenjangPengawas, 'status_usulan' => 2, 'id_tahun_tw' => $tw])
+                    ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'b.jenjang_pengawas' => $jenjangPengawas, 'a.status_usulan' => 2, 'a.id_tahun_tw' => $tw])
                     ->get()->getResult();
             }
 
