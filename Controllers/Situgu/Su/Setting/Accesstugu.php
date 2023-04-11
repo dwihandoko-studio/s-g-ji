@@ -41,7 +41,6 @@ class Accesstugu extends BaseController
             $row[] = $list->fullname;
             $row[] = $list->email;
             $row[] = $list->no_hp;
-            $row[] = $list->npsn;
             $row[] = $list->role_name;
 
             $data[] = $row;
