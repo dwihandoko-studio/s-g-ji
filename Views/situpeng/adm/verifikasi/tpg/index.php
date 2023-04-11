@@ -49,11 +49,7 @@
                                 <tr>
                                     <th data-orderable="false">#</th>
                                     <th data-orderable="false">Aksi</th>
-                                    <th>NAMA</th>
-                                    <th>NPSN</th>
-                                    <th>BENTUK PENDIDIKAN</th>
-                                    <th>STATUS</th>
-                                    <th>KECAMATAN</th>
+                                    <th>JENJANG PENGAWAS</th>
                                     <th>JUMLAH PTK</th>
                                 </tr>
                             </thead>

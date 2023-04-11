@@ -4,7 +4,7 @@ namespace App\Controllers\Situpeng\Adm\Verifikasi;
 
 use App\Controllers\BaseController;
 use App\Models\Situpeng\Adm\VerifikasitpgdetailModel;
-use App\Models\Situpeng\Adm\VerifikasitpgsekolahModel;
+use App\Models\Situpeng\Adm\VerifikasitpgpengawasModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -31,7 +31,7 @@ class Tpg extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new VerifikasitpgsekolahModel($request);
+        $datamodel = new VerifikasitpgpengawasModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -88,11 +88,11 @@ class Tpg extends BaseController
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
             $row[] = $action;
-            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
-            $row[] = $list->npsn;
-            $row[] = $list->bentuk_pendidikan;
-            $row[] = $list->status_sekolah;
-            $row[] = $list->kecamatan;
+            if ($list->jenjang_pengawas == "SD") {
+                $row[] = "SD / TK";
+            } else {
+                $row[] = $list->jenjang_pengawas;
+            }
             $row[] = $list->jumlah_ptk;
 
             $data[] = $row;

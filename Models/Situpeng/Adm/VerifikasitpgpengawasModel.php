@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Models\Situgu\Su;
+namespace App\Models\Situpeng\Adm;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class VerifikasitpgsekolahModel extends Model
+class VerifikasitpgpengawasModel extends Model
 {
-    protected $table = "v_antrian_usulan_tpg a";
-    protected $column_order = array(null, null, 'b.nama', 'b.npsn', 'b.bentuk_pendidikan', 'b.status_sekolah', 'b.kecamatan', null);
-    protected $column_search = array('a.nik', 'a.nuptk', 'a.nama', 'b.npsn', 'b.nama');
+    protected $table = "_tb_usulan_detail_tpg_pengawas a";
+    protected $column_order = array(null, null, 'b.jenjang_pengawas', null);
+    protected $column_search = array('b.jenjang_pengawas', 'b.nama');
     protected $order = array('a.date_approve_sptjm' => 'asc');
     protected $request;
     protected $db;
@@ -49,9 +49,8 @@ class VerifikasitpgsekolahModel extends Model
     }
     function get_datatables($jenis)
     {
-        $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan, a.status_usulan, a.date_approve_sptjm, b.nama, b.npsn, b.bentuk_pendidikan, b.status_sekolah, b.kecamatan");
-        $this->dt->join('ref_sekolah b', 'a.npsn = b.npsn');
-        $this->dt->where('a.jenis_tunjangan', $jenis);
+        $this->dt->select("count(a.kode_usulan) as jumlah_pengawas, a.kode_usulan, a.status_usulan, a.date_approve_sptjm, b.jenjang_pengawas");
+        $this->dt->join('__pengawas_tb b', "b.id = a.id_pengawas");
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         $this->dt->groupBy('a.kode_usulan');
@@ -64,8 +63,8 @@ class VerifikasitpgsekolahModel extends Model
     }
     function count_filtered($jenis)
     {
-        $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan");
-        $this->dt->where('a.jenis_tunjangan', $jenis);
+        $this->dt->select("count(a.kode_usulan) as jumlah_pengawas, a.kode_usulan, a.status_usulan, a.date_approve_sptjm, b.jenjang_pengawas");
+        $this->dt->join('__pengawas_tb b', "b.id = a.id_pengawas");
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         $this->dt->groupBy('a.kode_usulan');
@@ -75,8 +74,8 @@ class VerifikasitpgsekolahModel extends Model
     }
     public function count_all($jenis)
     {
-        $this->dt->select("count(a.kode_usulan) as jumlah_ptk, a.kode_usulan");
-        $this->dt->where('a.jenis_tunjangan', $jenis);
+        $this->dt->select("count(a.kode_usulan) as jumlah_pengawas, a.kode_usulan, a.status_usulan, a.date_approve_sptjm, b.jenjang_pengawas");
+        $this->dt->join('__pengawas_tb b', "b.id = a.id_pengawas");
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
         $this->dt->groupBy('a.kode_usulan');
