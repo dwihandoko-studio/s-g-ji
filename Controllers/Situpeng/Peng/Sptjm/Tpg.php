@@ -205,13 +205,24 @@ class Tpg extends BaseController
 
             $jenjangPengawas = $this->_helpLib->getJenjangPengawas($user->data->id);
 
-            $current = $this->_db->table('_tb_temp_usulan_detail_pengawas a')
-                ->select("b.*, a.id_pengawas, a.id as id_usulan, a.id_tahun_tw, a.jenis_tunjangan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya")
-                ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
-                ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
-                ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (a.us_pang_mk_tahun = c.masa_kerja)', 'LEFT')
-                ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'b.jenjang_pengawas' => $jenjangPengawas, 'status_usulan' => 2, 'id_tahun_tw' => $tw])
-                ->get()->getResult();
+            if ($jenjangPengawas == "SD") {
+                $current = $this->_db->table('_tb_temp_usulan_detail_pengawas a')
+                    ->select("b.*, a.id_pengawas, a.id as id_usulan, a.id_tahun_tw, a.jenis_tunjangan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya")
+                    ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
+                    ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
+                    ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (a.us_pang_mk_tahun = c.masa_kerja)', 'LEFT')
+                    ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'status_usulan' => 2, 'id_tahun_tw' => $tw])
+                    ->whereIn('b.jenjang_pengawas', ['SD', 'TK'])
+                    ->get()->getResult();
+            } else {
+                $current = $this->_db->table('_tb_temp_usulan_detail_pengawas a')
+                    ->select("b.*, a.id_pengawas, a.id as id_usulan, a.id_tahun_tw, a.jenis_tunjangan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya")
+                    ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
+                    ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
+                    ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (a.us_pang_mk_tahun = c.masa_kerja)', 'LEFT')
+                    ->where(['a.jenis_tunjangan' => $jenis_tunjangan, 'b.jenjang_pengawas' => $jenjangPengawas, 'status_usulan' => 2, 'id_tahun_tw' => $tw])
+                    ->get()->getResult();
+            }
 
             if (count($current) > 0) {
                 $data['data'] = $current;
@@ -348,7 +359,7 @@ class Tpg extends BaseController
                         'id_pengawass' => $id_ptks,
                         'generate_sptjm' => 0,
                         'id_tahun_tw' => $twActive->id,
-                        'jenjang_pengawas' => $jenjangPengawas,
+                        'jenjang_pengawas' => ($jenjangPengawas == "SD") ? 'SD/TK' : $jenjangPengawas,
                         'user_id' => $user->data->id,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]
