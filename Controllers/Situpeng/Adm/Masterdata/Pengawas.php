@@ -771,7 +771,7 @@ class Pengawas extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
             $current = $this->_db->table('__pengawas_tb a')
-                ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.image")
+                ->select("a.*, b.no_hp as nohpAkun, b.email as emailAkun, b.profile_picture")
                 ->join('_profil_users_tb b', 'a.id = b.ptk_id', 'left')
                 ->where('a.id', $id)->get()->getRowObject();
 
