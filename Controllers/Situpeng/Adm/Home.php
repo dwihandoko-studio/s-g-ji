@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Situpeng;
+namespace App\Controllers\Situpeng\Adm;
 
 use App\Controllers\BaseController;
 use App\Libraries\Profilelib;
