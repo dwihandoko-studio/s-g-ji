@@ -481,32 +481,23 @@ class Tpg extends BaseController
         if (count($ptks) > 0) {
             $file = FCPATH . "upload/template/sptjm-tpg-pengawas-new-1.docx";
             $template_processor = new TemplateProcessor($file);
-            $template_processor->setValue('NAMA_SEKOLAH', $sekolah->nama);
-            $template_processor->setValue('NPSN_SEKOLAH', $sekolah->npsn);
-            $alamat = $sekolah->alamat_jalan ? ($sekolah->alamat_jalan !== "" ? $sekolah->alamat_jalan : "-") : "-";
-            $template_processor->setValue('ALAMAT_SEKOLAH', $alamat);
-            $template_processor->setValue('KECAMATAN_SEKOLAH', $sekolah->kecamatan);
-            $template_processor->setValue('KABUPATEN_SEKOLAH', getenv('setting.utpg.kabupaten'));
-            $template_processor->setValue('PROV_SEKOLAH', getenv('setting.utpg.provinsi'));
-            $no_telp = $sekolah->no_telepon ? ($sekolah->no_telepon !== "" ? $sekolah->no_telepon : "-") : "-";
-            $template_processor->setValue('TELP_SEKOLAH', $no_telp);
-            $email = $sekolah->email ? ($sekolah->email !== "" ? $sekolah->email : "-") : "-";
-            $template_processor->setValue('EMAIL_SEKOLAH', $no_telp);
+            $jenjang_pengawas = ($sekolah->jenjang_pengawas == "SD") ? "SD/TK" : $sekolah->jenjang_pengawas;
+            $template_processor->setValue('JENJANG_SEKOLAH', $jenjang_pengawas);
             $template_processor->setValue('TW_TW', $ptks[0]->tw_tw);
             $template_processor->setValue('TW_TAHUN', $ptks[0]->tw_tahun);
             $template_processor->setValue('NOMOR_SPTJM', $usulan->kode_usulan);
             $nama_ks = "";
-            if ($ks->gelar_depan && ($ks->gelar_depan !== "" || $ks->gelar_depan !== "-")) {
-                $nama_ks .= $ks->gelar_depan;
+            if ($sekolah->gelar_depan && ($sekolah->gelar_depan !== "" || $sekolah->gelar_depan !== "-")) {
+                $nama_ks .= $sekolah->gelar_depan;
+                $nama_ks .= ' ';
             }
-            $nama_ks .= $ks->nama;
-            if ($ks->gelar_belakang && ($ks->gelar_belakang !== "" || $ks->gelar_belakang !== "-")) {
-                $nama_ks .= $ks->gelar_belakang;
+            $nama_ks .= $sekolah->nama;
+            if ($sekolah->gelar_belakang && ($sekolah->gelar_belakang !== "" || $sekolah->gelar_belakang !== "-")) {
+                $nama_ks .= ', ';
+                $nama_ks .= $sekolah->gelar_belakang;
             }
-            $template_processor->setValue('NAMA_KS', $nama_ks);
-            $jabatan_ks = $ks->jabatan_ks_plt ? ($ks->jabatan_ks_plt == 0 ? "Kepala Sekolah" : "Plt. Kepala Sekolah") : "Kepala Sekolah";
-            $template_processor->setValue('JABATAN_KS', $jabatan_ks);
-            $template_processor->setValue('JUMLAH_PTK', $usulan->jumlah_ptk);
+            $template_processor->setValue('NAMA_ADMIN', $nama_ks);
+            $template_processor->setValue('JUMLAH_PENGAWAS', $usulan->jumlah_pengawas);
             $template_processor->setValue('TANGGAL_SPTJM', tgl_indo(date('Y-m-d')));
             if ($ptks[0]->tw_tw == 1) {
                 $template_processor->setValue('BL_TO_BL', "Januari s/d Maret");
@@ -517,13 +508,13 @@ class Tpg extends BaseController
             } else if ($ptks[0]->tw_tw == 4) {
                 $template_processor->setValue('BL_TO_BL', "Oktober s/d Desember");
             }
-            $nipKs = "";
-            if ($ks->nip && ($ks->nip !== "" || $ks->nip !== "-")) {
-                $nipKs .= $ks->nip;
-            } else {
-                $nipKs .= "-";
-            }
-            $template_processor->setValue('NIP_KS', $nipKs);
+            // $nipKs = "";
+            // if ($sekolah->nip && ($sekolah->nip !== "" || $sekolah->nip !== "-")) {
+            //     $nipKs .= $sekolah->nip;
+            // } else {
+            //     $nipKs .= "-";
+            // }
+            // $template_processor->setValue('NIP_KS', $nipKs);
 
             $dataPtnya = [];
             foreach ($ptks as $key => $v) {
@@ -626,7 +617,7 @@ class Tpg extends BaseController
             $tahun = htmlspecialchars($this->request->getVar('tahun'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
 
-            $current = $this->_db->table('_tb_sptjm')->where(['id' => $id])->get()->getRowObject();
+            $current = $this->_db->table('_tb_sptjm_pengawas')->where(['id' => $id])->get()->getRowObject();
 
             if (!$current) {
                 $response = new \stdClass;
@@ -638,7 +629,7 @@ class Tpg extends BaseController
             if ($current->is_locked == 1) {
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Data PTK dalam SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
+                $response->message = "Data Pengawas dalam SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
                 return json_encode($response);
             }
 
@@ -716,7 +707,7 @@ class Tpg extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_tb_sptjm')->where(['id' => $id])->get()->getRowObject();
+            $current = $this->_db->table('_tb_sptjm_pengawas')->where(['id' => $id])->get()->getRowObject();
 
             if (!$current) {
                 $response = new \stdClass;
@@ -728,7 +719,7 @@ class Tpg extends BaseController
             if ($current->is_locked == 1) {
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Data PTK dalam SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
+                $response->message = "Data Pengawas dalam SPTJM ini sudah diverifikasi, sehingga tidak diperkenankan untuk mengedit.";
                 return json_encode($response);
             }
 
@@ -907,7 +898,7 @@ class Tpg extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $current = $this->_db->table('_tb_sptjm')->where(['id' => $id])->get()->getRowObject();
+            $current = $this->_db->table('_tb_sptjm_pengawas')->where(['id' => $id])->get()->getRowObject();
 
             if (!$current) {
                 $response = new \stdClass;
@@ -922,7 +913,7 @@ class Tpg extends BaseController
 
             $dir = FCPATH . "upload/pengawas/sptjm";
             $field_db = 'lampiran_sptjm';
-            $table_db = '_tb_sptjm';
+            $table_db = '_tb_sptjm_pengawas';
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
@@ -957,12 +948,12 @@ class Tpg extends BaseController
                 $ptks = explode(",", $current->id_ptks);
                 $dataPtks = [];
                 foreach ($ptks as $key => $value) {
-                    $ptk = $this->_db->table('_tb_temp_usulan_detail')->where(['id_ptk' => $value, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg'])->get()->getRowObject();
+                    $ptk = $this->_db->table('_tb_temp_usulan_detail_pengawas')->where(['id_pengawas' => $value, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg'])->get()->getRowObject();
                     if ($ptk) {
-                        $this->_db->table('_tb_usulan_detail_tpg')->insert([
+                        $this->_db->table('_tb_usulan_detail_tpg_pengawas')->insert([
                             'id' => $ptk->id,
                             'kode_usulan' => $current->kode_usulan,
-                            'id_ptk' => $ptk->id_ptk,
+                            'id_pengawas' => $ptk->id_pengawas,
                             'id_tahun_tw' => $ptk->id_tahun_tw,
                             'us_pang_golongan' => $ptk->us_pang_golongan,
                             'us_pang_tmt' => $ptk->us_pang_tmt,
@@ -977,7 +968,7 @@ class Tpg extends BaseController
                             'created_at' => $ptk->created_at,
                         ]);
                         if ($this->_db->affectedRows() > 0) {
-                            $this->_db->table('_tb_temp_usulan_detail')->where(['id' => $ptk->id, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg'])->delete();
+                            $this->_db->table('_tb_temp_usulan_detail_pengawas')->where(['id' => $ptk->id, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg'])->delete();
                             if ($this->_db->affectedRows() > 0) {
                                 continue;
                             } else {
