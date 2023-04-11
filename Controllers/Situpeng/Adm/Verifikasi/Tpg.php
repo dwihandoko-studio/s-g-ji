@@ -609,14 +609,14 @@ class Tpg extends BaseController
         $data = $this->_db->table('_tb_temp_usulan_detail_pengawas_backup_change')->get()->getResult();
 
         foreach ($data as $key => $value) {
-            $mk = $value->us_pang_mk_tahun > 32 ? 32 : $value->us_pang_mk_tahun;
+            $mk = ((int)$value->us_pang_mk_tahun > 32) ? '32' : $value->us_pang_mk_tahun;
             $gajiPokok = $this->_db->table('ref_gaji')
                 ->where('pangkat', $value->us_pang_golongan)
                 ->where('masa_kerja', $mk)
                 ->get()->getRowObject();
             $this->_db->table('_tb_temp_usulan_detail_pengawas_backup_change')->where('id', $value->id)->update(
                 [
-                    'us_gaji_pokok' => $gajiPokok ?? 0
+                    'us_gaji_pokok' => $gajiPokok ? $gajiPokok : 0
                 ]
             );
         }
