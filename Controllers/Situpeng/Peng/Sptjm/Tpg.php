@@ -76,9 +76,9 @@ class Tpg extends BaseController
         }
 
 
-        $npsn = $this->_helpLib->getNpsn($userId);
+        // $npsn = $this->_helpLib->getNpsn($userId);
 
-        $lists = $datamodel->get_datatables($npsn, 'tpg');
+        $lists = $datamodel->get_datatables($userId, 'tpg');
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -128,8 +128,8 @@ class Tpg extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($npsn, 'tpg'),
-            "recordsFiltered" => $datamodel->count_filtered($npsn, 'tpg'),
+            "recordsTotal" => $datamodel->count_all($userId, 'tpg'),
+            "recordsFiltered" => $datamodel->count_filtered($userId, 'tpg'),
             "data" => $data
         ];
         echo json_encode($output);
