@@ -968,17 +968,10 @@ function grantedVerifikasiPengawas($user_id)
 
 	$grandted = $db->table('access_verifikasi_pengawas')->where('user_id', $user_id)->get()->getRowObject();
 	if (!$grandted) {
-		$response = new \stdClass;
-		$response->code = 400;
-		$response->message = "Akses untuk proses verval terkunci. Silahkan hubungi Admin Tunjangan.";
-		$response->redirect = "";
-		return $response;
+		return false;
 	}
 
-	$response = new \stdClass;
-	$response->code = 200;
-	$response->message = "";
-	return $response;
+	return true;
 }
 
 function canGrantedVerifikasi($user_id)

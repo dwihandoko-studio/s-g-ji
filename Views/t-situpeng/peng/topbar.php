@@ -44,7 +44,11 @@
                                 <i class="bx bx-columns me-2"></i><span key="t-absen">USUL VERVAL</span>
                             </a>
                         </li>
-                        <?php if (grantedVerifikasiPengawas($user->id)) { ?>
+                        <?php
+                        $grandtVerif = grantedVerifikasiPengawas($user->id);
+                        if ($grandtVerif) {
+                            // if ($grandtVerif->id !== NULL) {
+                        ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "verifikasi") ? ' active-menu-href' : '' ?>" href="#" id="topnav-verifikasi" role="button">
                                     <i class="bx bx-rename me-2"></i><span key="t-verifikasi">Verifikasi</span>
@@ -63,6 +67,8 @@
                                     <a href="<?= base_url('situpeng/peng/sptjm/tpg') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "sptjm" && $uri->getSegment(4) == "tpg") ? ' active-menu-href' : '' ?>" key="t-sptjm-tpg">Tunjangan Profesi Guru</a>
                                 </div>
                             </li>
+                            <?php //} 
+                            ?>
                         <?php } ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-spj" role="button">

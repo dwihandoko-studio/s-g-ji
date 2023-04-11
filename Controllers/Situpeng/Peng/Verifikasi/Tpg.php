@@ -109,6 +109,17 @@ class Tpg extends BaseController
 
     public function index()
     {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            delete_cookie('jwt');
+            session()->destroy();
+            return redirect()->to(base_url('auth'));
+        }
+        $grantedAc = grantedVerifikasiPengawas($user->data->id);
+        if (!$grantedAc) {
+            return redirect()->to(base_url('situpeng/peng/home'));
+        }
         return redirect()->to(base_url('situpeng/peng/verifikasi/tpg/data'));
     }
 
@@ -244,6 +255,15 @@ class Tpg extends BaseController
                 return json_encode($response);
             }
 
+            $grantedAc = grantedVerifikasiPengawas($user->data->id);
+            if (!$grantedAc) {
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Not Allowed";
+                $response->redirect = base_url('situpeng/peng/home');
+                return json_encode($response);
+            }
+
             $canUsulTamsil = canUsulTpgPengawas();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
@@ -330,6 +350,16 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
+
+            $grantedAc = grantedVerifikasiPengawas($user->data->id);
+            if (!$grantedAc) {
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Not Allowed";
+                $response->redirect = base_url('situpeng/peng/home');
+                return json_encode($response);
+            }
+
             $canUsulTamsil = canUsulTpgPengawas();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
@@ -398,6 +428,16 @@ class Tpg extends BaseController
                 $response->redirect = base_url('auth');
                 return json_encode($response);
             }
+
+            $grantedAc = grantedVerifikasiPengawas($user->data->id);
+            if (!$grantedAc) {
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Not Allowed";
+                $response->redirect = base_url('situpeng/peng/home');
+                return json_encode($response);
+            }
+
             $canUsulTamsil = canUsulTpgPengawas();
 
             if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
