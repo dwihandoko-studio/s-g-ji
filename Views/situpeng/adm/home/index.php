@@ -271,26 +271,28 @@
 <script src="<?= base_url() ?>/assets/js/pages/coming-soon.init.js"></script>
 <script>
     $(document).ready(function() {
-        <?php if (!$registered || $registered->surat_tugas === NULL) { ?>
-            $('#content-aktivasiModalLabel').html('PERINGATAN AKUN BELUM MELAKUKAN AKTIVASI');
-            let aktivasiWa = '';
-            aktivasiWa += '<div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">';
-            aktivasiWa += '<div class="alert alert-danger" role="alert">';
-            aktivasiWa += 'Akun anda terdeteksi belum melakukan aktivasi.\nSilahkan untuk melakukan aktivasi Admin Kecamatan terlebih dahulu.';
-            aktivasiWa += '</div>';
-            aktivasiWa += '</div>';
-            aktivasiWa += '<div class="modal-footer">';
-            aktivasiWa += '<button type="button" onclick="aksiLogout(this);" class="btn btn-secondary waves-effect waves-light">Keluar</button>';
-            aktivasiWa += '<button type="button" onclick="aksiAktivasiWa(this);" id="aktivasi-button-wa" class="btn btn-primary waves-effect waves-light aktivasi-button-wa">Aktivasi Sekarang</button>';
-            aktivasiWa += '</div>';
-            $('.contentAktivasiBodyModal').html(aktivasiWa);
-            $('.content-aktivasiModal').modal({
-                backdrop: 'static',
-                keyboard: false,
-            });
-            $('.content-aktivasiModal').modal('show');
+        <?php //if (!$registered || $registered->surat_tugas === NULL) { 
+        ?>
+        // $('#content-aktivasiModalLabel').html('PERINGATAN AKUN BELUM MELAKUKAN AKTIVASI');
+        // let aktivasiWa = '';
+        // aktivasiWa += '<div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">';
+        // aktivasiWa += '<div class="alert alert-danger" role="alert">';
+        // aktivasiWa += 'Akun anda terdeteksi belum melakukan aktivasi.\nSilahkan untuk melakukan aktivasi Admin Kecamatan terlebih dahulu.';
+        // aktivasiWa += '</div>';
+        // aktivasiWa += '</div>';
+        // aktivasiWa += '<div class="modal-footer">';
+        // aktivasiWa += '<button type="button" onclick="aksiLogout(this);" class="btn btn-secondary waves-effect waves-light">Keluar</button>';
+        // aktivasiWa += '<button type="button" onclick="aksiAktivasiWa(this);" id="aktivasi-button-wa" class="btn btn-primary waves-effect waves-light aktivasi-button-wa">Aktivasi Sekarang</button>';
+        // aktivasiWa += '</div>';
+        // $('.contentAktivasiBodyModal').html(aktivasiWa);
+        // $('.content-aktivasiModal').modal({
+        //     backdrop: 'static',
+        //     keyboard: false,
+        // });
+        // $('.content-aktivasiModal').modal('show');
 
-        <?php } ?>
+        <?php //} 
+        ?>
     });
 
     function aksiAktivasiWa(event) {
