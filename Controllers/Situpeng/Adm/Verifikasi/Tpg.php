@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Controllers\Situgu\Adm\Verifikasi;
+namespace App\Controllers\Situpeng\Adm\Verifikasi;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Adm\VerifikasitpgdetailModel;
-use App\Models\Situgu\Adm\VerifikasitpgsekolahModel;
+use App\Models\Situpeng\Adm\VerifikasitpgdetailModel;
+use App\Models\Situpeng\Adm\VerifikasitpgsekolahModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
-use App\Libraries\Situgu\Verifikasiadminlib;
+use App\Libraries\Situpeng\Verifikasiadminlib;
 use App\Libraries\Uuid;
 
 class Tpg extends BaseController
@@ -158,7 +158,7 @@ class Tpg extends BaseController
             //                 <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Sync Dapodik</a>
             //             </div>
             //         </div>';
-            $action = '<a href="javascript:actionDetail(\'' . $list->id_usulan . '\', \'' . $list->id_ptk . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            $action = '<a href="javascript:actionDetail(\'' . $list->id_usulan . '\', \'' . $list->id_pengawas . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                 <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
                 </a>';
             //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -170,7 +170,7 @@ class Tpg extends BaseController
             $row[] = $action;
             $row[] = $list->kode_usulan;
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
-            $row[] = $list->nik;
+            $row[] = $list->nip;
             $row[] = $list->nuptk;
             $row[] = $list->jenis_ptk;
 
@@ -187,7 +187,7 @@ class Tpg extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/adm/verifikasi/tpg/data'));
+        return redirect()->to(base_url('situpeng/adm/verifikasi/tpg/data'));
     }
 
     public function data()
@@ -200,10 +200,10 @@ class Tpg extends BaseController
             session()->destroy();
             return redirect()->to(base_url('auth'));
         }
-        $id = $this->_helpLib->getPtkId($user->data->id);
+
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        return view('situgu/adm/verifikasi/tpg/index', $data);
+        return view('situpeng/adm/verifikasi/tpg/index', $data);
     }
 
     public function datalist()
@@ -222,7 +222,7 @@ class Tpg extends BaseController
         $data['user'] = $user->data;
         $data['kode_usulan'] = $id;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
-        return view('situgu/adm/verifikasi/tpg/detail_index', $data);
+        return view('situpeng/adm/verifikasi/tpg/detail_index', $data);
     }
 
     public function detail()
@@ -275,26 +275,19 @@ class Tpg extends BaseController
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $current = $this->_db->table('v_antrian_usulan_tpg a')
-                ->select("a.*, b.kecamatan as kecamatan_sekolah, c.lampiran_sptjm, d.gaji_pokok as gaji_pokok_referensi")
-                ->join('ref_sekolah b', 'a.npsn = b.npsn')
-                ->join('_tb_sptjm c', 'a.kode_usulan = c.kode_usulan')
-                ->join('ref_gaji d', 'a.us_pang_golongan = d.pangkat AND (a.us_pang_mk_tahun = d.masa_kerja)', 'LEFT')
-                ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
+            $current = $this->_db->table('_tb_temp_usulan_detail_pengawas a')
+                ->select("b.*, a.id as id_usulan, a.id_tahun_tw, a.jenis_tunjangan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya")
+                ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
+                ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
+                ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (a.us_pang_mk_tahun = c.masa_kerja)', 'LEFT')
+                ->where(['a.id' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
-                $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
-                    ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
-                    ->join('ref_sekolah b', 'a.sekolah_id = b.id')
-                    ->where('a.ptk_id', $current->id_ptk)
-                    ->where("a.jenis_keluar IS NULL")
-                    ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
-                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk)->get()->getRowObject();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/adm/verifikasi/tpg/detail', $data);
+                $response->data = view('situpeng/adm/verifikasi/tpg/detail', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -348,7 +341,7 @@ class Tpg extends BaseController
                 return json_encode($response);
             }
 
-            $canGrantedVerifikasi = canGrantedVerifikasi($user->data->id);
+            $canGrantedVerifikasi = canGrantedVerifikasiPengawas($user->data->id);
 
             if ($canGrantedVerifikasi && $canGrantedVerifikasi->code !== 200) {
                 return json_encode($canGrantedVerifikasi);
@@ -363,7 +356,7 @@ class Tpg extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('_tb_usulan_detail_tpg')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -373,18 +366,17 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => $user->data->id]);
+                $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => $user->data->id]);
                 if ($this->_db->affectedRows() > 0) {
                     try {
-                        $checkLocked = $this->_db->table('_tb_sptjm')->select('is_locked')->where('kode_usulan', $oldData->kode_usulan)->get()->getRowObject();
+                        $checkLocked = $this->_db->table('_tb_sptjm_pengawas')->select('is_locked')->where('kode_usulan', $oldData->kode_usulan)->get()->getRowObject();
                         if ($checkLocked) {
                             if ($checkLocked->is_locked == 0) {
-                                $this->_db->table('_tb_sptjm')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
+                                $this->_db->table('_tb_sptjm_pengawas')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
                             }
                         }
-                        $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
-                        $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
-                        $this->_db->table('_ptk_tb')->where(['id_ptk' => $oldData->id_ptk])->update(['is_locked' => 1]);
+                        $this->_db->table('__pengawas_upload_data_attribut')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
+                        $this->_db->table('__pengawas_tb')->where(['id' => $oldData->id_ptk])->update(['is_locked' => 1]);
 
                         $verifikasiLib = new Verifikasiadminlib();
                         $verifikasiLib->create($user->data->id, $oldData->kode_usulan, 'tpg', $oldData->id_ptk, $oldData->id_tahun_tw, 'Lolos');
@@ -484,7 +476,7 @@ class Tpg extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('situgu/adm/verifikasi/tpg/tolak', $data);
+            $response->data = view('situpeng/adm/verifikasi/tpg/tolak', $data);
             return json_encode($response);
         }
     }
@@ -555,7 +547,7 @@ class Tpg extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
 
-            $oldData = $this->_db->table('_tb_usulan_detail_tpg')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -565,18 +557,17 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_usulan_detail_tpg')->where('id', $oldData->id)->update(['status_usulan' => 3, 'keterangan_reject' => $keterangan, 'admin_reject' => $user->data->id, 'date_reject' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 3, 'keterangan_reject' => $keterangan, 'admin_reject' => $user->data->id, 'date_reject' => date('Y-m-d H:i:s')]);
                 if ($this->_db->affectedRows() > 0) {
                     try {
-                        $checkLocked = $this->_db->table('_tb_sptjm')->select('is_locked')->where('kode_usulan', $oldData->kode_usulan)->get()->getRowObject();
+                        $checkLocked = $this->_db->table('_tb_sptjm_pengawas')->select('is_locked')->where('kode_usulan', $oldData->kode_usulan)->get()->getRowObject();
                         if ($checkLocked) {
                             if ($checkLocked->is_locked == 0) {
-                                $this->_db->table('_tb_sptjm')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
+                                $this->_db->table('_tb_sptjm_pengawas')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
                             }
                         }
-                        $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 0]);
-                        $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 0]);
-                        $this->_db->table('_ptk_tb')->where(['id_ptk' => $oldData->id_ptk])->update(['is_locked' => 0]);
+                        $this->_db->table('__pengawas_upload_data_attribut')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 0]);
+                        $this->_db->table('__pengawas_tb')->where(['id' => $oldData->id_ptk])->update(['is_locked' => 0]);
 
                         $verifikasiLib = new Verifikasiadminlib();
                         $verifikasiLib->create($user->data->id, $oldData->kode_usulan, 'tpg', $oldData->id_ptk, $oldData->id_tahun_tw, 'Ditolak', $keterangan);

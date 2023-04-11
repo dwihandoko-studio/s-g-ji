@@ -54,7 +54,11 @@ class VerifikasiModel extends Model
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->where('b.jenjang_pengawas', $jenjangPengawas);
+        if ($jenjangPengawas == "SD") {
+            $this->dt->whereIn('b.jenjang_pengawas', ['SD', 'TK']);
+        } else {
+            $this->dt->where('b.jenjang_pengawas', $jenjangPengawas);
+        }
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -68,7 +72,11 @@ class VerifikasiModel extends Model
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->where('b.jenjang_pengawas', $jenjangPengawas);
+        if ($jenjangPengawas == "SD") {
+            $this->dt->whereIn('b.jenjang_pengawas', ['SD', 'TK']);
+        } else {
+            $this->dt->where('b.jenjang_pengawas', $jenjangPengawas);
+        }
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
@@ -80,7 +88,11 @@ class VerifikasiModel extends Model
         $this->dt->where('a.jenis_tunjangan', $jenis);
         $this->dt->where('a.status_usulan', 0);
         $this->dt->where('a.id_tahun_tw', $this->request->getPost('tw'));
-        $this->dt->where('b.jenjang_pengawas', $jenjangPengawas);
+        if ($jenjangPengawas == "SD") {
+            $this->dt->whereIn('b.jenjang_pengawas', ['SD', 'TK']);
+        } else {
+            $this->dt->where('b.jenjang_pengawas', $jenjangPengawas);
+        }
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
