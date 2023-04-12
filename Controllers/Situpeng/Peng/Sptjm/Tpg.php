@@ -112,7 +112,7 @@ class Tpg extends BaseController
             $row[] = $list->kode_usulan;
             $row[] = $list->tahun;
             $row[] = $list->tw;
-            $row[] = $list->jumlah_ptk;
+            $row[] = $list->jumlah_pengawas;
             if ($list->is_locked == 1) {
                 $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/pengawas/sptjm') . '/' . $list->lampiran_sptjm . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/pengawas/sptjm') . '/' . $list->lampiran_sptjm . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
             } else {
