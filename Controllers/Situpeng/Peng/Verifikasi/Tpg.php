@@ -283,7 +283,7 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_temp_usulan_detail_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_tb_temp_usulan_detail_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => $user->data->id]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
 
