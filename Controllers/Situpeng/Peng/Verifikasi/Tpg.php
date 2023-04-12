@@ -466,7 +466,7 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_temp_usulan_detail_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 1, 'keterangan_reject' => $keterangan, 'date_reject' => date('Y-m-d H:i:s')]);
+                $this->_db->table('_tb_temp_usulan_detail_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 1, 'keterangan_reject' => $keterangan, 'date_reject' => date('Y-m-d H:i:s'), 'admin_reject' => $user->data->id]);
                 if ($this->_db->affectedRows() > 0) {
                     $this->_db->transCommit();
 
