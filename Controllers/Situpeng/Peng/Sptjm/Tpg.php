@@ -464,7 +464,7 @@ class Tpg extends BaseController
             }
         }
 
-        $sekolah = $this->_db->table('__pengawas_tb')->where('id', $user->data->id)->get()->getRowObject();
+        $sekolah = $this->_db->table('__pengawas_tb')->where('id', $user->data->ptk_id)->get()->getRowObject();
         if (!$sekolah) {
             $response = new \stdClass;
             $response->status = 400;
