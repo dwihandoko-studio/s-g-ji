@@ -348,7 +348,8 @@ class Tpg extends BaseController
 
             try {
                 $uuidLib = new Uuid();
-                $kodeUsulan = "TPG-" . $twActive->tahun . '-' . $twActive->tw . '-' . $user->data->npsn . '-' . time();
+                $jenjangFix = ($jenjangPengawas == "SD") ? 'SD/TK' : $jenjangPengawas;
+                $kodeUsulan = "TPG-" . $twActive->tahun . '-' . $twActive->tw . '-Pengawas-' . $jenjangFix . '-' . time();
 
                 $this->_db->table('_tb_sptjm_pengawas')->insert(
                     [
@@ -359,7 +360,7 @@ class Tpg extends BaseController
                         'id_pengawass' => $id_ptks,
                         'generate_sptjm' => 0,
                         'id_tahun_tw' => $twActive->id,
-                        'jenjang_pengawas' => ($jenjangPengawas == "SD") ? 'SD/TK' : $jenjangPengawas,
+                        'jenjang_pengawas' => $jenjangFix,
                         'user_id' => $user->data->id,
                         'created_at' => date('Y-m-d H:i:s'),
                     ]
