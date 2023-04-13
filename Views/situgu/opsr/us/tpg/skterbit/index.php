@@ -53,7 +53,7 @@
                                     <th>NIK</th>
                                     <th>NUPTK</th>
                                     <th>JENIS PTK</th>
-                                    <th>TANGGAL USULAN</th>
+                                    <th>TANGGAL SK TERBIT</th>
                                 </tr>
                             </thead>
                         </table>
