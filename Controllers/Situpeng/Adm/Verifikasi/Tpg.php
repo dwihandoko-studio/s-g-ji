@@ -342,11 +342,11 @@ class Tpg extends BaseController
                 return json_encode($response);
             }
 
-            $canGrantedVerifikasi = canGrantedVerifikasiPengawas($user->data->id);
+            // $canGrantedVerifikasi = canGrantedVerifikasiPengawas($user->data->id);
 
-            if ($canGrantedVerifikasi && $canGrantedVerifikasi->code !== 200) {
-                return json_encode($canGrantedVerifikasi);
-            }
+            // if ($canGrantedVerifikasi && $canGrantedVerifikasi->code !== 200) {
+            //     return json_encode($canGrantedVerifikasi);
+            // }
 
             // $canUsulTamsil = canVerifikasiTpg();
 
