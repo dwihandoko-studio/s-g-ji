@@ -93,7 +93,7 @@ class Tpg extends BaseController
             } else {
                 $row[] = $list->jenjang_pengawas;
             }
-            $row[] = $list->jumlah_ptk;
+            $row[] = $list->jumlah_pengawas;
 
             $data[] = $row;
         }
