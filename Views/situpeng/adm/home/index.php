@@ -32,8 +32,8 @@
 
                                 <div class="d-flex flex-wrap">
                                     <div class="me-3">
-                                        <p class="text-muted mb-2">Jumlah PTK</p>
-                                        <h5 class="mb-0"><?= isset($jumlah) ? ($jumlah ? $jumlah->jumlah_ptk : '0') : '0' ?></h5>
+                                        <p class="text-muted mb-2">Jumlah Pengawas</p>
+                                        <h5 class="mb-0"><?= isset($jumlah) ? ($jumlah ? $jumlah->jumlah_pengawas : '0') : '0' ?></h5>
                                     </div>
 
                                     <div class="avatar-sm ms-auto">
@@ -53,8 +53,8 @@
 
                                 <div class="d-flex flex-wrap">
                                     <div class="me-3">
-                                        <p class="text-muted mb-2">Jumlah PTK Sertifikasi</p>
-                                        <h5 class="mb-0"><?= isset($jumlah) ? ($jumlah ? $jumlah->jumlah_ptk_tpg : '0') : '0' ?></h5>
+                                        <p class="text-muted mb-2">Jumlah Pengawas Sertifikasi</p>
+                                        <h5 class="mb-0"><?= isset($jumlah) ? ($jumlah ? $jumlah->jumlah_pengawas_tpg : '0') : '0' ?></h5>
                                     </div>
 
                                     <div class="avatar-sm ms-auto">
@@ -67,42 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card blog-stats-wid">
-                            <div class="card-body">
-                                <div class="d-flex flex-wrap">
-                                    <div class="me-3">
-                                        <p class="text-muted mb-2">Jumlah PTK Tamsil</p>
-                                        <h5 class="mb-0"><?= isset($jumlah) ? ($jumlah ? $jumlah->jumlah_ptk_tamsil : '0') : '0' ?></h5>
-                                    </div>
-
-                                    <div class="avatar-sm ms-auto">
-                                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
-                                            <i class="mdi mdi-account-switch-outline"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card blog-stats-wid">
-                            <div class="card-body">
-                                <div class="d-flex flex-wrap">
-                                    <div class="me-3">
-                                        <p class="text-muted mb-2">Jumlah PTK PGHM</p>
-                                        <h5 class="mb-0"><?= isset($jumlah) ? ($jumlah ? $jumlah->jumlah_ptk_pghm : '0') : '0' ?></h5>
-                                    </div>
-
-                                    <div class="avatar-sm ms-auto">
-                                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
-                                            <i class="mdi mdi-account-tie-outline"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="row justify-content-center mb-4">
