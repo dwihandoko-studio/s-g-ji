@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models\Situgu\Su;
+namespace App\Models\Situpeng\Adm;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class VerifikasitpgdetailModel extends Model
+class VerifikasitpgdetailpengawasModel extends Model
 {
-    protected $table = "v_antrian_usulan_tpg";
-    protected $column_order = array(null, null, 'kode_usulan', 'nama', 'nik', 'nuptk', 'jenis_ptk');
-    protected $column_search = array('nik', 'nuptk', 'nama', 'npsn', 'nama');
-    protected $order = array('date_approve_sptjm' => 'asc');
+    protected $table = "_tb_usulan_detail_tpg_pengawas a";
+    protected $column_order = array(null, null, 'a.kode_usulan', 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_pengawas', 'b.jenjang_pengawas');
+    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
+    protected $order = array('a.date_approve_sptjm' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -49,8 +49,10 @@ class VerifikasitpgdetailModel extends Model
     }
     function get_datatables($kode_usulan)
     {
-        $this->dt->where('kode_usulan', $kode_usulan);
-        $this->dt->where('status_usulan', 0);
+        $this->dt->select("b.*, a.id as id_usulan, a.kode_usulan, a.date_approve_sptjm, a.id_pengawas, a.id_tahun_tw");
+        $this->dt->join('__pengawas_tb b', "b.id = a.id_pengawas");
+        $this->dt->where('a.kode_usulan', $kode_usulan);
+        $this->dt->where('a.status_usulan', 0);
         $this->_get_datatables_query();
         if ($this->request->getPost('length') != -1)
             $this->dt->limit($this->request->getPost('length'), $this->request->getPost('start'));
@@ -59,16 +61,20 @@ class VerifikasitpgdetailModel extends Model
     }
     function count_filtered($kode_usulan)
     {
-        $this->dt->where('kode_usulan', $kode_usulan);
-        $this->dt->where('status_usulan', 0);
+        $this->dt->select("b.*, a.id as id_usulan, a.kode_usulan, a.date_approve_sptjm, a.id_pengawas, a.id_tahun_tw");
+        $this->dt->join('__pengawas_tb b', "b.id = a.id_pengawas");
+        $this->dt->where('a.kode_usulan', $kode_usulan);
+        $this->dt->where('a.status_usulan', 0);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();
     }
     public function count_all($kode_usulan)
     {
-        $this->dt->where('kode_usulan', $kode_usulan);
-        $this->dt->where('status_usulan', 0);
+        $this->dt->select("b.*, a.id as id_usulan, a.kode_usulan, a.date_approve_sptjm, a.id_pengawas, a.id_tahun_tw");
+        $this->dt->join('__pengawas_tb b', "b.id = a.id_pengawas");
+        $this->dt->where('a.kode_usulan', $kode_usulan);
+        $this->dt->where('a.status_usulan', 0);
         $this->_get_datatables_query();
 
         return $this->dt->countAllResults();

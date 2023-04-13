@@ -3,7 +3,7 @@
 namespace App\Controllers\Situpeng\Adm\Verifikasi;
 
 use App\Controllers\BaseController;
-use App\Models\Situpeng\Adm\VerifikasitpgdetailModel;
+use App\Models\Situpeng\Adm\VerifikasitpgdetailpengawasModel;
 use App\Models\Situpeng\Adm\VerifikasitpgpengawasModel;
 use Config\Services;
 use Firebase\JWT\JWT;
@@ -109,7 +109,7 @@ class Tpg extends BaseController
     public function getAllDetail()
     {
         $request = Services::request();
-        $datamodel = new VerifikasitpgdetailModel($request);
+        $datamodel = new VerifikasitpgdetailpengawasModel($request);
 
         $jwt = get_cookie('jwt');
         $token_jwt = getenv('token_jwt.default.key');
@@ -172,7 +172,7 @@ class Tpg extends BaseController
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
             $row[] = $list->nip;
             $row[] = $list->nuptk;
-            $row[] = $list->jenis_ptk;
+            $row[] = $list->jenis_pengawas;
 
             $data[] = $row;
         }
