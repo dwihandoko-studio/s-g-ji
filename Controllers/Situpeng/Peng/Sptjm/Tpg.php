@@ -965,6 +965,7 @@ class Tpg extends BaseController
                             'us_pang_jenis' => $ptk->us_pang_jenis,
                             'us_gaji_pokok' => $ptk->us_gaji_pokok,
                             'status_usulan' => 0,
+                            'admin_pengawas' => $user->data->id,
                             'date_approve_ks' => $ptk->admin_approve,
                             'date_approve_sptjm' => date('Y-m-d H:i:s'),
                             'created_at' => $ptk->created_at,
