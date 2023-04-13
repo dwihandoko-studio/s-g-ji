@@ -23,6 +23,7 @@ class TerbitskModel extends Model
 
         $this->dt = $this->db->table($this->table);
     }
+
     private function _get_datatables_query()
     {
         $i = 0;
@@ -47,6 +48,7 @@ class TerbitskModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
+    
     function get_datatables()
     {
         if ($this->request->getPost('tw')) {

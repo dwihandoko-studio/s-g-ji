@@ -93,7 +93,7 @@ class Skterbit extends BaseController
             $row[] = $list->nik;
             $row[] = $list->nuptk;
             $row[] = $list->jenis_ptk;
-            $row[] = $list->created_at;
+            $row[] = $list->date_terbitsk;
 
             $data[] = $row;
         }
