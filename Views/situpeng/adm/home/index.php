@@ -235,7 +235,7 @@
 <script src="<?= base_url() ?>/assets/libs/jquery-countdown/jquery.countdown.min.js"></script>
 <script src="<?= base_url() ?>/assets/js/pages/coming-soon.init.js"></script>
 <script>
-    $(document).ready(function() {
+    //$(document).ready(function() {
         <?php //if (!$registered || $registered->surat_tugas === NULL) { 
         ?>
         // $('#content-aktivasiModalLabel').html('PERINGATAN AKUN BELUM MELAKUKAN AKTIVASI');
@@ -258,66 +258,66 @@
 
         <?php //} 
         ?>
-    });
+    //});
 
-    function aksiAktivasiWa(event) {
-        $.ajax({
-            url: './home/getAktivasi',
-            type: 'POST',
-            data: {
-                id: 'admin',
-            },
-            dataType: 'JSON',
-            beforeSend: function() {
-                $('.aktivasi-button-wa').attr('disabled', true);
-                $('div.modal-content-loading').block({
-                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                });
-            },
-            success: function(resul) {
-                $('div.modal-content-loading').unblock();
-                if (resul.status == 200) {
-                    $('.contentAktivasiBodyModal').html(resul.data);
-                } else {
-                    if (resul.status == 404) {
-                        Swal.fire(
-                            'PERINGATAN!',
-                            resul.message,
-                            'warning'
-                        ).then((valRes) => {
-                            reloadPage(resul.redirrect);
-                        })
-                    } else {
-                        if (resul.status == 401) {
-                            Swal.fire(
-                                'PERINGATAN!',
-                                resul.message,
-                                'warning'
-                            ).then((valRes) => {
-                                reloadPage();
-                            })
-                        } else {
-                            $('.aktivasi-button-wa').attr('disabled', false);
-                            Swal.fire(
-                                'PERINGATAN!!!',
-                                resul.message,
-                                'warning'
-                            );
-                        }
-                    }
-                }
-            },
-            error: function(data) {
-                $('.aktivasi-button-wa').attr('disabled', false);
-                $('div.modal-content-loading').unblock();
-                Swal.fire(
-                    'PERINGATAN!',
-                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                    'warning'
-                );
-            }
-        });
-    }
+    // function aksiAktivasiWa(event) {
+    //     $.ajax({
+    //         url: './home/getAktivasi',
+    //         type: 'POST',
+    //         data: {
+    //             id: 'admin',
+    //         },
+    //         dataType: 'JSON',
+    //         beforeSend: function() {
+    //             $('.aktivasi-button-wa').attr('disabled', true);
+    //             $('div.modal-content-loading').block({
+    //                 message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+    //             });
+    //         },
+    //         success: function(resul) {
+    //             $('div.modal-content-loading').unblock();
+    //             if (resul.status == 200) {
+    //                 $('.contentAktivasiBodyModal').html(resul.data);
+    //             } else {
+    //                 if (resul.status == 404) {
+    //                     Swal.fire(
+    //                         'PERINGATAN!',
+    //                         resul.message,
+    //                         'warning'
+    //                     ).then((valRes) => {
+    //                         reloadPage(resul.redirrect);
+    //                     })
+    //                 } else {
+    //                     if (resul.status == 401) {
+    //                         Swal.fire(
+    //                             'PERINGATAN!',
+    //                             resul.message,
+    //                             'warning'
+    //                         ).then((valRes) => {
+    //                             reloadPage();
+    //                         })
+    //                     } else {
+    //                         $('.aktivasi-button-wa').attr('disabled', false);
+    //                         Swal.fire(
+    //                             'PERINGATAN!!!',
+    //                             resul.message,
+    //                             'warning'
+    //                         );
+    //                     }
+    //                 }
+    //             }
+    //         },
+    //         error: function(data) {
+    //             $('.aktivasi-button-wa').attr('disabled', false);
+    //             $('div.modal-content-loading').unblock();
+    //             Swal.fire(
+    //                 'PERINGATAN!',
+    //                 "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+    //                 'warning'
+    //             );
+    //         }
+    //     });
+    // }
 
     function changeValidation(event) {
         $('.' + event).css('display', 'none');
