@@ -6,7 +6,7 @@
                 <ul class="navbar-nav">
                     <?php if (isset($user)) { ?>
                         <li class="nav-item">
-                            <a class="nav-link <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "home") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situgu/adm/home') ?>">
+                            <a class="nav-link <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "home") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('situpeng/adm/home') ?>">
                                 <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Dashboards</span>
                             </a>
                         </li>
