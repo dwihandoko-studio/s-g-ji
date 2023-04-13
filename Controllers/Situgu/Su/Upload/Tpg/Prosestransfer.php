@@ -281,7 +281,7 @@ class Prosestransfer extends BaseController
                     ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                     ->where('a.status_usulan', 6)
                     ->where('a.id_tahun_tw', $tw)
-                    ->where('b.nuptk', $data[1])
+                    ->where('b.nuptk', $data[5])
                     ->get()->getRowObject();
 
                 $dataImport[] = $dataInsert;
