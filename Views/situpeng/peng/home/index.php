@@ -60,7 +60,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,7 +76,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -180,7 +180,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -196,7 +196,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -300,7 +300,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -316,7 +316,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -420,7 +420,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -436,7 +436,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -540,7 +540,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -556,7 +556,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -660,7 +660,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -676,7 +676,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -780,7 +780,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -796,7 +796,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -902,7 +902,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -918,7 +918,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1022,7 +1022,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1038,7 +1038,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1142,7 +1142,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1158,7 +1158,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1262,7 +1262,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1278,7 +1278,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1382,7 +1382,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Verifikasi dan Validasi Kepala Sekolah.</b></p>
+                                                        <p class="text-muted">Verifikasi dan Validasi Koordinator Pengawas Kabupaten.</b></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1398,7 +1398,7 @@
                                                     </div>
 
                                                     <div class="mt-3 px-3">
-                                                        <p class="text-muted">Generate dan Upload SPTJM Kepala Sekolah.</p>
+                                                        <p class="text-muted">Generate dan Upload SPTJM Koordinator Pengawas Kabupaten.</p>
                                                     </div>
                                                 </div>
                                             </div>
