@@ -112,13 +112,13 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
-    function actionDetail(id, id_ptk, tw, nama) {
+    function actionDetail(id, id_pengawas, tw, nama) {
         $.ajax({
             url: "./detail",
             type: 'POST',
             data: {
                 id: id,
-                id_ptk: id_ptk,
+                id_pengawas: id_pengawas,
                 tw: tw,
                 nama: nama,
             },
@@ -137,7 +137,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-detailModalLabel').html('DETAIL USULAN PTK ' + nama);
+                    $('#content-detailModalLabel').html('DETAIL USULAN PENGAWAS ' + nama);
                     $('.contentBodyModal').html(resul.data);
                     $('.content-detailModal').modal({
                         backdrop: 'static',

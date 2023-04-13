@@ -241,10 +241,10 @@ class Tpg extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
-            'id_ptk' => [
+            'id_pengawas' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Id PTK tidak boleh kosong. ',
+                    'required' => 'Id Pengawas tidak boleh kosong. ',
                 ]
             ],
             'tw' => [
@@ -265,17 +265,17 @@ class Tpg extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('id')
-                . $this->validator->getError('id_ptk')
+                . $this->validator->getError('id_pengawas')
                 . $this->validator->getError('tw')
                 . $this->validator->getError('nama');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
+            $id_ptk = htmlspecialchars($this->request->getVar('id_pengawas'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $current = $this->_db->table('_tb_temp_usulan_detail_pengawas a')
+            $current = $this->_db->table('_tb_usulan_detail_tpg_pengawas a')
                 ->select("b.*, a.id as id_usulan, a.id_tahun_tw, a.jenis_tunjangan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya")
                 ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
                 ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
