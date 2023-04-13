@@ -110,7 +110,7 @@ class Lolosberkas extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('situgu/adm/us/tpg/lolosberkas/data'));
+        return redirect()->to(base_url('situpeng/adm/us/tpg/lolosberkas/data'));
     }
 
     public function data()
@@ -127,7 +127,7 @@ class Lolosberkas extends BaseController
         $data['user'] = $user->data;
         $data['tw'] = $this->_db->table('_ref_tahun_tw')->where('is_current', 1)->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getRowObject();
         $data['tws'] = $this->_db->table('_ref_tahun_tw')->orderBy('tahun', 'desc')->orderBy('tw', 'desc')->get()->getResult();
-        return view('situgu/adm/us/tpg/lolosberkas/index', $data);
+        return view('situpeng/adm/us/tpg/lolosberkas/index', $data);
     }
 
     public function edit()
@@ -208,7 +208,7 @@ class Lolosberkas extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/adm/us/tpg/lolosberkas/edit-lolos', $data);
+                $response->data = view('situpeng/adm/us/tpg/lolosberkas/edit-lolos', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -489,7 +489,7 @@ class Lolosberkas extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/adm/us/tpg/detail-lolos', $data);
+                $response->data = view('situpeng/adm/us/tpg/detail-lolos', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
