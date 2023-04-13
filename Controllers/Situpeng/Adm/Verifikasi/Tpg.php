@@ -276,7 +276,7 @@ class Tpg extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
             $current = $this->_db->table('_tb_usulan_detail_tpg_pengawas a')
-                ->select("b.*, a.id as id_usulan, a.id_tahun_tw, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya, e.fullhame as verifikator")
+                ->select("b.*, a.id as id_usulan, a.id_tahun_tw, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_pang_jenis, a.us_gaji_pokok, a.status_usulan, c.gaji_pokok as gaji_pokok_referensi, d.pang_no, d.pangkat_terakhir as lampiran_pangkat, d.kgb_terakhir as lampiran_kgb, d.pernyataan_24jam as lampiran_pernyataan, d.penugasan as lampiran_penugasan, d.kunjungan_binaan as lampiran_kunjungan_binaan, d.cuti as lampiran_cuti, d.pensiun as lampiran_pensiun, d.kematian as lampiran_kematian, d.lainnya as lampiran_attr_lainnya, e.fullname as verifikator")
                 ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
                 ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
                 ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (c.masa_kerja = (IF(a.us_pang_mk_tahun > 32, 32, a.us_pang_mk_tahun)))', 'LEFT')
