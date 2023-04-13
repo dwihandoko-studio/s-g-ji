@@ -91,7 +91,7 @@ class Antrian extends BaseController
             $row[] = $list->nik;
             $row[] = $list->nuptk;
             $row[] = $list->jenis_ptk;
-            $row[] = $list->created_at;
+            $row[] = $list->date_approve_sptjm;
 
             $data[] = $row;
         }
