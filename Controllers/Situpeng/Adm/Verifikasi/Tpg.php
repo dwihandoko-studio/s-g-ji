@@ -357,7 +357,7 @@ class Tpg extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_tb_usulan_detail_tpg_pengawas_test')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 201;
@@ -367,20 +367,20 @@ class Tpg extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_tb_usulan_detail_tpg_pengawas')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => $user->data->id]);
+                $this->_db->table('_tb_usulan_detail_tpg_pengawas_test')->where('id', $oldData->id)->update(['status_usulan' => 2, 'date_approve' => date('Y-m-d H:i:s'), 'admin_approve' => $user->data->id]);
                 if ($this->_db->affectedRows() > 0) {
                     try {
                         $checkLocked = $this->_db->table('_tb_sptjm_pengawas')->select('is_locked')->where('kode_usulan', $oldData->kode_usulan)->get()->getRowObject();
                         if ($checkLocked) {
                             if ($checkLocked->is_locked == 0) {
-                                $this->_db->table('_tb_sptjm_pengawas')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
+                                // $this->_db->table('_tb_sptjm_pengawas_test')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
                             }
                         }
-                        $this->_db->table('__pengawas_upload_data_attribut')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
-                        $this->_db->table('__pengawas_tb')->where(['id' => $oldData->id_ptk])->update(['is_locked' => 1]);
+                        // $this->_db->table('__pengawas_upload_data_attribut')->where(['id_ptk' => $oldData->id_pengawas, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
+                        // $this->_db->table('__pengawas_tb')->where(['id' => $oldData->id_pengawas])->update(['is_locked' => 1]);
 
-                        $verifikasiLib = new Verifikasiadminlib();
-                        $verifikasiLib->create($user->data->id, $oldData->kode_usulan, 'tpg', $oldData->id_ptk, $oldData->id_tahun_tw, 'Lolos');
+                        // $verifikasiLib = new Verifikasiadminlib();
+                        // $verifikasiLib->create($user->data->id, $oldData->kode_usulan, 'tpg', $oldData->id_ptk, $oldData->id_tahun_tw, 'Lolos');
                     } catch (\Throwable $th) {
                         $this->_db->transRollback();
                         $response = new \stdClass;
