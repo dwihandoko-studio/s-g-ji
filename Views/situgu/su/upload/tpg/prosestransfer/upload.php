@@ -67,11 +67,11 @@
                     return false;
                 }
 
-                if (file.size > 5 * 1024 * 1000) {
+                if (file.size > 10 * 1024 * 1000) {
                     input.value = "";
                     Swal.fire(
                         'Warning!!!',
-                        "Ukuran file tidak boleh lebih dari 5 Mb.",
+                        "Ukuran file tidak boleh lebih dari 10 Mb.",
                         'warning'
                     );
                     return false;
