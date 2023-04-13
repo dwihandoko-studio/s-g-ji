@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 
 class ProsestransferModel extends Model
 {
-    protected $table = "_tb_usulan_tpg_siap_sk a";
+    protected $table = "_tb_usulan_tpg_siap_sk_test a";
     protected $column_order = array(null, null, 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'a.date_prosestransfer');
     protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
     protected $order = array('a.date_prosestransfer' => 'asc'); 
