@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\Situgu\Adm\Tpg\TerbitskModel;
 use Config\Services;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use Firebase\JWT\Key; 
 use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
@@ -91,7 +91,7 @@ class Skterbit extends BaseController
             $row[] = $list->nik;
             $row[] = $list->nuptk;
             $row[] = $list->jenis_ptk;
-            $row[] = $list->created_at;
+            $row[] = $list->date_terbitsk;
 
             $data[] = $row;
         }
