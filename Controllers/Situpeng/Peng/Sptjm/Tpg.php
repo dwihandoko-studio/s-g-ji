@@ -947,7 +947,7 @@ class Tpg extends BaseController
             }
 
             if ($this->_db->affectedRows() > 0) {
-                $ptks = explode(",", $current->id_ptks);
+                $ptks = explode(",", $current->id_pengawass);
                 $dataPtks = [];
                 foreach ($ptks as $key => $value) {
                     $ptk = $this->_db->table('_tb_temp_usulan_detail_pengawas')->where(['id_pengawas' => $value, 'status_usulan' => 5, 'jenis_tunjangan' => 'tpg'])->get()->getRowObject();
