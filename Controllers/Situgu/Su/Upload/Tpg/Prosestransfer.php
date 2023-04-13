@@ -395,8 +395,8 @@ class Prosestransfer extends BaseController
             $belumusul = 0;
             foreach ($datas['data'] as $key => $v) {
                 $item = [];
-                $tgl_lahir = explode("-", $v['tgl_lahir']);
-                $tgl_lhr = $tgl_lahir[2] . $tgl_lahir[1] . $tgl_lahir[0];
+                // $tgl_lahir = explode("-", $v['tgl_lahir']);
+                // $tgl_lhr = $tgl_lahir[2] . $tgl_lahir[1] . $tgl_lahir[0];
                 if ($v['data_usulan'] == NULL || $v['data_usulan'] == "") {
                     $item['number'] = $key + 1;
                     $item['nuptk'] = $v['nuptk'];
