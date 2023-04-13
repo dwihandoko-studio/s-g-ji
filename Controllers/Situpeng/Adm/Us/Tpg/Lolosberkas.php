@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Situgu\Adm\Us\Tpg;
+namespace App\Controllers\Situpeng\Adm\Us\Tpg;
 
 use App\Controllers\BaseController;
-use App\Models\Situgu\Adm\Tpg\LolosberkasModel;
+use App\Models\Situpeng\Adm\Tpg\LolosberkasModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -76,14 +76,14 @@ class Lolosberkas extends BaseController
             $action = '<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id_usulan . '\', \'' . $list->id_ptk . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\',\'' . $list->nuptk . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                            <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id_usulan . '\', \'' . $list->id_ptk . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\',\'' . $list->nuptk . '\');"><i class="bx bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit Data Pembenahan</a>
+                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id_usulan . '\', \'' . $list->id_pengawas . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\',\'' . $list->nuptk . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+                            <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id_usulan . '\', \'' . $list->id_pengawas . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\',\'' . $list->nuptk . '\');"><i class="bx bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit Data Pembenahan</a>
                         </div>
                     </div>';
-            // $action = '<a href="javascript:actionDetail(\'' . $list->id_usulan . '\', \'' . $list->id_ptk . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            // $action = '<a href="javascript:actionDetail(\'' . $list->id_usulan . '\', \'' . $list->id_pengawas . '\', \'' . $list->id_tahun_tw . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
             //     <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
             //     </a>';
-            //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_pengawas . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
             //     <i class="bx bx-transfer-alt font-size-16 align-middle"></i></button>
             //     </a>
             //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -93,7 +93,8 @@ class Lolosberkas extends BaseController
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
             $row[] = $list->nik;
             $row[] = $list->nuptk;
-            $row[] = $list->jenis_ptk;
+            $row[] = $list->jenjang_pengawas;
+            $row[] = $list->jenis_pengawas;
             $row[] = $list->date_approve;
 
             $data[] = $row;
@@ -145,7 +146,7 @@ class Lolosberkas extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
-            'id_ptk' => [
+            'id_pengawas' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Id PTK tidak boleh kosong. ',
@@ -175,22 +176,22 @@ class Lolosberkas extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('id')
-                . $this->validator->getError('id_ptk')
+                . $this->validator->getError('id_pengawas')
                 . $this->validator->getError('tw')
                 . $this->validator->getError('nuptk')
                 . $this->validator->getError('nama');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
+            $id_pengawas = htmlspecialchars($this->request->getVar('id_pengawas'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $nuptk = htmlspecialchars($this->request->getVar('nuptk'), true);
 
-            $current = $this->_db->table('_tb_usulan_detail_tpg a')
-                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_jenis, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian, e.pang_golongan as attr_pang_golongan, e.pang_jenis as attr_pang_jenis, e.pang_no as attr_pang_no, e.pang_tmt as attr_pang_tmt, e.pang_tgl as attr_pang_tgl, e.pang_tahun as attr_pang_mk_tahun, e.pang_bulan as attr_pang_mk_bulan")
-                ->join('_ptk_tb b', 'a.id_ptk = b.id')
-                ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
+            $current = $this->_db->table('_tb_usulan_detail_tpg_pengawas a')
+                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_tmt, a.us_pang_tgl, a.us_pang_jenis, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_pengawas, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian, e.pang_golongan as attr_pang_golongan, e.pang_jenis as attr_pang_jenis, e.pang_no as attr_pang_no, e.pang_tmt as attr_pang_tmt, e.pang_tgl as attr_pang_tgl, e.pang_tahun as attr_pang_mk_tahun, e.pang_bulan as attr_pang_mk_bulan")
+                ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
+                ->join('__pengawas_upload_data_attribut e', 'a.id_pengawas = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                 ->where('a.status_usulan', 2)
                 ->where(['a.id' => $id, 'a.id_tahun_tw' => $tw])
                 ->get()->getRowObject();
@@ -200,10 +201,10 @@ class Lolosberkas extends BaseController
                 $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
                     ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
                     ->join('ref_sekolah b', 'a.sekolah_id = b.id')
-                    ->where('a.ptk_id', $current->id_ptk)
+                    ->where('a.ptk_id', $current->id_pengawas)
                     ->where("a.jenis_keluar IS NULL")
                     ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
-                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk)->get()->getRowObject();
+                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_pengawas)->get()->getRowObject();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
@@ -234,7 +235,7 @@ class Lolosberkas extends BaseController
                     'required' => 'Id Usulan tidak boleh kosong. ',
                 ]
             ],
-            'id_ptk' => [
+            'id_pengawas' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Id PTK tidak boleh kosong. ',
@@ -253,7 +254,7 @@ class Lolosberkas extends BaseController
             $response->status = 400;
             $response->message = $this->validator->getError('id_usulan')
                 . $this->validator->getError('id_tahun_tw')
-                . $this->validator->getError('id_ptk');
+                . $this->validator->getError('id_pengawas');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -268,7 +269,7 @@ class Lolosberkas extends BaseController
             }
 
             $id_usulan = htmlspecialchars($this->request->getVar('id_usulan'), true);
-            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
+            $id_pengawas = htmlspecialchars($this->request->getVar('id_pengawas'), true);
             $id_tahun_tw = htmlspecialchars($this->request->getVar('id_tahun_tw'), true);
 
             $us_pang_jenis = htmlspecialchars($this->request->getVar('us_pang_jenis'), true);
@@ -385,7 +386,7 @@ class Lolosberkas extends BaseController
                 }
 
                 try {
-                    $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $id_ptk, 'id_tahun_tw' => $id_tahun_tw])->update($dataAttr);
+                    $this->_db->table('__pengawas_upload_data_attribut')->where(['id_ptk' => $id_pengawas, 'id_tahun_tw' => $id_tahun_tw])->update($dataAttr);
                 } catch (\Exception $e) {
                     $this->_db->transRollback();
                     $response = new \stdClass;
@@ -434,7 +435,7 @@ class Lolosberkas extends BaseController
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
-            'id_ptk' => [
+            'id_pengawas' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Id PTK tidak boleh kosong. ',
@@ -458,13 +459,13 @@ class Lolosberkas extends BaseController
             $response = new \stdClass;
             $response->status = 400;
             $response->message = $this->validator->getError('id')
-                . $this->validator->getError('id_ptk')
+                . $this->validator->getError('id_pengawas')
                 . $this->validator->getError('tw')
                 . $this->validator->getError('nama');
             return json_encode($response);
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
-            $id_ptk = htmlspecialchars($this->request->getVar('id_ptk'), true);
+            $id_pengawas = htmlspecialchars($this->request->getVar('id_pengawas'), true);
             $tw = htmlspecialchars($this->request->getVar('tw'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
@@ -481,10 +482,10 @@ class Lolosberkas extends BaseController
                 $data['penugasans'] = $this->_db->table('_ptk_tb_dapodik a')
                     ->select("a.*, b.npsn, b.nama as namaSekolah, b.kecamatan as kecamatan_sekolah, (SELECT SUM(jam_mengajar_per_minggu) FROM _pembelajaran_dapodik WHERE ptk_id = a.ptk_id AND sekolah_id = a.sekolah_id AND semester_id = a.semester_id) as jumlah_total_jam_mengajar_perminggu")
                     ->join('ref_sekolah b', 'a.sekolah_id = b.id')
-                    ->where('a.ptk_id', $current->id_ptk)
+                    ->where('a.ptk_id', $current->id_pengawas)
                     ->where("a.jenis_keluar IS NULL")
                     ->orderBy('a.ptk_induk', 'DESC')->get()->getResult();
-                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_ptk)->get()->getRowObject();
+                $data['igd'] = $this->_db->table('_info_gtk')->where('ptk_id', $current->id_pengawas)->get()->getRowObject();
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
@@ -521,11 +522,11 @@ class Lolosberkas extends BaseController
             // Mengambil data dari database
             $dataTw = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->get()->getRowObject();
             $query = $this->_db->table('_tb_usulan_detail_tpg a')
-                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, CONCAT('\'', b.nip) as nip, b.tempat_tugas, b.npsn, CONCAT('\'',b.no_rekening) as no_rekening, CONCAT('\'', b.nuptk) as nuptk, b.jenis_ptk, c.kecamatan, c.bentuk_pendidikan, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
-                ->join('_ptk_tb b', 'a.id_ptk = b.id')
+                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_pengawas, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, CONCAT('\'', b.nip) as nip, b.tempat_tugas, b.npsn, CONCAT('\'',b.no_rekening) as no_rekening, CONCAT('\'', b.nuptk) as nuptk, b.jenis_ptk, c.kecamatan, c.bentuk_pendidikan, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
+                ->join('_ptk_tb b', 'a.id_pengawas = b.id')
                 ->join('ref_sekolah c', 'b.npsn = c.npsn')
                 ->join('_profil_users_tb d', 'a.admin_approve = d.id')
-                ->join('_upload_data_attribut e', 'a.id_ptk = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
+                ->join('__pengawas_upload_data_attribut e', 'a.id_pengawas = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                 ->where('a.status_usulan', 2)
                 ->where('a.id_tahun_tw', $tw)
                 ->get();
