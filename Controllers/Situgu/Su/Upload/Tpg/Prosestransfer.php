@@ -683,7 +683,8 @@ class Prosestransfer extends BaseController
                                     'us_pang_mk_bulan' => $ptk->us_pang_mk_bulan,
                                     'us_pang_jenis' => $ptk->us_pang_jenis,
                                     'us_gaji_pokok' => $ptk->us_gaji_pokok,
-                                    'status_usulan' => 5,
+                                    'status_usulan' => 0,
+                                    'generate_spj' => 0,
                                     'no_sk_dirjen' => $ptk->no_sk_dirjen,
                                     'no_urut_sk' => $ptk->no_urut_sk,
                                     'tf_gaji_pokok_1' => $gaji_pokok_1,
@@ -716,7 +717,7 @@ class Prosestransfer extends BaseController
 
                                     try {
                                         $notifLib = new NotificationLib();
-                                        $notifLib->create("Proses Transfer", "Usulan " . $ptk->kode_usulan . " telah memasuki tahap proses trasnfer dengan total nominal: " . Rupiah($jumlah_diterima) , "success", $user->data->id, $ptk->id_ptk, base_url('situgu/ptk/us/tpg/prosestransfer'));
+                                        $notifLib->create("Proses Transfer", "Usulan " . $ptk->kode_usulan . " telah memasuki tahap proses trasnfer dengan total nominal: " . Rupiah($jumlah_diterima), "success", $user->data->id, $ptk->id_ptk, base_url('situgu/ptk/us/tpg/prosestransfer'));
                                     } catch (\Throwable $th) {
                                         //throw $th;
                                     }
