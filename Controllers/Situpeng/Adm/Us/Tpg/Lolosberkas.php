@@ -517,14 +517,13 @@ class Lolosberkas extends BaseController
             $worksheet = $spreadsheet->getActiveSheet();
 
             // Menulis nama kolom ke dalam baris pertama worksheet
-            $worksheet->fromArray(['NO', 'NUPTK', 'NAMA', 'TEMPAT TUGAS', 'NIP', 'GOL', 'MASA KERJA TAHUN', 'GAJI POKOK PP.15', 'JML. BLN', 'JML.UANG', 'IURAN BPJS 1%', 'PPH.21', 'JML. DITERIMA', 'NO REKENING', 'NPSN', 'KECAMATAN', 'JENJANG SEKOLAH', 'KETERANGAN', 'VERIFIKATOR'], NULL, 'A3');
+            $worksheet->fromArray(['NO', 'NUPTK', 'NAMA', 'TEMPAT TUGAS', 'NIP', 'GOL', 'MASA KERJA TAHUN', 'GAJI POKOK PP.15', 'JML. BLN', 'JML.UANG', 'IURAN BPJS 1%', 'PPH.21', 'JML. DITERIMA', 'NO REKENING', 'JENIS PENGAWAS', 'JENJANG PENGAWAS', 'KETERANGAN', 'VERIFIKATOR'], NULL, 'A3');
 
             // Mengambil data dari database
             $dataTw = $this->_db->table('_ref_tahun_tw')->where('id', $tw)->get()->getRowObject();
-            $query = $this->_db->table('_tb_usulan_detail_tpg a')
-                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_pengawas, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, CONCAT('\'', b.nip) as nip, b.tempat_tugas, b.npsn, CONCAT('\'',b.no_rekening) as no_rekening, CONCAT('\'', b.nuptk) as nuptk, b.jenis_ptk, c.kecamatan, c.bentuk_pendidikan, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
-                ->join('_ptk_tb b', 'a.id_pengawas = b.id')
-                ->join('ref_sekolah c', 'b.npsn = c.npsn')
+            $query = $this->_db->table('_tb_usulan_detail_tpg_pengawas a')
+                ->select("a.id as id_usulan, a.us_pang_golongan, a.us_pang_mk_tahun, a.us_pang_mk_bulan, a.us_gaji_pokok, a.date_approve, a.kode_usulan, a.id_pengawas, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, CONCAT('\'', b.nip) as nip, b.tempat_tugas, b.npsn, CONCAT('\'',b.no_rekening) as no_rekening, CONCAT('\'', b.nuptk) as nuptk, b.jenis_pengawas, b.jenjang_pengawas, d.fullname as verifikator, e.cuti as lampiran_cuti, e.pensiun as lampiran_pensiun, e.kematian as lampiran_kematian")
+                ->join('__pengawas_tb b', 'a.id_pengawas = b.id')
                 ->join('_profil_users_tb d', 'a.admin_approve = d.id')
                 ->join('__pengawas_upload_data_attribut e', 'a.id_pengawas = e.id_ptk AND (a.id_tahun_tw = e.id_tahun_tw)')
                 ->where('a.status_usulan', 2)
@@ -585,9 +584,8 @@ class Lolosberkas extends BaseController
                         ($item->us_gaji_pokok * 3) * $pph21,
                         ($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21),
                         substr($item->no_rekening, 0),
-                        $item->npsn,
-                        $item->kecamatan,
-                        $item->bentuk_pendidikan,
+                        $item->jenis_pengawas,
+                        $item->jenjang_pengawas,
                         $keterangan,
                         $item->verifikator,
                     ];
@@ -608,7 +606,7 @@ class Lolosberkas extends BaseController
             $writer = new Xlsx($spreadsheet);
 
             // Menuliskan file Excel
-            $filename = 'data_lolosberkas_usulan_tpg_tahun_' . $dataTw->tahun . '_tw_' . $dataTw->tw . '.xlsx';
+            $filename = 'data_lolosberkas_usulan_tpg_pengawas_tahun_' . $dataTw->tahun . '_tw_' . $dataTw->tw . '.xlsx';
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename="' . $filename . '"');
             header('Cache-Control: max-age=0');
