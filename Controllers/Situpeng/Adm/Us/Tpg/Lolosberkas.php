@@ -13,6 +13,7 @@ use App\Libraries\Helplib;
 use App\Libraries\Situgu\Kehadiranptklib;
 use App\Libraries\Uuid;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 // use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
@@ -624,11 +625,12 @@ class Lolosberkas extends BaseController
             }
 
             // Menyiapkan objek writer untuk menulis file Excel
-            $writer = new Xlsx($spreadsheet);
+            $writer = new Xls($spreadsheet);
 
             // Menuliskan file Excel
-            $filename = 'data_lolosberkas_usulan_tpg_pengawas_tahun_' . $dataTw->tahun . '_tw_' . $dataTw->tw . '.xlsx';
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            $filename = 'data_lolosberkas_usulan_tpg_pengawas_tahun_' . $dataTw->tahun . '_tw_' . $dataTw->tw . '.xls';
+            header('Content-Type: application/vnd-ms-excel');
+            // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename="' . $filename . '"');
             header('Cache-Control: max-age=0');
             $writer->save('php://output');
