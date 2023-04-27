@@ -569,31 +569,52 @@ class Lolosberkas extends BaseController
                         $keterangan .= "Kematian ";
                     }
 
-                    $itemCreate = [
-                        $key + 1,
-                        substr($item->nuptk, 0),
-                        $item->nama,
-                        $item->tempat_tugas,
-                        substr($item->nip, 0),
-                        $item->us_pang_golongan,
-                        $item->us_pang_mk_tahun,
-                        $item->us_gaji_pokok,
-                        3,
-                        $item->us_gaji_pokok * 3,
-                        ($item->us_gaji_pokok * 3) * 0.01,
-                        ($item->us_gaji_pokok * 3) * $pph21,
-                        ($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21),
-                        substr($item->no_rekening, 0),
-                        $item->jenis_pengawas,
-                        $item->jenjang_pengawas,
-                        $keterangan,
-                        $item->verifikator,
-                    ];
+                    // $itemCreate = [
+                    //     $key + 1,
+                    //     substr($item->nuptk, 0),
+                    //     $item->nama,
+                    //     $item->tempat_tugas,
+                    //     substr($item->nip, 0),
+                    //     $item->us_pang_golongan,
+                    //     $item->us_pang_mk_tahun,
+                    //     $item->us_gaji_pokok,
+                    //     3,
+                    //     $item->us_gaji_pokok * 3,
+                    //     ($item->us_gaji_pokok * 3) * 0.01,
+                    //     ($item->us_gaji_pokok * 3) * $pph21,
+                    //     ($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21),
+                    //     substr($item->no_rekening, 0),
+                    //     $item->jenis_pengawas,
+                    //     $item->jenjang_pengawas,
+                    //     $keterangan,
+                    //     $item->verifikator,
+                    // ];
+
+                    $worksheet->getCell('A' . $row)->setValue($key + 1);
+                    $worksheet->setCellValueExplicit("B" . $row, (string)$item->nuptk, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+                    $worksheet->getCell('C' . $row)->setValue($item->nama);
+                    $worksheet->getCell('D' . $row)->setValue($item->tempat_tugas);
+                    $worksheet->setCellValueExplicit("E" . $row, (string)$item->nip, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+                    $worksheet->getCell('F' . $row)->setValue($item->us_pang_golongan);
+                    $worksheet->setCellValueExplicit("G" . $row, $item->us_pang_mk_tahun, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
+                    $worksheet->setCellValueExplicit("H" . $row, $item->us_gaji_pokok, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
+                    $worksheet->setCellValueExplicit("I" . $row, 3, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
+                    $worksheet->setCellValueExplicit("J" . $row, ($item->us_gaji_pokok * 3), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
+                    $worksheet->setCellValueExplicit("K" . $row, (($item->us_gaji_pokok * 3) * 0.01), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
+                    $worksheet->setCellValueExplicit("L" . $row, (($item->us_gaji_pokok * 3) * $pph21), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
+                    $worksheet->setCellValueExplicit("M" . $row, (($item->us_gaji_pokok * 3) - (($item->us_gaji_pokok * 3) * 0.01) - (($item->us_gaji_pokok * 3) * $pph21)), \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC);
+                    $worksheet->setCellValueExplicit("N" . $row, (string)$item->no_rekening, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+                    $worksheet->getCell('O' . $row)->setValue($item->jenis_pengawas);
+                    $worksheet->getCell('P' . $row)->setValue($item->jenjang_pengawas);
+                    $worksheet->getCell('Q' . $row)->setValue($keterangan);
+                    $worksheet->getCell('R' . $row)->setValue($item->verifikator);
+
+
                     // $worksheet->getStyle('B' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
                     // $worksheet->getStyle('E' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
                     // $worksheet->getStyle('N' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
                     // $worksheet->getStyle('O' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
-                    $worksheet->fromArray($itemCreate, NULL, 'A' . $row);
+                    // $worksheet->fromArray($itemCreate, NULL, 'A' . $row);
                     // $worksheet->getStyle('B' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
                     // $worksheet->getStyle('E' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
                     // $worksheet->getStyle('N' . $row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
