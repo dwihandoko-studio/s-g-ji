@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\Situgu;
+namespace App\Libraries\Situpeng;
 
 use App\Libraries\Uuid;
 
