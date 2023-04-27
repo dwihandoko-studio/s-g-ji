@@ -373,7 +373,7 @@ class Tpg extends BaseController
                         $checkLocked = $this->_db->table('_tb_sptjm_pengawas')->select('is_locked')->where('kode_usulan', $oldData->kode_usulan)->get()->getRowObject();
                         if ($checkLocked) {
                             if ($checkLocked->is_locked == 0) {
-                                $this->_db->table('_tb_sptjm_pengawas_test')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
+                                $this->_db->table('_tb_sptjm_pengawas')->where('kode_usulan', $oldData->kode_usulan)->update(['is_locked' => 1]);
                             }
                         }
                         $this->_db->table('__pengawas_upload_data_attribut')->where(['id_ptk' => $oldData->id_pengawas, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
