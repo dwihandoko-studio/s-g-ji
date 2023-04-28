@@ -273,7 +273,7 @@
             </div>
             <div class="col-lg-12 mt-2">
                 <p>Verifikator: <span class="badge badge-pill badge-soft-success"><?= $data->verifikator ?></span></p>
-            </div
+            </div>
         </div>
     </div>
     <div class="modal-footer">
