@@ -476,7 +476,7 @@ class Lolosberkas extends BaseController
                 ->join('__pengawas_upload_data_attribut d', 'a.id_pengawas = d.id_ptk AND (a.id_tahun_tw = d.id_tahun_tw)')
                 ->join('ref_gaji c', 'a.us_pang_golongan = c.pangkat AND (c.masa_kerja = (IF(a.us_pang_mk_tahun > 32, 32, a.us_pang_mk_tahun)))', 'LEFT')
                 ->join('_profil_users_tb e', 'a.admin_approve = e.id')
-                ->where(['a.id_usulan' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
+                ->where(['a.id' => $id, 'a.id_tahun_tw' => $tw])->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
