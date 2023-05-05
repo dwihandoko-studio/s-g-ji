@@ -361,7 +361,7 @@ class Ajukan extends BaseController
                     return json_encode($response);
                 }
 
-                $pendidikans = ['D4', 'S1', 'S2', 'S3'];
+                $pendidikans = ["a" => 'D4', "b" => 'S1', "c" => 'S2', "d" => 'S3'];
                 $pend = $ptk->pendidikan ?? "";
                 if (!array_search(strtoupper($pend), $pendidikans)) {
                     $response->status = 400;

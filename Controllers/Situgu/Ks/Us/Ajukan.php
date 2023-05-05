@@ -344,9 +344,9 @@ class Ajukan extends BaseController
                     return json_encode($response);
                 }
 
-                $pendidikans = ['D4', 'S1', 'S2', 'S3'];
-                // strtoupper()
-                if (!array_search($ptk->pendidikan, $pendidikans)) {
+                $pendidikans = ["a" => 'D4', "b" => 'S1', "c" => 'S2', "d" => 'S3'];
+                $pend = $ptk->pendidikan ?? "";
+                if (!array_search(strtoupper($pend), $pendidikans)) {
                     $response->status = 400;
                     $response->message = "Untuk mendapatkan Tunjangan Penghasilan Guru PNS Non Sertifikasi (Tamsil), harus wajib memiliki Pendidikan minimal S1.";
                     return json_encode($response);
