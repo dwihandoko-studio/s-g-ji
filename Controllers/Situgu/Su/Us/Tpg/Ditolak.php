@@ -205,7 +205,7 @@ class Ditolak extends BaseController
     }
 
     public function unlock () {
-        $data = $this->_db->table('_tb_usulan_detail_tpg')->where('status_usulan' => 4)->get()->getResult();
+        $data = $this->_db->table('_tb_usulan_detail_tpg')->where('status_usulan', 4)->get()->getResult();
         if (count($data) > 0 ) {
             foreach ($data as $key => $current) {
                 $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $current->id_ptk, 'id_tahun_tw' => $current->id_tahun_tw])->update(['is_locked' => 0]);
