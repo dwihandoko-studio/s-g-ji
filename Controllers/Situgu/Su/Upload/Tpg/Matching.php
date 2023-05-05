@@ -979,6 +979,10 @@ class Matching extends BaseController
                 } else {
                     $this->_db->table('_tb_usulan_detail_tpg')->where('id', $current->id_usulan)->update(['status_usulan' => 4, 'updated_at' => date('Y-m-d H:i:s'), 'date_matching' => date('Y-m-d H:i:s'), 'admin_matching' => $user->data->id, 'keterangan_reject' => $keterangan]);
                     if ($this->_db->affectedRows() > 0) {
+                        $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $current->id_ptk, 'id_tahun_tw' => $current->id_tahun_tw])->update(['is_locked' => 0]);
+                        $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $current->id_ptk, 'id_tahun_tw' => $current->id_tahun_tw])->update(['is_locked' => 0]);
+                        $this->_db->table('_ptk_tb')->where(['id' => $current->id_ptk])->update(['is_locked' => 0]);
+
                         $this->_db->transCommit();
                         try {
                             $notifLib = new NotificationLib();
