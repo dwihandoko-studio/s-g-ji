@@ -378,7 +378,7 @@ class Tamsil extends BaseController
 
                         $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
                         $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 1]);
-                        $this->_db->table('_ptk_tb')->where(['id_ptk' => $oldData->id_ptk])->update(['is_locked' => 1]);
+                        $this->_db->table('_ptk_tb')->where(['id' => $oldData->id_ptk])->update(['is_locked' => 1]);
 
                         $verifikasiLib = new Verifikasiadminlib();
                         $verifikasiLib->create($user->data->id, $oldData->kode_usulan, 'tamsil', $oldData->id_ptk, $oldData->id_tahun_tw, 'Lolos');
@@ -554,7 +554,7 @@ class Tamsil extends BaseController
                         }
                         $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 0]);
                         $this->_db->table('_absen_kehadiran')->where(['id_ptk' => $oldData->id_ptk, 'id_tahun_tw' => $oldData->id_tahun_tw])->update(['is_locked' => 0]);
-                        $this->_db->table('_ptk_tb')->where(['id_ptk' => $oldData->id_ptk])->update(['is_locked' => 0]);
+                        $this->_db->table('_ptk_tb')->where(['id' => $oldData->id_ptk])->update(['is_locked' => 0]);
 
                         $verifikasiLib = new Verifikasiadminlib();
                         $verifikasiLib->create($user->data->id, $oldData->kode_usulan, 'tamsil', $oldData->id_ptk, $oldData->id_tahun_tw, 'Ditolak', $keterangan);
