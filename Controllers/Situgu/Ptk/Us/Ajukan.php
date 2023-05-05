@@ -362,8 +362,8 @@ class Ajukan extends BaseController
                 }
 
                 $pendidikans = ['D4', 'S1', 'S2', 'S3'];
-                // strtoupper()
-                if (!array_search($ptk->pendidikan, $pendidikans)) {
+                $pend = $ptk->pendidikan ?? "";
+                if (!array_search(strtoupper($pend), $pendidikans)) {
                     $response->status = 400;
                     $response->message = "Untuk mendapatkan Tunjangan Penghasilan Guru PNS Non Sertifikasi (Tamsil), harus wajib memiliki Pendidikan minimal S1.";
                     return json_encode($response);
