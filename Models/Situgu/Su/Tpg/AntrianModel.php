@@ -9,7 +9,7 @@ class AntrianModel extends Model
 {
     protected $table = "_tb_usulan_detail_tpg a";
     protected $column_order = array(null, null, 'b.nama', 'b.nik', 'b.nuptk', 'b.jenis_ptk', 'a.date_approve_sptjm');
-    protected $column_search = array('b.nik', 'b.nuptk', 'b.nama');
+    protected $column_search = array('b.nuptk', 'b.nama');
     protected $order = array('a.date_approve_sptjm' => 'asc');
     protected $request;
     protected $db;
