@@ -31,7 +31,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        <button type="button" onclick="actionSubmit(this)" class="btn btn-success waves-effect waves-light button-submit">Generate SPTJM Verifikasi Tamsil</button>
+        <button type="button" onclick="actionSubmit(this)" class="btn btn-success waves-effect waves-light button-submit">Generate SPTJM Verifikasi TPG</button>
     </div>
     <script>
         function actionSubmit(event) {
