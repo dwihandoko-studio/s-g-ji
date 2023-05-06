@@ -3,6 +3,21 @@
         <input type="hidden" id="_id" name="_id" value="<?= $data->id ?>" />
         <div class="modal-body" style="padding-top: 0px; padding-bottom: 0px;">
             <div class="mb-3">
+                <label for="_pendidikan" class="col-form-label">Pilih Pendidikan:</label>
+                <select class="select2 form-control select2" id="_pendidikan" name="_pendidikan" style="width: 100%" data-placeholder="Pilih Pendidikan ...">
+                    <option value="" selected>--Pilih Pendidikan--</option>
+                    <option value="SMA" <?= $data->pendidikan == NULL || $data->pendidikan == "" ? '' : ($data->pendidikan == 'SMA' ? 'selected' : '') ?>>SMA</option>
+                    <option value="D1" <?= $data->pendidikan == NULL || $data->pendidikan == "" ? '' : ($data->pendidikan == 'D1' ? 'selected' : '') ?>>D1</option>
+                    <option value="D2" <?= $data->pendidikan == NULL || $data->pendidikan == "" ? '' : ($data->pendidikan == 'D2' ? 'selected' : '') ?>>D2</option>
+                    <option value="D3" <?= $data->pendidikan == NULL || $data->pendidikan == "" ? '' : ($data->pendidikan == 'D3' ? 'selected' : '') ?>>D3</option>
+                    <option value="D4" <?= $data->pendidikan == NULL || $data->pendidikan == "" ? '' : ($data->pendidikan == 'D4' ? 'selected' : '') ?>>D4</option>
+                    <option value="S1" <?= $data->pendidikan == NULL || $data->pendidikan == "" ? '' : ($data->pendidikan == 'S1' ? 'selected' : '') ?>>S1</option>
+                    <option value="S2" <?= $data->pendidikan == NULL || $data->pendidikan == "" ? '' : ($data->pendidikan == 'S2' ? 'selected' : '') ?>>S2</option>
+                    <option value="S3" <?= $data->pendidikan == NULL || $data->pendidikan == "" ? '' : ($data->pendidikan == 'S3' ? 'selected' : '') ?>>S3</option>
+                </select>
+                <div class="help-block _pendidikan"></div>
+            </div>
+            <div class="mb-3">
                 <label for="_nrg" class="form-label">NRG</label>
                 <input type="text" class="form-control nrg" value="<?= $data->nrg ?>" id="_nrg" name="_nrg" placeholder="NRG..." onfocusin="inputFocus(this);">
                 <div class="help-block _nrg"></div>
@@ -90,6 +105,7 @@
             e.preventDefault();
             const id = document.getElementsByName('_id')[0].value;
             const nrg = document.getElementsByName('_nrg')[0].value;
+            const pendidikan = document.getElementsByName('_pendidikan')[0].value;
             const no_peserta = document.getElementsByName('_no_peserta')[0].value;
             const bidang_studi_sertifikasi = document.getElementsByName('_bidang_studi_sertifikasi')[0].value;
             const pangkat = document.getElementsByName('_pangkat')[0].value;
@@ -152,6 +168,7 @@
                         data: {
                             id: id,
                             nrg: nrg,
+                            pendidikan: pendidikan,
                             no_peserta: no_peserta,
                             bidang_studi_sertifikasi: bidang_studi_sertifikasi,
                             pangkat: pangkat,

@@ -807,6 +807,7 @@ class Ptk extends BaseController
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nrg = htmlspecialchars($this->request->getVar('nrg'), true);
+            $pendidikan = htmlspecialchars($this->request->getVar('pendidikan'), true);
             $no_peserta = htmlspecialchars($this->request->getVar('no_peserta'), true);
             $bidang_studi_sertifikasi = htmlspecialchars($this->request->getVar('bidang_studi_sertifikasi'), true);
             $pangkat = htmlspecialchars($this->request->getVar('pangkat'), true);
@@ -840,6 +841,9 @@ class Ptk extends BaseController
             }
             if ($no_peserta !== "") {
                 $data['no_peserta'] = $no_peserta;
+            }
+            if ($pendidikan !== "") {
+                $data['pendidikan'] = $pendidikan;
             }
             if ($bidang_studi_sertifikasi !== "") {
                 $data['bidang_studi_sertifikasi'] = $bidang_studi_sertifikasi;
