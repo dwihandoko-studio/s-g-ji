@@ -28,6 +28,7 @@
                         <div class="row">
                             <div class="col-6">
                                 <h4 class="card-title">Data Usulan TPG Siap SK</h4>
+                                <div><a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionDownload(this);"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download <i class="mdi mdi-file-excel font-size-16 align-middle me-2"></i></a>&nbsp;&nbsp;</div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
@@ -112,6 +113,31 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
+    function actionDownload(event) {
+        const tw = document.getElementsByName('_filter_tw')[0].value;
+
+        console.log(tw);
+        if (tw === undefined || tw === "") {
+            const linkSource = "<?= base_url('situgu/su/us/tpg/siapsk/download') ?>?tw=<?= $tw->id ?>";
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.onclick = function() {
+                window.open(this.href);
+                return false;
+            };
+            downloadLink.click();
+        } else {
+            const linkSource = "<?= base_url('situgu/su/us/tpg/siapsk/download') ?>?tw=" + tw;
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.onclick = function() {
+                window.open(this.href);
+                return false;
+            };
+            downloadLink.click();
+        }
+    }
+
     function actionDetail(id, id_ptk, tw, nama) {
         $.ajax({
             url: "./detail",
