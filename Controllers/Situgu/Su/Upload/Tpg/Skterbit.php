@@ -389,9 +389,9 @@ class Skterbit extends BaseController
             $belumusul = 0;
             foreach ($datas['data'] as $key => $v) {
                 $item = [];
-                $tgl_lh = ($v['tgl_lahir'] == null || $v['tgl_lahir'] == "" || $v['tgl_lahir'] == "null" || $v['tgl_lahir'] == "NULL") ? '0000-00-00' : $v['tgl_lahir'];
-                $tgl_lahir = explode("-", $tgl_lh);
-                $tgl_lhr = $tgl_lahir[2] . $tgl_lahir[1] . $tgl_lahir[0];
+                // $tgl_lh = ($v['tgl_lahir'] == null || $v['tgl_lahir'] == "" || $v['tgl_lahir'] == "null" || $v['tgl_lahir'] == "NULL") ? '0000-00-00' : $v['tgl_lahir'];
+                // $tgl_lahir = explode("-", $tgl_lh);
+                // $tgl_lhr = $tgl_lahir[2] . $tgl_lahir[1] . $tgl_lahir[0];
                 if ($v['data_usulan'] == NULL || $v['data_usulan'] == "") {
                     $item['number'] = $key + 1;
                     $item['nuptk'] = $v['nuptk'];
