@@ -229,10 +229,10 @@ class Absen extends BaseController
                     } else {
                         $countGagalUpdateCreate++;
                         continue;
-                        $response = new \stdClass;
-                        $response->status = 400;
-                        $response->message = "Simpan absen gagal.";
-                        return json_encode($res);
+                        // $response = new \stdClass;
+                        // $response->status = 400;
+                        // $response->message = "Simpan absen gagal.";
+                        // return json_encode($res);
                     }
                 }
                 $response = new \stdClass;
@@ -242,7 +242,7 @@ class Absen extends BaseController
             } catch (\Throwable $th) {
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->error = $th;
+                $response->error = var_dump($th);
                 $response->message = "Simpan absen gagal.";
                 return json_encode($response);
             }
