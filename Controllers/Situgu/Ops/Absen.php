@@ -238,7 +238,7 @@ class Absen extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Tambah absen PTK berhasil. Success: " . $countUpdateCreate . ", Gagal: " . $countGagalUpdateCreate;
-                return json_encode($res);
+                return json_encode($response);
             } catch (\Throwable $th) {
                 $response = new \stdClass;
                 $response->status = 400;
