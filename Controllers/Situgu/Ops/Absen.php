@@ -217,12 +217,18 @@ class Absen extends BaseController
         if (count($id) > 0 && count($id) === count($idptk) && count($id) === count($bulan1) && count($id) === count($bulan2) && count($id) === count($bulan3)) {
             try {
                 $kehadiranLib = new Kehadiranptklib();
+                $countUpdateCreate = 0;
+                $countGagalUpdateCreate = 0;
+
                 foreach ($id as $key => $value) {
 
                     $res = $kehadiranLib->createUpdate($user->data->npsn, $value, $tw, $bulan1[$key], $bulan2[$key], $bulan3[$key]);
                     if ($res->status === 200) {
+                        $countUpdateCreate++;
                         continue;
                     } else {
+                        $countGagalUpdateCreate++;
+                        continue;
                         $response = new \stdClass;
                         $response->status = 400;
                         $response->message = "Simpan absen gagal.";
@@ -231,7 +237,7 @@ class Absen extends BaseController
                 }
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->message = "Tambah absen semua PTK berhasil.";
+                $response->message = "Tambah absen PTK berhasil. Success: " . $countUpdateCreate . ", Gagal: " . $countGagalUpdateCreate;
                 return json_encode($res);
             } catch (\Throwable $th) {
                 $response = new \stdClass;
