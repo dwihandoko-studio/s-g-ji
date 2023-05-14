@@ -40,8 +40,9 @@ class Ptk extends BaseController
             $action = '<div class="btn-group">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                         <div class="dropdown-menu" style="">
-                        <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                        <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
+                            <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+                            <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Tarik Data</a>
+                            <a class="dropdown-item" href="javascript:actionSyncDataPembenahan(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Syncrone Data Pembenahan</a>
                             <a class="dropdown-item" href="javascript:actionEdit(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-edit-alt font-size-16 align-middle"></i> &nbsp;Edit</a>
                             <a class="dropdown-item" href="javascript:actionEditPendidikan(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="mdi mdi-school-outline font-size-16 align-middle"></i> &nbsp;Edit Default Pendidikan</a>
                             <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama))  . '\', \'' . $list->nuptk . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
@@ -534,6 +535,142 @@ class Ptk extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal Tarik Data";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function syncpembenahan()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'ptk_id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id PTK tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'npsn' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NPSN tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('ptk_id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('npsn');
+            return json_encode($response);
+        } else {
+            $idPtk = htmlspecialchars($this->request->getVar('ptk_id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
+
+            $tw = $this->_helpLib->getCurrentTw();
+            if (!$tw) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Tahun Triwulan Active tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $ptk = $this->_db->table('_ptk_tb')->where('id_ptk', $idPtk)->get()->getRowObject();
+
+            if (!$ptk) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data PTK tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $ptkAttr = $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $ptk->id, 'id_tahun_tw' => $tw->id])->get()->getRowObject();
+            if (!$ptkAttr) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data Atribut PTK tidak ditemukan.";
+                return json_encode($response);
+            }
+            if ($ptkAttr->is_locked == 1) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data Atribut PTK Sudah Terkunci.";
+                return json_encode($response);
+            }
+
+            $tgl = "";
+            $golongan = "";
+            $tmt = "";
+            $tgl = "";
+            $no = "";
+            $jenis = "";
+            $tahun = "";
+            $bulan = "";
+
+            if ($ptk->tmt_sk_kgb > $ptk->tmt_pangkat) {
+                $tgl = $ptk->tgl_sk_kgb;
+                $golongan = $ptk->pangkat_golongan_kgb;
+                $tmt = $ptk->tmt_sk_kgb;
+                $no = $ptk->sk_kgb;
+                $jenis = "kgb";
+                $tahun = $ptk->masa_kerja_tahun_kgb;
+                $bulan = $ptk->masa_kerja_bulan_kgb;
+            } else {
+                $tgl = $ptk->tgl_sk_pangkat;
+                $golongan = $ptk->pangkat_golongan;
+                $tmt = $ptk->tmt_pangkat;
+                $no = $ptk->nomor_sk_pangkat;
+                $jenis = "pangkat";
+                $tahun = $ptk->masa_kerja_tahun;
+                $bulan = $ptk->masa_kerja_bulan;
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('_upload_data_attribut')->where('id', $ptkAttr->id)->update([
+                    'pang_golongan' => $golongan,
+                    'pang_jenis' => $jenis,
+                    'pang_no' => $no,
+                    'pang_tmt' => $tmt,
+                    'pang_tgl' => $tgl,
+                    'pang_tahun' => $tahun,
+                    'pang_bulan' => $bulan,
+                ]);
+            } catch (\Throwable $th) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = var_dump($th);
+                $response->message = "Gagal melakukan pembaharuan data attribut.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Pembaharuan Data Atribut PTK $nama Berhasil Dilakukan.";
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal Melakukan Pembaharuan Data Atribut PTK";
                 return json_encode($response);
             }
         }
