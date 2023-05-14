@@ -1075,6 +1075,19 @@ function canVerifikasiTamsil()
 	}
 }
 
+function grantTarikDataBackbone()
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('granted_syncrone_backbone')->where(['id' => 1, 'status' => 1])->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+
+	return true;
+}
+
 function canSptjmPghm()
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'

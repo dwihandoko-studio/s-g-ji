@@ -502,6 +502,13 @@ class Ptk extends BaseController
 
     public function syncAll()
     {
+        if (!(grantTarikDataBackbone())) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Tarik data dari backbone masih dalam normalisasi system.";
+            return json_encode($response);
+        }
+
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
             $response->status = 400;
@@ -552,6 +559,13 @@ class Ptk extends BaseController
 
     public function sync()
     {
+        if (!(grantTarikDataBackbone())) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Tarik data dari backbone masih dalam normalisasi system.";
+            return json_encode($response);
+        }
+
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
             $response->status = 400;
