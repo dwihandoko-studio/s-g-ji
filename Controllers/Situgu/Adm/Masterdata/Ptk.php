@@ -761,7 +761,7 @@ class Ptk extends BaseController
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Gagal Melakukan Pembaharuan Data Atribut PTK";
+                $response->message = "Tidak ada Pembaharuan Data Atribut PTK $nama";
                 return json_encode($response);
             }
         }
