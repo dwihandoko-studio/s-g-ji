@@ -690,7 +690,7 @@ class Ptk extends BaseController
                 return json_encode($response);
             }
 
-            $ptkAttr = $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $ptk->id, 'id_tahun_tw' => $tw->id])->get()->getRowObject();
+            $ptkAttr = $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $ptk->id, 'id_tahun_tw' => $tw])->get()->getRowObject();
             if (!$ptkAttr) {
                 $response = new \stdClass;
                 $response->status = 400;
