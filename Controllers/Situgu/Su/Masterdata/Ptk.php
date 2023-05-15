@@ -583,8 +583,6 @@ class Ptk extends BaseController
             $npsn = htmlspecialchars($this->request->getVar('npsn'), true);
 
             $tw = $this->_helpLib->getCurrentTw();
-            var_dump($tw);
-            die;
             if (!$tw) {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -601,7 +599,7 @@ class Ptk extends BaseController
                 return json_encode($response);
             }
 
-            $ptkAttr = $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $ptk->id, 'id_tahun_tw' => $tw->id])->orderBy('created_at', 'DESC')->get()->getRowObject();
+            $ptkAttr = $this->_db->table('_upload_data_attribut')->where(['id_ptk' => $ptk->id, 'id_tahun_tw' => $tw])->orderBy('created_at', 'DESC')->get()->getRowObject();
             if (!$ptkAttr) {
                 $response = new \stdClass;
                 $response->status = 400;
