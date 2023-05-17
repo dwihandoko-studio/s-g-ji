@@ -84,20 +84,22 @@
                             </a>
 
                             <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl" aria-labelledby="topnav-spj">
-                                <div>
+                                <!-- <div>
                                     <a href="<?= base_url('situgu/ptk/spj/create') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "create") ? ' active-menu-href' : '' ?>" key="t-spj-create">Buat SPJ Tunjangan</a>
                                 </div>
-                                <hr />
+                                <hr /> -->
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h6> TPG (Sertifikasi)</h6>
                                         <div>
+                                            <a href="<?= base_url('situgu/ptk/spj/tpg/upload') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "upload") ? ' active-menu-href' : '' ?>" key="t-spj-upload">Upload</a>
                                             <a href="<?= base_url('situgu/ptk/spj/tpg/antrian') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "antrian") ? ' active-menu-href' : '' ?>" key="t-spj-antrian">Antrian</a>
                                             <a href="<?= base_url('situgu/ptk/spj/tpg/ditolak') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "ditolak") ? ' active-menu-href' : '' ?>" key="t-spj-ditolak">Ditolak</a>
                                             <a href="<?= base_url('situgu/ptk/spj/tpg/lolosberkas') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tpg"  && $uri->getSegment(5) == "lolosberkas") ? ' active-menu-href' : '' ?>" key="t-spj-lolosberkas">Lolos Verifikasi</a>
                                         </div>
                                         <h6 class="mt-2"> TAMSIL</h6>
                                         <div>
+                                            <a href="<?= base_url('situgu/ptk/spj/tamsil/upload') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "upload") ? ' active-menu-href' : '' ?>" key="t-spj-upload">Upload</a>
                                             <a href="<?= base_url('situgu/ptk/spj/tamsil/antrian') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "antrian") ? ' active-menu-href' : '' ?>" key="t-spj-antrian">Antrian</a>
                                             <a href="<?= base_url('situgu/ptk/spj/tamsil/ditolak') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "ditolak") ? ' active-menu-href' : '' ?>" key="t-spj-ditolak">Ditolak</a>
                                             <a href="<?= base_url('situgu/ptk/spj/tamsil/lolosberkas') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "tamsil"  && $uri->getSegment(5) == "lolosberkas") ? ' active-menu-href' : '' ?>" key="t-spj-lolosberkas">Lolos Verifikasi</a>
