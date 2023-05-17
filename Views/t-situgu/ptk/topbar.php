@@ -84,6 +84,10 @@
                             </a>
 
                             <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl" aria-labelledby="topnav-spj">
+                                <div>
+                                    <a href="<?= base_url('situgu/ptk/spj/create') ?>" class="dropdown-item <?= ($uri->getSegment(2) == "ptk" && $uri->getSegment(3) == "spj" && $uri->getSegment(4) == "create") ? ' active-menu-href' : '' ?>" key="t-spj-create">Buat SPJ Tunjangan</a>
+                                </div>
+                                <hr />
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <h6> TPG (Sertifikasi)</h6>
