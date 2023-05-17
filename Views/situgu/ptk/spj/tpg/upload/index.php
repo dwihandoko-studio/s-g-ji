@@ -48,8 +48,6 @@
                                 <tr>
                                     <th>Tahun</th>
                                     <th>TW</th>
-                                </tr>
-                                <tr>
                                     <th>Pernyataan</th>
                                     <th>Rekening Koran</th>
                                 </tr>
