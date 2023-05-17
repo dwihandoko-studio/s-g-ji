@@ -92,13 +92,19 @@ class Upload extends BaseController
             $row[] = $list->tw;
             $row[] = $list->tf_jumlah_diterima;
             if ($list->lock_upload_spj == 1) {
-                $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_pernyataan . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_pernyataan . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/ptk/spj/tpg') . '/' . $list->lampiran_pernyataan . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/ptk/spj/tpg') . '/' . $list->lampiran_pernyataan . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/ptk/spj/tpg') . '/' . $list->lampiran_rekening_koran . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/ptk/spj/tpg') . '/' . $list->lampiran_rekening_koran . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
             } else {
                 if ($list->lampiran_pernyataan == null || $list->lampiran_pernyataan == "") {
-                    $row[] = '<a class="btn btn-sm btn-primary waves-effect waves-light" target="_blank" href="' . base_url('situgu/ks/sptjm/tpg/download') . '?id=' . $list->id . '"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download</a>&nbsp;&nbsp;'
-                        . '<a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload</a>';
+                    $row[] = '<a class="btn btn-sm btn-primary waves-effect waves-light" target="_blank" href="' . base_url('situgu/ptk/spj/tpg/download') . '?id=' . $list->id . '"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download</a>&nbsp;&nbsp;'
+                        . '<a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\',\'pernyataan\');"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload</a>';
                 } else {
-                    $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_pernyataan . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_pernyataan . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                    $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/ptk/spj/tpg') . '/' . $list->lampiran_pernyataan . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/ptk/spj/tpg') . '/' . $list->lampiran_pernyataan . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                }
+                if ($list->lampiran_rekening_koran == null || $list->lampiran_rekening_koran == "") {
+                    $row[] = '<a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\',\'rekeningkoran\');"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload</a>';
+                } else {
+                    $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/ptk/spj/tpg') . '/' . $list->lampiran_rekening_koran . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/ptk/spj/tpg') . '/' . $list->lampiran_rekening_koran . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
                 }
             }
 

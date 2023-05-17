@@ -41,13 +41,17 @@
                                         <div class="text-center">Tahun TW</div>
                                     </th>
                                     <th rowspan="2">Nominal</th>
-                                    <th rowspan="2" data-orderable="false">
+                                    <th colspan="2" data-orderable="false">
                                         <div class="text-center">Aksi</div>
                                     </th>
                                 </tr>
                                 <tr>
                                     <th>Tahun</th>
                                     <th>TW</th>
+                                </tr>
+                                <tr>
+                                    <th>Pernyataan</th>
+                                    <th>Rekening Koran</th>
                                 </tr>
                             </thead>
                         </table>
