@@ -86,12 +86,21 @@ class Upload extends BaseController
             //     <a href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk . '\');" class="delete" id="delete"><button type="button" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
             //     <i class="bx bx-trash font-size-16 align-middle"></i></button>
             //     </a>';
-            $row[] = $action;
-            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
-            $row[] = $list->nik;
-            $row[] = $list->nuptk;
-            $row[] = $list->jenis_ptk;
-            $row[] = $list->date_approve_sptjm;
+            // $row[] = $action;
+            // $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
+            $row[] = $list->tahun;
+            $row[] = $list->tw;
+            $row[] = $list->tf_jumlah_diterima;
+            if ($list->lock_upload_spj == 1) {
+                $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_pernyataan . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_pernyataan . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+            } else {
+                if ($list->lampiran_pernyataan == null || $list->lampiran_pernyataan == "") {
+                    $row[] = '<a class="btn btn-sm btn-primary waves-effect waves-light" target="_blank" href="' . base_url('situgu/ks/sptjm/tpg/download') . '?id=' . $list->id . '"><i class="bx bxs-cloud-download font-size-16 align-middle me-2"></i> Download</a>&nbsp;&nbsp;'
+                        . '<a class="btn btn-sm btn-primary waves-effect waves-light" href="javascript:actionUpload(\'' . $list->id . '\',\'' . $list->tahun . '\',\'' . $list->tw . '\');"><i class="bx bxs-cloud-upload font-size-16 align-middle me-2"></i> Upload</a>';
+                } else {
+                    $row[] = '<a target="popup" onclick="window.open(\'' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_pernyataan . '\',\'popup\',\'width=600,height=600\'); return false;" href="' . base_url('upload/sekolah/sptjm') . '/' . $list->lampiran_pernyataan . '"><span class="badge rounded-pill badge-soft-dark">Lihat</span></a>';
+                }
+            }
 
             $data[] = $row;
         }
