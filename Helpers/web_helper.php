@@ -1532,3 +1532,65 @@ function getCodePangkatFromMatching($code = "")
 			break;
 	}
 }
+
+
+function getNameWeb()
+{
+	return getenv('name.web.key') ?? "LAYANAN";
+}
+
+function getTitleWeb()
+{
+	return getenv('title.web.key') ?? "Unuknown";
+}
+
+function getKeywordWeb()
+{
+	return getenv('keyword.web.key') ?? "Unuknown";
+}
+
+function getDescriptionWeb()
+{
+	return getenv('description.web.key') ?? "Unuknown";
+}
+
+function getNamaKecamatan($id = null)
+{
+	if ($id === NULL || $id === "") {
+		return "-";
+	}
+	$db      = \Config\Database::connect();
+
+	$data = $db->table('ref_kecamatan')
+		->select("kecamatan")
+		->where('id', $id)
+		->get()->getRowObject();
+	if ($data) {
+		return $data->kecamatan;
+	}
+	return "-";
+}
+
+function getNamaKelurahan($id = null)
+{
+	if ($id === NULL || $id === "") {
+		return "-";
+	}
+	$db      = \Config\Database::connect();
+
+	$data = $db->table('ref_kelurahan')
+		->select("kelurahan")
+		->where('id', $id)
+		->get()->getRowObject();
+	if ($data) {
+		return $data->kelurahan;
+	}
+	return "-";
+}
+
+function getLayananSilastri()
+{
+	$layanan = json_decode(file_get_contents(FCPATH . "uploads/layanans_silastri.json"), true);
+	$data = $layanan['layanans'];
+	return $data;
+}

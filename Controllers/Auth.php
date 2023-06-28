@@ -44,7 +44,11 @@ class Auth extends BaseController
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status == 200) {
-            return redirect()->to(base_url('home'));
+            $response = new \stdClass;
+            $response->status = 201;
+            $response->message = "Sudah Login";
+            return json_encode($response);
+            // return redirect()->to(base_url('home'));
         }
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -54,44 +58,41 @@ class Auth extends BaseController
         }
 
         $rules = [
-            '_name' => [
+            '_nama' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Nama tidak boleh kosong. ',
                 ]
             ],
+            '_nik' => [
+                'rules' => 'required|trim|min_length[16]',
+                'errors' => [
+                    'required' => 'NIK tidak boleh kosong. ',
+                    'min_length' => 'NIK harus 16 karakter. ',
+                ]
+            ],
             '_no_hp' => [
-                'rules' => 'required|trim',
+                'rules' => 'required|trim|min_length[8]',
                 'errors' => [
                     'required' => 'No handphone tidak boleh kosong. ',
-                ]
-            ],
-            '_kode_pos' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Kode pos tidak boleh kosong. ',
-                ]
-            ],
-            '_alamat' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Alamat tidak boleh kosong. ',
+                    'min_length' => 'Masukkan no handphone dengan benar. ',
                 ]
             ],
             '_email' => [
-                'rules' => 'required|trim',
+                'rules' => 'required|trim|valid_email',
                 'errors' => [
                     'required' => 'Email tidak boleh kosong. ',
+                    'valid_email' => 'Masukkan email dengan benar. ',
                 ]
             ],
             '_password' => [
                 'rules' => 'required|trim|min_length[6]',
                 'errors' => [
-                    'required' => 'Kata sandi tidak boleh kosong. ',
-                    'min_length' => 'Panjang kata sandi minimal 6 karakter. ',
+                    'required' => 'Password tidak boleh kosong. ',
+                    'min_length' => 'Panjang password minimal 6 karakter. ',
                 ]
             ],
-            '_repassword' => [
+            '_re_password' => [
                 'rules' => 'required|matches[_password]',
                 'errors' => [
                     'required' => 'Ulangi kata sandi tidak boleh kosong. ',
@@ -102,79 +103,70 @@ class Auth extends BaseController
 
         if (!$this->validate($rules)) {
             $response = new \stdClass;
-            $response->code = 400;
-            $response->message = $this->validator->getError('_name')
+            $response->status = 400;
+            $response->message = $this->validator->getError('_nama')
+                . $this->validator->getError('_nik')
                 . $this->validator->getError('_no_hp')
-                . $this->validator->getError('_kode_pos')
-                . $this->validator->getError('_alamat')
                 . $this->validator->getError('_email')
                 . $this->validator->getError('_password')
-                . $this->validator->getError('_repassword');
+                . $this->validator->getError('_re_password');
             return json_encode($response);
         } else {
-            $name = htmlspecialchars($this->request->getVar('_name'), true);
+            $nama = htmlspecialchars($this->request->getVar('_nama'), true);
+            $nik = htmlspecialchars($this->request->getVar('_nik'), true);
             $no_hp = htmlspecialchars($this->request->getVar('_no_hp'), true);
-            $kode_pos = htmlspecialchars($this->request->getVar('_kode_pos'), true);
-            $alamat = htmlspecialchars($this->request->getVar('_alamat'), true);
             $email = htmlspecialchars($this->request->getVar('_email'), true);
             $password = htmlspecialchars($this->request->getVar('_password'), true);
+            $re_password = htmlspecialchars($this->request->getVar('_re_password'), true);
 
-            $cekData = $this->_db->table('_users_tb')->where('email', $email)->get()->getRowObject();
+            $authLib = new Authlib();
+            $result = $authLib->postRegis($nama, $nik, $no_hp, $email, $password, $re_password);
 
-            if ($cekData) {
+            // var_dump($result);
+            // die;
+
+            if (!$result) {
                 $response = new \stdClass;
-                $response->status = 204;
-                $response->message = "Email sudah terdaftar, silahkan login ke aplikasi.";
-                $response->redirect = base_url('auth');
+                $response->status = 400;
+                $response->message = "Kesalahan dalam memuat data.";
                 return json_encode($response);
             }
 
-            $data = [
-                'email' => $email,
-                'password' => password_hash($password, PASSWORD_BCRYPT),
-                'fullname' => $name,
-                'no_hp' => $no_hp,
-                'alamat' => $alamat,
-                'kode_pos' => $kode_pos,
-                'level' => 0,
-                'is_active' => 1,
-                'created_at' => date('Y-m-d H:i:s')
-            ];
-
-            $this->_db->transBegin();
-
-            try {
-                $this->_db->table('_users_tb')->insert($data);
-            } catch (\Throwable $th) {
-                $this->_db->transRollback();
+            if (!($result->status == 200)) {
                 $response = new \stdClass;
-                $response->status = 401;
-                $response->message = "Gagal mendaftarkan user.";
+                $response->status = 400;
+                $response->message = $result->message;
                 return json_encode($response);
             }
-            if ($this->_db->affectedRows() > 0) {
-                $this->_db->transCommit();
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->data = $data;
-                $response->redirect = base_url('auth');
-                $response->message = "Registrasi Berhasil. Selanjutnya silahkan login.";
-                return json_encode($response);
-            } else {
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 401;
-                $response->message = "Gagal menyimpan user.";
-                return json_encode($response);
-            }
+
+            set_cookie('jwt', $result->data->access_token, strval(3600 * 24 * 1));
+
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = 'Pendaftaran Akun berhasil.';
+            // if ((int)$result->level == 1) {
+            $response->url = base_url('portal');
+            // } else if ((int)$result->level == 2) {
+            //     $response->redirect = base_url('sp/home');
+            // } else if ((int)$result->level == 3) {
+            //     $response->redirect = base_url('bp/home');
+            // } else {
+            //     $response->redirect = base_url('p/home');
+            // }
+            return json_encode($response);
         }
     }
+
     public function login()
     {
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status == 200) {
-            return redirect()->to(base_url('home'));
+            $response = new \stdClass;
+            $response->status = 201;
+            $response->message = "Sudah Login";
+            return json_encode($response);
+            // return redirect()->to(base_url('home'));
         }
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -210,6 +202,9 @@ class Auth extends BaseController
 
             $authLib = new Authlib();
             $result = $authLib->postLogin($username, $password);
+
+            // var_dump($result);
+            // die;
 
             if (!$result) {
                 $response = new \stdClass;

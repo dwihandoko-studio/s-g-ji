@@ -32,61 +32,39 @@ class Filterauth implements FilterInterface
                     $totalSegment = $uri->getTotalSegments();
                     if ($totalSegment > 0) {
                         $uriMain = $uri->getSegment(1);
-                        if ($uriMain === "" || $uriMain === "home" || $uriMain === "auth" || $uriMain === "portal") {
+                        if ($uriMain === "" || $uriMain === "home" || $uriMain === "auth" || $uriMain === "portal" || $uriMain === "profil") {
                         } else {
-                            if ($uriMain === "situgu") {
+                            if ($uriMain === "silastri") {
                                 $uriLevel = $uri->getSegment(2);
                                 $mtLib = new Mtlib();
                                 if ($mtLib->get()) {
                                     if (!$mtLib->getAccess($userId)) {
                                         if ($uriLevel !== "maintenance") {
-                                            return redirect()->to(base_url('situgu/maintenance'));
+                                            return redirect()->to(base_url('silastri/maintenance'));
                                         }
                                     } else {
 
                                         if ($level == 1) { //SuperAdmin
 
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('situgu/su/home'));
+                                                return redirect()->to(base_url('silastri/su/home'));
                                             }
                                             if ($uriLevel != "su") {
-                                                return redirect()->to(base_url('situgu/su/home'));
+                                                return redirect()->to(base_url('silastri/su/home'));
                                             }
                                         } else if ($level == 2) { //Admin
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('situgu/adm/home'));
+                                                return redirect()->to(base_url('silastri/peng/home'));
                                             }
-                                            if ($uriLevel != "adm") {
-                                                return redirect()->to(base_url('situgu/adm/home'));
+                                            if ($uriLevel != "peng") {
+                                                return redirect()->to(base_url('silastri/peng/home'));
                                             }
                                         } else if ($level == 3) { //Kecamatan
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('situgu/opk/home'));
+                                                return redirect()->to(base_url('silastri/adm/home'));
                                             }
-                                            if ($uriLevel != "opk") {
-                                                return redirect()->to(base_url('situgu/opk/home'));
-                                            }
-                                        } else if ($level == 4) { //SubRayon
-                                            if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('situgu/opsr/home'));
-                                            }
-                                            if ($uriLevel != "opsr") {
-                                                return redirect()->to(base_url('situgu/opsr/home'));
-                                            }
-                                        } else if ($level == 5) { //Sekolah
-                                            if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('situgu/ops/home'));
-                                            }
-                                            if ($uriLevel != "ops") {
-                                                return redirect()->to(base_url('situgu/ops/home'));
-                                            }
-                                        } else if ($level == 6) { //Kepsek
-                                            if ($uriLevel != "ks") {
-                                                return redirect()->to(base_url('situgu/ks/home'));
-                                            }
-                                        } else if ($level == 7) { //PTK
-                                            if ($uriLevel != "ptk") {
-                                                return redirect()->to(base_url('situgu/ptk/home'));
+                                            if ($uriLevel != "adm") {
+                                                return redirect()->to(base_url('silastri/adm/home'));
                                             }
                                         } else {
                                             return redirect()->to(base_url('portal'));
@@ -97,10 +75,10 @@ class Filterauth implements FilterInterface
                                     if ($level == 1) { //SuperAdmin
 
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('situgu/su/home'));
+                                            return redirect()->to(base_url('silastri/su/home'));
                                         }
                                         if ($uriLevel != "su") {
-                                            return redirect()->to(base_url('situgu/su/home'));
+                                            return redirect()->to(base_url('silastri/su/home'));
                                         }
                                         // else {
                                         //     var_dump($uriLevel);
@@ -145,10 +123,10 @@ class Filterauth implements FilterInterface
                                         // }
                                     } else if ($level == 2) { //Admin
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('situgu/adm/home'));
+                                            return redirect()->to(base_url('silastri/peng/home'));
                                         }
-                                        if ($uriLevel != "adm") {
-                                            return redirect()->to(base_url('situgu/adm/home'));
+                                        if ($uriLevel != "peng") {
+                                            return redirect()->to(base_url('silastri/peng/home'));
                                         }
                                         // if ($uriMain != "b") {
                                         //     return redirect()->to(base_url('b/home'));
@@ -193,10 +171,10 @@ class Filterauth implements FilterInterface
                                         // }
                                     } else if ($level == 3) { //Kecamatan
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('situgu/opk/home'));
+                                            return redirect()->to(base_url('silastri/adm/home'));
                                         }
-                                        if ($uriLevel != "opk") {
-                                            return redirect()->to(base_url('situgu/opk/home'));
+                                        if ($uriLevel != "adm") {
+                                            return redirect()->to(base_url('silastri/adm/home'));
                                         }
                                         // else {
                                         //     $uriMainMenu = $uri->getSegment(3);
@@ -232,69 +210,6 @@ class Filterauth implements FilterInterface
                                         //         }
                                         //     }
                                         // }
-                                    } else if ($level == 4) { //SubRayon
-                                        if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('situgu/opsr/home'));
-                                        }
-                                        if ($uriLevel != "opsr") {
-                                            return redirect()->to(base_url('situgu/opsr/home'));
-                                        }
-                                        // if ($uriMain != "d") {
-                                        //     return redirect()->to(base_url('d/home'));
-                                        // } else {
-                                        //     $uriMainMenu = $uri->getSegment(2);
-                                        //     if ($uriMain == "a" && $uriMainMenu == "home") {
-                                        //     } else {
-
-                                        //         $dataAccess = listHakAksesAllow();
-                                        //         if (!$dataAccess) {
-                                        //             return redirect()->to(base_url('a/home'));
-                                        //         }
-
-                                        //         if (!(menu_showed_access($dataAccess, $uriMainMenu))) {
-                                        //             return redirect()->to(base_url('a/home'));
-                                        //         }
-
-                                        //         $uriMainSubMenu = $uri->getSegment(3);
-
-                                        //         if (!(submenu_showed_access($dataAccess, $uriMainMenu, $uriMainSubMenu))) {
-                                        //             return redirect()->to(base_url('a/notallow'));
-                                        //             // return redirect()->to(base_url('a/home'));
-                                        //         }
-
-                                        //         $uriMainSubMenuAksi = $uri->getSegment(4);
-
-                                        //         if (!(access_allowed_new($dataAccess, $uriMainMenu, $uriMainSubMenu, $uriMainSubMenuAksi))) {
-                                        //             if ($uriMainSubMenuAksi == "" || $uriMainSubMenuAksi == "data") {
-                                        //                 return redirect()->to(base_url('a/notallow'));
-                                        //             } else {
-                                        //                 $response = new \stdClass;
-                                        //                 $response->status = 400;
-                                        //                 $response->message = "Akses tidak diizinkan.";
-                                        //                 return json_encode($response);
-                                        //             }
-                                        //         }
-
-                                        //         // if (!(access_allowed($dataAccess, $uriMainMenu, $uriMainSubMenu))) {
-                                        //         //     return redirect()->to(base_url('a/notallow'));
-                                        //         // }
-                                        //     }
-                                        // }
-                                    } else if ($level == 5) { //Sekolah
-                                        if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('situgu/ops/home'));
-                                        }
-                                        if ($uriLevel != "ops") {
-                                            return redirect()->to(base_url('situgu/ops/home'));
-                                        }
-                                    } else if ($level == 6) { //Kepsek
-                                        if ($uriLevel != "ks") {
-                                            return redirect()->to(base_url('situgu/ks/home'));
-                                        }
-                                    } else if ($level == 7) { //PTK
-                                        if ($uriLevel != "ptk") {
-                                            return redirect()->to(base_url('situgu/ptk/home'));
-                                        }
                                     } else {
                                         return redirect()->to(base_url('portal'));
                                     }
@@ -423,7 +338,7 @@ class Filterauth implements FilterInterface
                     if ($totalSegment == 0) {
 
                         $uriMain = $uri->getSegment(1);
-                        if ($uriMain === "" || $uriMain === "home" || $uriMain == "portal") {
+                        if ($uriMain === "" || $uriMain === "home" || $uriMain == "portal" || $uriMain == "profil") {
                         } else {
                             // if ($level == 1) { //SuperAdmin
                             //     return redirect()->to(base_url('a/home'));

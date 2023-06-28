@@ -679,6 +679,126 @@ class Authlib
 
 
 
+    public function postRegis($nama, $nik, $no_hp, $email, $password, $re_password)
+    {
+        $data = [
+            'nama' => $nama,
+            'nik' => $nik,
+            'no_hp' => $no_hp,
+            'email' => $email,
+            'password' => $password,
+            're_password' => $re_password,
+        ];
+        $add         = $this->_send_post($data, "register");
+        $send_data         = curl_exec($add);
+
+        // var_dump($send_data);
+        // die;
+
+        $result = json_decode($send_data);
+
+
+        if (isset($result->error)) {
+            return false;
+        }
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+
+        // $headers = [];
+        // curl_setopt(
+        //     $add,
+        //     CURLOPT_HEADERFUNCTION,
+        //     function ($curl, $header) use (&$headers) {
+        //         $len = strlen($header);
+        //         $header = explode(':', $header, 2);
+        //         if (count($header) < 2) // ignore invalid headers
+        //             return $len;
+
+        //         $headers[strtolower(trim($header[0]))] = trim($header[1]);
+
+        //         return $len;
+        //     }
+        // );
+        // $send_data         = curl_exec($add);
+
+        // $httpCodeCure = curl_getinfo($add, CURLINFO_HTTP_CODE);
+
+        // if (!curl_errno($add)) {
+        //     $info = curl_getinfo($add);
+        //     $header_size = $info['header_size'];
+        //     // $header = substr($send_data, 0, $header_size);
+        //     $body = substr($send_data, $header_size);
+        //     // var_dump($info); die;
+        //     curl_close($add);
+        //     switch ($http_code = $info['http_code']) {
+
+        //         case 200:  # OK
+        //             $headerConvert = json_decode(json_encode($headers));
+        //             $dataFile = new \stdClass;
+        //             $dataFile->idDokumen = $headerConvert->id_dokumen;
+        //             $dataFile->dokumen = $send_data;
+
+        //             $response = new \stdClass;
+        //             $response->code = $info['http_code'];
+        //             $response->header = $headerConvert;
+        //             $response->data = $send_data;
+        //             return $response;
+        //             break;
+        //             // return json_decode($send_data);
+        //             // break;
+        //         case 401:
+        //             $headerConvert = json_decode(json_encode($headers));
+        //             $inputLogGagal = new \stdClass;
+        //             $inputLogGagal->header = $headerConvert;
+
+        //             $result = json_decode($send_data);
+        //             $response = new \stdClass;
+        //             $response->code = $info['http_code'];
+        //             $response->status = "UNAUTHORIZED";
+        //             $response->message = $result->error;
+        //             return $response;
+        //             break;
+        //         case 404:
+        //             $headerConvert = json_decode(json_encode($headers));
+        //             $inputLogGagal = new \stdClass;
+        //             $inputLogGagal->header = $headerConvert;
+
+        //             $result = json_decode($send_data);
+
+        //             $response = new \stdClass;
+        //             $response->code = $info['http_code'];
+        //             $response->status = "NOT_FOUND";
+        //             $response->message = $result->error;
+        //             return $response;
+        //         default:
+        //             $headerConvert = json_decode(json_encode($headers));
+        //             $inputLogGagal = new \stdClass;
+        //             $inputLogGagal->header = $headerConvert;
+
+        //             $result = json_decode($send_data);
+
+        //             $response = new \stdClass;
+        //             $response->code = $info['http_code'];
+        //             $response->status = "UNAUTHORIZED";
+        //             $response->message = $result->error;
+        //             return $response;
+        //     }
+        // } else {
+        //     $err = curl_errno($add);
+
+        //     curl_close($add);
+        //     $response = new \stdClass;
+        //     $response->code = 400;
+        //     $response->status = "ERROR";
+        //     $response->message = $err . " . HTTP_CODE:" . $httpCodeCure;
+        //     return $response;
+        // }
+    }
+
     public function postLogin($username, $password)
     {
         $data = [
@@ -687,6 +807,9 @@ class Authlib
         ];
         $add         = $this->_send_post($data, "login");
         $send_data         = curl_exec($add);
+
+        // var_dump($send_data);
+        // die;
 
         $result = json_decode($send_data);
 

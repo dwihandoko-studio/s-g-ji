@@ -5,19 +5,19 @@
     <meta charset="utf-8" />
     <title><?= isset($title) ? $title : "Administrator" ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" name="description" />
+    <meta content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" name="description" />
     <meta content="handokowae.my.id" name="author" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="keywords" content="portal, layanan, portal layanan, portal layanan disdikbud, disdikbud, disdik, pendidikan, lampung, lampung tengah, pendidikan lampung tengah, dinas pendidikan, dinas pendidikan lampung tengah, dinas pendidikan dan kebudayaan, dinas pendidikan dan kebudayaan lampung tengah, kabupaten lampung tengah">
+    <meta name="keywords" content="portal, layanan, portal layanan, portal layanan dinsos, dinsos, disdik, lampung, lampung tengah lampung tengah, dinas sosial, dinas Sosial lampung tengah, kabupaten lampung tengah">
 
-    <meta property="og:title" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
+    <meta property="og:title" content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" />
     <meta property="og:url" content="<?= base_url() ?>" />
     <meta property="og:image" content="<?= base_url('favicon/android-icon-192x192.png'); ?>" />
-    <meta property="og:description" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
+    <meta property="og:description" content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" />
 
-    <meta itemprop="name" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
-    <meta itemprop="description" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
+    <meta itemprop="name" content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" />
+    <meta itemprop="description" content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" />
     <meta itemprop="image" content="<?= base_url('favicon/android-icon-192x192.png'); ?>" />
 
     <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url('favicon/apple-icon-57x57.png'); ?>">
@@ -39,121 +39,163 @@
     <meta name="theme-color" content="#ffffff">
 
     <link href="<?= base_url() ?>/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/libs/owl.carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/libs/owl.carousel/assets/owl.theme.default.min.css">
     <link href="<?= base_url() ?>/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url() ?>/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <link href="<?= base_url() ?>/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
-    <div class="account-pages my-5 pt-sm-5">
-        <div class="container content-loading">
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-6 col-xl-5">
-                    <div class="card overflow-hidden">
-                        <div class="bg-primary bg-soft">
-                            <div class="row">
-                                <div class="col-7">
-                                    <div class="text-primary p-4">
-                                        <h5 class="text-primary">Welcome Back !</h5>
-                                        <p>Sign in to continue . . .</p>
-                                    </div>
-                                </div>
-                                <div class="col-5 align-self-end">
-                                    <img src="<?= base_url() ?>/assets/images/profile-img.png" alt="" class="img-fluid">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="auth-logo">
-                                <a href="index.html" class="auth-logo-light">
-                                    <div class="avatar-md profile-user-wid mb-4">
-                                        <span class="avatar-title rounded-circle bg-light">
-                                            <img src="<?= base_url() ?>/assets/images/logo-light.svg" alt="" class="rounded-circle" height="34">
-                                        </span>
-                                    </div>
-                                </a>
+<body class="auth-body-bg">
 
-                                <a href="index.html" class="auth-logo-dark">
-                                    <div class="avatar-md profile-user-wid mb-4">
-                                        <span class="avatar-title rounded-circle bg-light">
-                                            <img src="<?= base_url() ?>/assets/images/logo.svg" alt="" class="rounded-circle" height="34">
-                                        </span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="alert alert-warning" role="alert">
-                                Untuk Login Admin Sekolah, silahkan menggunakan login Email Dapodik saat ini dan passwordnya menggunakan Kode Registrasi Dapodik.
-                            </div>
-                            <div class="p-2">
-                                <form class="form-horizontal" action="/auth/login" method="post">
+    <div>
+        <div class="container-fluid p-0 content-loading">
+            <div class="row g-0">
 
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
-                                    </div>
+                <div class="col-xl-9">
+                    <div class="auth-full-bg pt-lg-5 p-4">
+                        <div class="w-100">
+                            <div class="bg-overlay"></div>
+                            <div class="d-flex h-100 flex-column">
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Password</label>
-                                        <div class="input-group auth-pass-inputgroup">
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
-                                            <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                <div class="p-4 mt-auto">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-7">
+                                            <div class="text-center">
+
+                                                <h4 class="mb-3"><i class="bx bxs-quote-alt-left text-primary h1 align-middle me-3"></i><span class="text-primary">5k</span>+ Satisfied clients</h4>
+
+                                                <div dir="ltr">
+                                                    <div class="owl-carousel owl-theme auth-review-carousel" id="auth-review-carousel">
+                                                        <div class="item">
+                                                            <div class="py-3">
+                                                                <p class="font-size-16 mb-4">" Fantastic theme with a ton of options. If you just want the HTML to integrate with your project, then this is the package. You can find the files in the 'dist' folder...no need to install git and all the other stuff the documentation talks about. "</p>
+
+                                                                <div>
+                                                                    <h4 class="font-size-16 text-primary">Abs1981</h4>
+                                                                    <p class="font-size-14 mb-0">- Skote User</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="item">
+                                                            <div class="py-3">
+                                                                <p class="font-size-16 mb-4">" If Every Vendor on Envato are as supportive as Themesbrand, Development with be a nice experience. You guys are Wonderful. Keep us the good work. "</p>
+
+                                                                <div>
+                                                                    <h4 class="font-size-16 text-primary">nezerious</h4>
+                                                                    <p class="font-size-14 mb-0">- Skote User</p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="remember-check">
-                                        <label class="form-check-label" for="remember-check">
-                                            Remember me
-                                        </label>
+                <div class="col-xl-3">
+                    <div class="auth-full-page-content p-md-5 p-4">
+                        <div class="w-100">
+
+                            <div class="d-flex flex-column h-100">
+                                <!-- <div class="mb-4 mb-md-5">
+                                    <a href="index.html" class="d-block auth-logo">
+                                        <img src="assets/images/logo-dark.png" alt="" height="18" class="auth-logo-dark">
+                                        <img src="assets/images/logo-light.png" alt="" height="18" class="auth-logo-light">
+                                    </a>
+                                </div> -->
+                                <div class="my-auto">
+
+                                    <div>
+                                        <h5 class="text-primary">Selamat Datang Kembali !</h5>
+                                        <p class="text-muted">Silahkan Login Dulu Untuk Menggunakan Layanan.</p>
                                     </div>
 
-                                    <div class="mt-3 d-grid">
-                                        <button class="btn btn-primary waves-effect waves-light" type="submit">Masuk</button>
-                                    </div>
+                                    <div class="mt-4">
+                                        <form action="/auth/login" method="post">
 
-                                    <div class="mt-4 text-center">
-                                        <h5 class="font-size-14 mb-3">Sign in with</h5>
+                                            <div class="mb-3">
+                                                <label for="username" class="form-label">Email/NIK/No HP</label>
+                                                <input type="text" class="form-control" id="username" name="username" placeholder="Email / NIK / No HP">
+                                            </div>
 
-                                        <ul class="list-inline">
-                                            <!-- <li class="list-inline-item">
-                                                <a href="javascript::void()" class="social-list-item bg-primary text-white border-primary">
-                                                    <i class="mdi mdi-facebook"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript::void()" class="social-list-item bg-info text-white border-info">
-                                                    <i class="mdi mdi-twitter"></i>
-                                                </a>
-                                            </li> -->
-                                            <li class="list-inline-item">
-                                                <a href="javascript::void()" class="social-list-item bg-danger text-white border-danger">
-                                                    <i class="mdi mdi-google"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                            <div class="mb-3">
+                                                <div class="float-end">
+                                                    <a href="auth-recoverpw-2.html" class="text-muted">Lupa password?</a>
+                                                </div>
+                                                <label class="form-label">Password</label>
+                                                <div class="input-group auth-pass-inputgroup">
+                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                                    <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                                </div>
+                                            </div>
 
-                                    <div class="mt-4 text-center">
-                                        <a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock me-1"></i> Forgot your password?</a>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="remember-check">
+                                                <label class="form-check-label" for="remember-check">
+                                                    Ingat Saya
+                                                </label>
+                                            </div>
+
+                                            <div class="mt-3 d-grid">
+                                                <button class="btn btn-primary waves-effect waves-light" type="submit">MASUK</button>
+                                            </div>
+
+
+                                            <div class="mt-4 text-center">
+                                                <h5 class="font-size-14 mb-3">Masuk Dengan</h5>
+
+                                                <ul class="list-inline">
+                                                    <!-- <li class="list-inline-item">
+                                                        <a href="javascript::void()" class="social-list-item bg-primary text-white border-primary">
+                                                            <i class="mdi mdi-facebook"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <a href="javascript::void()" class="social-list-item bg-info text-white border-info">
+                                                            <i class="mdi mdi-twitter"></i>
+                                                        </a>
+                                                    </li> -->
+                                                    <li class="list-inline-item">
+                                                        <a href="javascript::void()" class="social-list-item bg-danger text-white border-danger">
+                                                            <i class="mdi mdi-google"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </form>
+                                        <div class="mt-5 text-center">
+                                            <p>Belum punya akun ? <a href="./auth/register" class="fw-medium text-primary"> Daftar Sekarang </a> </p>
+                                        </div>
                                     </div>
-                                </form>
+                                </div>
+
+                                <div class="mt-4 mt-md-5 text-center">
+                                    <p class="mb-0">© <script>
+                                            document.write(new Date().getFullYear())
+                                        </script> dinsos Kab. Lampung Tengah. Supported <i class="mdi mdi-heart text-danger"></i> by <a href="https://kntechline.id">KNTechline</a></p>
+                                </div>
                             </div>
 
+
                         </div>
                     </div>
-                    <div class="mt-5 text-center">
-
-                        <div>
-                            <!-- <p>Don't have an account ? <a href="auth-register.html" class="fw-medium text-primary"> Signup now </a> </p> -->
-                            <p>© <script>
-                                    document.write(new Date().getFullYear())
-                                </script> Disdikbud Kab. Lampung Tengah. Supported <i class="mdi mdi-heart text-danger"></i> by <a href="https://kntechline.id">KNTechline</a></p>
-                        </div>
-                    </div>
-
                 </div>
+                <!-- end col -->
             </div>
+            <!-- end row -->
         </div>
+        <!-- end container-fluid -->
     </div>
     <!-- end account-pages -->
 
@@ -164,7 +206,9 @@
     <script src="<?= base_url() ?>/assets/libs/metismenu/metisMenu.min.js"></script>
     <script src="<?= base_url() ?>/assets/libs/simplebar/simplebar.min.js"></script>
     <script src="<?= base_url() ?>/assets/libs/node-waves/waves.min.js"></script>
-    <!-- App js -->
+    <script src="<?= base_url() ?>/assets/libs/owl.carousel/owl.carousel.min.js"></script>
+    <script src="<?= base_url() ?>/assets/js/pages/auth-2-carousel.init.js"></script>
+
     <script src="<?= base_url() ?>/assets/js/app.js"></script>
     <script src="<?= base_url() ?>/assets/libs/sweetalert2/sweetalert2.min.js"></script>
     <script>

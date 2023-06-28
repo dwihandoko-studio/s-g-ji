@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <title><?= isset($title) ? $title : "Administrator" ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" name="description" />
     <meta content="handokowae.my.id" name="author" />
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +50,7 @@
     <link href="<?= base_url() ?>/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <script>
         if (sessionStorage.getItem("is_visited") === null) {
-            sessionStorage.setItem("is_visited", "dark-mode-switch");
+            sessionStorage.setItem("is_visited", "light-mode-switch");
         }
 
         // sessionStorage.setItem("is_visited", "dark-mode-switch");
@@ -58,30 +59,16 @@
     <?= $this->renderSection('scriptTop'); ?>
 </head>
 
-<body data-topbar="dark" data-layout="horizontal" data-layout-size="boxed" class="loading-logout">
-
-    <!-- Begin page -->
+<body data-sidebar="dark" data-layout-mode="light" class="loading-logout">
     <div id="layout-wrapper">
+        <?= $this->include('t-silastri/peng/header'); ?>
+        <?= $this->include('t-silastri/peng/menu'); ?>
 
-        <?= $this->include('templates/header'); ?>
-        <?= $this->include('templates/topbar'); ?>
-
-
-
-        <!-- ============================================================== -->
-        <!-- Start right Content here -->
-        <!-- ============================================================== -->
         <div class="main-content">
             <?= $this->renderSection('content'); ?>
-
-            <?= $this->include('templates/footer'); ?>
+            <?= $this->include('t-silastri/footer'); ?>
         </div>
-        <!-- end main content-->
-
     </div>
-    <!-- END layout-wrapper -->
-
-    <!-- Right Sidebar -->
     <div class="right-bar">
         <div data-simplebar class="h-100">
             <div class="rightbar-title d-flex align-items-center px-3 py-4">
@@ -172,7 +159,7 @@
                                 "Anda berhasil logout.",
                                 'success'
                             ).then((valRes) => {
-                                document.location.href = BASE_URL + "/web/home";
+                                document.location.href = BASE_URL + "/auth";
                             })
                         },
                         error: function() {
@@ -187,6 +174,41 @@
                 }
             })
         };
+
+        $(document).ready(function() {
+            $.ajax({
+                url: "<?= base_url('silastri/peng/notification/getNotifShowed') ?>",
+                type: 'GET',
+                dataType: 'JSON',
+                // beforeSend: function() {
+                //     $('div.loading_content_notification').block({
+                //         message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                //     });
+                // },
+                success: function(resul) {
+                    console.log(resul);
+                    $('.loading_content_notification').html(resul.content);
+                    // $('div.loading_content_notification').unblock();
+                    // const buttonTextNotif = document.getElementById('page-header-notifications-dropdown');
+                    // if (resul.status !== 200) {
+                    //     console.log(resul);
+                    //     buttonTextNotif.textContent = '<i class="bx bx-bell bx-tada"></i>';
+                    // } else {
+                    //     buttonTextNotif.textContent = '<i class="bx bx-bell bx-tada"></i><span class="badge bg-danger rounded-pill">' + resul.jumlah + '</span>';
+
+                    // }
+                },
+                error: function(e) {
+                    console.log(e);
+                    // $('div.loading_content_notification').unblock();
+                    // Swal.fire(
+                    //     'Failed!',
+                    //     "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    //     'warning'
+                    // );
+                }
+            });
+        });
     </script>
 </body>
 
