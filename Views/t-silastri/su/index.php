@@ -59,30 +59,16 @@
     <?= $this->renderSection('scriptTop'); ?>
 </head>
 
-<body data-topbar="dark" data-layout="horizontal" data-layout-size="boxed" class="loading-logout">
-
-    <!-- Begin page -->
+<body data-sidebar="dark" data-layout-mode="light" class="loading-logout">
     <div id="layout-wrapper">
-
         <?= $this->include('t-silastri/su/header'); ?>
-        <?= $this->include('t-silastri/su/topbar'); ?>
+        <?= $this->include('t-silastri/su/menu'); ?>
 
-
-
-        <!-- ============================================================== -->
-        <!-- Start right Content here -->
-        <!-- ============================================================== -->
         <div class="main-content">
             <?= $this->renderSection('content'); ?>
-
             <?= $this->include('t-silastri/footer'); ?>
         </div>
-        <!-- end main content-->
-
     </div>
-    <!-- END layout-wrapper -->
-
-    <!-- Right Sidebar -->
     <div class="right-bar">
         <div data-simplebar class="h-100">
             <div class="rightbar-title d-flex align-items-center px-3 py-4">

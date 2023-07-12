@@ -383,6 +383,7 @@ class Sktm extends BaseController
                 'nama' => $user->data->fullname,
                 'user_id' => $user->data->id,
                 'jenis' => $jenisFix,
+                'layanan' => "SKTM",
                 'indikator1' => $indikator1,
                 'indikator2' => $indikator2,
                 'indikator3' => $indikator3,
@@ -454,7 +455,7 @@ class Sktm extends BaseController
 
             $this->_db->transBegin();
             try {
-                $this->_db->table('_permohonan')->insert($data);
+                $this->_db->table('_permohonan_temp')->insert($data);
             } catch (\Exception $e) {
                 unlink($dir . '/' . $newNamelampiranKtp);
                 unlink($dir . '/' . $newNamelampiranKk);

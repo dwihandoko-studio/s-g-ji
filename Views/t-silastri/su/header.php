@@ -4,33 +4,33 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('silastri/peng/home') ?>" class="logo logo-dark">
+                <a href="<?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('silastri/su/home') ?>" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="<?= base_url() ?>/assets/images/logo.svg" alt="" height="22">
+                        <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="120">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?= base_url() ?>/assets/images/logo-dark.png" alt="" height="17">
+                        <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="150">
                     </span>
                 </a>
 
-                <a href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('silastri/peng/home') ?>" class="logo logo-light">
+                <a href="<?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('silastri/su/home') ?>" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="<?= base_url() ?>/assets/images/logo-light.svg" alt="" height="22">
+                        <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="120">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?= base_url() ?>/assets/images/logo-light.png" alt="" height="19">
+                        <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="150">
                     </span>
                 </a>
             </div>
 
-            <button type="button" class="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
 
             <!-- App Search-->
             <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Search..." style="background-color: #ffffff1a;">
+                    <input type="text" class="form-control" placeholder="Search...">
                     <span class="bx bx-search-alt"></span>
                 </div>
             </form>
@@ -47,9 +47,10 @@
                     <form class="p-3">
                         <div class="form-group m-0">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search ..." aria-label="Search input">
-
-                                <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>s
+                                <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                                </div>
                             </div>
                         </div>
                     </form>

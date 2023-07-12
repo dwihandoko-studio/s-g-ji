@@ -72,45 +72,49 @@
     <link href="<?= base_url() ?>/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body data-sidebar="light" data-layout="horizontal" data-layout-size="boxed" data-layout-mode="light" class="loading-logout">
+<!-- <body data-sidebar="dark" data-layout-mode="light" class="loading-logout"> -->
+
+<body data-sidebar="dark" data-layout="horizontal" data-layout-size="boxed" data-layout-mode="light" class="loading-logout">
+
+    <!-- <body data-sidebar="dark" data-layout="horizontal" data-layout-mode="light" class="loading-logout"> -->
 
     <!-- Begin page -->
     <div id="layout-wrapper">
 
         <?php $uri = current_url(true); ?>
-        <header id="page-topbar">
+        <header id="page-topbar" style="background-color: #2a3042; color: #ffffff;">
             <div class="navbar-header">
                 <div class="d-flex">
                     <!-- LOGO -->
                     <div class="navbar-brand-box">
                         <a href="javascript:;" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img src="<?= base_url() ?>/assets/images/logo.svg" alt="" height="22">
+                                <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="120">
                             </span>
                             <span class="logo-lg">
-                                <img src="<?= base_url() ?>/assets/images/logo-dark.png" alt="" height="17">
+                                <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="150">
                             </span>
                         </a>
 
                         <a href="javascript:;" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="<?= base_url() ?>/assets/images/logo-light.svg" alt="" height="22">
+                                <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="120">
                             </span>
                             <span class="logo-lg">
-                                <img src="<?= base_url() ?>/assets/images/logo-light-old.png" alt="" height="19">
+                                <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="150">
                             </span>
                         </a>
                     </div>
 
                     <button type="button" class="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
-                        <i class="fa fa-fw fa-bars"></i>
+                        <i class="fa fa-fw fa-bars" style="color: #fdfdff;"></i>
                     </button>
 
                     <!-- App Search-->
                     <form class="app-search d-none d-lg-block">
                         <div class="position-relative">
                             <input type="text" class="form-control" placeholder="Search..." style="background-color: #ffffff1a;">
-                            <span class="bx bx-search-alt"></span>
+                            <span class="bx bx-search-alt" style="color: #fdfdff;"></span>
                         </div>
                     </form>
                 </div>
@@ -119,7 +123,7 @@
 
                     <div class="dropdown d-inline-block d-lg-none ms-2">
                         <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi mdi-magnify"></i>
+                            <i class="mdi mdi-magnify" style="color: #fdfdff;"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-search-dropdown">
 
@@ -136,7 +140,7 @@
                     </div>
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="bx bx-bell bx-tada"></i>
+                            <i class="bx bx-bell bx-tada" style="color: #fdfdff;"></i>
                             <span class="badge bg-danger rounded-pill">3</span>
                         </button>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
@@ -220,8 +224,8 @@
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="rounded-circle header-profile-user" src="<?= isset($user) ? ($user->image !== null ? base_url() . '/upload/user/' . $user->image : base_url() . '/assets/images/users/avatar-1.jpg') : base_url() . '/assets/images/users/avatar-1.jpg' ?>" alt="Header Avatar">
-                            <span class="d-none d-xl-inline-block ms-1" key="t-henry"><?= isset($user) ? $user->fullname : '-' ?></span>
-                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            <span class="d-none d-xl-inline-block ms-1" key="t-henry" style="color: #fdfdff;"><?= isset($user) ? $user->fullname : '-' ?></span>
+                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block" style="color: #fdfdff;"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
@@ -233,7 +237,7 @@
 
                     <div class="dropdown d-none d-lg-inline-block ms-1">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
-                            <i class="bx bx-fullscreen"></i>
+                            <i class="bx bx-fullscreen" style="color: #fdfdff;"></i>
                         </button>
                     </div>
 

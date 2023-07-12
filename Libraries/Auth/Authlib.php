@@ -915,6 +915,27 @@ class Authlib
         // }
     }
 
+    public function postResetEmail($email)
+    {
+        $data = [
+            'email' => $email,
+        ];
+        $add         = $this->_send_post($data, "lupapassword/email");
+        $send_data         = curl_exec($add);
+
+        $result = json_decode($send_data);
+
+        if (isset($result->error)) {
+            return false;
+        }
+
+        if ($result) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
     public function profileUser($userId, $accessToken, $refreshToken)
     {
         $add         = $this->_send_get("profiluser/detail?id=" . $userId, $accessToken, $refreshToken);

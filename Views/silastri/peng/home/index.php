@@ -92,22 +92,26 @@
                     </div> -->
                 </div>
             </div>
-            <div class="col-xl-4 col-sm-6">
-                <div class="card text-center  _sorot-mouse">
-                    <a href="<?= base_url('silastri/peng/layanan/sktm') ?>">
-                        <div class="card-body">
-                            <div class="mb-4">
-                                <img class="avatar-lg" src="<?= base_url() ?>/assets/images/companies/airbnb.svg" alt="">
+            <?php if (isset($layanans)) { ?>
+                <?php if (count($layanans) > 0) { ?>
+                    <?php foreach ($layanans as $key => $v) { ?>
+                        <div class="col-xl-4 col-sm-6">
+                            <div class="card text-center  _sorot-mouse">
+                                <a href="<?= $v['layanan_url_peng'] ?>">
+                                    <div class="card-body" style="min-height: 230px;">
+                                        <div class="mb-4">
+                                            <img class="avatar-lg" src="<?= base_url('uploads/layanan') . '/' . $v['layanan_image'] ?>" alt="">
+                                        </div>
+                                        <h5 class="font-size-15 mb-1"><a href="<?= $v['layanan_url_peng'] ?>" style="color: rgba(var(--bs-dark-rgb),var(--bs-text-opacity));" class="_color-h-hover"><?= $v['layanan_singkatan'] ?></a></h5>
+                                        <p><a class="_color-p-hover" style="color: #747474;" href="<?= $v['layanan_url_peng'] ?>"><?= $v['layanan_deskripsi'] ?></a></p>
+                                    </div>
+                                </a>
                             </div>
-                            <h5 class="font-size-15 mb-1"><a href="<?= base_url('silastri/peng/layanan/sktm') ?>" style="color: rgba(var(--bs-dark-rgb),var(--bs-text-opacity));" class="_color-h-hover">SKTM</a></h5>
-                            <p><a class="_color-p-hover" style="color: #747474;" href="<?= base_url('silastri/peng/layanan/sktm') ?>">Surat Keterangan Tidak Mampu</a></p>
-                            <br />
-
                         </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-4 col-sm-6">
+                    <?php } ?>
+                <?php } ?>
+            <?php } ?>
+            <!-- <div class="col-xl-4 col-sm-6">
                 <div class="card text-center  _sorot-mouse">
                     <a href="<?= base_url('silastri/peng/layanan/keringananbiaya') ?>">
                         <div class="card-body">
@@ -120,7 +124,7 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="row">

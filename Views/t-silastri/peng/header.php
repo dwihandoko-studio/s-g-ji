@@ -6,19 +6,19 @@
             <div class="navbar-brand-box">
                 <a href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('silastri/peng/home') ?>" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="<?= base_url() ?>/assets/images/logo.svg" alt="" height="22">
+                        <img src="<?= base_url() ?>/assets/images/lastri.lastri" alt="" width="120">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?= base_url() ?>/assets/images/logo-dark.png" alt="" height="17">
+                        <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="150">
                     </span>
                 </a>
 
                 <a href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('silastri/peng/home') ?>" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="<?= base_url() ?>/assets/images/logo-light.svg" alt="" height="22">
+                        <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="120">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?= base_url() ?>/assets/images/logo-light.png" alt="" height="19">
+                        <img src="<?= base_url() ?>/assets/images/lastri.svg" alt="" width="150">
                     </span>
                 </a>
             </div>

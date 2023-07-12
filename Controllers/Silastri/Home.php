@@ -34,6 +34,8 @@ class Home extends BaseController
                             return redirect()->to(base_url('silastri/peng/home'));
                         case 3:
                             return redirect()->to(base_url('silastri/adm/home'));
+                        case 4:
+                            return redirect()->to(base_url('silastri/kepala/home'));
                         default:
                             return redirect()->to(base_url('portal'));
                     }

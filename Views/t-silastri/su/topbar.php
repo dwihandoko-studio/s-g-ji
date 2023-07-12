@@ -7,12 +7,12 @@
                 <ul class="navbar-nav">
                     <?php if (isset($user)) { ?>
                         <li class="nav-item">
-                            <a class="nav-link <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('silastri/peng/home') ?>">
+                            <a class="nav-link <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "home") ? ' active-menu-href' : '' ?>" href="<?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "home") ? 'javascript:;' : base_url('silastri/su/home') ?>">
                                 <i class="bx bx-home-circle me-2"></i><span key="t-dashboards">Home</span>
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "masterdata") ? ' active-menu-href' : '' ?>" href="#" id="topnav-masterdata" role="button">
+                            <a class="nav-link dropdown-toggle arrow-none <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata") ? ' active-menu-href' : '' ?>" href="#" id="topnav-masterdata" role="button">
                                 <i class="bx bx-layout me-2"></i><span key="t-masterdata">Master Data</span>
                                 <div class="arrow-down"></div>
                             </a>

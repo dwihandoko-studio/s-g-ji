@@ -130,7 +130,7 @@
 
                                             <div class="mb-3">
                                                 <div class="float-end">
-                                                    <a href="auth-recoverpw-2.html" class="text-muted">Lupa password?</a>
+                                                    <a href="<?= base_url('auth/lupapassword') ?>" class="text-muted">Lupa password?</a>
                                                 </div>
                                                 <label class="form-label">Password</label>
                                                 <div class="input-group auth-pass-inputgroup">
@@ -183,7 +183,7 @@
                                 <div class="mt-4 mt-md-5 text-center">
                                     <p class="mb-0">© <script>
                                             document.write(new Date().getFullYear())
-                                        </script> dinsos Kab. Lampung Tengah. Supported <i class="mdi mdi-heart text-danger"></i> by <a href="https://kntechline.id">KNTechline</a></p>
+                                        </script> Dinsos Kab. Lampung Tengah. Supported <i class="mdi mdi-heart text-danger"></i> by <a href="https://kntechline.id">KNTechline</a></p>
                                 </div>
                             </div>
 

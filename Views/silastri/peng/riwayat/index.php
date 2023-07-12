@@ -24,11 +24,11 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="col-lg-4">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title mb-4">Data Riwayat Permohonan</h4>
-                            <div data-simplebar="init" style="max-height: 376px;">
+                            <div data-simplebar="init" style="max-height: 420px;">
                                 <div class="simplebar-wrapper" style="margin: 0px;">
                                     <div class="simplebar-height-auto-observer-wrapper">
                                         <div class="simplebar-height-auto-observer"></div>

@@ -39,6 +39,54 @@ class Auth extends BaseController
         return view('register/index', $data);
     }
 
+    public function lupapassword()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status == 200) {
+            return redirect()->to(base_url('home'));
+        }
+
+        $data['title'] = "Lupa Password";
+        return view('login/lupapassword', $data);
+    }
+
+    public function confirmresetpassword()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status == 200) {
+            return redirect()->to(base_url('home'));
+        }
+
+        $token = htmlspecialchars($this->request->getGet('token') ?? "", true);
+        $email = htmlspecialchars($this->request->getGet('email') ?? "", true);
+        $code = htmlspecialchars($this->request->getGet('code') ?? "", true);
+
+        $tokenReset = $this->_db->table('_token_reset')->where(['token' => $token, 'email' => $email, 'code' => $code])->get()->getRowObject();
+
+        if (!$tokenReset) {
+            $data['title'] = "Error Reset Password";
+            $data['error'] = "Link reset password tidak valid";
+            return view('404', $data);
+        }
+
+        $expiryDateTime = strtotime($tokenReset->created_at);
+        $expiryDateTime += 2 * 24 * 60 * 60; // Adding 2 days in seconds
+
+        $currentDateTime = time();
+
+        if ($currentDateTime > $expiryDateTime) {
+            $data['title'] = "Error Reset Password";
+            $data['error'] = "Token reset telah expired.";
+            return view('404', $data);
+        }
+
+        $data['title'] = "Lupa Password";
+        $data['data'] = $tokenReset;
+        return view('login/lupapassword-conf', $data);
+    }
+
     public function saveregis()
     {
         $Profilelib = new Profilelib();
@@ -279,6 +327,172 @@ class Auth extends BaseController
             //     $response->redirect = base_url('p/home');
             // }
             return json_encode($response);
+        }
+    }
+
+    public function kirimlupapassword()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status == 200) {
+            $response = new \stdClass;
+            $response->status = 201;
+            $response->message = "Sudah Login";
+            return json_encode($response);
+            // return redirect()->to(base_url('home'));
+        }
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            '_email' => [
+                'rules' => 'required|trim|valid_email',
+                'errors' => [
+                    'required' => 'Username tidak boleh kosong. ',
+                    'valid_email' => 'Email tidak valid. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('_email');
+            return json_encode($response);
+        } else {
+            $email = htmlspecialchars($this->request->getVar('_email'), true);
+
+            $authLib = new Authlib();
+            $result = $authLib->postResetEmail($email);
+
+            // var_dump($result);
+            // die;
+
+            if (!$result) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Email tidak terdaftar.";
+                return json_encode($response);
+            }
+
+            if (!($result->status == 200)) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = $result->message;
+                return json_encode($response);
+            }
+
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->data = view('login/send-success', ['message' => $result->message]);
+            $response->message = 'Silahkan cek email anda untuk mereset password akun.';
+            $response->url = base_url('auth');
+            return json_encode($response);
+        }
+    }
+
+    public function savechangenewpassword()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status == 200) {
+            $response = new \stdClass;
+            $response->status = 201;
+            $response->message = "Sudah Login";
+            return json_encode($response);
+            // return redirect()->to(base_url('home'));
+        }
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            '_token' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Token tidak boleh kosong. ',
+                ]
+            ],
+            '_email' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Email tidak boleh kosong. ',
+                ]
+            ],
+            '_password' => [
+                'rules' => 'required|trim|min_length[6]',
+                'errors' => [
+                    'required' => 'Password baru tidak boleh kosong. ',
+                    'min_length' => 'Panjang password baru minimal 6 karakter. ',
+                ]
+            ],
+            '_re_password' => [
+                'rules' => 'required|matches[_password]',
+                'errors' => [
+                    'required' => 'Ulangi kata sandi tidak boleh kosong. ',
+                    'matches' => 'Ulangi kata sandi tidak sama. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('_password')
+                . $this->validator->getError('_token')
+                . $this->validator->getError('_email')
+                . $this->validator->getError('_re_password');
+            return json_encode($response);
+        } else {
+            $token = htmlspecialchars($this->request->getVar('_token'), true);
+            $email = htmlspecialchars($this->request->getVar('_email'), true);
+            $password = htmlspecialchars($this->request->getVar('_password'), true);
+
+            $oldData = $this->_db->table('_users_tb')->where(['id' => $token, 'email' => $email])->get()->getRowObject();
+
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "User tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('_users_tb')->where('id', $oldData->id)->update([
+                    'password' => password_hash($password, PASSWORD_BCRYPT),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan password baru.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->data = view('login/send-success-reset', ['message' => "Password baru berhasil disimpan.", 'buttonText' => "Masuk Sekarang", 'url' => base_url('auth')]);
+                $response->message = 'Password baru berhasil disimpan.';
+                $response->url = base_url('auth');
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengajukan permohonan.";
+                return json_encode($response);
+            }
         }
     }
 
