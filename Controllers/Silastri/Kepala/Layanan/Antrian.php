@@ -318,7 +318,7 @@ class Antrian extends BaseController
                         if ($this->_db->affectedRows() > 0) {
                             $this->_db->transCommit();
                             $response = new \stdClass;
-                            $response->code = 200;
+                            $response->status = 200;
                             $response->message = $data->message;
                             $response->redirrect = base_url('silastri/kepala/layanan/approved/detail') . '?token=' . $id;
                             $response->filename = $oldData->kode_permohonan . ".pdf";
@@ -328,33 +328,33 @@ class Antrian extends BaseController
                         } else {
                             $this->_db->transRollback();
                             $response = new \stdClass;
-                            $response->code = 400;
+                            $response->status = 400;
                             $response->message = "Gagal mengupdate dokumen.";
                             return json_encode($response);
                         }
                     } else {
                         $this->_db->transRollback();
                         $response = new \stdClass;
-                        $response->code = 400;
+                        $response->status = 400;
                         $response->message = "Gagal mengupdate dokumen.";
                         return json_encode($response);
                     }
                     break;
                 case "UNAUTHORIZED":
                     $response = new \stdClass;
-                    $response->code = 400;
+                    $response->status = 400;
                     $response->message = $data->message;
                     return json_encode($response);
                     break;
                 case "NOT_FOUND":
                     $response = new \stdClass;
-                    $response->code = 400;
+                    $response->status = 400;
                     $response->message = "Url tidak ditemukan.";
                     return json_encode($response);
                     break;
                 default:
                     $response = new \stdClass;
-                    $response->code = 400;
+                    $response->status = 400;
                     $response->message = $data->message;
                     // $response->message = "Trafik sedang penuh, silahkan ulangi beberapa saat lagi.";
                     return json_encode($response);
