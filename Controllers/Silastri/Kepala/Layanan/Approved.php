@@ -203,7 +203,7 @@ class Approved extends BaseController
 
             if ($data->file_dokumen_tte) {
                 $response = new \stdClass;
-                $response->code = 200;
+                $response->status = 200;
                 $response->message = "Dokumen ditemukan";
                 $response->data = base64_encode($data->file_dokumen_tte);
                 return json_encode($response);
