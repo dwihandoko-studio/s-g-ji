@@ -55,7 +55,7 @@ class Approved extends BaseController
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
                             <div class="dropdown-menu" style="">
                                 <a class="dropdown-item" href="./detail?token=' . $list->id_permohonan . '"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
-                                <a class="dropdown-item" href="javascript:actionDownload(\'' . $list->id . '\', \'' . $list->kode_permohonan  . '\');"><i class="bx bx-cloud-download font-size-16 align-middle"></i> &nbsp;Download</a>
+                                <a class="dropdown-item" href="javascript:actionDownload(\'' . $list->id_permohonan . '\', \'' . $list->kode_permohonan  . '\');"><i class="bx bx-cloud-download font-size-16 align-middle"></i> &nbsp;Download</a>
                             </div>
                         </div>';
             $row[] = $action;
