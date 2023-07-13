@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Silastri\Su\Layanan;
+namespace App\Models\Silastri\Kepala\Layanan;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class ProsesModel extends Model
+class ApprovedModel extends Model
 {
-    protected $table = "_permohonan a";
+    protected $table = "_file_tte c";
     protected $column_order = array(null, null, 'a.layanan', 'a.kode_permohonan', 'a.nik', 'a.nama', 'b.kk', 'a.jenis');
     protected $column_search = array('a.nik', 'a.nama', 'a.kode_permohonan');
     protected $order = array('a.created_at' => 'asc');
@@ -25,9 +25,10 @@ class ProsesModel extends Model
     }
     private function _get_datatables_query()
     {
-        $this->dt->select("a.id as id_permohonan, a.layanan, a.kode_permohonan, a.user_id, a.nik, a.nama, a.jenis, a.kelurahan, b.kk");
+        $this->dt->select("a.id as id_permohonan, a.layanan, a.kode_permohonan, a.user_id, a.nik, a.nama, a.jenis, a.kelurahan, b.kk, c.file_dokumen_tte");
+        $this->dt->join('_permohonan a', 'c.id = a.id');
         $this->dt->join('_profil_users_tb b', 'b.id = a.user_id');
-        $this->dt->where("(a.status_permohonan = 1)");
+        $this->dt->where("(a.status_permohonan = 5)");
 
         $i = 0;
         foreach ($this->column_search as $item) {

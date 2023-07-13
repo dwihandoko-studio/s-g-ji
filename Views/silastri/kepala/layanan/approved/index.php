@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">PROSES PERMOHONAN LAYANAN</h4>
+                    <h4 class="mb-sm-0 font-size-18">PERMOHONAN LAYANAN APPROVED</h4>
 
                     <!-- <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -27,7 +27,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">Data Proses Permohonan Layanan</h4>
+                                <h4 class="card-title">Data Approved Permohonan Layanan</h4>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
@@ -112,6 +112,65 @@
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
 
 <script>
+    function downloadPDF(pdf, fileName) {
+        // const linkSource = `data:application/pdf;base64,${pdf}`;
+        const linkSource = `data:application/octet-stream;base64,${pdf}`;
+        const downloadLink = document.createElement("a");
+        // const fileName = "abc.pdf";
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName + ".pdf";
+        downloadLink.click();
+    }
+
+    function actionDownload(id, kode) {
+        Swal.fire({
+            title: 'Apakah anda yakin ingin mendownload hasil dokumen permohonan layanan ini?',
+            text: "Download hasil dokumen permohonan layanan : " + kode,
+            showCancelButton: true,
+            icon: 'question',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Download!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: "./download",
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        kode: kode,
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('div.main-content').block({
+                            message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+                    },
+                    success: function(resul) {
+                        $('div.main-content').unblock();
+                        if (resul.status !== 200) {
+                            Swal.fire(
+                                'Failed!',
+                                resul.message,
+                                'warning'
+                            );
+                        } else {
+                            downloadPDF(resul.data, kode);
+                        }
+                    },
+                    error: function() {
+                        $('div.main-content').unblock();
+                        Swal.fire(
+                            'Failed!',
+                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                            'warning'
+                        );
+                    }
+                });
+            }
+        })
+    }
+
     function actionDetail(id, nik, nama) {
         $.ajax({
             url: "./detail",
