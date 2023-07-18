@@ -69,7 +69,7 @@
                                                     <div class="owl-carousel owl-theme auth-review-carousel" id="auth-review-carousel">
                                                         <div class="item">
                                                             <div class="py-3">
-                                                                <p class="font-size-16 mb-4">" <b>Sinergitas melayani</b>, memberikan yang tebaik untuk masyarakat menuju <.>Lampung Tengah Berjaya.</b> "</p>
+                                                                <p class="font-size-16 mb-4">" <b>Sinergitas melayani</b>, memberikan yang tebaik untuk masyarakat menuju <b>Lampung Tengah Berjaya.</b> "</p>
 
                                                                 <div>
                                                                     <h4 class="font-size-16 text-primary">Dinas Sosial</h4>
