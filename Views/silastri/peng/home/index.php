@@ -29,8 +29,8 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">Job View</p>
-                                <h4 class="mb-0">14,487</h4>
+                                <p class="text-muted fw-medium">Jumlah Permohonan</p>
+                                <h4 class="mb-0">0</h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -48,8 +48,8 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">New Application</p>
-                                <h4 class="mb-0">7,402</h4>
+                                <p class="text-muted fw-medium">Permohonan Selesai</p>
+                                <h4 class="mb-0">0</h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -68,7 +68,7 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">Total Rejected</p>
-                                <h4 class="mb-0">12,487</h4>
+                                <h4 class="mb-0">0</h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
