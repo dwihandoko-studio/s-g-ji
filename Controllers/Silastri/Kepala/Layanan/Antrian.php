@@ -499,7 +499,7 @@ class Antrian extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
 
-            $oldData = $this->_db->table('_permohonan_temp')->where(['id' => $id])->get()->getRowArray();
+            $oldData = $this->_db->table('_permohonan')->where(['id' => $id])->get()->getRowArray();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -518,7 +518,7 @@ class Antrian extends BaseController
             $this->_db->transBegin();
             $this->_db->table('_permohonan_tolak')->insert($oldData);
             if ($this->_db->affectedRows() > 0) {
-                $this->_db->table('_permohonan_temp')->where('id', $oldData['id'])->delete();
+                $this->_db->table('_permohonan')->where('id', $oldData['id'])->delete();
                 if ($this->_db->affectedRows() > 0) {
                     // try {
                     //     $riwayatLib = new Riwayatlib();
