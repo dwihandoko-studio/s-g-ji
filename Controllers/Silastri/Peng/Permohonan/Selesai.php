@@ -129,7 +129,7 @@ class Selesai extends BaseController
             ->join('_profil_users_tb b', 'b.id = a.user_id')
             ->join('ref_kecamatan c', 'c.id = b.kecamatan')
             ->join('ref_kelurahan d', 'd.id = b.kelurahan')
-            ->where(['a.id' => $id, 'a.status_permohonan' => 1])->get()->getRowObject();
+            ->where(['a.id' => $id, 'a.status_permohonan' => 2])->get()->getRowObject();
 
         if ($current) {
             $data['data'] = $current;
