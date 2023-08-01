@@ -15,7 +15,7 @@
                         <i class="bx bx-calendar"></i>
                         <span key="t-layanans">Layanan</span>
                     </a>
-                    <ul class="sub-menu  <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "home") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
+                    <ul class="sub-menu  <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "layanan") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
                         <?php $menus = getLayananSilastri(); ?>
                         <?php if ($menus) { ?>
                             <?php if (count($menus) > 0) { ?>
@@ -26,8 +26,20 @@
                         <?php } ?>
                     </ul>
                 </li>
+                <li <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan") ? ' class="mm-active"' : '' ?>>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan") ? ' mm-active' : '' ?>">
+                        <i class="bx bx-calendar"></i>
+                        <span key="t-permohonans">Status Permohonan</span>
+                    </a>
+                    <ul class="sub-menu  <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
+                        <li><a <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan" && $uri->getSegment(4) == "antrian") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peng/permohonan/antrian') ?>" key="t-permohonan-antrian">Antrian</a></li>
+                        <li><a <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan" && $uri->getSegment(4) == "proses") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peng/permohonan/proses') ?>" key="t-permohonan-proses">Proses</a></li>
+                        <li><a <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan" && $uri->getSegment(4) == "selesai") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peng/permohonan/selesai') ?>" key="t-permohonan-selesai">Selesai</a></li>
+                        <li><a <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan" && $uri->getSegment(4) == "ditolak") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peng/permohonan/ditolak') ?>" key="t-permohonan-ditolak">Ditolak</a></li>
+                    </ul>
+                </li>
 
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-layout"></i>
                         <span key="t-layouts">Layouts</span>
@@ -58,7 +70,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="chat.html" class="waves-effect">
