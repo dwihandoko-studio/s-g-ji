@@ -133,7 +133,7 @@ class Selesai extends BaseController
 
         if ($current) {
             $data['data'] = $current;
-            return view('silastri/peng/permohonan/selesai/detail', $data);
+            return view('silastri/peng/permohonan/selesai/detail-page', $data);
         } else {
             return view('404', ['error' => "Data tidak ditemukan."]);
         }
