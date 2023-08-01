@@ -184,7 +184,7 @@ class Selesai extends BaseController
             }
 
 
-            $oldData = $this->_db->table('_file_tte a')->select("a.*, b.layanan, b.kode_permohonan, b.jenis")->join('_permohonan b', 'b.id = a.id')->where('a.id', $id)->get()->getRowObject();
+            $oldData = $this->_db->table('_file_tte a')->select("a.*, b.layanan, b.kode_permohonan, b.jenis")->join('_permohonan b', 'a.id = b.id')->where('a.id', $id)->get()->getRowObject();
 
             if ($oldData) {
                 try {
