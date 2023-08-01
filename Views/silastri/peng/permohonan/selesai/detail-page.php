@@ -234,7 +234,7 @@
                         );
                     }
                 } else {
-                    downloadPDF(msg.data, msg.filename);
+                    downloadPDF(resul.data, resul.filename);
                 }
             },
             error: function(erro) {
