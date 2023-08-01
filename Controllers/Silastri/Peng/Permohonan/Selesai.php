@@ -138,4 +138,72 @@ class Selesai extends BaseController
             return view('404', ['error' => "Data tidak ditemukan."]);
         }
     }
+
+    public function download()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->code = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->code = 400;
+            $response->message = $this->validator->getError('id') . $this->validator->getError('nama');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->code = 401;
+                $response->message = "Session telah habis.";
+                return json_encode($response);
+            }
+
+
+            $oldData = $this->_db->table('_file_tte a')->select("a.*, b.layanan, b.kode_permohonan, b.jenis")->join('_permohonan b', 'b.id = a.id')->where('id', $id)->get()->getRowObject();
+
+            if ($oldData) {
+                try {
+                    $this->_db->table('_file_tte')->where('id', $oldData->id)->update(['downloaded' => (int)$oldData->downloaded + 1]);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+                $response = new \stdClass;
+                $response->code = 200;
+                $response->message = "Dokumen {$nama} ditemukan.";
+                $response->data = base64_encode($oldData->file_dokumen_tte);
+                $response->filename = $oldData->kode_permohonan . ".pdf";
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->code = 400;
+                $response->message = "Dokumen " . $nama . " tidak ditemukan.";
+                return json_encode($response);
+            }
+        }
+    }
 }
