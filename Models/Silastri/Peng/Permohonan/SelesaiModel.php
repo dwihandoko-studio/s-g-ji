@@ -27,7 +27,7 @@ class SelesaiModel extends Model
     {
         $this->dt->select("a.id as id_permohonan, a.layanan, a.kode_permohonan, a.user_id, a.nik, a.nama, a.jenis, a.kelurahan, b.kk");
         $this->dt->join('_profil_users_tb b', 'b.id = a.user_id');
-        $this->dt->where("(a.status_permohonan = 2)");
+        $this->dt->where("(a.status_permohonan = 5)");
 
         $i = 0;
         foreach ($this->column_search as $item) {
