@@ -197,7 +197,7 @@
 
     function actionDownload(e) {
         const id = '<?= $data->id ?>';
-        const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
+        const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->kode_permohonan)) ?>';
 
         $.ajax({
             url: "./download",
