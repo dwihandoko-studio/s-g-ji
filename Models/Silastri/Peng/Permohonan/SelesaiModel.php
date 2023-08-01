@@ -5,7 +5,7 @@ namespace App\Models\Silastri\Peng\Permohonan;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class ProsesModel extends Model
+class SelesaiModel extends Model
 {
     protected $table = "_permohonan a";
     protected $column_order = array(null, null, 'a.layanan', 'a.kode_permohonan', 'a.nik', 'a.nama', 'b.kk', 'a.jenis');
