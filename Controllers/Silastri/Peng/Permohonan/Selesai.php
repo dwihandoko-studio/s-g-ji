@@ -143,7 +143,7 @@ class Selesai extends BaseController
     {
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
-            $response->code = 400;
+            $response->status = 400;
             $response->message = "Permintaan tidak diizinkan";
             return json_encode($response);
         }
@@ -165,7 +165,7 @@ class Selesai extends BaseController
 
         if (!$this->validate($rules)) {
             $response = new \stdClass;
-            $response->code = 400;
+            $response->status = 400;
             $response->message = $this->validator->getError('id') . $this->validator->getError('nama');
             return json_encode($response);
         } else {
@@ -178,7 +178,7 @@ class Selesai extends BaseController
                 session()->destroy();
                 delete_cookie('jwt');
                 $response = new \stdClass;
-                $response->code = 401;
+                $response->status = 401;
                 $response->message = "Session telah habis.";
                 return json_encode($response);
             }
@@ -193,14 +193,14 @@ class Selesai extends BaseController
                     //throw $th;
                 }
                 $response = new \stdClass;
-                $response->code = 200;
+                $response->status = 200;
                 $response->message = "Dokumen {$nama} ditemukan.";
                 $response->data = base64_encode($oldData->file_dokumen_tte);
                 $response->filename = $oldData->kode_permohonan . ".pdf";
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
-                $response->code = 400;
+                $response->status = 400;
                 $response->message = "Dokumen " . $nama . " tidak ditemukan.";
                 return json_encode($response);
             }
