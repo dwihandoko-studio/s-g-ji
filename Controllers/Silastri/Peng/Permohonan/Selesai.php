@@ -48,7 +48,7 @@ class Selesai extends BaseController
             $row = [];
 
             $row[] = $no;
-            $action = '<a href="./detail?token=' . $list->id_permohonan . '"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            $action = '<a href="javascript:actionDetail(\'' . $list->id_permohonan . '\', \'' . $list->nik . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                 <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
                 </a>';
             $row[] = $action;
@@ -133,7 +133,7 @@ class Selesai extends BaseController
 
         if ($current) {
             $data['data'] = $current;
-            return view('silastri/peng/permohonan/selesai/detail-page', $data);
+            return view('silastri/peng/permohonan/selesai/detail', $data);
         } else {
             return view('404', ['error' => "Data tidak ditemukan."]);
         }
