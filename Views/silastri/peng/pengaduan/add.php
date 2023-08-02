@@ -384,14 +384,9 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptBottom'); ?>
+<script src="<?= base_url() ?>/assets/libs/select2/js/select2.min.js"></script>
 
 <script>
-    function initSelect2(event, parrent) {
-        $('#' + event).select2({
-            dropdownParent: parrent
-        });
-    }
-
     initSelect2("_kategori", ".page-content");
     initSelect2("_kecamatan_aduan", ".page-content");
     initSelect2("_kelurahan_aduan", ".page-content");
@@ -807,6 +802,7 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptTop'); ?>
+<link href="<?= base_url() ?>/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 <style>
     .preview-image-upload-ktp {
         position: relative;
