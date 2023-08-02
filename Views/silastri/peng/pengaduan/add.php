@@ -105,6 +105,10 @@
                                             Sama dengan pemohon
                                         </label>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mt-4">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject_lain">
                                         <label class="form-check-label" for="_identitas_subject_lain">
