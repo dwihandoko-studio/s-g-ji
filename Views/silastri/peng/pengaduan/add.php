@@ -122,57 +122,61 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="display: block;">
-                            <div class="col-lg-6">
-                                <div class="row mb-2">
-                                    <label for="_nama_aduan" class="col-sm-3 col-form-label">Nama Lengkap yang diadukan</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control nama_aduan" id="_nama_aduan" name="_nama_aduan" placeholder="Nama lengkap yang diadukan.. " required />
+                        <div class="row">
+                            <div class="col-lg-12" style="display: block;">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row mb-2">
+                                            <label for="_nama_aduan" class="col-sm-3 col-form-label">Nama Lengkap yang diadukan</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control nama_aduan" id="_nama_aduan" name="_nama_aduan" placeholder="Nama lengkap yang diadukan.. " required />
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <label for="_nik_aduan" class="col-sm-3 col-form-label">NIK yang diadukan</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control nik_aduan" id="_nik_aduan" name="_nik_aduan" placeholder="NIK yang diadukan.. " required />
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <label for="_nohp_aduan" class="col-sm-3 col-form-label">No Handphone yang diadukan</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control nohp_aduan" id="_nohp_aduan" name="_nohp_aduan" placeholder="No Handphone yang diadukan.. " required />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nik_aduan" class="col-sm-3 col-form-label">NIK yang diadukan</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control nik_aduan" id="_nik_aduan" name="_nik_aduan" placeholder="NIK yang diadukan.. " required />
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nohp_aduan" class="col-sm-3 col-form-label">No Handphone yang diadukan</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control nohp_aduan" id="_nohp_aduan" name="_nohp_aduan" placeholder="No Handphone yang diadukan.. " required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row mb-2">
-                                    <label for="_alamat_aduan" class="col-sm-3 col-form-label">Alamat yang diadukan</label>
-                                    <div class="col-sm-9">
-                                        <textarea rows="3" class="form-control alamat_aduan" id="_alamat_aduan" name="_alamat_aduan" required></textarea>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_kecamatan_aduan" class="col-sm-3 col-form-label">Kecamatan (yang diadukan) :</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control select2 kecamatan_aduan" id="_kecamatan_aduan" name="_kecamatan_aduan" style="width: 100%" onchange="changeKecamatan(this)" required>
-                                            <option value=""> --- Pilih Kecamatan --- </option>
-                                            <?php if (isset($kecamatans)) { ?>
-                                                <?php if (count($kecamatans) > 0) { ?>
-                                                    <?php foreach ($kecamatans as $key => $value) { ?>
-                                                        <option value="<?= $value->id ?>"><?= $value->kecamatan ?></option>
+                                    <div class="col-lg-6">
+                                        <div class="row mb-2">
+                                            <label for="_alamat_aduan" class="col-sm-3 col-form-label">Alamat yang diadukan</label>
+                                            <div class="col-sm-9">
+                                                <textarea rows="3" class="form-control alamat_aduan" id="_alamat_aduan" name="_alamat_aduan" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <label for="_kecamatan_aduan" class="col-sm-3 col-form-label">Kecamatan (yang diadukan) :</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control select2 kecamatan_aduan" id="_kecamatan_aduan" name="_kecamatan_aduan" style="width: 100%" onchange="changeKecamatan(this)" required>
+                                                    <option value=""> --- Pilih Kecamatan --- </option>
+                                                    <?php if (isset($kecamatans)) { ?>
+                                                        <?php if (count($kecamatans) > 0) { ?>
+                                                            <?php foreach ($kecamatans as $key => $value) { ?>
+                                                                <option value="<?= $value->id ?>"><?= $value->kecamatan ?></option>
+                                                            <?php } ?>
+                                                        <?php } ?>
                                                     <?php } ?>
-                                                <?php } ?>
-                                            <?php } ?>
-                                        </select>
-                                        <div class="help-block _kecamatan_aduan"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_kelurahan_aduan" class="col-sm-3 col-form-label">Kelurahan (yang diadukan) :</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control select2 kelurahan_aduan" id="_kelurahan_aduan" name="_kelurahan_aduan" style="width: 100%" required>
-                                            <option value=""> --- Pilih Kecamatan Dulu --- </option>
-                                        </select>
-                                        <div class="help-block _kelurahan_aduan"></div>
+                                                </select>
+                                                <div class="help-block _kecamatan_aduan"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <label for="_kelurahan_aduan" class="col-sm-3 col-form-label">Kelurahan (yang diadukan) :</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control select2 kelurahan_aduan" id="_kelurahan_aduan" name="_kelurahan_aduan" style="width: 100%" required>
+                                                    <option value=""> --- Pilih Kecamatan Dulu --- </option>
+                                                </select>
+                                                <div class="help-block _kelurahan_aduan"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
