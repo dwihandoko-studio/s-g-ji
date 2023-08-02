@@ -24,6 +24,74 @@ class Riwayat extends BaseController
         $this->_helpLib = new Helplib();
     }
 
+    public function getAllPengaduan()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            session()->destroy();
+            delete_cookie('jwt');
+            return redirect()->to(base_url('auth'));
+        }
+
+        $datas = $this->_db->table('riwayat_pengaduan a')
+            // ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.fullname, b.profile_picture as image_user")
+            // ->join('_profil_users_tb b', 'a.send_from = b.id', 'LEFT')
+            ->where('a.user_id', $user->data->id)
+            ->limit(5)
+            ->orderBy('a.created_at', 'DESC')
+            ->get()->getResult();
+
+        if (count($datas) > 0) {
+            $x['datas'] = $datas;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "success";
+            $response->data = $datas;
+            return json_encode($response);
+        } else {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Belum ada riwayat.";
+            $response->data = [];
+            return json_encode($response);
+        }
+    }
+
+    public function getAllPermohonan()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            session()->destroy();
+            delete_cookie('jwt');
+            return redirect()->to(base_url('auth'));
+        }
+
+        $datas = $this->_db->table('riwayat_permohonan a')
+            // ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.fullname, b.profile_picture as image_user")
+            // ->join('_profil_users_tb b', 'a.send_from = b.id', 'LEFT')
+            ->where('a.user_id', $user->data->id)
+            ->limit(5)
+            ->orderBy('a.created_at', 'DESC')
+            ->get()->getResult();
+
+        if (count($datas) > 0) {
+            $x['datas'] = $datas;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "success";
+            $response->data = $datas;
+            return json_encode($response);
+        } else {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Belum ada riwayat.";
+            $response->data = [];
+            return json_encode($response);
+        }
+    }
+
     public function index()
     {
         return redirect()->to(base_url('silastri/peng/riwayat/data'));
@@ -87,72 +155,6 @@ class Riwayat extends BaseController
             $response->message = "Belum ada notifikasi.";
             $response->data = [];
             return json_encode($response);
-        }
-    }
-
-    public function hapus()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id');
-            return json_encode($response);
-        } else {
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-
-            $current = $this->_db->table('_info_gtk')
-                ->where('ptk_id', $id)->get()->getRowObject();
-
-            if ($current) {
-                $this->_db->transBegin();
-                try {
-                    $this->_db->table('_info_gtk')->where('ptk_id', $id)->delete();
-                } catch (\Exception $e) {
-                    $this->_db->transRollback();
-
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->error = var_dump($e);
-                    $response->message = "Gagal menghapus tautan Info GTK Digital.";
-                    return json_encode($response);
-                }
-
-                if ($this->_db->affectedRows() > 0) {
-                    createAktifitas($user->data->id, "Menghapus tautan Info GTK Digital", "Menghapus Tautan Info GTK Digital", "delete");
-                    $this->_db->transCommit();
-                    $response = new \stdClass;
-                    $response->status = 200;
-                    $response->message = "Info GTK Digital berhasil dihapus.";
-                    return json_encode($response);
-                } else {
-                    $this->_db->transRollback();
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal memhapus tautan Info GTK Digital.";
-                    return json_encode($response);
-                }
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data tidak ditemukan";
-                return json_encode($response);
-            }
         }
     }
 }
