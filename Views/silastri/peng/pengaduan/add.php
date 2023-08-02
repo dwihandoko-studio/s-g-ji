@@ -186,7 +186,7 @@
                                 <div class="row mb-2">
                                     <label for="_uraian_aduan" class="col-sm-3 col-form-label">Uraian Pengaduan</label>
                                     <div class="col-sm-9">
-                                        <textarean rows="4" class="form-control uraian_aduan" id="_uraian_aduan" name="_uraian_aduan" required></textarean>
+                                        <textarea rows="4" class="form-control uraian_aduan" id="_uraian_aduan" name="_uraian_aduan" required></textarea>
                                     </div>
                                 </div>
                             </div>
