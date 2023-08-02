@@ -12,7 +12,7 @@
                 </li>
                 <li <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "layanan") ? ' class="mm-active"' : '' ?>>
                     <a href="javascript: void(0);" class="has-arrow waves-effect <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "layanan") ? ' mm-active' : '' ?>">
-                        <i class="bx bx-calendar"></i>
+                        <i class="bx bx-layer"></i>
                         <span key="t-layanans">Layanan</span>
                     </a>
                     <ul class="sub-menu  <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "layanan") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
@@ -28,7 +28,7 @@
                 </li>
                 <li <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan") ? ' class="mm-active"' : '' ?>>
                     <a href="javascript: void(0);" class="has-arrow waves-effect <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan") ? ' mm-active' : '' ?>">
-                        <i class="bx bx-calendar"></i>
+                        <i class="bx bx-sitemap"></i>
                         <span key="t-permohonans">Status Permohonan</span>
                     </a>
                     <ul class="sub-menu  <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "permohonan") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
