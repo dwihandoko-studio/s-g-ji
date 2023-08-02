@@ -100,7 +100,7 @@
                             <div class="col-lg-6">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="mt-4">
+                                        <div class="mt-1">
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject" checked="">
                                                 <label class="form-check-label" for="_identitas_subject">
@@ -110,7 +110,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="mt-4">
+                                        <div class="mt-1">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject_lain">
                                                 <label class="form-check-label" for="_identitas_subject_lain">
