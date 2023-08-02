@@ -133,11 +133,11 @@
                             reloadPage();
                         });
                     } else {
-                        Swal.fire(
-                            'PERINGATAN!',
-                            resul.message,
-                            'warning'
-                        );
+                        // Swal.fire(
+                        //     'PERINGATAN!',
+                        //     resul.message,
+                        //     'warning'
+                        // );
                     }
                 } else {
                     const ulPengaduan = document.querySelector('.datas-pengaduan');
@@ -205,11 +205,11 @@
                             reloadPage();
                         });
                     } else {
-                        Swal.fire(
-                            'PERINGATAN!',
-                            resul.message,
-                            'warning'
-                        );
+                        // Swal.fire(
+                        //     'PERINGATAN!',
+                        //     resul.message,
+                        //     'warning'
+                        // );
                     }
                 } else {
                     const ulPengaduan = document.querySelector('.datas-permohonan');
