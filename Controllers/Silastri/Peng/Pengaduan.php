@@ -172,6 +172,257 @@ class Pengaduan extends BaseController
         }
     }
 
+    public function addSave()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama pemohon tidak boleh kosong. ',
+                ]
+            ],
+            'nik' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nik pemohon tidak boleh kosong. ',
+                ]
+            ],
+            'nohp' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nohp pemohon tidak boleh kosong. ',
+                ]
+            ],
+            'alamat' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Alamat pemohon tidak boleh kosong. ',
+                ]
+            ],
+            'kecamatan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kecamatan pemohon tidak boleh kosong. ',
+                ]
+            ],
+            'kelurahan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kelurahan pemohon tidak boleh kosong. ',
+                ]
+            ],
+            'nama_aduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama yang diadukan tidak boleh kosong. ',
+                ]
+            ],
+            'nik_aduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nik yang diadukan tidak boleh kosong. ',
+                ]
+            ],
+            'nohp_aduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nohp yang diadukan tidak boleh kosong. ',
+                ]
+            ],
+            'alamat_aduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Alamat yang diadukan tidak boleh kosong. ',
+                ]
+            ],
+            'kecamatan_aduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kecamatan yang diadukan tidak boleh kosong. ',
+                ]
+            ],
+            'kelurahan_aduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kelurahan yang diadukan tidak boleh kosong. ',
+                ]
+            ],
+            'kategori' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kategori pengaduan tidak boleh kosong. ',
+                ]
+            ],
+            'identitas_aduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Identitas aduan tidak boleh kosong. ',
+                ]
+            ],
+            'uraian_aduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Uraian aduan tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        $filenamelampiran = dot_array_search('_file.name', $_FILES);
+        if ($filenamelampiran != '') {
+            $lampiranVal = [
+                '_file' => [
+                    'rules' => 'uploaded[_file]|max_size[_file,2048]|mime_in[_file,image/jpeg,image/jpg,image/png,application/pdf]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen pengaduan terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen pengaduan terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar atau pdf. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranVal);
+        }
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('nama')
+                . $this->validator->getError('nik')
+                . $this->validator->getError('nohp')
+                . $this->validator->getError('alamat')
+                . $this->validator->getError('kecamatan')
+                . $this->validator->getError('kelurahan')
+                . $this->validator->getError('nama_aduan')
+                . $this->validator->getError('nik_aduan')
+                . $this->validator->getError('nohp_aduan')
+                . $this->validator->getError('alamat_aduan')
+                . $this->validator->getError('kecamatan_aduan')
+                . $this->validator->getError('kelurahan_aduan')
+                . $this->validator->getError('kategori')
+                . $this->validator->getError('identitas_aduan')
+                . $this->validator->getError('uraian_aduan')
+                . $this->validator->getError('_file');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $kategori = htmlspecialchars($this->request->getVar('kategori'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $nik = htmlspecialchars($this->request->getVar('nik'), true);
+            $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
+            $alamat = htmlspecialchars($this->request->getVar('alamat'), true);
+            $kecamatan = htmlspecialchars($this->request->getVar('kecamatan'), true);
+            $kelurahan = htmlspecialchars($this->request->getVar('kelurahan'), true);
+            $nama_aduan = htmlspecialchars($this->request->getVar('nama_aduan'), true);
+            $nik_aduan = htmlspecialchars($this->request->getVar('nik_aduan'), true);
+            $nohp_aduan = htmlspecialchars($this->request->getVar('nohp_aduan'), true);
+            $alamat_aduan = htmlspecialchars($this->request->getVar('alamat_aduan'), true);
+            $kecamatan_aduan = htmlspecialchars($this->request->getVar('kecamatan_aduan'), true);
+            $kelurahan_aduan = htmlspecialchars($this->request->getVar('kelurahan_aduan'), true);
+            $identitas_aduan = htmlspecialchars($this->request->getVar('identitas_aduan'), true);
+            $uraian_aduan = htmlspecialchars($this->request->getVar('uraian_aduan'), true);
+            $keterangan = (int)htmlspecialchars($this->request->getVar('keterangan'), true);
+
+            if ($keterangan === NULL || $keterangan === "") {
+                $jenisFix = $kategori;
+            } else {
+                $jenisFix = $kategori;
+            }
+
+            $uuidLib = new Uuid();
+
+            $kodeUsulan = "ADUAN-" . $nik_aduan . '-' . time();
+
+            $data = [
+                'id' => $uuidLib->v4(),
+                'kode_aduan' => $kodeUsulan,
+                'nama' => $nama,
+                'nik' => $nik,
+                'nohp' => $nohp,
+                'alamat' => $alamat,
+                'kelurahan' => $kelurahan,
+                'kecamatan' => $kecamatan,
+                'nama_aduan' => $nama_aduan,
+                'nik_aduan' => $nik_aduan,
+                'nohp_aduan' => $nohp_aduan,
+                'alamat_aduan' => $alamat_aduan,
+                'kelurahan_aduan' => $kelurahan_aduan,
+                'kecamatan_aduan' => $kecamatan_aduan,
+                'user_id' => $user->data->id,
+                'kategori' => $jenisFix,
+                'identitas_aduan' => $identitas_aduan,
+                'uraian_aduan' => $uraian_aduan,
+                'status_aduan' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $dir = FCPATH . "uploads/aduan";
+
+            if ($filenamelampiran != '') {
+                $lampiran = $this->request->getFile('_file');
+                $filesNamelampiran = $lampiran->getName();
+                $newNamelampiran = _create_name_foto($filesNamelampiran);
+
+                if ($lampiran->isValid() && !$lampiran->hasMoved()) {
+                    $lampiran->move($dir, $newNamelampiran);
+                    $data['lampiran_aduan'] = $newNamelampiran;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran pengaduan.";
+                    return json_encode($response);
+                }
+            }
+
+            $this->_db->transBegin();
+            try {
+                $this->_db->table('_pengaduan')->insert($data);
+            } catch (\Exception $e) {
+                if ($filenamelampiran != '') {
+                    unlink($dir . '/' . $newNamelampiran);
+                }
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengirim pengaduan.";
+                return json_encode($response);
+            }
+
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Pengaduan Berhasil di Kirim.";
+                $response->redirect = base_url('silastri/peng/riwayat');
+                return json_encode($response);
+            } else {
+                if ($filenamelampiran != '') {
+                    unlink($dir . '/' . $newNamelampiran);
+                }
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengirim pengaduan.";
+                return json_encode($response);
+            }
+        }
+    }
+
     public function getKelurahan()
     {
         if ($this->request->getMethod() != 'post') {

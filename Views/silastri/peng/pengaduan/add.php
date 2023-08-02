@@ -388,6 +388,7 @@
         formUpload.append('kelurahan_aduan', kelurahan_aduan);
         formUpload.append('kategori', kategori);
         formUpload.append('identitas_aduan', identitasAduan);
+        formUpload.append('uraian_aduan', uraian_aduan);
         formUpload.append('keterangan', keterangan);
 
         Swal.fire({
