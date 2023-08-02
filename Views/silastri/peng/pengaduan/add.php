@@ -34,29 +34,29 @@
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <label for="_kk" class="col-sm-3 col-form-label">KK</label>
+                                    <label for="_kk" class="col-sm-3 col-form-label">No Handphone</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control nama" id="_kk" name="_kk" value="<?= $data->kk ?>" placeholder="KK.. " readonly />
+                                        <input type="text" class="form-control nama" id="_kk" name="_kk" value="<?= $data->no_hp ?>" placeholder="No Handphone.. " readonly />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="row mb-2">
-                                    <label for="_tempat_lahir" class="col-sm-3 col-form-label">Tempat Lahir</label>
+                                    <label for="_alamat" class="col-sm-3 col-form-label">Alamat</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control nama" id="_tempat_lahir" name="_tempat_lahir" value="<?= $data->tempat_lahir ?>" placeholder="Tempat lahir.. " readonly />
+                                        <textarean rows="2" class="form-control alamat" id="_alamat" name="_alamat" readonly><?= $data->alamat ?></textarean>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <label for="_tgl_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                                    <label for="_kecamatan" class="col-sm-3 col-form-label">Kecamatan</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="form-control nama" id="_tgl_lahir" name="_tgl_lahir" value="<?= $data->tgl_lahir ?>" readonly />
+                                        <input type="text" class="form-control kecamatan" id="_kecamatan" name="_kecamatan" value="<?= $data->nama_kecamatan ?>" readonly />
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <label for="_jenis_kelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                                    <label for="_kampung" class="col-sm-3 col-form-label">Kampung</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control nama" id="_jenis_kelamin" name="_jenis_kelamin" value="<?= $data->jenis_kelamin === NULL || $data->jenis_kelamin === "" ? '-' : ($data->jenis_kelamin == "L" ? 'Laki-laki' : 'Perempuan') ?>" placeholder="Jenis kelamin.. " readonly />
+                                        <input type="text" class="form-control kampung" id="_kampung" name="_kampung" value="<?= $data->nama_kampung ?>" readonly />
                                     </div>
                                 </div>
                             </div>
