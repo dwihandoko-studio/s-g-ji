@@ -11,6 +11,7 @@ use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
+use App\Libraries\Silastri\Riwayatpengaduanlib;
 
 class Pengaduan extends BaseController
 {
@@ -405,6 +406,12 @@ class Pengaduan extends BaseController
 
             if ($this->_db->affectedRows() > 0) {
                 $this->_db->transCommit();
+                $riwayatLib = new Riwayatpengaduanlib();
+                try {
+                    $riwayatLib->create($user->data->id, "Mengirim pengaduan dengan kode antrian: " . $data['kode_aduan'], "submit", "bx bx-send", "riwayat/detailpengaduan?token=" . $data['id'], $data['id']);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Pengaduan Berhasil di Kirim.";
