@@ -60,7 +60,7 @@
                                     <label for="_kampung" class="col-sm-3 col-form-label">Kampung</label>
                                     <div class="col-sm-9">
                                         <input type="hidden" id="_kampung" name="_kampung" value="<?= $data->kelurahan ?>" readonly />
-                                        <input type="text" class="form-control kecamatan" id="_nama_kampung" name="_nama_kampung" value="<?= getNamaKelurahan($data->kelurahan) ?>" readonly />
+                                        <input type="text" class="form-control kampung" id="_nama_kampung" name="_nama_kampung" value="<?= getNamaKelurahan($data->kelurahan) ?>" readonly />
                                     </div>
                                 </div>
                             </div>
@@ -130,18 +130,21 @@
                                             <label for="_nama_aduan" class="col-sm-3 col-form-label">Nama Lengkap yang diadukan</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control nama_aduan" id="_nama_aduan" name="_nama_aduan" placeholder="Nama lengkap yang diadukan.. " />
+                                                <div class="help-block _nama_aduan"></div>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <label for="_nik_aduan" class="col-sm-3 col-form-label">NIK yang diadukan</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control nik_aduan" id="_nik_aduan" name="_nik_aduan" placeholder="NIK yang diadukan.. " />
+                                                <div class="help-block _nik_aduan"></div>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <label for="_nohp_aduan" class="col-sm-3 col-form-label">No Handphone yang diadukan</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control nohp_aduan" id="_nohp_aduan" name="_nohp_aduan" placeholder="No Handphone yang diadukan.. " />
+                                                <div class="help-block _nohp_aduan"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -150,6 +153,7 @@
                                             <label for="_alamat_aduan" class="col-sm-3 col-form-label">Alamat yang diadukan</label>
                                             <div class="col-sm-9">
                                                 <textarea rows="3" class="form-control alamat_aduan" id="_alamat_aduan" name="_alamat_aduan"></textarea>
+                                                <div class="help-block _alamat_aduan"></div>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
@@ -198,134 +202,15 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h4>Lampiran Dokumen Permohonan</h4>
-                                <p style="margin-bottom: 30px;">Silahkan lampirkan dokumen permohonan (KTP Pengurus, Akta Notaris, Pengesahan Kemenkumham, ADRT, Keterangan Domisili, Akreditasi, Struktur Organisasi, NPWP, Foto Lokasi Tampak Depan, Foto Usaha Ekonomi Produktif, Logo Lembaga, dan File Binaan).</p>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_ktp_ketua" class="form-label">Lampiran KTP Pengurus (Ketua) : </label>
-                                            <input class="form-control" type="file" id="_file_ktp_ketua" name="_file_ktp_ketua" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_ktp_ketua', 'KTP Ketua')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_ktp_ketua" for="_file_ktp_ketua"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_ktp_sekretaris" class="form-label">Lampiran KTP Pengurus (Sekretaris) : </label>
-                                            <input class="form-control" type="file" id="_file_ktp_sekretaris" name="_file_ktp_sekretaris" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_ktp_sekretaris', 'KTP Sekretaris')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_ktp_sekretaris" for="_file_ktp_sekretaris"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_ktp_bendahara" class="form-label">Lampiran KTP Pengurus (Bendahara) : </label>
-                                            <input class="form-control" type="file" id="_file_ktp_bendahara" name="_file_ktp_bendahara" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_ktp_bendahara', 'KTP Bendahara')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_ktp_bendahara" for="_file_ktp_bendahara"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_akta_notaris" class="form-label">Lampiran Akta Notaris : </label>
-                                            <input class="form-control" type="file" id="_file_akta_notaris" name="_file_akta_notaris" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_akta_notaris', 'Akta Notaris')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_akta_notaris" for="_file_akta_notaris"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_pengesahan_kemenkumham" class="form-label">Lampiran Pengesahan Kemenkumham : </label>
-                                            <input class="form-control" type="file" id="_file_pengesahan_kemenkumham" name="_file_pengesahan_kemenkumham" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_pengesahan_kemenkumham', 'Pengesahan Kemenkumham')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_pengesahan_kemenkumham" for="_file_pengesahan_kemenkumham"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_adrt" class="form-label">Lampiran ADRT : </label>
-                                            <input class="form-control" type="file" id="_file_adrt" name="_file_adrt" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_adrt', 'ADRT')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_adrt" for="_file_adrt"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_keterangan_domisili" class="form-label">Lampiran Keterangan Domisili : </label>
-                                            <input class="form-control" type="file" id="_file_keterangan_domisili" name="_file_keterangan_domisili" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_keterangan_domisili', 'Keterangan Domisili')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_keterangan_domisili" for="_file_keterangan_domisili"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_akreditasi" class="form-label">Lampiran Akreditasi : </label>
-                                            <input class="form-control" type="file" id="_file_akreditasi" name="_file_akreditasi" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_akreditasi', 'Akreditasi')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb (Jika Ada)</code></p>
-                                            <div class="help-block _file_akreditasi" for="_file_akreditasi"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_struktur_organisasi" class="form-label">Lampiran Struktur Organisasi : </label>
-                                            <input class="form-control" type="file" id="_file_struktur_organisasi" name="_file_struktur_organisasi" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_struktur_organisasi', 'Struktur Organisasi')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_struktur_organisasi" for="_file_struktur_organisasi"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_npwp" class="form-label">Lampiran NPWP : </label>
-                                            <input class="form-control" type="file" id="_file_npwp" name="_file_npwp" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_npwp', 'NPWP')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_npwp" for="_file_npwp"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_foto_lokasi" class="form-label">Lampiran Foto Lokasi : </label>
-                                            <input class="form-control" type="file" id="_file_foto_lokasi" name="_file_foto_lokasi" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_foto_lokasi', 'Foto Lokasi')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_foto_lokasi" for="_file_foto_lokasi"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_foto_usaha_ekonomi_produktif" class="form-label">Lampiran Foto Usaha Ekonomi Produktif (UEP) : </label>
-                                            <input class="form-control" type="file" id="_file_foto_usaha_ekonomi_produktif" name="_file_foto_usaha_ekonomi_produktif" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_foto_usaha_ekonomi_produktif', 'Foto Usaha Ekonomi Produktif')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb (Jika Ada)</code></p>
-                                            <div class="help-block _file_foto_usaha_ekonomi_produktif" for="_file_foto_usaha_ekonomi_produktif"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="mt-3">
-                                            <label for="_file_logo_lembaga" class="form-label">Lampiran Logo Lembaga : </label>
-                                            <input class="form-control" type="file" id="_file_logo_lembaga" name="_file_logo_lembaga" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_logo_lembaga', 'Logo Lembaga')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb (Jika Ada)</code></p>
-                                            <div class="help-block _file_logo_lembaga" for="_file_logo_lembaga"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h4>Lampiran Pengaduan</h4>
+                                <p style="margin-bottom: 30px;">Silahkan lampirkan dokumen pengaduan jika ada.</p>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mt-3">
-                                            <label for="_file_data_binaan" class="form-label">Lampiran Data Binaan : </label>
-                                            <p class="font-size-11">&nbsp;&nbsp;Template data binaan dapat di download pada : <a class="menu-badge badge-info" href="#">Link Berikut...</a></p>
-                                            <input class="form-control" type="file" id="_file_data_binaan" name="_file_data_binaan" onFocus="inputFocus(this);" accept=".xls, .xlsx" onchange="loadFileExcel('_file_data_binaan', 'Data Binaan')">
-                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="xls, xlsx">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_data_binaan" for="_file_data_binaan"></div>
+                                            <label for="_file_lampiran" class="form-label">Lampiran dokumen pengaduan: </label>
+                                            <input class="form-control" type="file" id="_file_lampiran" name="_file_lampiran" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_lampiran', 'Lampiran Dokumen Pengaduan')">
+                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                            <div class="help-block _file_lampiran" for="_file_lampiran"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -393,149 +278,126 @@
 
     $("#formAddData").on("submit", function(e) {
         e.preventDefault();
-        const indikator1 = $("input[type='radio'][name='_indikator_1']:checked").val();
-        const indikator2 = $("input[type='radio'][name='_indikator_2']:checked").val();
-        const indikator3 = $("input[type='radio'][name='_indikator_3']:checked").val();
-        const indikator4 = $("input[type='radio'][name='_indikator_4']:checked").val();
-        const indikator5 = $("input[type='radio'][name='_indikator_5']:checked").val();
-        const indikator6 = $("input[type='radio'][name='_indikator_6']:checked").val();
+        const identitasAduan = $("input[type='radio'][name='_identitas_pemohon']:checked").val();
 
         const nama = document.getElementsByName('_nama')[0].value;
         const nik = document.getElementsByName('_nik')[0].value;
-        const kk = document.getElementsByName('_kk')[0].value;
+        const nohp = document.getElementsByName('_nohp')[0].value;
+        const alamat = document.getElementsByName('_alamat')[0].value;
+        const nama_kecamatan = document.getElementsByName('_kecamatan')[0].value;
+        const nama_kampung = document.getElementsByName('_kampung')[0].value;
+
+        let nama_aduan = document.getElementsByName('_nama_aduan')[0].value;
+        let nik_aduan = document.getElementsByName('_nik_aduan')[0].value;
+        let nohp_aduan = document.getElementsByName('_nohp_aduan')[0].value;
+        let alamat_aduan = document.getElementsByName('_alamat_aduan')[0].value;
+        let kecamatan_aduan = document.getElementsByName('_kecamatan_aduan')[0].value;
+        let kelurahan_aduan = document.getElementsByName('_kelurahan_aduan')[0].value;
+
         const jenis = document.getElementsByName('_jenis')[0].value;
         const keterangan = document.getElementsByName('_jenis_detail')[0].value;
 
-        const fileKtp = document.getElementsByName('_file_ktp')[0].value;
-        const fileKk = document.getElementsByName('_file_kk')[0].value;
-        const filePernyataan = document.getElementsByName('_file_pernyataan')[0].value;
-        const fileFotoRumah = document.getElementsByName('_file_foto_rumah')[0].value;
+        const fileLampiran = document.getElementsByName('_file_lampiran')[0].value;
+
+        const uraian_aduan = document.getElementsByName('_uraian_aduan')[0].value;
 
         if (jenis === "") {
             $("select#_jenis").css("color", "#dc3545");
             $("select#_jenis").css("border-color", "#dc3545");
-            $('._jenis-error').html('Silahkan pilih jenis SKTM');
+            $('._jenis-error').html('Silahkan pilih kategori Pengaduan');
 
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan pilih peruntukan SKTM.",
+                "Silahkan pilih kategori Pengaduan.",
                 'warning'
             );
             return false;
         }
 
-        if (indikator1 === undefined || indikator1 === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan pilih isian indikator 1.",
-                'warning'
-            );
-            return;
+        if (identitasAduan === "beda") {
+            if (nama_aduan === "") {
+                $("input#_nama_aduan").css("color", "#dc3545");
+                $("input#_nama_aduan").css("border-color", "#dc3545");
+                $('._nama_aduan').html('Silahkan masukkan nama yang diadukan');
+                return;
+            }
+            if (nik_aduan === "") {
+                $("input#_nik_aduan").css("color", "#dc3545");
+                $("input#_nik_aduan").css("border-color", "#dc3545");
+                $('._nik_aduan').html('Silahkan masukkan NIK yang diadukan');
+                return;
+            }
+            if (nohp_aduan === "") {
+                $("input#_nohp_aduan").css("color", "#dc3545");
+                $("input#_nohp_aduan").css("border-color", "#dc3545");
+                $('._nohp_aduan').html('Silahkan masukkan no handphone yang diadukan');
+                return;
+            }
+            if (alamat_aduan === "") {
+                $("input#_alamat_aduan").css("color", "#dc3545");
+                $("input#_alamat_aduan").css("border-color", "#dc3545");
+                $('._alamat_aduan').html('Silahkan masukkan alamat yang diadukan');
+                return;
+            }
+            if (kecamatan_aduan === "") {
+                $("select#_kecamatan_aduan").css("color", "#dc3545");
+                $("select#_kecamatan_aduan").css("border-color", "#dc3545");
+                $('._kecamatan_aduan').html('Silahkan pilih kecamatan yang diadukan');
+                return;
+            }
+            if (kelurahan_aduan === "") {
+                $("select#_kelurahan_aduan").css("color", "#dc3545");
+                $("select#_kelurahan_aduan").css("border-color", "#dc3545");
+                $('._kelurahan_aduan').html('Silahkan pilih kelurahan yang diadukan');
+                return;
+            }
+        } else {
+            nama_aduan = nama;
+            nik_aduan = nik;
+            nohp_aduan = nohp;
+            alamat_aduan = alamat;
+            kecamatan_aduan = nama_kecamatan;
+            kelurahan_aduan = nama_kampung;
         }
-        if (indikator2 === undefined || indikator2 === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan pilih isian indikator 2.",
-                'warning'
-            );
-            return;
-        }
-        if (indikator3 === undefined || indikator3 === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan pilih isian indikator 3.",
-                'warning'
-            );
-            return;
-        }
-        if (indikator4 === undefined || indikator4 === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan pilih isian indikator 4.",
-                'warning'
-            );
-            return;
-        }
-        if (indikator5 === undefined || indikator5 === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan pilih isian indikator 5.",
-                'warning'
-            );
-            return;
-        }
-        if (indikator6 === undefined || indikator6 === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan pilih isian indikator 6.",
-                'warning'
-            );
-            return;
-        }
-        if (fileKtp === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan lampirkan dokumen KTP.",
-                'warning'
-            );
-            return;
-        }
-        if (fileKk === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan lampirkan dokumen KK.",
-                'warning'
-            );
-            return;
-        }
-        if (filePernyataan === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan lampirkan dokumen Pernyataan.",
-                'warning'
-            );
-            return;
-        }
-        if (fileFotoRumah === "") {
-            Swal.fire(
-                'Peringatan..!!',
-                "Silahkan lampirkan dokumen Foto Rumah.",
-                'warning'
-            );
+
+        if (uraian_aduan === "") {
+            $("input#_uraian_aduan").css("color", "#dc3545");
+            $("input#_uraian_aduan").css("border-color", "#dc3545");
+            $('._uraian_aduan').html('Silahkan masukkan uraian aduan');
             return;
         }
 
         const formUpload = new FormData();
 
-        const file_ktp = document.getElementsByName('_file_ktp')[0].files[0];
-        formUpload.append('_file_ktp', file_ktp);
-        const file_kk = document.getElementsByName('_file_kk')[0].files[0];
-        formUpload.append('_file_kk', file_kk);
-        const file_pernyataan = document.getElementsByName('_file_pernyataan')[0].files[0];
-        formUpload.append('_file_pernyataan', file_pernyataan);
-        const file_foto_rumah = document.getElementsByName('_file_foto_rumah')[0].files[0];
-        formUpload.append('_file_foto_rumah', file_foto_rumah);
+        if (fileLampiran !== "") {
+            const file_lampiran = document.getElementsByName('_file_lampiran')[0].files[0];
+            formUpload.append('_file', file_lampiran);
+        }
 
         formUpload.append('nama', nama);
         formUpload.append('nik', nik);
-        formUpload.append('kk', kk);
+        formUpload.append('nohp', nohp);
+        formUpload.append('alamat', alamat);
+        formUpload.append('kecamatan', nama_kecamatan);
+        formUpload.append('kelurahan', nama_kampung);
+        formUpload.append('nama_aduan', nama_aduan);
+        formUpload.append('nik_aduan', nik_aduan);
+        formUpload.append('nohp_aduan', nohp_aduan);
+        formUpload.append('alamat_aduan', alamat_aduan);
+        formUpload.append('kecamatan_aduan', kecamatan_aduan);
+        formUpload.append('kelurahan_aduan', kelurahan_aduan);
         formUpload.append('jenis', jenis);
-        formUpload.append('indikator1', indikator1);
-        formUpload.append('indikator2', indikator2);
-        formUpload.append('indikator3', indikator3);
-        formUpload.append('indikator4', indikator4);
-        formUpload.append('indikator5', indikator5);
-        formUpload.append('indikator6', indikator6);
+        formUpload.append('identitas_aduan', identitasAduan);
         formUpload.append('keterangan', keterangan);
 
         Swal.fire({
-            title: 'Apakah anda yakin ingin mengajukan permohonan data ini?',
-            text: "Ajukan permohonan : SKTM",
+            title: 'Apakah anda yakin ingin mengirim pengaduan ini?',
+            text: "Kirim pengaduan : " + jenis,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Ajukan!'
+            confirmButtonText: 'Ya, Kirim!'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
