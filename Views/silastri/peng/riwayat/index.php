@@ -149,13 +149,13 @@
                         // Set the inner HTML of the <li> element
                         liElement.innerHTML = `
         <div class="event-timeline-dot">
-            <i class="${resul.data[index].icon} font-size-18"></i>
+            <i class="bx bx-right-arrow-circle font-size-18"></i>
         </div>
         <div class="d-flex">
             <div class="flex-shrink-0 me-3">
                 <div class="avatar-xs">
                     <div class="avatar-title bg-primary text-primary bg-soft rounded-circle">
-                        <i class="bx bx-revision font-size-14"></i>
+                        <i class="${resul.data[index].icon} font-size-14"></i>
                     </div>
                 </div>
             </div>
