@@ -400,19 +400,20 @@ class Pengaduan extends BaseController
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->error = $e;
                 $response->message = "Gagal mengirim pengaduan.";
                 return json_encode($response);
             }
 
             if ($this->_db->affectedRows() > 0) {
                 $this->_db->transCommit();
+                $response = new \stdClass;
                 $riwayatLib = new Riwayatpengaduanlib();
                 try {
                     $riwayatLib->create($user->data->id, "Mengirim pengaduan dengan kode antrian: " . $data['kode_aduan'], "submit", "bx bx-send", "riwayat/detailpengaduan?token=" . $data['id'], $data['id']);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    $response->error = $th;
                 }
-                $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Pengaduan Berhasil di Kirim.";
                 $response->redirect = base_url('silastri/peng/riwayat');
