@@ -168,7 +168,7 @@
                                                 <div class="help-block _kecamatan_aduan"></div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2">
+                                        <div class="row mb-2 select2-kelurahan-loading">
                                             <label for="_kelurahan_aduan" class="col-sm-3 col-form-label">Kelurahan (yang diadukan) :</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control select2 kelurahan_aduan" id="_kelurahan_aduan" name="_kelurahan_aduan" style="width: 100%">
@@ -625,6 +625,59 @@
         });
 
     });
+
+    function changeKecamatan(event) {
+        const color = $(event).attr('name');
+        $(event).removeAttr('style');
+        $('.' + color).html('');
+
+        if (event.value !== "") {
+            $.ajax({
+                url: './getKelurahan',
+                type: 'POST',
+                data: {
+                    id: event.value,
+                },
+                dataType: 'JSON',
+                beforeSend: function() {
+                    $('.kelurahan_aduan').html("");
+                    $('div.select2-kelurahan-loading').block({
+                        message: '<i class="las la-spinner la-spin la-3x la-fw"></i><span class="sr-only">Loading...</span>'
+                    });
+                },
+                success: function(resul) {
+                    $('div.select2-kelurahan-loading').unblock();
+                    if (resul.status == 200) {
+                        $('.kelurahan_aduan').html(resul.data);
+                    } else {
+                        if (resul.status == 401) {
+                            Swal.fire(
+                                'PERINGATAN!',
+                                resul.message,
+                                'warning'
+                            ).then((valRes) => {
+                                reloadPage(resul.redirrect);
+                            })
+                        } else {
+                            Swal.fire(
+                                'PERINGATAN!!!',
+                                resul.message,
+                                'warning'
+                            );
+                        }
+                    }
+                },
+                error: function(data) {
+                    $('div.select2-kelurahan-loading').unblock();
+                    Swal.fire(
+                        'PERINGATAN!',
+                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                        'warning'
+                    );
+                }
+            });
+        }
+    }
 
     function changeJenis(event) {
         const color = $(event).attr('name');
