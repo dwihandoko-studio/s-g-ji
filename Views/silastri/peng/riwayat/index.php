@@ -141,10 +141,10 @@
                     }
                 } else {
                     const ulPengaduan = document.querySelector('.datas-pengaduan');
-                    for (let index = 0; index < result.data.length; index++) {
+                    for (let index = 0; index < resul.data.length; index++) {
                         ulPengaduan.appendChild('<li class="event-list">' +
                             '<div class="event-timeline-dot">' +
-                            '<i class="' + result.data[index].icon + ' font-size-18"></i>' +
+                            '<i class="' + resul.data[index].icon + ' font-size-18"></i>' +
                             '</div>' +
                             '<div class="d-flex">' +
                             '<div class="flex-shrink-0 me-3">' +
@@ -156,8 +156,8 @@
                             '</div>' +
                             '<div class="flex-grow-1">' +
                             '<div>' +
-                            result.data[index].keterangan +
-                            '<p class="text-muted mb-0">' + getTimeAgo(result.data[index].created_at) + '</p>' +
+                            resul.data[index].keterangan +
+                            '<p class="text-muted mb-0">' + getTimeAgo(resul.data[index].created_at) + '</p>' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
@@ -206,10 +206,10 @@
                     }
                 } else {
                     const ulPengaduan = document.querySelector('.datas-permohonan');
-                    for (let index = 0; index < result.data.length; index++) {
+                    for (let index = 0; index < resul.data.length; index++) {
                         ulPengaduan.appendChild('<li class="event-list">' +
                             '<div class="event-timeline-dot">' +
-                            '<i class="' + result.data[index].icon + ' font-size-18"></i>' +
+                            '<i class="' + resul.data[index].icon + ' font-size-18"></i>' +
                             '</div>' +
                             '<div class="d-flex">' +
                             '<div class="flex-shrink-0 me-3">' +
@@ -221,8 +221,8 @@
                             '</div>' +
                             '<div class="flex-grow-1">' +
                             '<div>' +
-                            result.data[index].keterangan +
-                            '<p class="text-muted mb-0">' + getTimeAgo(result.data[index].created_at) + '</p>' +
+                            resul.data[index].keterangan +
+                            '<p class="text-muted mb-0">' + getTimeAgo(resul.data[index].created_at) + '</p>' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
