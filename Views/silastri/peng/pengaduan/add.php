@@ -102,7 +102,7 @@
                                     <div class="col-lg-6">
                                         <div class="mt-1">
                                             <div class="form-check mb-3">
-                                                <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject" checked="">
+                                                <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject" onchange="changePengadu(this)" checked="">
                                                 <label class="form-check-label" for="_identitas_subject">
                                                     Sama dengan pemohon
                                                 </label>
@@ -112,7 +112,7 @@
                                     <div class="col-lg-6">
                                         <div class="mt-1">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject_lain">
+                                                <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" onchange="changePengadu(this)" id="_identitas_subject_lain">
                                                 <label class="form-check-label" for="_identitas_subject_lain">
                                                     Orang lain
                                                 </label>
@@ -123,25 +123,25 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-12" style="display: block;">
+                            <div class="col-lg-12 data-aduan" id="data-aduan" style="display: none;">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="row mb-2">
                                             <label for="_nama_aduan" class="col-sm-3 col-form-label">Nama Lengkap yang diadukan</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control nama_aduan" id="_nama_aduan" name="_nama_aduan" placeholder="Nama lengkap yang diadukan.. " required />
+                                                <input type="text" class="form-control nama_aduan" id="_nama_aduan" name="_nama_aduan" placeholder="Nama lengkap yang diadukan.. " />
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <label for="_nik_aduan" class="col-sm-3 col-form-label">NIK yang diadukan</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control nik_aduan" id="_nik_aduan" name="_nik_aduan" placeholder="NIK yang diadukan.. " required />
+                                                <input type="text" class="form-control nik_aduan" id="_nik_aduan" name="_nik_aduan" placeholder="NIK yang diadukan.. " />
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <label for="_nohp_aduan" class="col-sm-3 col-form-label">No Handphone yang diadukan</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control nohp_aduan" id="_nohp_aduan" name="_nohp_aduan" placeholder="No Handphone yang diadukan.. " required />
+                                                <input type="text" class="form-control nohp_aduan" id="_nohp_aduan" name="_nohp_aduan" placeholder="No Handphone yang diadukan.. " />
                                             </div>
                                         </div>
                                     </div>
@@ -149,13 +149,13 @@
                                         <div class="row mb-2">
                                             <label for="_alamat_aduan" class="col-sm-3 col-form-label">Alamat yang diadukan</label>
                                             <div class="col-sm-9">
-                                                <textarea rows="3" class="form-control alamat_aduan" id="_alamat_aduan" name="_alamat_aduan" required></textarea>
+                                                <textarea rows="3" class="form-control alamat_aduan" id="_alamat_aduan" name="_alamat_aduan"></textarea>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <label for="_kecamatan_aduan" class="col-sm-3 col-form-label">Kecamatan (yang diadukan) :</label>
                                             <div class="col-sm-8">
-                                                <select class="form-control select2 kecamatan_aduan" id="_kecamatan_aduan" name="_kecamatan_aduan" style="width: 100%" onchange="changeKecamatan(this)" required>
+                                                <select class="form-control select2 kecamatan_aduan" id="_kecamatan_aduan" name="_kecamatan_aduan" style="width: 100%" onchange="changeKecamatan(this)">
                                                     <option value=""> --- Pilih Kecamatan --- </option>
                                                     <?php if (isset($kecamatans)) { ?>
                                                         <?php if (count($kecamatans) > 0) { ?>
@@ -171,7 +171,7 @@
                                         <div class="row mb-2">
                                             <label for="_kelurahan_aduan" class="col-sm-3 col-form-label">Kelurahan (yang diadukan) :</label>
                                             <div class="col-sm-8">
-                                                <select class="form-control select2 kelurahan_aduan" id="_kelurahan_aduan" name="_kelurahan_aduan" style="width: 100%" required>
+                                                <select class="form-control select2 kelurahan_aduan" id="_kelurahan_aduan" name="_kelurahan_aduan" style="width: 100%">
                                                     <option value=""> --- Pilih Kecamatan Dulu --- </option>
                                                 </select>
                                                 <div class="help-block _kelurahan_aduan"></div>
@@ -628,6 +628,7 @@
 
     function changeJenis(event) {
         const color = $(event).attr('name');
+
         $(event).removeAttr('style');
         $('.' + color).html('');
 
@@ -635,6 +636,19 @@
             document.getElementById("_kategori_detail").style.display = "block";
         } else {
             document.getElementById("_kategori_detail").style.display = "none";
+        }
+    }
+
+    function changePengadu(event) {
+        const color = $(event).attr('name');
+        const vPengadu = $("input[type='radio'][name='" + color + "']:checked").val();
+
+        $('.data-aduan').removeAttr('style');
+
+        if (vPengadu === "sama") {
+            document.getElementById("data-aduan").style.display = "none";
+        } else {
+            document.getElementById("data-aduan").style.display = "block";
         }
     }
 
