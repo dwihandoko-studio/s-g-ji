@@ -73,7 +73,7 @@
                 </li> -->
 
                 <li <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "pengaduan") ? ' class="mm-active"' : '' ?>>
-                    <a href="chat.html" class="waves-effect <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "pengaduan") ? ' mm-active' : '' ?>">
+                    <a href="<?= base_url('silastri/peng/pengaduan') ?>" class="waves-effect <?= ($uri->getSegment(2) == "peng" && $uri->getSegment(3) == "pengaduan") ? ' mm-active' : '' ?>">
                         <i class="bx bx-chat"></i>
                         <span key="t-chat">Pengaduan</span>
                     </a>
