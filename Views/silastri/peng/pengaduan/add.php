@@ -386,6 +386,10 @@
 <?= $this->section('scriptBottom'); ?>
 
 <script>
+    initSelect2("_kategori", ".page-content");
+    initSelect2("_kecamatan_aduan", ".page-content");
+    initSelect2("_kelurahan_aduan", ".page-content");
+
     $("#formAddData").on("submit", function(e) {
         e.preventDefault();
         const indikator1 = $("input[type='radio'][name='_indikator_1']:checked").val();
