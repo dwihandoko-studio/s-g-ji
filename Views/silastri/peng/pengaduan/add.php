@@ -386,6 +386,12 @@
 <?= $this->section('scriptBottom'); ?>
 
 <script>
+    function initSelect2(event, parrent) {
+        $('#' + event).select2({
+            dropdownParent: parrent
+        });
+    }
+
     initSelect2("_kategori", ".page-content");
     initSelect2("_kecamatan_aduan", ".page-content");
     initSelect2("_kelurahan_aduan", ".page-content");
