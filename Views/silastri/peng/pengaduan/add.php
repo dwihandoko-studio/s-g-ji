@@ -20,6 +20,8 @@
                     <div class="card-body">
                         <h4 class="card-title mb-4">Permohonan Pengaduan</h4>
                         <div class="row">
+                        </div>
+                        <div class="row">
                             <div class="col-lg-6">
                                 <div class="row mb-2">
                                     <label for="_nama" class="col-sm-3 col-form-label">Nama Lengkap</label>
@@ -34,9 +36,9 @@
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <label for="_kk" class="col-sm-3 col-form-label">No Handphone</label>
+                                    <label for="_nohp" class="col-sm-3 col-form-label">No Handphone</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control nama" id="_kk" name="_kk" value="<?= $data->no_hp ?>" placeholder="No Handphone.. " readonly />
+                                        <input type="text" class="form-control nama" id="_nohp" name="_nohp" value="<?= $data->no_hp ?>" placeholder="No Handphone.. " readonly />
                                     </div>
                                 </div>
                             </div>
@@ -67,167 +69,83 @@
                 </div>
                 <div class="card mt-0 mb-1">
                     <div class="card-body">
-                        <h4 class="card-title mb-4">Data Lembaga</h4>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row mb-2">
+                                    <label for="_kategori" class="col-sm-3 col-form-label">Kategori Aduan :</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control select2 kategori_aduan" id="_kategori" name="_kategori" style="width: 100%" onchange="changeJenis(this)">
+                                            <option value=""> --- Pilih Kategori Aduan ---</option>
+                                            <?php if (isset($jeniss)) {
+                                                if (count($jeniss) > 0) {
+                                                    foreach ($jeniss as $key => $value) { ?>
+                                                        <option value="<?= $value ?>"><?= $value ?></option>
+                                            <?php }
+                                                }
+                                            } ?>
+                                        </select>
+                                        <textarea rows="3" style="display: none; margin-top: 10px;" id="_kategori_detail" name="_kategori_detail" class="form-control" placeholder="Masukan keterangan peruntukan SKTM.."></textarea>
+                                        <div class="help-block _kategori"></div>
+                                        <div class="help-block _kategori_detail"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-0 mb-1">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">Identitas Subject Yang Diadukan</h4>
                         <div class="row">
                             <div class="col-lg-6">
+                                <div class="mt-4">
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject" checked="">
+                                        <label class="form-check-label" for="_identitas_subject">
+                                            Sama dengan pemohon
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject_lain">
+                                        <label class="form-check-label" for="_identitas_subject_lain">
+                                            Orang lain
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="display: block;">
+                            <div class="col-lg-6">
                                 <div class="row mb-2">
-                                    <label for="_nama_lembaga" class="col-sm-3 col-form-label">Nama Lembaga</label>
+                                    <label for="_nama_aduan" class="col-sm-3 col-form-label">Nama Lengkap yang diadukan</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nama_lembaga" name="_nama_lembaga" placeholder="Nama lembaga.. " required />
-                                        <div class="help-block _nama_lembaga"></div>
+                                        <input type="text" class="form-control nama_aduan" id="_nama_aduan" name="_nama_aduan" placeholder="Nama lengkap yang diadukan.. " required />
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <label for="_jenis_lembaga" class="col-sm-3 col-form-label">Jenis Lembaga :</label>
+                                    <label for="_nik_aduan" class="col-sm-3 col-form-label">NIK yang diadukan</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control select2 jenis_lembaga" id="_jenis_lembaga" name="_jenis_lembaga" style="width: 100%" required>
-                                            <option value=""> --- Pilih Jenis Lembaga --- </option>
-                                            <option value="LKS"> LKS </option>
-                                            <option value="YAYASAN"> YAYASAN </option>
-                                        </select>
-                                        <div class="help-block _jenis_lembaga"></div>
+                                        <input type="text" class="form-control nik_aduan" id="_nik_aduan" name="_nik_aduan" placeholder="NIK yang diadukan.. " required />
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <label for="_tgl_berdiri" class="col-sm-3 col-form-label">Tanggal Berdiri</label>
+                                    <label for="_nohp_aduan" class="col-sm-3 col-form-label">No Handphone yang diadukan</label>
                                     <div class="col-sm-8">
-                                        <input type="date" class="form-control" id="_tgl_berdiri" name="_tgl_berdiri" required />
-                                        <div class="help-block _tgl_berdiri"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nama_notaris" class="col-sm-3 col-form-label">Nama Notaris</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nama_notaris" name="_nama_notaris" placeholder="Nama notaris.. " required />
-                                        <div class="help-block _nama_notaris"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_no_tanggal_notaris" class="col-sm-3 col-form-label">Nama Notaris</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_no_tanggal_notaris" name="_no_tanggal_notaris" placeholder="Contoh: 02/27-02/2000 " required />
-                                        <div class="help-block _no_tanggal_notaris"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_no_pendaftaran_kemenkumham" class="col-sm-3 col-form-label">Nomor Pendaftaran / Pengesahan Kemenkumham</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_no_pendaftaran_kemenkumham" name="_no_pendaftaran_kemenkumham" placeholder="No pengesahan... " required />
-                                        <div class="help-block _no_pendaftaran_kemenkumham"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_akreditasi_lembaga" class="col-sm-3 col-form-label">Akreditasi Lembaga :</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control select2 akreditasi_lembaga" id="_akreditasi_lembaga" name="_akreditasi_lembaga" style="width: 100%" required>
-                                            <option value=""> --- Pilih Akreditasi Lembaga --- </option>
-                                            <option value="A"> A </option>
-                                            <option value="B"> B </option>
-                                            <option value="C"> C </option>
-                                            <option value="D"> D </option>
-                                            <option value="Belum Terakreditasi"> Belum Terakreditasi </option>
-                                        </select>
-                                        <div class="help-block _akreditasi_lembaga"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_no_surat_akreditasi" class="col-sm-3 col-form-label">Nomor Surat Akreditasi (Kosongkan Jika Belum Terakreditasi)</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_no_surat_akreditasi" name="_no_surat_akreditasi" placeholder="No akreditasi... " />
-                                        <div class="help-block _no_surat_akreditasi"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_tgl_habis_berlaku_akreditasi" class="col-sm-3 col-form-label">Tanggal Habis Masa Berlaku Akreditasi</label>
-                                    <div class="col-sm-8">
-                                        <input type="date" class="form-control" id="_tgl_habis_berlaku_akreditasi" name="_tgl_habis_berlaku_akreditasi" />
-                                        <div class="help-block _tgl_habis_berlaku_akreditasi"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nomor_wajib_pajak" class="col-sm-3 col-form-label">Nomor Pokok Wajib Pajak (NPWP)</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nomor_wajib_pajak" name="_nomor_wajib_pajak" required />
-                                        <div class="help-block _nomor_wajib_pajak"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_modal_usaha" class="col-sm-3 col-form-label">Modal Usaha (UEP) *tidak wajib</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="_modal_usaha" name="_modal_usaha" />
-                                        <div class="help-block _modal_usaha"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_status_lembaga" class="col-sm-3 col-form-label">Status Lembaga :</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control select2 status_lembaga" id="_status_lembaga" name="_status_lembaga" style="width: 100%" required>
-                                            <option value=""> --- Pilih Status Lembaga --- </option>
-                                            <option value="PUSAT"> PUSAT </option>
-                                            <option value="CABANG"> CABANG </option>
-                                        </select>
-                                        <div class="help-block _status_lembaga"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_lingkup_wilayah_kerja" class="col-sm-3 col-form-label">Lingkup Wilayah Kerja :</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control select2 lingkup_wilayah_kerja" id="_lingkup_wilayah_kerja" name="_lingkup_wilayah_kerja" style="width: 100%" required>
-                                            <option value=""> --- Pilih Lingkup Wilayah Kerja --- </option>
-                                            <option value="KABUPATEN LAMPUNG TENGAH"> KABUPATEN LAMPUNG TENGAH </option>
-                                        </select>
-                                        <div class="help-block _lingkup_wilayah_kerja"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_bidang_kegiatan" class="col-sm-3 col-form-label">Bidang Kegiatan</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_bidang_kegiatan" name="_bidang_kegiatan" required />
-                                        <div class="help-block _bidang_kegiatan"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_no_telp_lembaga" class="col-sm-3 col-form-label">No Telp Lembaga</label>
-                                    <div class="col-sm-8">
-                                        <input type="phone" class="form-control" id="_no_telp_lembaga" name="_no_telp_lembaga" required />
-                                        <div class="help-block _no_telp_lembaga"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_email_lembaga" class="col-sm-3 col-form-label">Email Lembaga</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="_email_lembaga" name="_email_lembaga" required />
-                                        <div class="help-block _email_lembaga"></div>
+                                        <input type="text" class="form-control nohp_aduan" id="_nohp_aduan" name="_nohp_aduan" placeholder="No Handphone yang diadukan.. " required />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="row mb-2">
-                                    <label for="_alamat_lembaga" class="col-sm-2 col-form-label">Alamat Lembaga</label>
-                                    <div class="col-sm-10">
-                                        <textarea rows="5" class="form-control" id="_alamat_lembaga" name="_alamat_lembaga" required></textarea>
+                                    <label for="_alamat_aduan" class="col-sm-3 col-form-label">Alamat yang diadukan</label>
+                                    <div class="col-sm-9">
+                                        <textarean rows="2" class="form-control alamat_aduan" id="_alamat_aduan" name="_alamat_aduan" required></textarean>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <div class="col-lg-6">
-                                        <div>
-                                            <label class="form-label" for="_rt_lembaga">RT</label>
-                                            <input class="form-control" id="_rt_lembaga" name="_rt_lembaga" type="text" placeholder="RT" required>
-                                            <div class="help-block _rt_lembaga"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div>
-                                            <label class="form-label" for="_rw_lembaga">RW</label>
-                                            <input class="form-control" id="_rw_lembaga" name="_rw_lembaga" type="text" placeholder="RT" required>
-                                            <div class="help-block _rw_lembaga"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_kecamatan_lembaga" class="col-sm-3 col-form-label">Kecamatan (Lembaga) :</label>
+                                    <label for="_kecamatan_aduan" class="col-sm-3 col-form-label">Kecamatan (yang diadukan) :</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control select2 kecamatan_lembaga" id="_kecamatan_lembaga" name="_kecamatan_lembaga" style="width: 100%" onchange="changeKecamatan(this)" required>
+                                        <select class="form-control select2 kecamatan_aduan" id="_kecamatan_aduan" name="_kecamatan_aduan" style="width: 100%" onchange="changeKecamatan(this)" required>
                                             <option value=""> --- Pilih Kecamatan --- </option>
                                             <?php if (isset($kecamatans)) { ?>
                                                 <?php if (count($kecamatans) > 0) { ?>
@@ -237,118 +155,27 @@
                                                 <?php } ?>
                                             <?php } ?>
                                         </select>
-                                        <div class="help-block _kecamatan_lembaga"></div>
+                                        <div class="help-block _kecamatan_aduan"></div>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <label for="_kelurahan_lembaga" class="col-sm-3 col-form-label">Kelurahan (Lembaga) :</label>
+                                    <label for="_kelurahan_aduan" class="col-sm-3 col-form-label">Kelurahan (yang diadukan) :</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control select2 kecamatan_lembaga" id="_kelurahan_lembaga" name="_kelurahan_lembaga" style="width: 100%" required>
+                                        <select class="form-control select2 kelurahan_aduan" id="_kelurahan_aduan" name="_kelurahan_aduan" style="width: 100%" required>
                                             <option value=""> --- Pilih Kecamatan Dulu --- </option>
                                         </select>
-                                        <div class="help-block _kelurahan_lembaga"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nama_ketua" class="col-sm-3 col-form-label">Nama Pengurus (Ketua)</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nama_ketua" name="_nama_ketua" required />
-                                        <div class="help-block _nama_ketua"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nik_ketua" class="col-sm-3 col-form-label">NIK Pengurus (Ketua)</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nik_ketua" name="_nik_ketua" required />
-                                        <div class="help-block _nik_ketua"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nohp_ketua" class="col-sm-3 col-form-label">Nomor HP Pengurus (Ketua)</label>
-                                    <div class="col-sm-8">
-                                        <input type="phone" class="form-control" id="_nohp_ketua" name="_nohp_ketua" required />
-                                        <div class="help-block _nohp_ketua"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nama_sekretaris" class="col-sm-3 col-form-label">Nama Pengurus (Sekretaris)</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nama_sekretaris" name="_nama_sekretaris" required />
-                                        <div class="help-block _nama_sekretaris"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nik_sekretaris" class="col-sm-3 col-form-label">NIK Pengurus (Sekretaris)</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nik_sekretaris" name="_nik_sekretaris" required />
-                                        <div class="help-block _nik_sekretaris"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nohp_sekretaris" class="col-sm-3 col-form-label">Nomor HP Pengurus (Sekretaris)</label>
-                                    <div class="col-sm-8">
-                                        <input type="phone" class="form-control" id="_nohp_sekretaris" name="_nohp_sekretaris" required />
-                                        <div class="help-block _nohp_sekretaris"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nama_bendahara" class="col-sm-3 col-form-label">Nama Pengurus (Bendahara)</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nama_bendahara" name="_nama_bendahara" required />
-                                        <div class="help-block _nama_bendahara"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nik_bendahara" class="col-sm-3 col-form-label">NIK Pengurus (Bendahara)</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="_nik_bendahara" name="_nik_bendahara" required />
-                                        <div class="help-block _nik_bendahara"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_nohp_bendahara" class="col-sm-3 col-form-label">Nomor HP Pengurus (Bendahara)</label>
-                                    <div class="col-sm-8">
-                                        <input type="phone" class="form-control" id="_nohp_bendahara" name="_nohp_bendahara" required />
-                                        <div class="help-block _nohp_bendahara"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_jumlah_pengurus" class="col-sm-3 col-form-label">Jumlah Pengurus</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="_jumlah_pengurus" name="_jumlah_pengurus" required />
-                                        <div class="help-block _jumlah_pengurus"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_jumlah_binaan_dalam_lembaga" class="col-sm-3 col-form-label">Jumlah Binaan Dalam Lembaga</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="_jumlah_binaan_dalam_lembaga" name="_jumlah_binaan_dalam_lembaga" required />
-                                        <div class="help-block _jumlah_binaan_dalam_lembaga"></div>
-                                    </div>
-                                </div>
-                                <div class="row mb-2">
-                                    <label for="_jumlah_binaan_luar_lembaga" class="col-sm-3 col-form-label">Jumlah Binaan Luar Lembaga</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="_jumlah_binaan_luar_lembaga" name="_jumlah_binaan_luar_lembaga" required />
-                                        <div class="help-block _jumlah_binaan_luar_lembaga"></div>
+                                        <div class="help-block _kelurahan_aduan"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
-                                <div class="form-group _koordinat-block">
-                                    <label for="_koordinat" class="form-control-label">Koordinat Tempat Tinggal</label>
-                                    <div class="input-group input-group-merge">
-                                        <input type="hidden" name="_latitude" id="_latitude">
-                                        <input type="hidden" name="_longitude" id="_longitude">
-                                        <input type="text" class="form-control koordinat" style="padding-left: 15px;" name="_koordinat" id="_koordinat" onFocus="inputFocus(this);" readonly>
-                                        <div class="input-group-append action-location" onmouseover="actionMouseHoverLocation(this)" onmouseout="actionMouseOutHoverLocation(this)" onclick="pickCoordinat()">
-                                            <span class="input-group-text action-location-icon" style="background-color: transparent;"><i class="fas fa-map-marker"></i></span>
-                                        </div>
+                            <div class="col-lg-12">
+                                <div class="row mb-2">
+                                    <label for="_uraian_aduan" class="col-sm-3 col-form-label">Uraian Pengaduan</label>
+                                    <div class="col-sm-9">
+                                        <textarean rows="4" class="form-control uraian_aduan" id="_uraian_aduan" name="_uraian_aduan" required></textarean>
                                     </div>
-
-                                    <div class="help-block _koordinat"></div>
                                 </div>
                             </div>
                         </div>
@@ -793,9 +620,9 @@
         $('.' + color).html('');
 
         if (event.value === "Lainnya") {
-            document.getElementById("_jenis_detail").style.display = "block";
+            document.getElementById("_kategori_detail").style.display = "block";
         } else {
-            document.getElementById("_jenis_detail").style.display = "none";
+            document.getElementById("_kategori_detail").style.display = "none";
         }
     }
 

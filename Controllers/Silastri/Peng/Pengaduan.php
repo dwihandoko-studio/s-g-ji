@@ -119,6 +119,8 @@ class Pengaduan extends BaseController
         $data['user'] = $user->data;
         $data['data'] = $user->data;
 
+        $data['kecamatans'] = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'asc')->get()->getResult();
+
         $data['jeniss'] = ['Pengaduan Program Bantuan Sosial', 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)', 'Pengaduan Layanan Sosial', 'Lainnya'];
 
         return view('silastri/peng/pengaduan/add', $data);
