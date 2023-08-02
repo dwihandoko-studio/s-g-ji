@@ -142,26 +142,7 @@
                 } else {
                     const ulPengaduan = document.querySelector('.datas-pengaduan');
                     for (let index = 0; index < resul.data.length; index++) {
-                        ulPengaduan.appendChild('<li class="event-list">' +
-                            '<div class="event-timeline-dot">' +
-                            '<i class="' + resul.data[index].icon + ' font-size-18"></i>' +
-                            '</div>' +
-                            '<div class="d-flex">' +
-                            '<div class="flex-shrink-0 me-3">' +
-                            '<div class="avatar-xs">' +
-                            '<div class="avatar-title bg-primary text-primary bg-soft rounded-circle">' +
-                            '<i class="bx bx-revision font-size-14"></i>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="flex-grow-1">' +
-                            '<div>' +
-                            resul.data[index].keterangan +
-                            '<p class="text-muted mb-0">' + getTimeAgo(resul.data[index].created_at) + '</p>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</li>');
+                        ulPengaduan.appendChild('<li class="event-list"><div class="event-timeline-dot"><i class="' + resul.data[index].icon + ' font-size-18"></i></div><div class="d-flex"><div class="flex-shrink-0 me-3"><div class="avatar-xs"><div class="avatar-title bg-primary text-primary bg-soft rounded-circle"><i class="bx bx-revision font-size-14"></i></div></div></div><div class="flex-grow-1"><div>' + resul.data[index].keterangan + '<p class="text-muted mb-0">' + getTimeAgo(resul.data[index].created_at) + '</p></div></div></div></li>');
                     }
                 }
             },
