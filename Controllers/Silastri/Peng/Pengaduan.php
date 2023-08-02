@@ -391,19 +391,19 @@ class Pengaduan extends BaseController
             }
 
             $this->_db->transBegin();
-            // try {
-            $this->_db->table('_pengaduan')->insert($data);
-            // } catch (\Exception $e) {
-            // if ($filenamelampiran != '') {
-            //     unlink($dir . '/' . $newNamelampiran);
-            // }
-            // $this->_db->transRollback();
-            // $response = new \stdClass;
-            // $response->status = 400;
-            // $response->error = $e;
-            // $response->message = "Gagal mengirim pengaduan.";
-            // return json_encode($response);
-            // }
+            try {
+                $this->_db->table('_pengaduan')->insert($data);
+            } catch (\Exception $e) {
+                if ($filenamelampiran != '') {
+                    unlink($dir . '/' . $newNamelampiran);
+                }
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->error = $e;
+                $response->message = "Gagal mengirim pengaduan.";
+                return json_encode($response);
+            }
 
             if ($this->_db->affectedRows() > 0) {
                 $this->_db->transCommit();
