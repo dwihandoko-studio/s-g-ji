@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="./add;" class="btn btn-primary btn-rounded waves-effect waves-light">Buat Pengaduan</a></li>
+                            <li class="breadcrumb-item"><a href="./add;" class="btn btn-success btn-rounded waves-effect waves-light">Buat Pengaduan</a></li>
                         </ol>
                     </div>
 
