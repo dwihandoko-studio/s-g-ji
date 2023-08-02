@@ -50,13 +50,15 @@
                                 <div class="row mb-2">
                                     <label for="_kecamatan" class="col-sm-3 col-form-label">Kecamatan</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control kecamatan" id="_kecamatan" name="_kecamatan" value="<?= $data->nama_kecamatan ?>" readonly />
+                                        <input type="hidden" id="_kecamatan" name="_kecamatan" value="<?= $data->kecamatan ?>" readonly />
+                                        <input type="text" class="form-control kecamatan" id="_nama_kecamatan" name="_nama_kecamatan" value="<?= getNamaKecamatan($data->kecamatan) ?>" readonly />
                                     </div>
                                 </div>
                                 <div class="row mb-2">
                                     <label for="_kampung" class="col-sm-3 col-form-label">Kampung</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control kampung" id="_kampung" name="_kampung" value="<?= $data->nama_kampung ?>" readonly />
+                                        <input type="hidden" id="_kampung" name="_kampung" value="<?= $data->kelurahan ?>" readonly />
+                                        <input type="text" class="form-control kecamatan" id="_nama_kampung" name="_nama_kampung" value="<?= getNamaKelurahan($data->kelurahan) ?>" readonly />
                                     </div>
                                 </div>
                             </div>
