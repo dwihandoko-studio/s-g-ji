@@ -105,6 +105,25 @@ class Pengaduan extends BaseController
         return view('silastri/peng/pengaduan/index', $data);
     }
 
+    public function add()
+    {
+        $data['title'] = 'Layanan Pengaduan';
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            session()->destroy();
+            delete_cookie('jwt');
+            return redirect()->to(base_url('auth'));
+        }
+
+        $data['user'] = $user->data;
+        $data['data'] = $user->data;
+
+        $data['jeniss'] = ['Pengaduan Program Bantuan Sosial', 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)', 'Pengaduan Layanan Sosial', 'Lainnya'];
+
+        return view('silastri/peng/pengaduan/add', $data);
+    }
+
     public function detail()
     {
         if ($this->request->getMethod() != 'get') {
