@@ -102,7 +102,7 @@
                                     <div class="col-lg-6">
                                         <div class="mt-1">
                                             <div class="form-check mb-3">
-                                                <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject" onclick="changePengadu(this)" checked="">
+                                                <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" id="_identitas_subject" onchange="changePengadu(this)" checked="">
                                                 <label class="form-check-label" for="_identitas_subject">
                                                     Sama dengan pemohon
                                                 </label>
@@ -112,7 +112,7 @@
                                     <div class="col-lg-6">
                                         <div class="mt-1">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="_identitas_pemohon" value="sama" onclick="changePengadu(this)" id="_identitas_subject_lain">
+                                                <input class="form-check-input" type="radio" name="_identitas_pemohon" value="beda" onchange="changePengadu(this)" id="_identitas_subject_lain">
                                                 <label class="form-check-label" for="_identitas_subject_lain">
                                                     Orang lain
                                                 </label>
