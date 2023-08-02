@@ -294,17 +294,17 @@
         let kecamatan_aduan = document.getElementsByName('_kecamatan_aduan')[0].value;
         let kelurahan_aduan = document.getElementsByName('_kelurahan_aduan')[0].value;
 
-        const jenis = document.getElementsByName('_jenis')[0].value;
-        const keterangan = document.getElementsByName('_jenis_detail')[0].value;
+        const kategori = document.getElementsByName('_kategori')[0].value;
+        const keterangan = document.getElementsByName('_kategori_detail')[0].value;
 
         const fileLampiran = document.getElementsByName('_file_lampiran')[0].value;
 
         const uraian_aduan = document.getElementsByName('_uraian_aduan')[0].value;
 
         if (jenis === "") {
-            $("select#_jenis").css("color", "#dc3545");
-            $("select#_jenis").css("border-color", "#dc3545");
-            $('._jenis-error').html('Silahkan pilih kategori Pengaduan');
+            $("select#_kategori").css("color", "#dc3545");
+            $("select#_kategori").css("border-color", "#dc3545");
+            $('._kategori-error').html('Silahkan pilih kategori Pengaduan');
 
             Swal.fire(
                 'Peringatan..!!',
@@ -386,13 +386,13 @@
         formUpload.append('alamat_aduan', alamat_aduan);
         formUpload.append('kecamatan_aduan', kecamatan_aduan);
         formUpload.append('kelurahan_aduan', kelurahan_aduan);
-        formUpload.append('jenis', jenis);
+        formUpload.append('kategori', kategori);
         formUpload.append('identitas_aduan', identitasAduan);
         formUpload.append('keterangan', keterangan);
 
         Swal.fire({
             title: 'Apakah anda yakin ingin mengirim pengaduan ini?',
-            text: "Kirim pengaduan : " + jenis,
+            text: "Kirim pengaduan : " + kategori,
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
