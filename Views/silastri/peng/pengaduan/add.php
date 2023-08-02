@@ -46,7 +46,7 @@
                                 <div class="row mb-2">
                                     <label for="_alamat" class="col-sm-3 col-form-label">Alamat</label>
                                     <div class="col-sm-9">
-                                        <textarean rows="2" class="form-control alamat" id="_alamat" name="_alamat" readonly><?= $data->alamat ?></textarean>
+                                        <textarea rows="2" class="form-control alamat" id="_alamat" name="_alamat" readonly><?= $data->alamat ?></textarea>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
