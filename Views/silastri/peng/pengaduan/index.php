@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
+                    <!-- <div class="card-header">
                         <div class="row">
                             <div class="col-6">
                                 <h4 class="card-title">Data Permohonan Layanan Pengaduan</h4>
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="card-body">
                         <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
