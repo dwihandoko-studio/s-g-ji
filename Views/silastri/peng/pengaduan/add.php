@@ -147,7 +147,7 @@
                                 <div class="row mb-2">
                                     <label for="_alamat_aduan" class="col-sm-3 col-form-label">Alamat yang diadukan</label>
                                     <div class="col-sm-9">
-                                        <textarean rows="2" class="form-control alamat_aduan" id="_alamat_aduan" name="_alamat_aduan" required></textarean>
+                                        <textarea rows="3" class="form-control alamat_aduan" id="_alamat_aduan" name="_alamat_aduan" required></textarea>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
