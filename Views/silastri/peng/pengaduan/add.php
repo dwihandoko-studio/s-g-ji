@@ -301,7 +301,7 @@
 
         const uraian_aduan = document.getElementsByName('_uraian_aduan')[0].value;
 
-        if (jenis === "") {
+        if (kategori === "") {
             $("select#_kategori").css("color", "#dc3545");
             $("select#_kategori").css("border-color", "#dc3545");
             $('._kategori-error').html('Silahkan pilih kategori Pengaduan');
