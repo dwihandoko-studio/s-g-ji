@@ -40,9 +40,9 @@
                 <div class="help-block _fullname"></div>
             </div>
             <div class="col-lg-6">
-                <label for="_nip" class="col-form-label">NIP:</label>
-                <input type="number" class="form-control nip" id="_nip" name="_nip" placeholder="NIP..." onfocusin="inputFocus(this);" required />
-                <div class="help-block _nip"></div>
+                <label for="_nik" class="col-form-label">NIK:</label>
+                <input type="number" class="form-control nip" id="_nik" name="_nik" placeholder="NIK..." onfocusin="inputFocus(this);" required />
+                <div class="help-block _nik"></div>
             </div>
             <div class="col-lg-6">
                 <label for="_email" class="col-form-label">E-mail:</label>
@@ -194,65 +194,10 @@
         }
     }
 
-    function changePtk(event) {
-        const color = $(event).attr('name');
-        $(event).removeAttr('style');
-        $('.' + color).html('');
-
-        if (event.value !== "") {
-            $.ajax({
-                url: './getPtk',
-                type: 'POST',
-                data: {
-                    id: event.value,
-                },
-                dataType: 'JSON',
-                beforeSend: function() {
-                    $('div.loading-get-data').block({
-                        message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                    });
-                },
-                success: function(resul) {
-                    $('div.loading-get-data').unblock();
-                    if (resul.status == 200) {
-                        document.getElementById("_fullname").value = resul.data.nama;
-                        document.getElementById("_nip").value = resul.data.nip;
-                        document.getElementById("_email").value = resul.data.email;
-                        document.getElementById("_nohp").value = resul.data.no_hp;
-                    } else {
-                        if (resul.status == 404) {
-                            Swal.fire(
-                                'PERINGATAN!',
-                                resul.message,
-                                'warning'
-                            ).then((valRes) => {
-                                reloadPage(resul.redirrect);
-                            })
-                        } else {
-                            Swal.fire(
-                                'PERINGATAN!!!',
-                                resul.message,
-                                'warning'
-                            );
-                        }
-                    }
-                },
-                error: function(data) {
-                    $('div.loading-get-data').unblock();
-                    Swal.fire(
-                        'PERINGATAN!',
-                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                        'warning'
-                    );
-                }
-            });
-        }
-    }
-
     $("#formAddModalData").on("submit", function(e) {
         e.preventDefault();
         const fullname = document.getElementsByName('_fullname')[0].value;
-        const nip = document.getElementsByName('_nip')[0].value;
+        const nik = document.getElementsByName('_nik')[0].value;
         const email = document.getElementsByName('_email')[0].value;
         const nohp = document.getElementsByName('_nohp')[0].value;
         const fileName = document.getElementsByName('_file')[0].value;
@@ -294,10 +239,10 @@
             return false;
         }
 
-        if (nip === "") {
-            $("input#_nip").css("color", "#dc3545");
-            $("input#_nip").css("border-color", "#dc3545");
-            $('._nip').html('<ul role="alert" style="color: #dc3545; list-style-type:none; padding-inline-start: 10px;"><li style="color: #dc3545;">NIP tidak boleh kosong. Jika belum mempunya NIP silahkan isi dengan tanda (-). </li></ul>');
+        if (nik === "") {
+            $("input#_nik").css("color", "#dc3545");
+            $("input#_nik").css("border-color", "#dc3545");
+            $('._nik').html('<ul role="alert" style="color: #dc3545; list-style-type:none; padding-inline-start: 10px;"><li style="color: #dc3545;">NIK tidak boleh kosong. Jika belum mempunya NIP silahkan isi dengan tanda (-). </li></ul>');
             return false;
         }
 
@@ -335,7 +280,7 @@
         const file = document.getElementsByName('_file')[0].files[0];
         formUpload.append('file', file);
         formUpload.append('nama', fullname);
-        formUpload.append('nip', nip);
+        formUpload.append('nik', nik);
         formUpload.append('email', email);
         formUpload.append('nohp', nohp);
         formUpload.append('status', status);

@@ -597,10 +597,10 @@ class Pengguna extends BaseController
                     'required' => 'No handphone tidak boleh kosong. ',
                 ]
             ],
-            'nip' => [
+            'nik' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'NIP tidak boleh kosong. ',
+                    'required' => 'NIK tidak boleh kosong. ',
                 ]
             ],
             'role' => [
@@ -644,7 +644,7 @@ class Pengguna extends BaseController
             $response->message = $this->validator->getError('nama')
                 . $this->validator->getError('email')
                 . $this->validator->getError('nohp')
-                . $this->validator->getError('nip')
+                . $this->validator->getError('nik')
                 . $this->validator->getError('role')
                 . $this->validator->getError('wilayah')
                 . $this->validator->getError('status')
@@ -665,7 +665,7 @@ class Pengguna extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $email = htmlspecialchars($this->request->getVar('email'), true);
             $nohp = htmlspecialchars($this->request->getVar('nohp'), true);
-            $nip = htmlspecialchars($this->request->getVar('nip'), true);
+            $nik = htmlspecialchars($this->request->getVar('nik'), true);
             $role = htmlspecialchars($this->request->getVar('role'), true);
             $wilayah = htmlspecialchars($this->request->getVar('wilayah'), true);
             $status = htmlspecialchars($this->request->getVar('status'), true);
@@ -686,10 +686,9 @@ class Pengguna extends BaseController
                 'email' => $email,
                 'fullname' => $nama,
                 'no_hp' => $nohp,
-                'nip' => $nip,
-                'nik' => $user->data->nik,
+                'nik' => $nik,
                 'role_user' => $role,
-                'kecamatan' => $wilayah,
+                'kecamatan' => $wilayah == "all" ? NULL : $wilayah,
                 'created_at' => date('Y-m-d H:i:s'),
             ];
 
@@ -702,7 +701,7 @@ class Pengguna extends BaseController
 
                 if ($lampiran->isValid() && !$lampiran->hasMoved()) {
                     $lampiran->move($dir, $newNamelampiran);
-                    $data['profile_picture'] = $newNamelampiran;
+                    $data['image'] = $newNamelampiran;
                 } else {
                     $response = new \stdClass;
                     $response->status = 400;
@@ -716,6 +715,8 @@ class Pengguna extends BaseController
                 $this->_db->table('_users_tb')->insert([
                     'id' => $data['id'],
                     'email' => $data['email'],
+                    'nik' => $data['nik'],
+                    'nohp' => $data['nohp'],
                     'password' => password_hash('123456', PASSWORD_DEFAULT),
                     'scope' => 'app',
                     'is_active' => $status,
