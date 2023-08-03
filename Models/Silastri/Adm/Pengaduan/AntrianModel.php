@@ -25,7 +25,7 @@ class AntrianModel extends Model
     }
     private function _get_datatables_query()
     {
-        $this->dt->select("a.id, a.kategori, a.kode_aduan, a.user_id, a.nik, a.nama, a.nohp, a.kelurahan, b.nama");
+        $this->dt->select("a.id, a.kategori, a.kode_aduan, a.user_id, a.nik, a.nama, a.nohp, a.kelurahan, b.fullname");
         $this->dt->join('_profil_users_tb b', 'b.id = a.user_id');
         $this->dt->where("(a.status_aduan = 0)");
 
