@@ -200,7 +200,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/pengguna/wilayahs', $data);
+                $response->data = view('silastri/su/masterdata/pengguna/wilayahs', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -446,7 +446,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/pengguna/add_rayon', $data);
+                $response->data = view('silastri/su/masterdata/pengguna/add_rayon', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -804,7 +804,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('situgu/su/masterdata/pengguna/edit', $data);
+                $response->data = view('silastri/su/masterdata/pengguna/edit', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -1045,7 +1045,7 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 201;
                 $response->message = "Tidak ada perubahan data yang disimpan.";
-                $response->redirect = base_url('situgu/su/masterdata/pengguna');
+                $response->redirect = base_url('silastri/su/masterdata/pengguna');
                 return json_encode($response);
             }
 
@@ -1106,7 +1106,7 @@ class Pengguna extends BaseController
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->message = "Data berhasil diupdate.";
-                    $response->redirect = base_url('situgu/su/masterdata/pengguna');
+                    $response->redirect = base_url('silastri/su/masterdata/pengguna');
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
@@ -1279,7 +1279,7 @@ class Pengguna extends BaseController
             return redirect()->to(base_url('auth'));
         }
         $data['user'] = $user->data;
-        return view('situgu/su/masterdata/pengguna/import', $data);
+        return view('silastri/su/masterdata/pengguna/import', $data);
     }
 
     public function uploadData()
