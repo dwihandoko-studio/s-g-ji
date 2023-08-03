@@ -711,29 +711,29 @@ class Pengguna extends BaseController
             }
 
             $this->_db->transBegin();
-            try {
-                $this->_db->table('_users_tb')->insert([
-                    'id' => $data['id'],
-                    'email' => $data['email'],
-                    'nik' => $data['nik'],
-                    'nohp' => $data['nohp'],
-                    'password' => password_hash('123456', PASSWORD_DEFAULT),
-                    'scope' => 'app',
-                    'is_active' => $status,
-                    'wa_verified' => 0,
-                    'email_verified' => 0,
-                    'email_tertaut' => 0,
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
-            } catch (\Throwable $e) {
-                unlink($dir . '/' . $newNamelampiran);
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->error = $e;
-                $response->message = "Gagal menyimpan data baru.";
-                return json_encode($response);
-            }
+            // try {
+            $this->_db->table('_users_tb')->insert([
+                'id' => $data['id'],
+                'email' => $data['email'],
+                'nik' => $data['nik'],
+                'nohp' => $data['nohp'],
+                'password' => password_hash('123456', PASSWORD_DEFAULT),
+                'scope' => 'app',
+                'is_active' => $status,
+                'wa_verified' => 0,
+                'email_verified' => 0,
+                'email_tertaut' => 0,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+            // } catch (\Throwable $e) {
+            //     unlink($dir . '/' . $newNamelampiran);
+            //     $this->_db->transRollback();
+            //     $response = new \stdClass;
+            //     $response->status = 400;
+            //     $response->error = $e;
+            //     $response->message = "Gagal menyimpan data baru.";
+            //     return json_encode($response);
+            // }
 
             if ($this->_db->affectedRows() > 0) {
                 try {
