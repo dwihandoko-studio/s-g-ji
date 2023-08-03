@@ -27,17 +27,22 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                <h4 class="card-title">Data Antrian Permohonan Layanan</h4>
+                                <h4 class="card-title">Data Antrian Pengaduan Layanan</h4>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
-                                    <label for="_filter_layanan" class="col-form-label">Filter Layanan:</label>
-                                    <select class="form-control" id="_filter_layanan" name="_filter_layanan" required>
-                                        <option value="">--Pilih--</option>
-                                        <option value="SKDTKS">Surat Keterangan DTKS</option>
-                                        <option value="SKTM">Surat Keterangan Tidak Mampu</option>
+                                    <label for="_filter_kategori" class="col-form-label">Filter Kategori:</label>
+                                    <select class="form-control" id="_filter_kategori" name="_filter_kategori" required>
+                                        <option value=""> --- Pilih Kategori Aduan ---</option>
+                                        <?php if (isset($jeniss)) {
+                                            if (count($jeniss) > 0) {
+                                                foreach ($jeniss as $key => $value) { ?>
+                                                    <option value="<?= $value ?>"><?= $value ?></option>
+                                        <?php }
+                                            }
+                                        } ?>
                                     </select>
-                                    <div class="help-block _filter_layanan"></div>
+                                    <div class="help-block _filter_kategori"></div>
                                 </div>
                             </div>
                         </div>
@@ -213,7 +218,7 @@
                 "url": "./getAll",
                 "type": "POST",
                 "data": function(data) {
-                    data.layanan = $('#_filter_layanan').val();
+                    data.layanan = $('#_filter_kategori').val();
                 }
             },
             language: {
