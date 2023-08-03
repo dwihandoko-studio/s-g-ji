@@ -1,7 +1,7 @@
 <?php if (isset($data)) { ?>
     <div class="modal-body">
         <div class="row">
-            <h2>DATA PEMOHON</h2>
+            <h2>DATA PENGADU</h2>
             <div class="col-lg-6">
                 <label class="col-form-label">Nama Lengkap:</label>
                 <input type="text" class="form-control" value="<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>" readonly />
@@ -13,92 +13,76 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <label class="col-form-label">KK:</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" aria-describedby="kk" aria-label="KK" value="<?= $data->kk ?>" readonly />
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Tempat Lahir:</label>
-                <input type="text" class="form-control" value="<?= $data->tempat_lahir ?>" readonly />
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Tanggal Lahir:</label>
-                <input type="text" class="form-control" value="<?= $data->tgl_lahir ?>" readonly />
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Jenis Kelamin:</label>
-                <div><?php switch ($data->jenis_kelamin) {
-                            case 'P':
-                                echo '<span class="badge badge-pill badge-soft-primary">Perempuan</span>';
-                                break;
-                            case 'L':
-                                echo '<span class="badge badge-pill badge-soft-primary">Laki-Laki</span>';
-                                break;
-                            default:
-                                echo '-';
-                                break;
-                        } ?>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <label class="col-form-label">Email:</label>
-                <input type="text" class="form-control" value="<?= $data->email ?>" readonly />
-            </div>
-            <div class="col-lg-6">
                 <label class="col-form-label">No Handphone:</label>
-                <input type="text" class="form-control" value="<?= $data->no_hp ?>" readonly />
+                <div class="input-group">
+                    <input type="text" class="form-control" aria-describedby="nohp" aria-label="NO HP" value="<?= $data->nohp ?>" readonly />
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Alamat:</label>
+                <textarea class="form-control" readonly><?= $data->alamat ?></textarea>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Kecamatan:</label>
+                <input type="text" class="form-control" value="<?= getNamaKecamatan($data->kecamatan) ?>" readonly />
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Kelurahan:</label>
+                <input type="text" class="form-control" value="<?= getNamaKelurahan($data->kelurahan) ?>" readonly />
             </div>
         </div>
         <hr />
         <div class="row mt-2">
-            <h2>DATA PERMOHONAN</h2>
+            <h2>DATA YANG DIADUKAN</h2>
             <div class="col-lg-6">
-                <label class="col-form-label">Kode Permohonan:</label>
-                <input type="text" class="form-control" value="<?= $data->kode_permohonan ?>" readonly />
+                <label class="col-form-label">Kode Adukan:</label>
+                <input type="text" class="form-control" value="<?= $data->kode_aduan ?>" readonly />
             </div>
             <div class="col-lg-6">
-                <label class="col-form-label">Layanan:</label>
-                <input type="text" class="form-control" value="<?= $data->layanan ?>" readonly />
+                <label class="col-form-label">Kategori:</label>
+                <input type="text" class="form-control" value="<?= $data->kategori ?>" readonly />
             </div>
             <div class="col-lg-6">
-                <label class="col-form-label">Jenis:</label>
-                <textarea rows="3" class="form-control" readonly><?= $data->jenis ?></textarea>
+                <label class="col-form-label">Nama (Yang Diadukan):</label>
+                <input type="text" class="form-control" value="<?= $data->nama_aduan ?>" readonly />
             </div>
-
-            <?php if (isset($data->lampiran_ktp)) { ?>
+            <div class="col-lg-6">
+                <label class="col-form-label">NIK (Yang Diadukan):</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" aria-describedby="nik" aria-label="NIK" value="<?= $data->nik_aduan ?>" readonly />
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">No Handphone (Yang Diadukan):</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" aria-describedby="nohp" aria-label="NO HP" value="<?= $data->nohp_aduan ?>" readonly />
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Alamat (Yang Diadukan):</label>
+                <textarea class="form-control" readonly><?= $data->alamat_aduan ?></textarea>
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Kecamatan (Yang Diadukan):</label>
+                <input type="text" class="form-control" value="<?= getNamaKecamatan($data->kecamatan_aduan) ?>" readonly />
+            </div>
+            <div class="col-lg-6">
+                <label class="col-form-label">Kelurahan (Yang Diadukan):</label>
+                <input type="text" class="form-control" value="<?= getNamaKelurahan($data->kelurahan_aduan) ?>" readonly />
+            </div>
+            <div class="col-lg-12">
+                <label class="col-form-label">Uraian Pengaduan:</label>
+                <textarea rows="5" class="form-control" readonly><?= $data->uraian_aduan ?></textarea>
+            </div>
+            <?php if (isset($data->lampiran_aduan)) { ?>
                 <div class="col-lg-12 mt-2">
-                    <label class="col-form-label">Lampiran Dokumen:</label>
+                    <label class="col-form-label">Lampiran Aduan:</label>
                     <br />
-                    <?php if (isset($data->lampiran_ktp)) { ?>
-                        <?php if ($data->lampiran_ktp === null || $data->lampiran_ktp === "") { ?>
+                    <?php if (isset($data->lampiran_aduan)) { ?>
+                        <?php if ($data->lampiran_aduan === null || $data->lampiran_aduan === "") { ?>
                         <?php } else { ?>
-                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/sktm') . '/' . $data->lampiran_ktp ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/sktm') . '/' . $data->lampiran_ktp ?>" id="nik">
-                                KTP
-                            </a>
-                        <?php } ?>
-                    <?php } ?>
-                    <?php if (isset($data->lampiran_kk)) { ?>
-                        <?php if ($data->lampiran_kk === null || $data->lampiran_kk === "") { ?>
-                        <?php } else { ?>
-                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/sktm') . '/' . $data->lampiran_kk ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/sktm') . '/' . $data->lampiran_kk ?>" id="nik">
-                                Kartu Keluarga
-                            </a>
-                        <?php } ?>
-                    <?php } ?>
-                    <?php if (isset($data->lampiran_pernyataan)) { ?>
-                        <?php if ($data->lampiran_pernyataan === null || $data->lampiran_pernyataan === "") { ?>
-                        <?php } else { ?>
-                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/sktm') . '/' . $data->lampiran_pernyataan ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/sktm') . '/' . $data->lampiran_pernyataan ?>" id="nik">
-                                Pernyataan
-                            </a>
-                        <?php } ?>
-                    <?php } ?>
-                    <?php if (isset($data->lampiran_foto_rumah)) { ?>
-                        <?php if ($data->lampiran_foto_rumah === null || $data->lampiran_foto_rumah === "") { ?>
-                        <?php } else { ?>
-                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/sktm') . '/' . $data->lampiran_foto_rumah ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/sktm') . '/' . $data->lampiran_foto_rumah ?>" id="nik">
-                                Foto Rumah
+                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan ?>" id="nik">
+                                Dokumen Pengaduan
                             </a>
                         <?php } ?>
                     <?php } ?>
@@ -108,15 +92,16 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        <button type="button" onclick="actionTolak(this)" class="btn btn-danger waves-effect waves-light">Tolak Permohonan</button>
-        <button type="button" onclick="actionApprove(this)" class="btn btn-success waves-effect waves-light">Proses Permohonan</button>
+        <button type="button" onclick="actionTolak(this)" class="btn btn-danger waves-effect waves-light">Tolak Pengaduan</button>
+        <button type="button" onclick="actionApprove(this)" class="btn btn-success waves-effect waves-light">Tanggapi Pengaduan</button>
     </div>
     <script>
         function actionTolak(e) {
             const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
+            const kode = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->kode_aduan)) ?>';
             Swal.fire({
-                title: 'Apakah anda yakin ingin menolak permohonan layanan ini?',
-                text: "Tolak permohonan layanan : <?= $data->layanan ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
+                title: 'Apakah anda yakin ingin menolak pengaduan layanan ini?',
+                text: "Tolak pengaduan layanan : <?= $data->kategori ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?> , dengan Kode Aduan: <?= $data->kode_aduan ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
@@ -146,7 +131,7 @@
                                     'warning'
                                 );
                             } else {
-                                $('#content-tolakModalLabel').html('TOLAK PERMOHONAN LAYANAN <?= $data->layanan ?> dari ' + nama);
+                                $('#content-tolakModalLabel').html('TOLAK PENGADUAN LAYANAN <?= $data->kategori ?> dari ' + nama + ', dengan Kode Aduan: ' + kode);
                                 $('.contentTolakBodyModal').html(resul.data);
                                 $('.content-tolakModal').modal({
                                     backdrop: 'static',
@@ -246,13 +231,13 @@
             const id = '<?= $data->id ?>';
             const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
             Swal.fire({
-                title: 'Apakah anda yakin ingin memproses permohonan layanan ini?',
-                text: "Proses Layanan : <?= $data->layanan ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
+                title: 'Apakah anda yakin ingin menanggapi pengaduan layanan ini?',
+                text: "Tanggapi Pengaduan : <?= $data->kategori ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?> , dengan Kode Aduan: <?= $data->kode_aduan ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Proses!'
+                confirmButtonText: 'Ya, Tanggapi!'
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
@@ -290,13 +275,13 @@
                                     );
                                 }
                             } else {
-                                Swal.fire(
-                                    'SELAMAT!',
-                                    resul.message,
-                                    'success'
-                                ).then((valRes) => {
-                                    reloadPage(resul.redirrect);
-                                })
+                                $('#content-approveModalLabel').html('TANGGAPI PENGADUAN LAYANAN <?= $data->kategori ?> dari ' + nama + ', dengan Kode Aduan: ' + kode);
+                                $('.contentApproveBodyModal').html(resul.data);
+                                $('.content-approveModal').modal({
+                                    backdrop: 'static',
+                                    keyboard: false,
+                                });
+                                $('.content-approveModal').modal('show');
                             }
                         },
                         error: function(erro) {

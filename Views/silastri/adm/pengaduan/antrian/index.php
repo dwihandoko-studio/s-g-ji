@@ -89,6 +89,18 @@
         </div>
     </div>
 </div>
+<div id="content-approveModal" class="modal fade content-approveModal" tabindex="-1" role="dialog" aria-labelledby="content-approveModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-loading-approve">
+            <div class="modal-header">
+                <h5 class="modal-title" id="content-approveModalLabel">Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="contentApproveBodyModal">
+            </div>
+        </div>
+    </div>
+</div>
 <!-- end modal -->
 <?= $this->endSection(); ?>
 
@@ -135,7 +147,7 @@
                         'warning'
                     );
                 } else {
-                    $('#content-detailModalLabel').html('DETAIL PERMOHONAN ' + nama + ' (' + nik + ')');
+                    $('#content-detailModalLabel').html('DETAIL PENGADUAN ' + nama + ' (' + nik + ')');
                     $('.contentBodyModal').html(resul.data);
                     $('.content-detailModal').modal({
                         backdrop: 'static',

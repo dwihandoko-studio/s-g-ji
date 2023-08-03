@@ -146,24 +146,12 @@ class Antrian extends BaseController
             $nik = htmlspecialchars($this->request->getVar('nik'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $current = $this->_db->table('_permohonan_temp a')
-                ->select("a.*, 
-                b.nik as nik_pemohon, 
-                b.kk as kk, 
-                b.email as email, 
-                b.no_hp as no_hp, 
-                b.tempat_lahir, 
-                b.tgl_lahir, 
-                b.jenis_kelamin, 
-                b.alamat, 
-                c.id as id_kecamatan, 
-                c.kecamatan as nama_kecamatan, 
-                d.id as id_kelurahan, 
-                d.kelurahan as nama_kelurahan")
-                ->join('_profil_users_tb b', 'b.id = a.user_id')
-                ->join('ref_kecamatan c', 'c.id = b.kecamatan')
-                ->join('ref_kelurahan d', 'd.id = b.kelurahan')
-                ->where(['a.id' => $id, 'a.status_permohonan' => 0])->get()->getRowObject();
+            $current = $this->_db->table('_pengaduan a')
+                ->select("a.*")
+                // ->join('_profil_users_tb b', 'b.id = a.user_id')
+                ->join('ref_kecamatan c', 'c.id = a.kecamatan')
+                ->join('ref_kelurahan d', 'd.id = a.kelurahan')
+                ->where(['a.id' => $id, 'a.status_aduan' => 0])->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
