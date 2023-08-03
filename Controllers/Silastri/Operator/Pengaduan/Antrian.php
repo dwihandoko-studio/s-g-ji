@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Silastri\Adm\Pengaduan;
+namespace App\Controllers\Silastri\Operator\Pengaduan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Adm\Pengaduan\AntrianModel;
+use App\Models\Silastri\Operator\Pengaduan\AntrianModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -83,7 +83,7 @@ class Antrian extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/adm/pengaduan/antrian/data'));
+        return redirect()->to(base_url('silastri/operator/pengaduan/antrian/data'));
     }
 
     public function data()
@@ -101,7 +101,7 @@ class Antrian extends BaseController
 
         // $data['jeniss'] = ['Surat Keterangan DTKS untuk Pengajuan PIP', 'Surat Keterangan DTKS untuk Pendaftaran PPDB', 'Surat Keterangan DTKS untuk Pengajuan PLN', 'Lainnya'];
 
-        return view('silastri/adm/pengaduan/antrian/index', $data);
+        return view('silastri/operator/pengaduan/antrian/index', $data);
     }
 
     public function detail()
@@ -158,7 +158,7 @@ class Antrian extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
-                $response->data = view('silastri/adm/pengaduan/antrian/detail', $data);
+                $response->data = view('silastri/operator/pengaduan/antrian/detail', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;
@@ -233,7 +233,7 @@ class Antrian extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/pengaduan/antrian/form-tanggapan', $data);
+            $response->data = view('silastri/operator/pengaduan/antrian/form-tanggapan', $data);
             return json_encode($response);
         }
     }
@@ -294,7 +294,7 @@ class Antrian extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/su/layanan/antrian/tolak', $data);
+            $response->data = view('silastri/operator/layanan/antrian/tolak', $data);
             return json_encode($response);
         }
     }
@@ -406,7 +406,7 @@ class Antrian extends BaseController
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->redirrect = base_url('silastri/su/layanan/antrian');
+                    $response->redirrect = base_url('silastri/operator/pengaduan/antrian');
                     $response->message = "Tolak Proses Permohonan $nama berhasil dilakukan.";
                     return json_encode($response);
                 } else {
