@@ -50,7 +50,7 @@ class PenggunaModel extends Model
     function get_datatables()
     {
         $this->dt->select("a.*, b.kecamatan as nama_kecamatan, c.role as role_name");
-        $this->dt->join('ref_kecamatan b', 'a.kecamatan = b.id');
+        $this->dt->join('ref_kecamatan b', 'a.kecamatan = b.id', 'LEFT');
         $this->dt->join('_role_user c', 'a.role_user = c.id');
         if ($this->request->getPost('role')) {
             $this->dt->where('a.role_user', $this->request->getPost('role'));
