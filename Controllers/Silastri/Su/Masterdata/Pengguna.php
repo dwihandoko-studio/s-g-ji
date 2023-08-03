@@ -730,6 +730,7 @@ class Pengguna extends BaseController
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->error = $e;
                 $response->message = "Gagal menyimpan data baru.";
                 return json_encode($response);
             }
