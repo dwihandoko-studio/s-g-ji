@@ -5,7 +5,7 @@
         <?php if (isset($wilayahs)) {
             if (count($wilayahs) > 0) {
                 foreach ($wilayahs as $key => $value) { ?>
-                    <option value="<?= $value->kode_kecamatan ?>"><?= $value->nama_kecamatan ?></option>
+                    <option value="<?= $value->id ?>"><?= $value->kecamatan ?></option>
         <?php }
             }
         } ?>
