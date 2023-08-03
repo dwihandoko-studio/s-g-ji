@@ -68,7 +68,7 @@ class Antrian extends BaseController
             $row[] = $list->kode_aduan;
             $row[] = $list->nik;
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
-            $row[] = $list->nohp;
+            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama_aduan));
 
             $data[] = $row;
         }

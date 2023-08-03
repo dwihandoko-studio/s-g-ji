@@ -48,12 +48,11 @@
                                 <tr>
                                     <th data-orderable="false">#</th>
                                     <th data-orderable="false">Aksi</th>
-                                    <th>Layanan</th>
-                                    <th>Kode Permohonan</th>
-                                    <th>NIK</th>
-                                    <th>Nama Pemohon</th>
-                                    <th>KK</th>
-                                    <th>Jenis Permohonan</th>
+                                    <th>Kategori</th>
+                                    <th>Kode Aduan</th>
+                                    <th>NIK Pengadu</th>
+                                    <th>Nama Pengadu</th>
+                                    <th>Nama yang diadukan</th>
                                 </tr>
                             </thead>
                         </table>

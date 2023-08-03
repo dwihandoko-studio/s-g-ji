@@ -8,7 +8,7 @@ use CodeIgniter\Model;
 class AntrianModel extends Model
 {
     protected $table = "_pengaduan a";
-    protected $column_order = array(null, null, 'a.kategori', 'a.kode_aduan', 'a.nik', 'a.nama', 'b.nohp');
+    protected $column_order = array(null, null, 'a.kategori', 'a.kode_aduan', 'a.nik', 'a.nama', 'a.nama_aduan');
     protected $column_search = array('a.nik', 'a.nama', 'a.kode_permohonan');
     protected $order = array('a.created_at' => 'asc');
     protected $request;
@@ -25,7 +25,7 @@ class AntrianModel extends Model
     }
     private function _get_datatables_query()
     {
-        $this->dt->select("a.id, a.kategori, a.kode_aduan, a.user_id, a.nik, a.nama, a.nohp, a.kelurahan, b.fullname");
+        $this->dt->select("a.id, a.kategori, a.kode_aduan, a.user_id, a.nik, a.nama, a.nohp, a.kelurahan, a.nama_aduan, b.fullname");
         $this->dt->join('_profil_users_tb b', 'b.id = a.user_id');
         $this->dt->where("(a.status_aduan = 0)");
 
