@@ -725,7 +725,7 @@ class Pengguna extends BaseController
                     'email_tertaut' => 0,
                     'created_at' => date('Y-m-d H:i:s'),
                 ]);
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 unlink($dir . '/' . $newNamelampiran);
                 $this->_db->transRollback();
                 $response = new \stdClass;
