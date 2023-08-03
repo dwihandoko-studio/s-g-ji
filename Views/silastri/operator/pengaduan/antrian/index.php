@@ -218,7 +218,7 @@
                 "url": "./getAll",
                 "type": "POST",
                 "data": function(data) {
-                    data.layanan = $('#_filter_kategori').val();
+                    data.kategori = $('#_filter_kategori').val();
                 }
             },
             language: {
@@ -246,7 +246,7 @@
             ]
         });
 
-        $('#_filter_layanan').change(function() {
+        $('#_filter_kategori').change(function() {
             tableUsulan.draw();
         });
 
