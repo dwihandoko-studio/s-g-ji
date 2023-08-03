@@ -192,7 +192,7 @@ class Pengguna extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('id'), true);
 
-            $wilayahs = $this->_db->table('ref_kecamatan')
+            $wilayahs = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'ASC')
                 ->get()->getResult();
 
             if ($wilayahs) {
