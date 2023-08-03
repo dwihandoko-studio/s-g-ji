@@ -61,8 +61,8 @@
 
 <body data-sidebar="dark" data-layout-mode="light" class="loading-logout">
     <div id="layout-wrapper">
-        <?= $this->include('t-silastri/su/header'); ?>
-        <?= $this->include('t-silastri/su/menu'); ?>
+        <?= $this->include('t-silastri/adm/header'); ?>
+        <?= $this->include('t-silastri/adm/menu'); ?>
 
         <div class="main-content">
             <?= $this->renderSection('content'); ?>
@@ -177,7 +177,7 @@
 
         $(document).ready(function() {
             $.ajax({
-                url: "<?= base_url('silastri/su/notification/getNotifShowed') ?>",
+                url: "<?= base_url('silastri/adm/notification/getNotifShowed') ?>",
                 type: 'GET',
                 dataType: 'JSON',
                 // beforeSend: function() {
