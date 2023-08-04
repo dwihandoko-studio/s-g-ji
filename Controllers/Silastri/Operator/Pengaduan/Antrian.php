@@ -221,7 +221,7 @@ class Antrian extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowArray();
+            $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowObject();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 400;
