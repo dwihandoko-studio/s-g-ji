@@ -1588,6 +1588,23 @@ function getNamaKelurahan($id = null)
 	return "-";
 }
 
+function getNamaBidang($id = null)
+{
+	if ($id === NULL || $id === "") {
+		return "-";
+	}
+	$db      = \Config\Database::connect();
+
+	$data = $db->table('ref_bidang')
+		->select("bidang")
+		->where('id', $id)
+		->get()->getRowObject();
+	if ($data) {
+		return $data->bidang;
+	}
+	return "-";
+}
+
 function getLayananSilastri()
 {
 	$layanan = json_decode(file_get_contents(FCPATH . "uploads/layanans_silastri.json"), true);

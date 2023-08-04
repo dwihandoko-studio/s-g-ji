@@ -11,6 +11,7 @@ use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
+use App\Libraries\Silastri\Riwayatpengaduanlib;
 
 class Antrian extends BaseController
 {

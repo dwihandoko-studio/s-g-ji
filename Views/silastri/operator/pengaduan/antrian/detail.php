@@ -93,7 +93,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
         <button type="button" onclick="actionTolak(this)" class="btn btn-danger waves-effect waves-light">Tolak Pengaduan</button>
-        <button type="button" onclick="actionApprove(this)" class="btn btn-success waves-effect waves-light">Tanggapi Pengaduan</button>
+        <button type="button" onclick="actionApprove(this)" class="btn btn-success waves-effect waves-light">Teruskan Pengaduan</button>
     </div>
     <script>
         function actionTolak(e) {
@@ -231,13 +231,13 @@
             const id = '<?= $data->id ?>';
             const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
             Swal.fire({
-                title: 'Apakah anda yakin ingin menanggapi pengaduan layanan ini?',
-                text: "Tanggapi Pengaduan : <?= $data->kategori ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?> , dengan Kode Aduan: <?= $data->kode_aduan ?>",
+                title: 'Apakah anda yakin ingin meneruskan pengaduan layanan ini?',
+                text: "Teruskan Pengaduan : <?= $data->kategori ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?> , dengan Kode Aduan: <?= $data->kode_aduan ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Tanggapi!'
+                confirmButtonText: 'Ya, Teruskan!'
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
@@ -275,7 +275,7 @@
                                     );
                                 }
                             } else {
-                                $('#content-approveModalLabel').html('TANGGAPI PENGADUAN LAYANAN <?= $data->kategori ?> dari ' + nama + ', dengan Kode Aduan: ' + kode);
+                                $('#content-approveModalLabel').html('TERUSKAN PENGADUAN LAYANAN <?= $data->kategori ?> dari ' + nama + ', dengan Kode Aduan: ' + kode);
                                 $('.contentApproveBodyModal').html(resul.data);
                                 $('.content-approveModal').modal({
                                     backdrop: 'static',

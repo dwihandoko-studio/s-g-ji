@@ -11,6 +11,7 @@ use App\Libraries\Profilelib;
 use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
+use App\Libraries\Silastri\Riwayatpengaduanlib;
 
 class Antrian extends BaseController
 {
@@ -230,6 +231,8 @@ class Antrian extends BaseController
 
             $data['id'] = $id;
             $data['nama'] = $nama;
+            $data['data'] = $oldData;
+            $data['bidangs'] = $this->_db->table('ref_bidang')->orderBy('id', 'ASC')->get()->getResult();
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
@@ -421,6 +424,123 @@ class Antrian extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal menolak proses permohonan $nama";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function teruskan()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'permasalahan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Permasalahan tidak boleh kosong. ',
+                ]
+            ],
+            'teruskan_ke' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Teruskan ke tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('permasalahan')
+                . $this->validator->getError('teruskan_ke');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                $response->redirrect = base_url('auth');
+                return json_encode($response);
+            }
+            // $canUsulTamsil = canUsulTamsil();
+
+            // if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
+            //     return json_encode($canUsulTamsil);
+            // }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $permasalahan = htmlspecialchars($this->request->getVar('permasalahan'), true);
+            $teruskan_ke = htmlspecialchars($this->request->getVar('teruskan_ke'), true);
+
+            $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowArray();
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Pengaduan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $date = date('Y-m-d H:i:s');
+
+            $oldData['updated_at'] = $date;
+            $oldData['date_proses'] = $date;
+            $oldData['admin_proses'] = $user->data->id;
+            $oldData['permasalahan'] = $permasalahan;
+            $oldData['diteruskan_ke'] = $teruskan_ke;
+            $oldData['status_permohonan'] = 1;
+
+            $this->_db->transBegin();
+            $this->_db->table('_pengaduan')->insert($oldData);
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->table('_permohonan_temp')->where('id', $oldData['id'])->delete();
+                if ($this->_db->affectedRows() > 0) {
+                    $riwayatLib = new Riwayatpengaduanlib();
+                    try {
+                        $riwayatLib->create($user->data->id, "Memproses pengaduan: " . $oldData['kode_aduan'] . ", dengan permasalahan $permasalahan, dan diteruskan ke bidang " . getNamaBidang($teruskan_ke), "submit", "bx bx-send", "riwayat/detailpengaduan?token=" . $oldData['id'], $oldData['id']);
+                    } catch (\Throwable $th) {
+                    }
+                    $this->_db->transCommit();
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->redirrect = base_url('silastri/operator/pengaduan/antrian');
+                    $response->message = "Teruskan Aduan $nama berhasil dilakukan.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal meneruskan aduan $nama";
+                    return json_encode($response);
+                }
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal meneruskan aduan $nama";
                 return json_encode($response);
             }
         }
