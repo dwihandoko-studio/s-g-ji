@@ -231,6 +231,7 @@ class Antrian extends BaseController
 
             $data['id'] = $id;
             $data['nama'] = $nama;
+            $data['data'] = $oldData;
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
