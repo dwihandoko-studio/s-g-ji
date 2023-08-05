@@ -42,10 +42,10 @@
         <div class="col-lg-12">
             <label class="col-form-label">Kepesertaan Bansos (Backoffice):</label>
             <div class="row">
-                <div class="col-lg-6" style="border: 1px solid #ced4da; border-radius: .25rem;">
+                <div class="col-lg-6" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">DTKS</h5>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mt-1">
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="_dtks" value="ya" id="_dtks_1">
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mt-1">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="_dtks" value="tidak" id="_dtks_2">
@@ -67,10 +67,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">PKH</h5>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mt-1">
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="_pkh" value="ya" id="_pkh_1">
@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mt-1">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="_pkh" value="tidak" id="_pkh_2">
@@ -92,10 +92,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">BPNT (Sembako)</h5>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mt-1">
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="_bpnt" value="ya" id="_bpnt_1">
@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mt-1">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="_bpnt" value="tidak" id="_bpnt_2">
@@ -117,10 +117,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">RST (Rumah Sederhana Terpadu)</h5>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mt-1">
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="radio" name="_rst" value="ya" id="_rst_1">
@@ -130,7 +130,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <div class="mt-1">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="_rst" value="tidak" id="_rst_2">
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">Bansos lainnya</h5>
                     <div class="row">
                         <div class="col-lg-6">
@@ -150,7 +150,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="mt-1">
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" type="radio" name="_bansos_lain_option" value="ya" id="_bansos_lain_option_1">
@@ -160,7 +160,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="mt-1">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="_bansos_lain_option" value="tidak" id="_bansos_lain_option_2">
