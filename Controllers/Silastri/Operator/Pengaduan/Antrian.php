@@ -505,16 +505,16 @@ class Antrian extends BaseController
             }
 
             $date = date('Y-m-d H:i:s');
-
-            $oldData['updated_at'] = $date;
-            $oldData['date_proses'] = $date;
-            $oldData['admin_proses'] = $user->data->id;
-            $oldData['permasalahan'] = $permasalahan;
-            $oldData['diteruskan_ke'] = $teruskan_ke;
-            $oldData['status_aduan'] = 1;
+            $upData = [];
+            $upData['updated_at'] = $date;
+            $upData['date_proses'] = $date;
+            $upData['admin_proses'] = $user->data->id;
+            $upData['permasalahan'] = $permasalahan;
+            $upData['diteruskan_ke'] = $teruskan_ke;
+            $upData['status_aduan'] = 1;
 
             $this->_db->transBegin();
-            $this->_db->table('_pengaduan')->insert($oldData);
+            $this->_db->table('_pengaduan')->where('id', $oldData->id)->update($upData);
             if ($this->_db->affectedRows() > 0) {
                 if ($this->_db->affectedRows() > 0) {
                     $riwayatLib = new Riwayatpengaduanlib();
@@ -526,20 +526,20 @@ class Antrian extends BaseController
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->redirrect = base_url('silastri/operator/pengaduan/antrian');
-                    $response->message = "Teruskan Aduan $nama berhasil dilakukan.";
+                    $response->message = "Teruskan Aduan " . $oldData['kode_aduan'] . " berhasil dilakukan.";
                     return json_encode($response);
                 } else {
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
-                    $response->message = "Gagal meneruskan aduan $nama";
+                    $response->message = "Gagal meneruskan aduan " . $oldData['kode_aduan'];
                     return json_encode($response);
                 }
             } else {
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
-                $response->message = "Gagal meneruskan aduan $nama";
+                $response->message = "Gagal meneruskan aduan " . $oldData['kode_aduan'];
                 return json_encode($response);
             }
         }
