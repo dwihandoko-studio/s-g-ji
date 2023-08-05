@@ -230,6 +230,7 @@
         function actionApprove(e) {
             const id = '<?= $data->id ?>';
             const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
+            const kode = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
             Swal.fire({
                 title: 'Apakah anda yakin ingin meneruskan pengaduan layanan ini?',
                 text: "Teruskan Pengaduan : <?= $data->kategori ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?> , dengan Kode Aduan: <?= $data->kode_aduan ?>",
