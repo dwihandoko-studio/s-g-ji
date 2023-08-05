@@ -9,8 +9,8 @@
             <textarea rows="5" class="form-control" id="_permasalahan" name="_permasalahan" required></textarea>
             <div class="help-block _permasalahan"></div>
         </div>
-        <div class="col-lg-6">
-            <div class="row mb-2">
+        <div class="col-lg-12">
+            <div class="row mt-2">
                 <label for="_teruskan_ke" class="col-sm-3 col-form-label">Teruskan Ke Bidang :</label>
                 <div class="col-sm-8">
                     <select class="form-control select2 teruskan_ke" id="_teruskan_ke" name="_teruskan_ke" style="width: 100%">
