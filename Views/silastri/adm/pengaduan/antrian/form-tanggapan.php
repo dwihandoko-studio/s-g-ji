@@ -42,7 +42,7 @@
         <div class="col-lg-12">
             <label class="col-form-label">Kepesertaan Bansos (Backoffice):</label>
             <div class="row">
-                <div class="col-lg-6 mt-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
+                <div class="col-lg-6 mt-2 mr-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">DTKS</h5>
                     <div class="row">
                         <div class="col-lg-4">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 mt-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
+                <div class="col-lg-6 mt-2 mr-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">PKH</h5>
                     <div class="row">
                         <div class="col-lg-4">
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 mt-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
+                <div class="col-lg-6 mt-2 mr-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">BPNT (Sembako)</h5>
                     <div class="row">
                         <div class="col-lg-4">
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 mt-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
+                <div class="col-lg-6 mt-2 mr-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px;">
                     <h5 class="font-size-14">RST (Rumah Sederhana Terpadu)</h5>
                     <div class="row">
                         <div class="col-lg-4">
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 mt-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px; padding-bottom: 20px;">
+                <div class="col-lg-12 mt-2 mr-2" style="border: 1px solid #ced4da; border-radius: .25rem; padding-top: 20px; padding-bottom: 20px;">
                     <h5 class="font-size-14">Bansos lainnya</h5>
                     <div class="row">
                         <div class="col-lg-6">
