@@ -514,7 +514,7 @@ class Antrian extends BaseController
             $upData['status_aduan'] = 1;
 
             $this->_db->transBegin();
-            $this->_db->table('_pengaduan')->where('id', $oldData->id)->update($upData);
+            $this->_db->table('_pengaduan')->where('id', $oldData['id'])->update($upData);
             if ($this->_db->affectedRows() > 0) {
                 if ($this->_db->affectedRows() > 0) {
                     $riwayatLib = new Riwayatpengaduanlib();
