@@ -74,6 +74,14 @@
                 <label class="col-form-label">Uraian Pengaduan:</label>
                 <textarea rows="5" class="form-control" readonly><?= $data->uraian_aduan ?></textarea>
             </div>
+            <div class="col-lg-12">
+                <label class="col-form-label">Permasalahan (FrontOffice):</label>
+                <textarea rows="5" class="form-control" readonly><?= $data->permasalahan ?></textarea>
+            </div>
+            <div class="col-lg-12">
+                <label class="col-form-label">Diteruskan Ke (FrontOffice):</label>
+                <input type="text" class="form-control" value="<?= getNamaBidang($data->diteruskan_ke) ?>" readonly />
+            </div>
             <?php if (isset($data->lampiran_aduan)) { ?>
                 <div class="col-lg-12 mt-2">
                     <label class="col-form-label">Lampiran Aduan:</label>
