@@ -232,7 +232,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-3 _kepala_dinas_pilihan_content" style="display: none;">
+                            <div class="mb-3 _kepala_dinas_pilihan_content" id="_kepala_dinas_pilihan_content" style="display: none;">
                                 <label class="form-label">Pilih Kepala Dinas :</label>
                                 <select class="form-control select2" id="_kepala_dinas_pilihan" name="_kepala_dinas_pilihan" style="width: 100%">
                                     <option value=""> --- Pilih Kepala Dinas --- </option>
@@ -260,7 +260,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-3 _camat_pilihan_content" style="display: none;">
+                            <div class="mb-3 _camat_pilihan_content" id="_camat_pilihan_content" style="display: none;">
                                 <label class="form-label">Pilih Camat :</label>
                                 <select class="form-control select2 camat_pilihan" id="_camat_pilihan" name="_camat_pilihan" style="width: 100%">
                                     <option value=""> --- Pilih Camat --- </option>
@@ -288,7 +288,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-3 _kampung_pilihan_content" style="display: none;">
+                            <div class="mb-3 _kampung_pilihan_content" id="_kampung_pilihan_content" style="display: none;">
                                 <label class="form-label">Pilih Kepala Kampung :</label>
                                 <select class="form-control select2" id="_kampung_pilihan" name="_kampung_pilihan" style="width: 100%">
                                     <option value=""> --- Pilih Kepala Kampung --- </option>
