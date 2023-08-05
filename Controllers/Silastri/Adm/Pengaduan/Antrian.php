@@ -152,7 +152,7 @@ class Antrian extends BaseController
                 // ->join('_profil_users_tb b', 'b.id = a.user_id')
                 ->join('ref_kecamatan c', 'c.id = a.kecamatan')
                 ->join('ref_kelurahan d', 'd.id = a.kelurahan')
-                ->where(['a.id' => $id, 'a.status_aduan' => 0])->get()->getRowObject();
+                ->where(['a.id' => $id, 'a.status_aduan' => 1])->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;

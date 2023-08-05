@@ -74,6 +74,14 @@
                 <label class="col-form-label">Uraian Pengaduan:</label>
                 <textarea rows="5" class="form-control" readonly><?= $data->uraian_aduan ?></textarea>
             </div>
+            <div class="col-lg-12">
+                <label class="col-form-label">Permasalahan (FrontOffice):</label>
+                <textarea rows="5" class="form-control" readonly><?= $data->permasalahan ?></textarea>
+            </div>
+            <div class="col-lg-12">
+                <label class="col-form-label">Diteruskan Ke (FrontOffice):</label>
+                <input type="text" class="form-control" value="<?= getNamaBidang($data->diteruskan_ke) ?>" readonly />
+            </div>
             <?php if (isset($data->lampiran_aduan)) { ?>
                 <div class="col-lg-12 mt-2">
                     <label class="col-form-label">Lampiran Aduan:</label>
@@ -93,7 +101,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
         <button type="button" onclick="actionTolak(this)" class="btn btn-danger waves-effect waves-light">Tolak Pengaduan</button>
-        <button type="button" onclick="actionApprove(this)" class="btn btn-success waves-effect waves-light">Tanggapi Pengaduan</button>
+        <button type="button" onclick="actionApprove(this)" class="btn btn-success waves-effect waves-light">Tindak Lanjuti Pengaduan</button>
     </div>
     <script>
         function actionTolak(e) {
