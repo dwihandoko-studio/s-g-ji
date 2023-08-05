@@ -223,7 +223,7 @@
                 <label for="_tembusan" class="col-sm-3 col-form-label">Tembusan :</label>
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-check form-checkbox-outline form-check-primary mb-3">
                                 <input class="form-check-input" type="checkbox" id="_kepala_dinas" name="_kepala_dinas" onchange="changeTembusan(this)">
                                 <label class="form-check-label" for="_kepala_dinas">
@@ -231,7 +231,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <div class="mb-3 _kepala_dinas_pilihan_content" id="_kepala_dinas_pilihan_content" style="display: none;">
                                 <label class="form-label">Pilih Kepala Dinas :</label>
                                 <select class="form-control select2" id="_kepala_dinas_pilihan" name="_kepala_dinas_pilihan" style="width: 100%">
@@ -251,7 +251,7 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-check form-checkbox-outline form-check-primary mb-3">
                                 <input class="form-check-input" type="checkbox" id="_camat" name="_camat" onchange="changeTembusan(this)">
                                 <label class="form-check-label" for="_camat">
@@ -259,7 +259,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <div class="mb-3 _camat_pilihan_content" id="_camat_pilihan_content" style="display: none;">
                                 <label class="form-label">Pilih Camat :</label>
                                 <select class="form-control select2 camat_pilihan" id="_camat_pilihan" name="_camat_pilihan" style="width: 100%">
@@ -279,7 +279,7 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-check form-checkbox-outline form-check-primary mb-3">
                                 <input class="form-check-input" type="checkbox" id="_kampung" name="_kampung" onchange="changeTembusan(this)">
                                 <label class="form-check-label" for="_kampung">
@@ -287,7 +287,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <div class="mb-3 _kampung_pilihan_content" id="_kampung_pilihan_content" style="display: none;">
                                 <label class="form-label">Pilih Kepala Kampung :</label>
                                 <select class="form-control select2" id="_kampung_pilihan" name="_kampung_pilihan" style="width: 100%">
