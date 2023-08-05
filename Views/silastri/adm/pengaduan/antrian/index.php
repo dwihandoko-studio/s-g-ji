@@ -95,7 +95,7 @@
     </div>
 </div>
 <div id="content-approveModal" class="modal fade content-approveModal" tabindex="-1" role="dialog" aria-labelledby="content-approveModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content modal-content-loading-approve">
             <div class="modal-header">
                 <h5 class="modal-title" id="content-approveModalLabel">Details</h5>
