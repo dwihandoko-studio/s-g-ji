@@ -24,11 +24,12 @@
                 </li>
                 <li <?= ($uri->getSegment(2) == "operator" && $uri->getSegment(3) == "pengaduan") ? ' class="mm-active"' : '' ?>>
                     <a href="javascript: void(0);" class="has-arrow waves-effect <?= ($uri->getSegment(2) == "operator" && $uri->getSegment(3) == "pengaduan") ? ' mm-active' : '' ?>">
-                        <i class="bx bx-package"></i>
+                        <i class="mdi mdi-atom-variant"></i>
                         <span key="t-pengaduans">Pengaduan</span>
                     </a>
                     <ul class="sub-menu  <?= ($uri->getSegment(2) == "operator" && $uri->getSegment(3) == "pengaduan") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
                         <li><a <?= ($uri->getSegment(2) == "operator" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "antrian") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/operator/pengaduan/antrian') ?>" key="t-pengaduan-antrian">Antrian</a></li>
+                        <li><a <?= ($uri->getSegment(2) == "operator" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "proses") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/operator/pengaduan/proses') ?>" key="t-pengaduan-proses">Proses</a></li>
                         <li><a <?= ($uri->getSegment(2) == "operator" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "selesai") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/operator/pengaduan/selesai') ?>" key="t-pengaduan-selesai">Selesai</a></li>
                         <li><a <?= ($uri->getSegment(2) == "operator" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "ditolak") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/operator/pengaduan/ditolak') ?>" key="t-pengaduan-ditolak">Ditolak</a></li>
                     </ul>
