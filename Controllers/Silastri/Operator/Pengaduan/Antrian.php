@@ -511,7 +511,7 @@ class Antrian extends BaseController
             $oldData['admin_proses'] = $user->data->id;
             $oldData['permasalahan'] = $permasalahan;
             $oldData['diteruskan_ke'] = $teruskan_ke;
-            $oldData['status_permohonan'] = 1;
+            $oldData['status_aduan'] = 1;
 
             $this->_db->transBegin();
             $this->_db->table('_pengaduan')->insert($oldData);
