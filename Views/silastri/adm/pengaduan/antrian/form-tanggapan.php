@@ -9,7 +9,7 @@
             <textarea rows="5" class="form-control" id="_permasalahan" name="_permasalahan" readonly></textarea>
             <div class="help-block _permasalahan"></div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12 mt-2">
             <div class="row mb-2">
                 <label for="_media_pengaduan" class="col-sm-3 col-form-label">Media Pengaduan :</label>
                 <div class="col-sm-8">
@@ -43,7 +43,7 @@
             <label class="col-form-label">Kepesertaan Bansos (Backoffice):</label>
             <div class="row">
                 <div class="col-lg-6">
-                    <h5 class="font-size-14 mb-4">DTKS</h5>
+                    <h5 class="font-size-14">DTKS</h5>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mt-1">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h5 class="font-size-14 mb-4">PKH</h5>
+                    <h5 class="font-size-14">PKH</h5>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mt-1">
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h5 class="font-size-14 mb-4">BPNT (Sembako)</h5>
+                    <h5 class="font-size-14">BPNT (Sembako)</h5>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mt-1">
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h5 class="font-size-14 mb-4">RST (Rumah Sederhana Terpadu)</h5>
+                    <h5 class="font-size-14">RST (Rumah Sederhana Terpadu)</h5>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mt-1">
@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <h5 class="font-size-14 mb-4">Bansos lainnya</h5>
+                    <h5 class="font-size-14">Bansos lainnya</h5>
                     <div class="row">
                         <div class="col-lg-6">
                             <input type="text" class="form-control bansos_lain" id="_bansos_lain" name="_bansos_lain" placeholder="Bansos Lainnya.. " />
