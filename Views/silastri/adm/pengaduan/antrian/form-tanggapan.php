@@ -42,7 +42,7 @@
         <div class="col-lg-12">
             <label class="col-form-label">Kepesertaan Bansos (Backoffice):</label>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6" style="border: 1px solid #ced4da; border-radius: .25rem;">
                     <h5 class="font-size-14">DTKS</h5>
                     <div class="row">
                         <div class="col-lg-6">
