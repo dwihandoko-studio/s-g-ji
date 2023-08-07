@@ -6,7 +6,7 @@
         </div>
         <div class="col-lg-12">
             <label class="col-form-label">Permasalahan (Dari Frontoffice):</label>
-            <textarea rows="5" class="form-control" id="_permasalahan" name="_permasalahan" readonly></textarea>
+            <textarea rows="5" class="form-control" id="_permasalahan" name="_permasalahan" readonly><?= $data->permasalahan ?></textarea>
             <div class="help-block _permasalahan"></div>
         </div>
         <div class="col-lg-12 mt-2">
