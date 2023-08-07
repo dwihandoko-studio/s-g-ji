@@ -616,7 +616,7 @@ class Antrian extends BaseController
                     // $this->_db->transCommit();
                     // try {
                     $m = new Merger();
-                    $dataFileGambar = file_get_contents(FCPATH . '/assets/favicon/android-icon-192x192.png');
+                    $dataFileGambar = file_get_contents(FCPATH . 'assets/favicon/android-icon-192x192.png');
                     $base64 = "data:image/png;base64," . base64_encode($dataFileGambar);
 
                     $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData->kode_aduan . '&choe=UTF-8'));
