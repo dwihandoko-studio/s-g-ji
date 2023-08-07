@@ -376,7 +376,7 @@
             const kampung_pilihan = document.getElementsByName('_kampung_pilihan')[0].value;
 
             const media_pengaduan = document.getElementsByName('_media_pengaduan')[0].value;
-            const media_pengaduan_detail = document.getElementsByName('__media_pengaduan_detail')[0].value;
+            const media_pengaduan_detail = document.getElementsByName('_media_pengaduan_detail')[0].value;
 
             if (media_pengaduan === "" || media_pengaduan === undefined) {
                 Swal.fire(
