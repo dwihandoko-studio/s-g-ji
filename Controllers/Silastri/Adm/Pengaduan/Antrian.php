@@ -730,18 +730,19 @@ class Antrian extends BaseController
                         }
                     } else {
                         if ($dataTindakLanjut['tembusan_camat'] !== NULL) {
-                            $html   .= '&nbsp;2. Camat ' . getNamaKecamatan($dataTindakLanjut['tembusan_camat']) . '<br/>';
+                            $html   .= '&nbsp;1. Camat ' . getNamaKecamatan($dataTindakLanjut['tembusan_camat']) . '<br/>';
                             if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
-                                $html   .= '&nbsp;3. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
-                                $html .= '&nbsp;4. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
-                            } else {
+                                $html   .= '&nbsp;2. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
                                 $html .= '&nbsp;3. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                            } else {
+                                $html .= '&nbsp;2. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
                             }
                         } else {
                             if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
-                                $html   .= '&nbsp;2. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
-                            } else {
+                                $html   .= '&nbsp;1. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
                                 $html .= '&nbsp;2. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                            } else {
+                                $html .= '&nbsp;1. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
                             }
                         }
                     }
