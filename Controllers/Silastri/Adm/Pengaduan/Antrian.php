@@ -586,6 +586,7 @@ class Antrian extends BaseController
             if ($this->_db->affectedRows() > 0) {
                 $dataTindakLanjut = [
                     'id' => $oldData['id'],
+                    'id' => $user->data->id,
                     'kode_aduan' => $oldData['kode_aduan'],
                     'media_pengaduan' => $media_pengaduan,
                     'uraian_permasalahan' => $uraian_permasalahan,
