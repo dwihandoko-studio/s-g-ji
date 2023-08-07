@@ -693,7 +693,7 @@ class Antrian extends BaseController
                                                         </td>
                                                         <td>&nbsp;: &nbsp;</td>
                                                         <td>&nbsp;';
-                    $html   .=                                          tgl_indo($oldData->created_at);
+                    $html   .=                                          tgl_indo($oldData['created_at']);
                     $html   .=                                      '</td>
                                                     </tr>
                                                     <tr>
@@ -999,7 +999,7 @@ class Antrian extends BaseController
                     // $m->addRaw($dompdf1->output());
 
                     $dir = FCPATH . "upload/pengaduan/pdf";
-                    $fileNya = $dir . '/' . $oldData->kode_aduan . '.pdf';
+                    $fileNya = $dir . '/' . $oldData['kode_aduan'] . '.pdf';
 
                     file_put_contents($fileNya, $m->merge());
 
