@@ -587,7 +587,7 @@ class Antrian extends BaseController
                 $dataTindakLanjut = [
                     'id' => $oldData['id'],
                     'kode_aduan' => $oldData['kode_aduan'],
-                    'media_pengaduan' => $oldData['media_pengaduan'],
+                    'media_pengaduan' => $media_pengaduan,
                     'uraian_permasalahan' => $uraian_permasalahan,
                     'pokok_permasalahan' => $pokok_permasalahan,
                     'bansos_dtks' => $dtks,
