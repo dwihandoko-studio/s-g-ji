@@ -524,7 +524,7 @@ class Antrian extends BaseController
                 . $this->validator->getError('bpnt')
                 . $this->validator->getError('rst')
                 . $this->validator->getError('jawaban')
-                . $this->validator->getError('saran_tidaklanjut');
+                . $this->validator->getError('saran_tindaklanjut');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -558,7 +558,7 @@ class Antrian extends BaseController
             $kepersertaan_jamkesnas = $this->request->getVar('kepersertaan_jamkesnas') ? htmlspecialchars($this->request->getVar('kepersertaan_jamkesnas'), true) : NULL;
             $kepersertaan_jamkesnas_pilihan = $this->request->getVar('kepersertaan_jamkesnas_option') ? htmlspecialchars($this->request->getVar('kepersertaan_jamkesnas_option'), true) : NULL;
             $jawaban = htmlspecialchars($this->request->getVar('jawaban'), true);
-            $saran_tindaklanjut = htmlspecialchars($this->request->getVar('saran_tidaklanjut'), true);
+            $saran_tindaklanjut = htmlspecialchars($this->request->getVar('saran_tindaklanjut'), true);
             $kepala_dinas = $this->request->getVar('kepala_dinas') ? htmlspecialchars($this->request->getVar('kepala_dinas'), true) : NULL;
             $kepala_dinas_pilihan = $this->request->getVar('kepala_dinas_pilihan') ? htmlspecialchars($this->request->getVar('kepala_dinas_pilihan'), true) : NULL;
             $camat = $this->request->getVar('camat') ? htmlspecialchars($this->request->getVar('camat'), true) : NULL;
