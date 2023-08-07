@@ -553,18 +553,18 @@ class Antrian extends BaseController
             $pkh = htmlspecialchars($this->request->getVar('pkh'), true);
             $bpnt = htmlspecialchars($this->request->getVar('bpnt'), true);
             $rst = htmlspecialchars($this->request->getVar('rst'), true);
-            $bansos_lain = htmlspecialchars($this->request->getVar('bansos_lain'), true);
-            $bansos_lain_pilihan = htmlspecialchars($this->request->getVar('bansos_lain_option'), true);
-            $kepersertaan_jamkesnas = htmlspecialchars($this->request->getVar('kepersertaan_jamkesnas'), true);
-            $kepersertaan_jamkesnas_pilihan = htmlspecialchars($this->request->getVar('kepersertaan_jamkesnas_option'), true);
+            $bansos_lain = $this->request->getVar('bansos_lain') ? htmlspecialchars($this->request->getVar('bansos_lain'), true) : NULL;
+            $bansos_lain_pilihan = $this->request->getVar('bansos_lain_option') ? htmlspecialchars($this->request->getVar('bansos_lain_option'), true) : NULL;
+            $kepersertaan_jamkesnas = $this->request->getVar('kepersertaan_jamkesnas') ? htmlspecialchars($this->request->getVar('kepersertaan_jamkesnas'), true) : NULL;
+            $kepersertaan_jamkesnas_pilihan = $this->request->getVar('kepersertaan_jamkesnas_option') ? htmlspecialchars($this->request->getVar('kepersertaan_jamkesnas_option'), true) : NULL;
             $jawaban = htmlspecialchars($this->request->getVar('jawaban'), true);
             $saran_tindaklanjut = htmlspecialchars($this->request->getVar('saran_tidaklanjut'), true);
-            $kepala_dinas = htmlspecialchars($this->request->getVar('kepala_dinas'), true);
-            $kepala_dinas_pilihan = htmlspecialchars($this->request->getVar('kepala_dinas_pilihan'), true);
-            $camat = htmlspecialchars($this->request->getVar('camat'), true);
-            $camat_pilihan = htmlspecialchars($this->request->getVar('camat_pilihan'), true);
-            $kampung = htmlspecialchars($this->request->getVar('kampung'), true);
-            $kampung_pilihan = htmlspecialchars($this->request->getVar('kampung_pilihan'), true);
+            $kepala_dinas = $this->request->getVar('kepala_dinas') ? htmlspecialchars($this->request->getVar('kepala_dinas'), true) : NULL;
+            $kepala_dinas_pilihan = $this->request->getVar('kepala_dinas_pilihan') ? htmlspecialchars($this->request->getVar('kepala_dinas_pilihan'), true) : NULL;
+            $camat = $this->request->getVar('camat') ? htmlspecialchars($this->request->getVar('camat'), true) : NULL;
+            $camat_pilihan = $this->request->getVar('camat_pilihan') ? htmlspecialchars($this->request->getVar('camat_pilihan'), true) : NULL;
+            $kampung = $this->request->getVar('kampung') ? htmlspecialchars($this->request->getVar('kampung'), true) : NULL;
+            $kampung_pilihan = $this->request->getVar('kampung_pilihan') ? htmlspecialchars($this->request->getVar('kampung_pilihan'), true) : NULL;
 
             $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowArray();
             if (!$oldData) {
