@@ -880,7 +880,7 @@ class Antrian extends BaseController
                                                         </li>
                                                     </ol>
                                                 </li>
-                                                <li style="font-size: 14px;"><b>KATEGORI ADUAN</b><br/><span>' . $dataTindakLanjut['kategori'] . '</span></li>
+                                                <li style="font-size: 14px;"><b>KATEGORI ADUAN</b><br/><span>' . $oldData['kategori'] . '</span></li>
                                                 <li style="font-size: 14px;"><b>HASIL ANALISA</b><br/>
                                                     <ol style="font-size: 12px;">
                                                         <li style="font-size: 14px;">
