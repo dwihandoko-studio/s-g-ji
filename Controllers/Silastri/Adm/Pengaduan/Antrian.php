@@ -907,10 +907,10 @@ class Antrian extends BaseController
                                                                     <td>Kepersertaan Basos</td>
                                                                     <td>&nbsp;:</td>
                                                                     <td>
-                                                                        1. DTKS (' . $dataTindakLanjut['dtks'] . ')<br/>
-                                                                        2. PKH (' . $dataTindakLanjut['pkh'] . ')<br/>
-                                                                        3. BPNT (' . $dataTindakLanjut['bpnt'] . ')<br/>
-                                                                        4. Rumah Sederhana Terpadu - RST (' . $dataTindakLanjut['rst'] . ')<br/>';
+                                                                        1. DTKS (' . $dataTindakLanjut['bansos_dtks'] . ')<br/>
+                                                                        2. PKH (' . $dataTindakLanjut['bansos_pkh'] . ')<br/>
+                                                                        3. BPNT (' . $dataTindakLanjut['bansos_bpnt'] . ')<br/>
+                                                                        4. Rumah Sederhana Terpadu - RST (' . $dataTindakLanjut['bansos_rst'] . ')<br/>';
                     if ($dataTindakLanjut['bansos_lain'] == NULL || $dataTindakLanjut['bansos_lain'] == "") {
                     } else {
                         $html .= '5. ' . $dataTindakLanjut['bansos_lain'] . ' (' . $dataTindakLanjut['bansos_lain_pilihan'] . ')';
