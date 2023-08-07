@@ -1008,10 +1008,17 @@ class Antrian extends BaseController
                     // } catch (\Throwable $th) {
                     //     //throw $th;
                     // }
+                    header('Content-Type: application/pdf');
+                    header('Content-Disposition: attachment; filename="' . basename($fileNya) . '"');
+                    header('Content-Length: ' . filesize($fileNya));
+                    readfile($fileNya);
+
+                    return;
+
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
+                    $response->redirrect = base_url('upload/pengaduan/pdf') . '/' . $fileNya;
                     $response->message = "Tanggapan Aduan " . $oldData['kode_aduan'] . " berhasil disimpan.";
                     return json_encode($response);
                 } else {
