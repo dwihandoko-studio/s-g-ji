@@ -1554,6 +1554,23 @@ function getDescriptionWeb()
 	return getenv('description.web.key') ?? "Unuknown";
 }
 
+function getNamaDinas($id = null)
+{
+	if ($id === NULL || $id === "") {
+		return "-";
+	}
+	$db      = \Config\Database::connect();
+
+	$data = $db->table('ref_dinas')
+		->select("dinas")
+		->where('id', $id)
+		->get()->getRowObject();
+	if ($data) {
+		return $data->dinas;
+	}
+	return "-";
+}
+
 function getNamaKecamatan($id = null)
 {
 	if ($id === NULL || $id === "") {
@@ -1601,6 +1618,23 @@ function getNamaBidang($id = null)
 		->get()->getRowObject();
 	if ($data) {
 		return $data->bidang;
+	}
+	return "-";
+}
+
+function getNamaPengguna($id = null)
+{
+	if ($id === NULL || $id === "") {
+		return "-";
+	}
+	$db      = \Config\Database::connect();
+
+	$data = $db->table('_profil_users_tb')
+		->select("fullname")
+		->where('id', $id)
+		->get()->getRowObject();
+	if ($data) {
+		return $data->fullname;
 	}
 	return "-";
 }

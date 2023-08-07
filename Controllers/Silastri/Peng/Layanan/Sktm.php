@@ -367,7 +367,7 @@ class Sktm extends BaseController
             if ($keterangan === NULL || $keterangan === "") {
                 $jenisFix = $jenis;
             } else {
-                $jenisFix = $jenis;
+                $jenisFix = $keterangan;
             }
 
             $skor = (($indikator1 + $indikator2 + $indikator3 + $indikator4 + $indikator5 + $indikator6) / 16) * 100;

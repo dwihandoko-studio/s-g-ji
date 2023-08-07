@@ -36,8 +36,8 @@
         </div>
         <div class="col-lg-12">
             <label class="col-form-label">Pokok Permasalahan (Backoffice):</label>
-            <textarea rows="5" class="form-control" id="_permasalahan" name="_permasalahan" required></textarea>
-            <div class="help-block _permasalahan"></div>
+            <textarea rows="5" class="form-control" id="_pokok_permasalahan" name="_pokok_permasalahan" required></textarea>
+            <div class="help-block _pokok_permasalahan"></div>
         </div>
         <div class="col-lg-12">
             <label class="col-form-label">Kepesertaan Bansos (Backoffice):</label>
@@ -210,13 +210,13 @@
         </div>
         <div class="col-lg-12">
             <label class="col-form-label">Jawaban (Backoffice):</label>
-            <textarea rows="5" class="form-control" id="_permasalahan" name="_permasalahan" required></textarea>
-            <div class="help-block _permasalahan"></div>
+            <textarea rows="5" class="form-control" id="_jawaban" name="_jawaban" required></textarea>
+            <div class="help-block _jawaban"></div>
         </div>
         <div class="col-lg-12">
             <label class="col-form-label">Saran Tindaklanjut (Backoffice):</label>
-            <textarea rows="5" class="form-control" id="_permasalahan" name="_permasalahan" required></textarea>
-            <div class="help-block _permasalahan"></div>
+            <textarea rows="5" class="form-control" id="_saran_tindaklanjut" name="_saran_tindaklanjut" required></textarea>
+            <div class="help-block _saran_tindaklanjut"></div>
         </div>
         <div class="col-lg-12">
             <div class="row mt-2">
@@ -336,41 +336,241 @@
         }
 
         function saveTanggapanPengaduan(e) {
-            const uraian = document.getElementsByName('_uraian_pengaduan')[0].value;
-            const permasalahan = document.getElementsByName('_permasalahan')[0].value;
-            const teruskan_ke = document.getElementsByName('_teruskan_ke')[0].value;
-            if (uraian === "" || uraian === undefined) {
+            const uraian_permasalahan = document.getElementsByName('_uraian_permasalahan')[0].value;
+            const pokok_permasalahan = document.getElementsByName('_pokok_permasalahan')[0].value;
+
+            const dtks = $("input[type='radio'][name='_dtks']:checked").val();
+            const pkh = $("input[type='radio'][name='_pkh']:checked").val();
+            const bpnt = $("input[type='radio'][name='_bpnt']:checked").val();
+            const rst = $("input[type='radio'][name='_rst']:checked").val();
+            const bansos_lain_option = $("input[type='radio'][name='_bansos_lain_option']:checked").val();
+            const bansos_lain = document.getElementsByName('_bansos_lain')[0].value;
+            const kepersertaan_jamkesnas_option = $("input[type='radio'][name='_kepersertaan_jamkesnas_option']:checked").val();
+            const kepersertaan_jamkesnas = document.getElementsByName('_kepersertaan_jamkesnas')[0].value;
+
+            const jawaban = document.getElementsByName('_jawaban')[0].value;
+            const saran_tindaklanjut = document.getElementsByName('_saran_tindaklanjut')[0].value;
+
+            let kepala_dinas;
+            if ($('#_kepala_dinas').is(":checked")) {
+                kepala_dinas = 1;
+            } else {
+                kepala_dinas = 0;
+            }
+            const kepala_dinas_pilihan = document.getElementsByName('_kepala_dinas_pilihan')[0].value;
+
+            let camat;
+            if ($('#_camat').is(":checked")) {
+                camat = 1;
+            } else {
+                camat = 0;
+            }
+            const camat_pilihan = document.getElementsByName('_camat_pilihan')[0].value;
+
+            let kampung;
+            if ($('#_kampung').is(":checked")) {
+                kampung = 1;
+            } else {
+                kampung = 0;
+            }
+            const kampung_pilihan = document.getElementsByName('_kampung_pilihan')[0].value;
+
+            const media_pengaduan = document.getElementsByName('_media_pengaduan')[0].value;
+            const media_pengaduan_detail = document.getElementsByName('__media_pengaduan_detail')[0].value;
+
+            if (media_pengaduan === "" || media_pengaduan === undefined) {
                 Swal.fire(
                     'PERINGATAN!!!',
-                    "Uraian aduan tidak boleh kosong.",
+                    "Media pengaduan tidak boleh kosong.",
                     'warning'
                 );
                 return;
             }
-            if (permasalahan === "" || permasalahan === undefined) {
+            if (media_pengaduan === "lainnya") {
+                if (media_pengaduan_detail === "" || media_pengaduan_detail === undefined) {
+                    Swal.fire(
+                        'PERINGATAN!!!',
+                        "Silahkan masukkan jenis media pengaduan lain.",
+                        'warning'
+                    );
+                    return;
+                }
+            }
+
+            if (uraian_permasalahan === "" || uraian_permasalahan === undefined) {
+                $("textarea#_uraian_permasalahan").css("color", "#dc3545");
+                $("textarea#_uraian_permasalahan").css("border-color", "#dc3545");
+                $('._uraian_permasalahan').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan masukkan uraian permasalahan.</li></ul>');
                 Swal.fire(
                     'PERINGATAN!!!',
-                    "Permasalahan tidak boleh kosong.",
+                    "Uraian Permasalahan tidak boleh kosong.",
                     'warning'
                 );
                 return;
             }
-            if (teruskan_ke === "") {
+
+            if (pokok_permasalahan === "" || pokok_permasalahan === undefined) {
+                $("textarea#_pokok_permasalahan").css("color", "#dc3545");
+                $("textarea#_pokok_permasalahan").css("border-color", "#dc3545");
+                $('._pokok_permasalahan').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan masukkan pokok permasalahan.</li></ul>');
                 Swal.fire(
                     'PERINGATAN!!!',
-                    "Diteruskan ke tidak boleh kosong.",
+                    "Pokok Permasalahan tidak boleh kosong.",
                     'warning'
                 );
                 return;
             }
+
+            if (dtks === "ya" || dtks === "tidak") {} else {
+                Swal.fire(
+                    'PERINGATAN!!!',
+                    "Kepersertaan bansos DTKS harus dipilih.",
+                    'warning'
+                );
+                return;
+            }
+
+            if (pkh === "ya" || pkh === "tidak") {} else {
+                Swal.fire(
+                    'PERINGATAN!!!',
+                    "Kepersertaan bansos PKH harus dipilih.",
+                    'warning'
+                );
+                return;
+            }
+
+            if (bpnt === "ya" || bpnt === "tidak") {} else {
+                Swal.fire(
+                    'PERINGATAN!!!',
+                    "Kepersertaan bansos BPNT harus dipilih.",
+                    'warning'
+                );
+                return;
+            }
+
+            if (rst === "ya" || rst === "tidak") {} else {
+                Swal.fire(
+                    'PERINGATAN!!!',
+                    "Kepersertaan bansos RST(Rumah Sederhana Terpadu) harus dipilih.",
+                    'warning'
+                );
+                return;
+            }
+
+            if (bansos_lain === "" || bansos_lain === undefined) {} else {
+                if (bansos_lain_option === "ya" || bansos_lain_option === "tidak") {} else {
+                    Swal.fire(
+                        'PERINGATAN!!!',
+                        "Kepersertaan bansos lainya harus dipilih.",
+                        'warning'
+                    );
+                    return;
+                }
+            }
+
+            if (kepersertaan_jamkesnas === "" || kepersertaan_jamkesnas === undefined) {} else {
+                if (kepersertaan_jamkesnas_option === "aktif" || kepersertaan_jamkesnas_option === "tidak") {} else {
+                    Swal.fire(
+                        'PERINGATAN!!!',
+                        "Kepersertaan jaminan kesehatan nasional (JKN) harus dipilih.",
+                        'warning'
+                    );
+                    return;
+                }
+            }
+
+            if (jawaban === "" || jawaban === undefined) {
+                $("textarea#_jawaban").css("color", "#dc3545");
+                $("textarea#_jawaban").css("border-color", "#dc3545");
+                $('._jawaban').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan masukkan jawaban.</li></ul>');
+                Swal.fire(
+                    'PERINGATAN!!!',
+                    "Jawaban tidak boleh kosong.",
+                    'warning'
+                );
+                return;
+            }
+
+            if (saran_tindaklanjut === "" || saran_tindaklanjut === undefined) {
+                $("textarea#_saran_tindaklanjut").css("color", "#dc3545");
+                $("textarea#_saran_tindaklanjut").css("border-color", "#dc3545");
+                $('._saran_tindaklanjut').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan masukkan saran tidaklanjut.</li></ul>');
+                Swal.fire(
+                    'PERINGATAN!!!',
+                    "Saran tindaklanjut tidak boleh kosong.",
+                    'warning'
+                );
+                return;
+            }
+
+            if (kepala_dinas === 1) {
+                if (kepala_dinas_pilihan === "" || kepala_dinas_pilihan === undefined) {
+                    $("select#_kepala_dinas_pilihan").css("color", "#dc3545");
+                    $("select#_kepala_dinas_pilihan").css("border-color", "#dc3545");
+                    $('._kepala_dinas_pilihan').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih tembusan kepala dinas.</li></ul>');
+                    Swal.fire(
+                        'PERINGATAN!!!',
+                        "Tembusan kepala dinas harus di pilih.",
+                        'warning'
+                    );
+                    return;
+                }
+            }
+
+            if (camat === 1) {
+                if (camat_pilihan === "" || camat_pilihan === undefined) {
+                    $("select#_camat_pilihan").css("color", "#dc3545");
+                    $("select#_camat_pilihan").css("border-color", "#dc3545");
+                    $('._camat_pilihan').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih tembusan camat.</li></ul>');
+                    Swal.fire(
+                        'PERINGATAN!!!',
+                        "Tembusan camat harus di pilih.",
+                        'warning'
+                    );
+                    return;
+                }
+            }
+
+            if (kampung === 1) {
+                if (kampung_pilihan === "" || kampung_pilihan === undefined) {
+                    $("select#_kampung_pilihan").css("color", "#dc3545");
+                    $("select#_kampung_pilihan").css("border-color", "#dc3545");
+                    $('._kampung_pilihan').html('<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih tembusan kepala kampung.</li></ul>');
+                    Swal.fire(
+                        'PERINGATAN!!!',
+                        "Tembusan kepala kampung harus di pilih.",
+                        'warning'
+                    );
+                    return;
+                }
+            }
+
             $.ajax({
-                url: "./teruskan",
+                url: "./tanggapi",
                 type: 'POST',
                 data: {
                     id: '<?= $data->id ?>',
                     nama: '<?= str_replace('&#039;', "`", str_replace("'", "`", $nama)) ?>',
-                    permasalahan: permasalahan,
-                    teruskan_ke: teruskan_ke,
+                    media_pengaduan: media_pengaduan,
+                    media_pengaduan_detail: media_pengaduan_detail,
+                    uraian_permasalahan: uraian_permasalahan,
+                    pokok_permasalahan: pokok_permasalahan,
+                    dtks: dtks,
+                    pkh: pkh,
+                    bpnt: bpnt,
+                    rst: rst,
+                    bansos_lain: bansos_lain,
+                    bansos_lain_option: bansos_lain_option,
+                    kepersertaan_jamkesnas: kepersertaan_jamkesnas,
+                    kepersertaan_jamkesnas_option: kepersertaan_jamkesnas_option,
+                    jawaban: jawaban,
+                    saran_tindaklanjut: saran_tindaklanjut,
+                    kepala_dinas: kepala_dinas,
+                    kepala_dinas_pilihan: kepala_dinas_pilihan,
+                    camat: camat,
+                    camat_pilihan: camat_pilihan,
+                    kampung: kampung,
+                    kampung_pilihan: kampung_pilihan,
                 },
                 dataType: 'JSON',
                 beforeSend: function() {

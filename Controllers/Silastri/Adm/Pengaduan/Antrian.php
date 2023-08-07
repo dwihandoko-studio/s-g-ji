@@ -12,6 +12,8 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
 use App\Libraries\Silastri\Riwayatpengaduanlib;
+use iio\libmergepdf\Merger;
+use Dompdf\Dompdf;
 
 class Antrian extends BaseController
 {
@@ -426,6 +428,603 @@ class Antrian extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal menolak proses permohonan $nama";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function tanggapi()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'nama' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama tidak boleh kosong. ',
+                ]
+            ],
+            'media_pengaduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Media pengaduan tidak boleh kosong. ',
+                ]
+            ],
+            'uraian_permasalahan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Uraian Permasalahan tidak boleh kosong. ',
+                ]
+            ],
+            'pokok_permasalahan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pokok permasalahan ke tidak boleh kosong. ',
+                ]
+            ],
+            'dtks' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'DTKS ke tidak boleh kosong. ',
+                ]
+            ],
+            'pkh' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'PKH ke tidak boleh kosong. ',
+                ]
+            ],
+            'bpnt' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'BPNT ke tidak boleh kosong. ',
+                ]
+            ],
+            'rst' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Rumah sederhana terpadu ke tidak boleh kosong. ',
+                ]
+            ],
+            'jawaban' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jawaban ke tidak boleh kosong. ',
+                ]
+            ],
+            'saran_tindaklanjut' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Saran tindaklanjut ke tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id')
+                . $this->validator->getError('nama')
+                . $this->validator->getError('media_pengaduan')
+                . $this->validator->getError('uraian_permasalahan')
+                . $this->validator->getError('pokok_permasalahan')
+                . $this->validator->getError('dtks')
+                . $this->validator->getError('pkh')
+                . $this->validator->getError('bpnt')
+                . $this->validator->getError('rst')
+                . $this->validator->getError('jawaban')
+                . $this->validator->getError('saran_tidaklanjut');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                $response->redirrect = base_url('auth');
+                return json_encode($response);
+            }
+            // $canUsulTamsil = canUsulTamsil();
+
+            // if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
+            //     return json_encode($canUsulTamsil);
+            // }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+            $media_pengaduan = htmlspecialchars($this->request->getVar('media_pengaduan'), true);
+            $uraian_permasalahan = htmlspecialchars($this->request->getVar('uraian_permasalahan'), true);
+            $pokok_permasalahan = htmlspecialchars($this->request->getVar('pokok_permasalahan'), true);
+            $dtks = htmlspecialchars($this->request->getVar('dtks'), true);
+            $pkh = htmlspecialchars($this->request->getVar('pkh'), true);
+            $bpnt = htmlspecialchars($this->request->getVar('bpnt'), true);
+            $rst = htmlspecialchars($this->request->getVar('rst'), true);
+            $bansos_lain = htmlspecialchars($this->request->getVar('bansos_lain'), true);
+            $bansos_lain_pilihan = htmlspecialchars($this->request->getVar('bansos_lain_option'), true);
+            $kepersertaan_jamkesnas = htmlspecialchars($this->request->getVar('kepersertaan_jamkesnas'), true);
+            $kepersertaan_jamkesnas_pilihan = htmlspecialchars($this->request->getVar('kepersertaan_jamkesnas_option'), true);
+            $jawaban = htmlspecialchars($this->request->getVar('jawaban'), true);
+            $saran_tindaklanjut = htmlspecialchars($this->request->getVar('saran_tidaklanjut'), true);
+            $kepala_dinas = htmlspecialchars($this->request->getVar('kepala_dinas'), true);
+            $kepala_dinas_pilihan = htmlspecialchars($this->request->getVar('kepala_dinas_pilihan'), true);
+            $camat = htmlspecialchars($this->request->getVar('camat'), true);
+            $camat_pilihan = htmlspecialchars($this->request->getVar('camat_pilihan'), true);
+            $kampung = htmlspecialchars($this->request->getVar('kampung'), true);
+            $kampung_pilihan = htmlspecialchars($this->request->getVar('kampung_pilihan'), true);
+
+            $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowArray();
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Pengaduan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $date = date('Y-m-d H:i:s');
+            $upData = [];
+            $upData['updated_at'] = $date;
+            $upData['date_approve'] = $date;
+            $upData['admin_approve'] = $user->data->id;
+            $upData['status_aduan'] = 2;
+
+            $this->_db->transBegin();
+            $this->_db->table('_pengaduan')->where('id', $oldData['id'])->update($upData);
+            if ($this->_db->affectedRows() > 0) {
+                $dataTindakLanjut = [
+                    'id' => $oldData['id'],
+                    'kode_aduan' => $oldData['kode_aduan'],
+                    'media_pengaduan' => $oldData['media_pengaduan'],
+                    'uraian_permasalahan' => $uraian_permasalahan,
+                    'pokok_permasalahan' => $pokok_permasalahan,
+                    'bansos_dtks' => $dtks,
+                    'bansos_pkh' => $pkh,
+                    'bansos_bpnt' => $bpnt,
+                    'bansos_rst' => $rst,
+                    'bansos_lain' => ($bansos_lain == NULL || $bansos_lain == "") ? NULL : $bansos_lain,
+                    'bansos_lain_pilihan' => ($bansos_lain_pilihan == NULL || $bansos_lain_pilihan == "") ? NULL : $bansos_lain_pilihan,
+                    'kepersertaan_jkn' => ($kepersertaan_jamkesnas == NULL || $kepersertaan_jamkesnas == "") ? NULL : $kepersertaan_jamkesnas,
+                    'kepersertaan_jkn_pilihan' => ($kepersertaan_jamkesnas_pilihan == NULL || $kepersertaan_jamkesnas_pilihan == "") ? NULL : $kepersertaan_jamkesnas_pilihan,
+                    'jawaban' => $jawaban,
+                    'saran_tindaklanjut' => $saran_tindaklanjut,
+                    'tembusan_dinas' => ($kepala_dinas == 1 || $kepala_dinas == "1") ? $kepala_dinas_pilihan : NULL,
+                    'tembusan_camat' => ($camat == 1 || $camat == "1") ? $camat_pilihan : NULL,
+                    'tembusan_kampung' => ($kampung == 1 || $kampung == "1") ? $kampung_pilihan : NULL,
+                    'created_at' => $date,
+                ];
+                $this->_db->table('_pengaduan_tanggapan')->insert($dataTindakLanjut);
+                if ($this->_db->affectedRows() > 0) {
+                    $riwayatLib = new Riwayatpengaduanlib();
+                    try {
+                        $riwayatLib->create($user->data->id, "Menanggapi pengaduan: " . $oldData['kode_aduan'] . ", dengan jawaban $jawaban, dan dengan saran tindaklanjut $saran_tindaklanjut", "submit", "bx bx-send", "riwayat/detailpengaduan?token=" . $oldData['id'], $oldData['id']);
+                    } catch (\Throwable $th) {
+                    }
+                    $this->_db->transCommit();
+                    try {
+                        $m = new Merger();
+                        $dataFileGambar = file_get_contents(FCPATH . './assets/favicon/android-icon-192x192.png');
+                        $base64 = "data:image/png;base64," . base64_encode($dataFileGambar);
+
+                        $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData->kode_aduan . '&choe=UTF-8'));
+
+                        $jabatan_ks = $ks->jabatan_ks_plt ? ($ks->jabatan_ks_plt == 0 ? "Kepala Sekolah" : "Plt. Kepala Sekolah") : "Kepala Sekolah";
+
+                        $html   =  '<html>
+                        <head>
+                            <link href="';
+                        $html   .=              base_url('uploads/bootstrap.css');
+                        $html   .=          '" rel="stylesheet">
+                        </head>
+                        <body>
+                            <div class="container">
+                                <div class="row">
+                                    <table class="table table-responsive" style="border: none;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img class="image-responsive" width="110px" height="110px" src="';
+                        $html   .=                                      $base64;
+                        $html   .=                                  '"/>
+                                                </td>
+                                                <td>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                </td>
+                                                <td>
+                                                    <h3 style="margin: 0rem;font-size: 16px; font-weight: 500;">PEMERINTAH KABUPATEN LAMPUNG TENGAH</h3>
+                                                    <h3 style="margin: 0rem;font-size: 16px; font-weight: 500;">DINAS SOSIAL</h3>
+                                                    <h3 style="margin: 0rem;font-size: 16px; font-weight: 500;">KABUPATEN LAMPUNG TENGAH</h3>
+                                                    <h4 style="margin: 0rem;font-size: 12px;font-weight: 400;">Jl. Hi. Muchtar Gunung Sugih 34161 Telp. (0725) 529786 Fax. 529787</h4>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div style="text-align: center;margin-top: 30px; border:1px solid black;">
+                                        <h3 style="margin: 0rem;font-size: 14px;">NOTA DINAS</h3>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 30px;margin-right:30px;">
+                                    <div style="text-align: justify;margin-top: 30px;">
+                                        <p style="margin-bottom: 15px; margin-top: 0px; font-size: 12px; padding-top: 0px; padding-bottom: 0px;">
+                                            <table style="border: none;font-size: 12px; margin-bottom: 0px; margin-top: 0px; padding-bottom: 0px; padding-top: 0px;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            Kepada Yth.
+                                                        </td>
+                                                        <td>&nbsp;: &nbsp;</td>
+                                                        <td>&nbsp;Kepala Dinas Sosial Kabupaten Lampung Tengah</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Dari
+                                                        </td>
+                                                        <td>&nbsp;: &nbsp;</td>
+                                                        <td>&nbsp;';
+                        $html   .=                                          $user->data->fullname;
+                        // $html   .=                                          getNamaPengguna($user->data->id);
+                        $html   .=                                      '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Jabatan
+                                                        </td>
+                                                        <td>&nbsp;: &nbsp;</td>
+                                                        <td>&nbsp;';
+                        $html   .=                                          $user->data->fullname;
+                        $html   .=                                      '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Tanggal
+                                                        </td>
+                                                        <td>&nbsp;: &nbsp;</td>
+                                                        <td>&nbsp;';
+                        $html   .=                                          tgl_indo($oldData->created_at);
+                        $html   .=                                      '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Lampiran
+                                                        </td>
+                                                        <td>&nbsp;: &nbsp;</td>
+                                                        <td>&nbsp;';
+                        $html   .=                                          '-';
+                        $html   .=                                      '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Tembusan
+                                                        </td>
+                                                        <td>&nbsp;: &nbsp;</td>';
+                        $html   .=                      '<td>&nbsp;';
+                        if ($dataTindakLanjut['tembusan_dinas'] !== NULL) {
+                            $html   .= '1. Kepala Dinas ' . getNamaDinas($dataTindakLanjut['tembusan_dinas']) . '<br/>';
+                            if ($dataTindakLanjut['tembusan_camat'] !== NULL) {
+                                $html   .= '&nbsp;2. Camat ' . getNamaKecamatan($dataTindakLanjut['tembusan_camat']) . '<br/>';
+                                if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
+                                    $html   .= '&nbsp;3. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
+                                    $html .= '&nbsp;4. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                                } else {
+                                    $html .= '&nbsp;3. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                                }
+                            } else {
+                                if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
+                                    $html   .= '&nbsp;2. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
+                                } else {
+                                    $html .= '&nbsp;2. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                                }
+                            }
+                        } else {
+                            if ($dataTindakLanjut['tembusan_camat'] !== NULL) {
+                                $html   .= '&nbsp;2. Camat ' . getNamaKecamatan($dataTindakLanjut['tembusan_camat']) . '<br/>';
+                                if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
+                                    $html   .= '&nbsp;3. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
+                                    $html .= '&nbsp;4. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                                } else {
+                                    $html .= '&nbsp;3. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                                }
+                            } else {
+                                if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
+                                    $html   .= '&nbsp;2. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
+                                } else {
+                                    $html .= '&nbsp;2. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                                }
+                            }
+                        }
+                        $html   .=                                          '-';
+                        $html   .=                                      '</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            Perihal
+                                                        </td>
+                                                        <td>&nbsp;: &nbsp;</td>
+                                                        <td>&nbsp;';
+                        $html   .=                                          'Laporan Tindak Lanjut Penanganan Aduan';
+                        $html   .=                                      '</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </p>
+                                        <p style="margin-top: 20px;font-size: 12px;">
+                                            <ol style="font-size: 14px;">
+                                                <li style="font-size: 14px;"><b>TANGGAL ADUAN</b><br/><span>Hari Tanggal Bulan Tahun</span></li>
+                                                <li style="font-size: 14px;"><b>MEDIA PENGADUAN</b><br/><span>' . $dataTindakLanjut['media_pengaduan'] . '</span></li>
+                                                <li style="font-size: 14px;"><b>IDENTITAS PEMOHON</b><br/>
+                                                    <ol style="font-size: 12px;">
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Nama</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . $oldData['nama'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>NIK</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . $oldData['nik'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>No HP</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . $oldData['nohp'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Alamat</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . $oldData['alamat'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Kampung</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . getNamaKelurahan($oldData['kelurahan']) . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Kecamatan</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . getNamaKecamatan($oldData['kecamatan']) . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                                <li style="font-size: 14px;"><b>IDENTITAS SUBJEK ADUAN</b><br/>
+                                                    <ol style="font-size: 12px;">
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Nama</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . $oldData['nama_aduan'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>NIK</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . $oldData['nik_aduan'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>No HP</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . $oldData['nohp_aduan'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Alamat</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . $oldData['alamat_aduan'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Kampung</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . getNamaKelurahan($oldData['kelurahan_aduan']) . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Kecamatan</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>&nbsp;' . getNamaKecamatan($oldData['kecamatan_aduan']) . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                                <li style="font-size: 14px;"><b>KATEGORI ADUAN</b><br/><span>' . $dataTindakLanjut['kategori'] . '</span></li>
+                                                <li style="font-size: 14px;"><b>HASIL ANALISA</b><br/>
+                                                    <ol style="font-size: 12px;">
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Uraian Permasalahan</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>' . $dataTindakLanjut['uraian_permasalahan'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Pokok Permasalahan</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>' . $dataTindakLanjut['pokok_permasalahan'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Kepersertaan Basos</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>
+                                                                        1. DTKS (' . $dataTindakLanjut['dtks'] . ')<br/>
+                                                                        2. PKH (' . $dataTindakLanjut['pkh'] . ')<br/>
+                                                                        3. BPNT (' . $dataTindakLanjut['bpnt'] . ')<br/>
+                                                                        4. Rumah Sederhana Terpadu - RST (' . $dataTindakLanjut['rst'] . ')<br/>';
+                        if ($dataTindakLanjut['bansos_lain'] == NULL || $dataTindakLanjut['bansos_lain'] == "") {
+                        } else {
+                            $html .= '5. ' . $dataTindakLanjut['bansos_lain'] . ' (' . $dataTindakLanjut['bansos_lain_pilihan'] . ')';
+                        }
+                        $html   .=                                  '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Kepersertaan Jaminan Kesehatan Nasional (JKN)</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>';
+                        if ($dataTindakLanjut['kepersertaan_jkn'] == NULL || $dataTindakLanjut['kepersertaan_jkn'] == "") {
+                        } else {
+                            $html .= '' . $dataTindakLanjut['kepersertaan_jkn'] . ' Dengan Status (' . $dataTindakLanjut['kepersertaan_jkn_pilihan'] . ')';
+                        }
+                        $html   .=                                  '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Jawaban</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>' . $dataTindakLanjut['jawaban'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                        <li style="font-size: 14px;">
+                                                            <table border="0">
+                                                                <tr>
+                                                                    <td>Saran Tindak Lanjut</td>
+                                                                    <td>&nbsp;:</td>
+                                                                    <td>' . $dataTindakLanjut['saran_tindaklanjut'] . '</td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ol>
+                                                </li>
+                                            </ol>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-left: 30px;margin-right:30px;">
+                                    <div>
+                                        <table style="width: 100%;max-width: 100%;" border="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 60%"><center><img class="image-responsive" width="110px" height="110px" src="' . $qrCode . '"/></center></td>
+                                                    <td style="width: 40%">
+                                                        <br>
+                                                        <br>
+                                                        <span style="font-size: 12px;">Gunung Sugih, ';
+                        $html   .=                                          tgl_indo(date('Y-m-d'));
+                        $html   .=                                      '</span><br>
+                                                        <span style="font-size: 12px;">PETUGAS</span><br><br><br><span style="font-size: 10px; color: #1c1c1cb8;">Materai 10.000</span><br><br>
+                                                        <span style="font-size: 12px;"><b><u>';
+                        $html   .=                                          $user->data->fullname;
+                        $html   .=                                      '</u></b></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </body>
+                    </html>';
+
+                        $dompdf = new DOMPDF();
+                        $dompdf->setPaper('F4', 'potrait');
+                        $dompdf->loadHtml($html);
+                        $dompdf->render();
+                        $m->addRaw($dompdf->output());
+                        // unset($dompdf);
+
+                        // $dompdf1 = new DOMPDF();
+                        // // $dompdf = new Dompdf();
+                        // $dompdf1->set_paper('F4', 'landscape');
+                        // $dompdf1->load_html($lHtml);
+                        // $dompdf1->render();
+                        // $m->addRaw($dompdf1->output());
+
+                        $dir = FCPATH . "upload/pengaduan/pdf";
+                        $fileNya = $dir . '/' . $oldData->kode_aduan . '.pdf';
+
+                        file_put_contents($fileNya, $m->merge());
+
+                        sleep(3);
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
+                    $response->message = "Tanggapan Aduan " . $oldData['kode_aduan'] . " berhasil disimpan.";
+                    return json_encode($response);
+                } else {
+                    $this->_db->transRollback();
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
+                    return json_encode($response);
+                }
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
                 return json_encode($response);
             }
         }
