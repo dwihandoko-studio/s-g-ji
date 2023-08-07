@@ -612,21 +612,19 @@ class Antrian extends BaseController
                         $riwayatLib->create($user->data->id, "Menanggapi pengaduan: " . $oldData['kode_aduan'] . ", dengan jawaban $jawaban, dan dengan saran tindaklanjut $saran_tindaklanjut", "submit", "bx bx-send", "riwayat/detailpengaduan?token=" . $oldData['id'], $oldData['id']);
                     } catch (\Throwable $th) {
                     }
-                    $this->_db->transCommit();
-                    try {
-                        $m = new Merger();
-                        $dataFileGambar = file_get_contents(FCPATH . './assets/favicon/android-icon-192x192.png');
-                        $base64 = "data:image/png;base64," . base64_encode($dataFileGambar);
+                    // $this->_db->transCommit();
+                    // try {
+                    $m = new Merger();
+                    $dataFileGambar = file_get_contents(FCPATH . './assets/favicon/android-icon-192x192.png');
+                    $base64 = "data:image/png;base64," . base64_encode($dataFileGambar);
 
-                        $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData->kode_aduan . '&choe=UTF-8'));
+                    $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData->kode_aduan . '&choe=UTF-8'));
 
-                        $jabatan_ks = $ks->jabatan_ks_plt ? ($ks->jabatan_ks_plt == 0 ? "Kepala Sekolah" : "Plt. Kepala Sekolah") : "Kepala Sekolah";
-
-                        $html   =  '<html>
+                    $html   =  '<html>
                         <head>
                             <link href="';
-                        $html   .=              base_url('uploads/bootstrap.css');
-                        $html   .=          '" rel="stylesheet">
+                    $html   .=              base_url('uploads/bootstrap.css');
+                    $html   .=          '" rel="stylesheet">
                         </head>
                         <body>
                             <div class="container">
@@ -636,8 +634,8 @@ class Antrian extends BaseController
                                             <tr>
                                                 <td>
                                                     <img class="image-responsive" width="110px" height="110px" src="';
-                        $html   .=                                      $base64;
-                        $html   .=                                  '"/>
+                    $html   .=                                      $base64;
+                    $html   .=                                  '"/>
                                                 </td>
                                                 <td>
                                                     &nbsp;&nbsp;&nbsp;
@@ -675,9 +673,9 @@ class Antrian extends BaseController
                                                         </td>
                                                         <td>&nbsp;: &nbsp;</td>
                                                         <td>&nbsp;';
-                        $html   .=                                          $user->data->fullname;
-                        // $html   .=                                          getNamaPengguna($user->data->id);
-                        $html   .=                                      '</td>
+                    $html   .=                                          $user->data->fullname;
+                    // $html   .=                                          getNamaPengguna($user->data->id);
+                    $html   .=                                      '</td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -685,8 +683,8 @@ class Antrian extends BaseController
                                                         </td>
                                                         <td>&nbsp;: &nbsp;</td>
                                                         <td>&nbsp;';
-                        $html   .=                                          $user->data->fullname;
-                        $html   .=                                      '</td>
+                    $html   .=                                          $user->data->fullname;
+                    $html   .=                                      '</td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -694,8 +692,8 @@ class Antrian extends BaseController
                                                         </td>
                                                         <td>&nbsp;: &nbsp;</td>
                                                         <td>&nbsp;';
-                        $html   .=                                          tgl_indo($oldData->created_at);
-                        $html   .=                                      '</td>
+                    $html   .=                                          tgl_indo($oldData->created_at);
+                    $html   .=                                      '</td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -703,51 +701,51 @@ class Antrian extends BaseController
                                                         </td>
                                                         <td>&nbsp;: &nbsp;</td>
                                                         <td>&nbsp;';
-                        $html   .=                                          '-';
-                        $html   .=                                      '</td>
+                    $html   .=                                          '-';
+                    $html   .=                                      '</td>
                                                     </tr>
                                                     <tr>
                                                         <td>
                                                             Tembusan
                                                         </td>
                                                         <td>&nbsp;: &nbsp;</td>';
-                        $html   .=                      '<td>&nbsp;';
-                        if ($dataTindakLanjut['tembusan_dinas'] !== NULL) {
-                            $html   .= '1. Kepala Dinas ' . getNamaDinas($dataTindakLanjut['tembusan_dinas']) . '<br/>';
-                            if ($dataTindakLanjut['tembusan_camat'] !== NULL) {
-                                $html   .= '&nbsp;2. Camat ' . getNamaKecamatan($dataTindakLanjut['tembusan_camat']) . '<br/>';
-                                if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
-                                    $html   .= '&nbsp;3. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
-                                    $html .= '&nbsp;4. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
-                                } else {
-                                    $html .= '&nbsp;3. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
-                                }
+                    $html   .=                      '<td>&nbsp;';
+                    if ($dataTindakLanjut['tembusan_dinas'] !== NULL) {
+                        $html   .= '1. Kepala Dinas ' . getNamaDinas($dataTindakLanjut['tembusan_dinas']) . '<br/>';
+                        if ($dataTindakLanjut['tembusan_camat'] !== NULL) {
+                            $html   .= '&nbsp;2. Camat ' . getNamaKecamatan($dataTindakLanjut['tembusan_camat']) . '<br/>';
+                            if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
+                                $html   .= '&nbsp;3. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
+                                $html .= '&nbsp;4. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
                             } else {
-                                if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
-                                    $html   .= '&nbsp;2. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
-                                } else {
-                                    $html .= '&nbsp;2. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
-                                }
+                                $html .= '&nbsp;3. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
                             }
                         } else {
-                            if ($dataTindakLanjut['tembusan_camat'] !== NULL) {
-                                $html   .= '&nbsp;2. Camat ' . getNamaKecamatan($dataTindakLanjut['tembusan_camat']) . '<br/>';
-                                if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
-                                    $html   .= '&nbsp;3. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
-                                    $html .= '&nbsp;4. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
-                                } else {
-                                    $html .= '&nbsp;3. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
-                                }
+                            if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
+                                $html   .= '&nbsp;2. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
                             } else {
-                                if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
-                                    $html   .= '&nbsp;2. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
-                                } else {
-                                    $html .= '&nbsp;2. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
-                                }
+                                $html .= '&nbsp;2. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
                             }
                         }
-                        $html   .=                                          '-';
-                        $html   .=                                      '</td>
+                    } else {
+                        if ($dataTindakLanjut['tembusan_camat'] !== NULL) {
+                            $html   .= '&nbsp;2. Camat ' . getNamaKecamatan($dataTindakLanjut['tembusan_camat']) . '<br/>';
+                            if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
+                                $html   .= '&nbsp;3. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
+                                $html .= '&nbsp;4. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                            } else {
+                                $html .= '&nbsp;3. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                            }
+                        } else {
+                            if ($dataTindakLanjut['tembusan_kampung'] !== NULL) {
+                                $html   .= '&nbsp;2. Kepala Kampung/Lulrah ' . getNamaKelurahan($dataTindakLanjut['tembusan_kampung']) . '<br/>';
+                            } else {
+                                $html .= '&nbsp;2. Kepada Yang Bersangkutan <i>(Pelapor)</i>';
+                            }
+                        }
+                    }
+                    $html   .=                                          '-';
+                    $html   .=                                      '</td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -755,8 +753,8 @@ class Antrian extends BaseController
                                                         </td>
                                                         <td>&nbsp;: &nbsp;</td>
                                                         <td>&nbsp;';
-                        $html   .=                                          'Laporan Tindak Lanjut Penanganan Aduan';
-                        $html   .=                                      '</td>
+                    $html   .=                                          'Laporan Tindak Lanjut Penanganan Aduan';
+                    $html   .=                                      '</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -912,11 +910,11 @@ class Antrian extends BaseController
                                                                         2. PKH (' . $dataTindakLanjut['pkh'] . ')<br/>
                                                                         3. BPNT (' . $dataTindakLanjut['bpnt'] . ')<br/>
                                                                         4. Rumah Sederhana Terpadu - RST (' . $dataTindakLanjut['rst'] . ')<br/>';
-                        if ($dataTindakLanjut['bansos_lain'] == NULL || $dataTindakLanjut['bansos_lain'] == "") {
-                        } else {
-                            $html .= '5. ' . $dataTindakLanjut['bansos_lain'] . ' (' . $dataTindakLanjut['bansos_lain_pilihan'] . ')';
-                        }
-                        $html   .=                                  '</td>
+                    if ($dataTindakLanjut['bansos_lain'] == NULL || $dataTindakLanjut['bansos_lain'] == "") {
+                    } else {
+                        $html .= '5. ' . $dataTindakLanjut['bansos_lain'] . ' (' . $dataTindakLanjut['bansos_lain_pilihan'] . ')';
+                    }
+                    $html   .=                                  '</td>
                                                                 </tr>
                                                             </table>
                                                         </li>
@@ -926,11 +924,11 @@ class Antrian extends BaseController
                                                                     <td>Kepersertaan Jaminan Kesehatan Nasional (JKN)</td>
                                                                     <td>&nbsp;:</td>
                                                                     <td>';
-                        if ($dataTindakLanjut['kepersertaan_jkn'] == NULL || $dataTindakLanjut['kepersertaan_jkn'] == "") {
-                        } else {
-                            $html .= '' . $dataTindakLanjut['kepersertaan_jkn'] . ' Dengan Status (' . $dataTindakLanjut['kepersertaan_jkn_pilihan'] . ')';
-                        }
-                        $html   .=                                  '</td>
+                    if ($dataTindakLanjut['kepersertaan_jkn'] == NULL || $dataTindakLanjut['kepersertaan_jkn'] == "") {
+                    } else {
+                        $html .= '' . $dataTindakLanjut['kepersertaan_jkn'] . ' Dengan Status (' . $dataTindakLanjut['kepersertaan_jkn_pilihan'] . ')';
+                    }
+                    $html   .=                                  '</td>
                                                                 </tr>
                                                             </table>
                                                         </li>
@@ -968,12 +966,12 @@ class Antrian extends BaseController
                                                         <br>
                                                         <br>
                                                         <span style="font-size: 12px;">Gunung Sugih, ';
-                        $html   .=                                          tgl_indo(date('Y-m-d'));
-                        $html   .=                                      '</span><br>
+                    $html   .=                                          tgl_indo(date('Y-m-d'));
+                    $html   .=                                      '</span><br>
                                                         <span style="font-size: 12px;">PETUGAS</span><br><br><br><span style="font-size: 10px; color: #1c1c1cb8;">Materai 10.000</span><br><br>
                                                         <span style="font-size: 12px;"><b><u>';
-                        $html   .=                                          $user->data->fullname;
-                        $html   .=                                      '</u></b></span>
+                    $html   .=                                          $user->data->fullname;
+                    $html   .=                                      '</u></b></span>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -985,29 +983,30 @@ class Antrian extends BaseController
                         </body>
                     </html>';
 
-                        $dompdf = new DOMPDF();
-                        $dompdf->setPaper('F4', 'potrait');
-                        $dompdf->loadHtml($html);
-                        $dompdf->render();
-                        $m->addRaw($dompdf->output());
-                        // unset($dompdf);
+                    $dompdf = new DOMPDF();
+                    $dompdf->setPaper('F4', 'potrait');
+                    $dompdf->loadHtml($html);
+                    $dompdf->render();
+                    $m->addRaw($dompdf->output());
+                    // unset($dompdf);
 
-                        // $dompdf1 = new DOMPDF();
-                        // // $dompdf = new Dompdf();
-                        // $dompdf1->set_paper('F4', 'landscape');
-                        // $dompdf1->load_html($lHtml);
-                        // $dompdf1->render();
-                        // $m->addRaw($dompdf1->output());
+                    // $dompdf1 = new DOMPDF();
+                    // // $dompdf = new Dompdf();
+                    // $dompdf1->set_paper('F4', 'landscape');
+                    // $dompdf1->load_html($lHtml);
+                    // $dompdf1->render();
+                    // $m->addRaw($dompdf1->output());
 
-                        $dir = FCPATH . "upload/pengaduan/pdf";
-                        $fileNya = $dir . '/' . $oldData->kode_aduan . '.pdf';
+                    $dir = FCPATH . "upload/pengaduan/pdf";
+                    $fileNya = $dir . '/' . $oldData->kode_aduan . '.pdf';
 
-                        file_put_contents($fileNya, $m->merge());
+                    file_put_contents($fileNya, $m->merge());
 
-                        sleep(3);
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                    }
+                    sleep(3);
+                    // } catch (\Throwable $th) {
+                    //     //throw $th;
+                    // }
+                    $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
