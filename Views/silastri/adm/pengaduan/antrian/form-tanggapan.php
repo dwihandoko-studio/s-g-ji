@@ -239,7 +239,7 @@
                                     <?php if (isset($dinass)) { ?>
                                         <?php if (count($dinass) > 0) { ?>
                                             <?php foreach ($dinass as $key => $value) { ?>
-                                                <option value="<?= $value->id ?>"><?= $value->dinas ?></option>
+                                                <option value="<?= $value->id ?>"><?= $value->instansi ?></option>
                                             <?php } ?>
                                         <?php } ?>
                                     <?php } ?>

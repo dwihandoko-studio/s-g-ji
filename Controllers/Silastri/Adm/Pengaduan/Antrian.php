@@ -234,7 +234,7 @@ class Antrian extends BaseController
             $data['id'] = $id;
             $data['nama'] = $nama;
             $data['data'] = $oldData;
-            $data['dinass'] = [];
+            $data['dinass'] = $this->_db->table('ref_instansi')->orderBy('id', 'ASC')->get()->getResult();
             $data['kecamatans'] = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'ASC')->get()->getResult();
             $data['kelurahans'] = $this->_db->table('ref_kelurahan')->orderBy('kelurahan', 'ASC')->get()->getResult();
             $response = new \stdClass;
