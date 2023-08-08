@@ -275,11 +275,11 @@ class Pengaduan extends BaseController
             ],
         ];
 
-        $filenamelampiran = dot_array_search('_file.name', $_FILES);
-        if ($filenamelampiran != '') {
-            $lampiranVal = [
-                '_file' => [
-                    'rules' => 'uploaded[_file]|max_size[_file,2048]|mime_in[_file,image/jpeg,image/jpg,image/png,application/pdf]',
+        $filenamelampiran1 = dot_array_search('_file_1.name', $_FILES);
+        if ($filenamelampiran1 != '') {
+            $lampiranVal1 = [
+                '_file_1' => [
+                    'rules' => 'uploaded[_file_1]|max_size[_file_1,2048]|mime_in[_file_1,image/jpeg,image/jpg,image/png,application/pdf]',
                     'errors' => [
                         'uploaded' => 'Pilih lampiran dokumen pengaduan terlebih dahulu. ',
                         'max_size' => 'Ukuran lampiran dokumen pengaduan terlalu besar. ',
@@ -287,7 +287,67 @@ class Pengaduan extends BaseController
                     ]
                 ],
             ];
-            $rules = array_merge($rules, $lampiranVal);
+            $rules = array_merge($rules, $lampiranVal1);
+        }
+
+        $filenamelampiran2 = dot_array_search('_file_2.name', $_FILES);
+        if ($filenamelampiran2 != '') {
+            $lampiranVal2 = [
+                '_file_2' => [
+                    'rules' => 'uploaded[_file_2]|max_size[_file_2,2048]|mime_in[_file_2,image/jpeg,image/jpg,image/png,application/pdf]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen pengaduan terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen pengaduan terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar atau pdf. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranVal2);
+        }
+
+        $filenamelampiran3 = dot_array_search('_file_3.name', $_FILES);
+        if ($filenamelampiran3 != '') {
+            $lampiranVal3 = [
+                '_file_3' => [
+                    'rules' => 'uploaded[_file_3]|max_size[_file_3,2048]|mime_in[_file_3,image/jpeg,image/jpg,image/png,application/pdf]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen pengaduan terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen pengaduan terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar atau pdf. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranVal3);
+        }
+
+        $filenamelampiran4 = dot_array_search('_file_4.name', $_FILES);
+        if ($filenamelampiran4 != '') {
+            $lampiranVal4 = [
+                '_file_4' => [
+                    'rules' => 'uploaded[_file_4]|max_size[_file_4,2048]|mime_in[_file_4,image/jpeg,image/jpg,image/png,application/pdf]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen pengaduan terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen pengaduan terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar atau pdf. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranVal4);
+        }
+
+        $filenamelampiran5 = dot_array_search('_file_5.name', $_FILES);
+        if ($filenamelampiran5 != '') {
+            $lampiranVal5 = [
+                '_file_5' => [
+                    'rules' => 'uploaded[_file_5]|max_size[_file_5,2048]|mime_in[_file_5,image/jpeg,image/jpg,image/png,application/pdf]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen pengaduan terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen pengaduan terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar atau pdf. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranVal5);
         }
 
         if (!$this->validate($rules)) {
@@ -308,7 +368,11 @@ class Pengaduan extends BaseController
                 . $this->validator->getError('kategori')
                 . $this->validator->getError('identitas_aduan')
                 . $this->validator->getError('uraian_aduan')
-                . $this->validator->getError('_file');
+                . $this->validator->getError('_file_1')
+                . $this->validator->getError('_file_2')
+                . $this->validator->getError('_file_3')
+                . $this->validator->getError('_file_4')
+                . $this->validator->getError('_file_5');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -374,14 +438,78 @@ class Pengaduan extends BaseController
 
             $dir = FCPATH . "uploads/aduan";
 
-            if ($filenamelampiran != '') {
-                $lampiran = $this->request->getFile('_file');
-                $filesNamelampiran = $lampiran->getName();
-                $newNamelampiran = _create_name_foto($filesNamelampiran);
+            if ($filenamelampiran1 != '') {
+                $lampiran1 = $this->request->getFile('_file_1');
+                $filesNamelampiran1 = $lampiran1->getName();
+                $newNamelampiran1 = _create_name_foto($filesNamelampiran1);
 
-                if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                    $lampiran->move($dir, $newNamelampiran);
-                    $data['lampiran_aduan'] = $newNamelampiran;
+                if ($lampiran1->isValid() && !$lampiran1->hasMoved()) {
+                    $lampiran1->move($dir, $newNamelampiran1);
+                    $data['lampiran_aduan_1'] = $newNamelampiran1;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran pengaduan.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampiran2 != '') {
+                $lampiran2 = $this->request->getFile('_file_2');
+                $filesNamelampiran2 = $lampiran2->getName();
+                $newNamelampiran2 = _create_name_foto($filesNamelampiran2);
+
+                if ($lampiran2->isValid() && !$lampiran2->hasMoved()) {
+                    $lampiran2->move($dir, $newNamelampiran2);
+                    $data['lampiran_aduan_2'] = $newNamelampiran2;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran pengaduan.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampiran3 != '') {
+                $lampiran3 = $this->request->getFile('_file_3');
+                $filesNamelampiran3 = $lampiran3->getName();
+                $newNamelampiran3 = _create_name_foto($filesNamelampiran3);
+
+                if ($lampiran3->isValid() && !$lampiran3->hasMoved()) {
+                    $lampiran3->move($dir, $newNamelampiran3);
+                    $data['lampiran_aduan_3'] = $newNamelampiran3;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran pengaduan.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampiran4 != '') {
+                $lampiran4 = $this->request->getFile('_file_4');
+                $filesNamelampiran4 = $lampiran4->getName();
+                $newNamelampiran4 = _create_name_foto($filesNamelampiran4);
+
+                if ($lampiran4->isValid() && !$lampiran4->hasMoved()) {
+                    $lampiran4->move($dir, $newNamelampiran4);
+                    $data['lampiran_aduan_4'] = $newNamelampiran4;
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran pengaduan.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampiran5 != '') {
+                $lampiran5 = $this->request->getFile('_file_5');
+                $filesNamelampiran5 = $lampiran5->getName();
+                $newNamelampiran5 = _create_name_foto($filesNamelampiran5);
+
+                if ($lampiran5->isValid() && !$lampiran5->hasMoved()) {
+                    $lampiran5->move($dir, $newNamelampiran5);
+                    $data['lampiran_aduan_5'] = $newNamelampiran5;
                 } else {
                     $response = new \stdClass;
                     $response->status = 400;
@@ -394,8 +522,20 @@ class Pengaduan extends BaseController
             try {
                 $this->_db->table('_pengaduan')->insert($data);
             } catch (\Exception $e) {
-                if ($filenamelampiran != '') {
-                    unlink($dir . '/' . $newNamelampiran);
+                if ($filenamelampiran1 != '') {
+                    unlink($dir . '/' . $newNamelampiran1);
+                }
+                if ($filenamelampiran2 != '') {
+                    unlink($dir . '/' . $newNamelampiran2);
+                }
+                if ($filenamelampiran3 != '') {
+                    unlink($dir . '/' . $newNamelampiran3);
+                }
+                if ($filenamelampiran4 != '') {
+                    unlink($dir . '/' . $newNamelampiran4);
+                }
+                if ($filenamelampiran5 != '') {
+                    unlink($dir . '/' . $newNamelampiran5);
                 }
                 $this->_db->transRollback();
                 $response = new \stdClass;
@@ -419,8 +559,20 @@ class Pengaduan extends BaseController
                 $response->redirect = base_url('silastri/peng/riwayat');
                 return json_encode($response);
             } else {
-                if ($filenamelampiran != '') {
-                    unlink($dir . '/' . $newNamelampiran);
+                if ($filenamelampiran1 != '') {
+                    unlink($dir . '/' . $newNamelampiran1);
+                }
+                if ($filenamelampiran2 != '') {
+                    unlink($dir . '/' . $newNamelampiran2);
+                }
+                if ($filenamelampiran3 != '') {
+                    unlink($dir . '/' . $newNamelampiran3);
+                }
+                if ($filenamelampiran4 != '') {
+                    unlink($dir . '/' . $newNamelampiran4);
+                }
+                if ($filenamelampiran5 != '') {
+                    unlink($dir . '/' . $newNamelampiran5);
                 }
                 $this->_db->transRollback();
                 $response = new \stdClass;

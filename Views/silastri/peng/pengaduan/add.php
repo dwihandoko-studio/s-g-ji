@@ -202,15 +202,71 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h4>Lampiran Pengaduan</h4>
+                                <h4>Lampiran Pengaduan 1</h4>
                                 <p style="margin-bottom: 30px;">Silahkan lampirkan dokumen pengaduan jika ada.</p>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mt-3">
-                                            <label for="_file_lampiran" class="form-label">Lampiran dokumen pengaduan: </label>
-                                            <input class="form-control" type="file" id="_file_lampiran" name="_file_lampiran" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_lampiran', 'Lampiran Dokumen Pengaduan')">
+                                            <label for="_file_lampiran_1" class="form-label">Lampiran dokumen pengaduan 1: </label>
+                                            <input class="form-control" type="file" id="_file_lampiran_1" name="_file_lampiran_1" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_lampiran_1', 'Lampiran Dokumen Pengaduan 1')">
                                             <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
-                                            <div class="help-block _file_lampiran" for="_file_lampiran"></div>
+                                            <div class="help-block _file_lampiran_1" for="_file_lampiran_1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4>Lampiran Pengaduan 2</h4>
+                                <p style="margin-bottom: 30px;">Silahkan lampirkan dokumen pengaduan jika ada.</p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mt-3">
+                                            <label for="_file_lampiran_2" class="form-label">Lampiran dokumen pengaduan 2: </label>
+                                            <input class="form-control" type="file" id="_file_lampiran_2" name="_file_lampiran_2" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_lampiran_2', 'Lampiran Dokumen Pengaduan 2')">
+                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                            <div class="help-block _file_lampiran_2" for="_file_lampiran_2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4>Lampiran Pengaduan 3</h4>
+                                <p style="margin-bottom: 30px;">Silahkan lampirkan dokumen pengaduan jika ada.</p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mt-3">
+                                            <label for="_file_lampiran_3" class="form-label">Lampiran dokumen pengaduan 3: </label>
+                                            <input class="form-control" type="file" id="_file_lampiran_3" name="_file_lampiran_3" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_lampiran_3', 'Lampiran Dokumen Pengaduan 3')">
+                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                            <div class="help-block _file_lampiran_3" for="_file_lampiran_3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4>Lampiran Pengaduan 4</h4>
+                                <p style="margin-bottom: 30px;">Silahkan lampirkan dokumen pengaduan jika ada.</p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mt-3">
+                                            <label for="_file_lampiran_4" class="form-label">Lampiran dokumen pengaduan 4: </label>
+                                            <input class="form-control" type="file" id="_file_lampiran_4" name="_file_lampiran_4" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_lampiran_4', 'Lampiran Dokumen Pengaduan 4')">
+                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                            <div class="help-block _file_lampiran_4" for="_file_lampiran_4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <h4>Lampiran Pengaduan 5</h4>
+                                <p style="margin-bottom: 30px;">Silahkan lampirkan dokumen pengaduan jika ada.</p>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="mt-3">
+                                            <label for="_file_lampiran_5" class="form-label">Lampiran dokumen pengaduan 5: </label>
+                                            <input class="form-control" type="file" id="_file_lampiran_5" name="_file_lampiran_5" onFocus="inputFocus(this);" accept="image/*,application/pdf" onchange="loadFile('_file_lampiran_5', 'Lampiran Dokumen Pengaduan 5')">
+                                            <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg, pdf">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                            <div class="help-block _file_lampiran_5" for="_file_lampiran_5"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -297,7 +353,11 @@
         const kategori = document.getElementsByName('_kategori')[0].value;
         const keterangan = document.getElementsByName('_kategori_detail')[0].value;
 
-        const fileLampiran = document.getElementsByName('_file_lampiran')[0].value;
+        const fileLampiran1 = document.getElementsByName('_file_lampiran_1')[0].value;
+        const fileLampiran2 = document.getElementsByName('_file_lampiran_2')[0].value;
+        const fileLampiran3 = document.getElementsByName('_file_lampiran_3')[0].value;
+        const fileLampiran4 = document.getElementsByName('_file_lampiran_4')[0].value;
+        const fileLampiran5 = document.getElementsByName('_file_lampiran_5')[0].value;
 
         const uraian_aduan = document.getElementsByName('_uraian_aduan')[0].value;
 
@@ -369,9 +429,29 @@
 
         const formUpload = new FormData();
 
-        if (fileLampiran !== "") {
-            const file_lampiran = document.getElementsByName('_file_lampiran')[0].files[0];
-            formUpload.append('_file', file_lampiran);
+        if (fileLampiran1 !== "") {
+            const file_lampiran1 = document.getElementsByName('_file_lampiran_1')[0].files[0];
+            formUpload.append('_file_1', file_lampiran1);
+        }
+
+        if (fileLampiran2 !== "") {
+            const file_lampiran2 = document.getElementsByName('_file_lampiran_2')[0].files[0];
+            formUpload.append('_file_2', file_lampiran2);
+        }
+
+        if (fileLampiran3 !== "") {
+            const file_lampiran3 = document.getElementsByName('_file_lampiran_3')[0].files[0];
+            formUpload.append('_file_3', file_lampiran3);
+        }
+
+        if (fileLampiran4 !== "") {
+            const file_lampiran4 = document.getElementsByName('_file_lampiran_4')[0].files[0];
+            formUpload.append('_file_4', file_lampiran4);
+        }
+
+        if (fileLampiran5 !== "") {
+            const file_lampiran5 = document.getElementsByName('_file_lampiran_5')[0].files[0];
+            formUpload.append('_file_5', file_lampiran5);
         }
 
         formUpload.append('nama', nama);
