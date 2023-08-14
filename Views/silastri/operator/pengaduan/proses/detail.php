@@ -82,18 +82,49 @@
                 <label class="col-form-label">Diteruskan Ke (FrontOffice):</label>
                 <input type="text" class="form-control" value="<?= getNamaBidang($data->diteruskan_ke) ?>" readonly />
             </div>
-            <?php if (isset($data->lampiran_aduan)) { ?>
+            <?php if (isset($data->lampiran_aduan_1)) { ?>
                 <div class="col-lg-12 mt-2">
                     <label class="col-form-label">Lampiran Aduan:</label>
                     <br />
-                    <?php if (isset($data->lampiran_aduan)) { ?>
-                        <?php if ($data->lampiran_aduan === null || $data->lampiran_aduan === "") { ?>
+                    <?php if (isset($data->lampiran_aduan_1)) { ?>
+                        <?php if ($data->lampiran_aduan_1 === null || $data->lampiran_aduan_1 === "") { ?>
                         <?php } else { ?>
-                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan ?>" id="nik">
-                                Dokumen Pengaduan
-                            </a>
+                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_1 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_1 ?>" id="nik">
+                                Dokumen Pengaduan 1
+                            </a> &nbsp;&nbsp;
                         <?php } ?>
                     <?php } ?>
+                    <?php if (isset($data->lampiran_aduan_2)) { ?>
+                        <?php if ($data->lampiran_aduan_2 === null || $data->lampiran_aduan_2 === "") { ?>
+                        <?php } else { ?>
+                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_2 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_2 ?>" id="nik">
+                                Dokumen Pengaduan 2
+                            </a>&nbsp;&nbsp;
+                        <?php } ?>
+                    <?php } ?>
+                    <?php if (isset($data->lampiran_aduan_3)) { ?>
+                        <?php if ($data->lampiran_aduan_3 === null || $data->lampiran_aduan_3 === "") { ?>
+                        <?php } else { ?>
+                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_3 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_3 ?>" id="nik">
+                                Dokumen Pengaduan 3
+                            </a>&nbsp;&nbsp;
+                        <?php } ?>
+                    <?php } ?>
+                    <?php if (isset($data->lampiran_aduan_4)) { ?>
+                        <?php if ($data->lampiran_aduan_4 === null || $data->lampiran_aduan_4 === "") { ?>
+                        <?php } else { ?>
+                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_4 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_4 ?>" id="nik">
+                                Dokumen Pengaduan 4
+                            </a>&nbsp;&nbsp;
+                        <?php } ?>
+                    <?php } ?>
+                    <?php if (isset($data->lampiran_aduan_5)) { ?>
+                        <?php if ($data->lampiran_aduan_5 === null || $data->lampiran_aduan_5 === "") { ?>
+                        <?php } else { ?>
+                            <a class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1" target="popup" onclick="window.open('<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_5 ?>','popup','width=600,height=600'); return false;" href="<?= base_url('uploads/aduan') . '/' . $data->lampiran_aduan_5 ?>" id="nik">
+                                Dokumen Pengaduan 5
+                            </a>&nbsp;&nbsp;
+                        <?php } ?>
                 </div>
             <?php } ?>
         </div>

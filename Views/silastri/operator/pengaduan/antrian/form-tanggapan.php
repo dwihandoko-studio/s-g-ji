@@ -4,6 +4,26 @@
             <label class="col-form-label">Uraian Pengaduan:</label>
             <textarea rows="5" class="form-control" id="_uraian_pengaduan" name="_uraian_pengaduan" readonly><?= $data->uraian_aduan ?></textarea>
         </div>
+        <div class="col-lg-12 mt-2">
+            <div class="row mb-2">
+                <label for="_media_pengaduan" class="col-sm-3 col-form-label">Media Pengaduan :</label>
+                <div class="col-sm-8">
+                    <select class="form-control select2 media_pengaduan" id="_media_pengaduan" name="_media_pengaduan" style="width: 100%" onchange="changeMediaPengaduan(this)">
+                        <option value=""> --- Pilih Media Pengaduan ---</option>
+                        <option value="Loket Pengaduan">Loket Pengaduan</option>
+                        <option value="Website">Website</option>
+                        <option value="Email">Email</option>
+                        <option value="Aplikasi Layanan">Aplikasi Layanan</option>
+                        <option value="E-lapor">E-lapor</option>
+                        <option value="Call Center">Call Center</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                    <textarea rows="3" style="display: none; margin-top: 10px;" id="_media_pengaduan_detail" name="_media_pengaduan_detail" class="form-control" placeholder="Masukan keterangan peruntukan SKTM.."></textarea>
+                    <div class="help-block _media_pengaduan"></div>
+                    <div class="help-block _media_pengaduan_detail"></div>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-12">
             <label class="col-form-label">Permasalahan:</label>
             <textarea rows="5" class="form-control" id="_permasalahan" name="_permasalahan" required></textarea>
@@ -38,6 +58,16 @@
             const uraian = document.getElementsByName('_uraian_pengaduan')[0].value;
             const permasalahan = document.getElementsByName('_permasalahan')[0].value;
             const teruskan_ke = document.getElementsByName('_teruskan_ke')[0].value;
+            const media_pengaduan = document.getElementsByName('_media_pengaduan')[0].value;
+            if (media_pengaduan === "") {
+                Swal.fire(
+                    'PERINGATAN!!!',
+                    "Silahkan pilih media pengaduan.",
+                    'warning'
+                );
+                return;
+            }
+
             if (uraian === "" || uraian === undefined) {
                 Swal.fire(
                     'PERINGATAN!!!',
@@ -70,6 +100,7 @@
                     nama: '<?= str_replace('&#039;', "`", str_replace("'", "`", $nama)) ?>',
                     permasalahan: permasalahan,
                     teruskan_ke: teruskan_ke,
+                    media_pengaduan: media_pengaduan,
                 },
                 dataType: 'JSON',
                 beforeSend: function() {

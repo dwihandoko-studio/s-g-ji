@@ -463,6 +463,12 @@ class Antrian extends BaseController
                     'required' => 'Teruskan ke tidak boleh kosong. ',
                 ]
             ],
+            'media_pengaduan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Media pengaduan ke tidak boleh kosong. ',
+                ]
+            ],
         ];
 
         if (!$this->validate($rules)) {
@@ -471,7 +477,8 @@ class Antrian extends BaseController
             $response->message = $this->validator->getError('id')
                 . $this->validator->getError('nama')
                 . $this->validator->getError('permasalahan')
-                . $this->validator->getError('teruskan_ke');
+                . $this->validator->getError('teruskan_ke')
+                . $this->validator->getError('media_pengaduan');
             return json_encode($response);
         } else {
             $Profilelib = new Profilelib();
@@ -495,6 +502,7 @@ class Antrian extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $permasalahan = htmlspecialchars($this->request->getVar('permasalahan'), true);
             $teruskan_ke = htmlspecialchars($this->request->getVar('teruskan_ke'), true);
+            $media_pengaduan = htmlspecialchars($this->request->getVar('media_pengaduan'), true);
 
             $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowArray();
             if (!$oldData) {
@@ -511,6 +519,7 @@ class Antrian extends BaseController
             $upData['admin_proses'] = $user->data->id;
             $upData['permasalahan'] = $permasalahan;
             $upData['diteruskan_ke'] = $teruskan_ke;
+            $upData['media_pengaduan'] = $media_pengaduan;
             $upData['status_aduan'] = 1;
 
             $this->_db->transBegin();

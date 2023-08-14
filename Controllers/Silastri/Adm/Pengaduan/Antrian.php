@@ -443,67 +443,62 @@ class Antrian extends BaseController
         }
 
         $rules = [
-            'id' => [
+            '_id' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Id tidak boleh kosong. ',
                 ]
             ],
-            'nama' => [
+            '_nama' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Nama tidak boleh kosong. ',
                 ]
             ],
-            'media_pengaduan' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Media pengaduan tidak boleh kosong. ',
-                ]
-            ],
-            'uraian_permasalahan' => [
+            // 'media_pengaduan' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Media pengaduan tidak boleh kosong. ',
+            //     ]
+            // ],
+            '_uraian_permasalahan' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Uraian Permasalahan tidak boleh kosong. ',
                 ]
             ],
-            'pokok_permasalahan' => [
+            '_pokok_permasalahan' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Pokok permasalahan ke tidak boleh kosong. ',
                 ]
             ],
-            'dtks' => [
+            'nik_pemilik_bansos.*' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'DTKS ke tidak boleh kosong. ',
+                    'required' => 'NIK pemilik bansos tidak boleh kosong. ',
                 ]
             ],
-            'pkh' => [
+            'nama_pemilik_bansos.*' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'PKH ke tidak boleh kosong. ',
+                    'required' => 'Nama pemilik bansos tidak boleh kosong. ',
                 ]
             ],
-            'bpnt' => [
+            'keterangan_pemilik_bansos.*' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'BPNT ke tidak boleh kosong. ',
+                    'required' => 'Keterangan pemilik bansos tidak boleh kosong. ',
                 ]
             ],
-            'rst' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Rumah sederhana terpadu ke tidak boleh kosong. ',
-                ]
-            ],
-            'jawaban' => [
+
+            '_jawaban' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Jawaban ke tidak boleh kosong. ',
                 ]
             ],
-            'saran_tindaklanjut' => [
+            '_saran_tindaklanjut' => [
                 'rules' => 'required|trim',
                 'errors' => [
                     'required' => 'Saran tindaklanjut ke tidak boleh kosong. ',
@@ -514,19 +509,70 @@ class Antrian extends BaseController
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
-            $response->message = $this->validator->getError('id')
-                . $this->validator->getError('nama')
-                . $this->validator->getError('media_pengaduan')
-                . $this->validator->getError('uraian_permasalahan')
-                . $this->validator->getError('pokok_permasalahan')
-                . $this->validator->getError('dtks')
-                . $this->validator->getError('pkh')
-                . $this->validator->getError('bpnt')
-                . $this->validator->getError('rst')
-                . $this->validator->getError('jawaban')
-                . $this->validator->getError('saran_tindaklanjut');
+            $response->message = "Silahkan lengkapi isian wajib.";
+            // $this->validator->getError('_id')
+            //     . $this->validator->getError('_nama')
+            //     // . $this->validator->getError('media_pengaduan')
+            //     . $this->validator->getError('_uraian_permasalahan')
+            //     . $this->validator->getError('_pokok_permasalahan')
+            //     // . $this->validator->getError('_nama_pemilik_bansos.*')
+            //     // . $this->validator->getError('_nik_pemilik_bansos.*')
+            //     // . $this->validator->getError('keterangan_pemilik_bansos.*')
+            //     . $this->validator->getError('_jawaban')
+            //     . $this->validator->getError('_saran_tindaklanjut');
             return json_encode($response);
         } else {
+            $namesPemilikBansos = $this->request->getVar('nama_pemilik_bansos');
+
+            foreach ($namesPemilikBansos as $i => $idN) {
+                $name = $namesPemilikBansos[$i];
+                $rulesBansos = [
+                    '_dtks_bansos_' . $i => [
+                        'rules' => 'required|trim',
+                        'errors' => [
+                            'required' => 'Pilihan DTKS untuk penerima bansos tidak boleh kosong. ',
+                        ]
+                    ],
+                    '_pkh_bansos_' . $i => [
+                        'rules' => 'required|trim',
+                        'errors' => [
+                            'required' => 'Pilihan PKH untuk penerima bansos tidak boleh kosong. ',
+                        ]
+                    ],
+                    '_bpnt_bansos_' . $i => [
+                        'rules' => 'required|trim',
+                        'errors' => [
+                            'required' => 'Pilihan BPNT untuk penerima bansos tidak boleh kosong. ',
+                        ]
+                    ],
+                    '_pbi_jk_bansos_' . $i => [
+                        'rules' => 'required|trim',
+                        'errors' => [
+                            'required' => 'Pilihan PBI JK untuk penerima bansos tidak boleh kosong. ',
+                        ]
+                    ],
+                    '_rst_' . $i => [
+                        'rules' => 'required|trim',
+                        'errors' => [
+                            'required' => 'Pilihan RST untuk penerima bansos tidak boleh kosong. ',
+                        ]
+                    ],
+                    '_bansos_lain_bansos_' . $i => [
+                        'rules' => 'required|trim',
+                        'errors' => [
+                            'required' => 'Pilihan Bansos Lain untuk penerima bansos tidak boleh kosong. ',
+                        ]
+                    ],
+                ];
+
+                if (!$this->validate($rulesBansos)) {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Siilahkan pilih pilihan penerima bantuan.";
+                    return json_encode($response);
+                }
+            }
+
             $Profilelib = new Profilelib();
             $user = $Profilelib->user();
             if ($user->status != 200) {
@@ -538,15 +584,13 @@ class Antrian extends BaseController
                 $response->redirrect = base_url('auth');
                 return json_encode($response);
             }
-            // $canUsulTamsil = canUsulTamsil();
 
-            // if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
-            //     return json_encode($canUsulTamsil);
-            // }
+            var_dump("Eksekusi kedatabase");
+            die;
 
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
-            $media_pengaduan = htmlspecialchars($this->request->getVar('media_pengaduan'), true);
+            // $media_pengaduan = htmlspecialchars($this->request->getVar('media_pengaduan'), true);
             $uraian_permasalahan = htmlspecialchars($this->request->getVar('uraian_permasalahan'), true);
             $pokok_permasalahan = htmlspecialchars($this->request->getVar('pokok_permasalahan'), true);
             $dtks = htmlspecialchars($this->request->getVar('dtks'), true);
@@ -588,7 +632,7 @@ class Antrian extends BaseController
                     'id' => $oldData['id'],
                     'id' => $user->data->id,
                     'kode_aduan' => $oldData['kode_aduan'],
-                    'media_pengaduan' => $media_pengaduan,
+                    'media_pengaduan' => $oldData['media_pengaduan'],
                     'uraian_permasalahan' => $uraian_permasalahan,
                     'pokok_permasalahan' => $pokok_permasalahan,
                     'bansos_dtks' => $dtks,
@@ -1033,6 +1077,50 @@ class Antrian extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function getKelurahan()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $kels = $this->_db->table('ref_kelurahan')->where('id_kecamatan', $id)->orderBy('kelurahan', 'ASC')->get()->getResult();
+
+            if (count($kels) > 0) {
+                $x['kels'] = $kels;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('portal/ref_kelurahan', $x);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
                 return json_encode($response);
             }
         }
