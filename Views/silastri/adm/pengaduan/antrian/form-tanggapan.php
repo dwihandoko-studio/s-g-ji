@@ -642,12 +642,23 @@
         }
 
 
-        function downloadPDF(pdf, fileName) {
+        function downloadPDF(pdf, fileName, redirrect) {
             const linkSource = `data:application/octet-stream;base64,${pdf}`;
-            const downloadLink = document.createElement("a");
-            downloadLink.href = linkSource;
-            downloadLink.download = fileName + ".pdf";
-            downloadLink.click();
+            const newTab = window.open(linkSource, '_blank');
+            if (!newTab) {
+                Swal.fire(
+                    'WARNING!',
+                    "Popup blocked. Please allow popups for this website and try again.",
+                    'warning'
+                );
+            } else {
+                reloadPage(redirrect);
+            }
+            // const linkSource = `data:application/octet-stream;base64,${pdf}`;
+            // const downloadLink = document.createElement("a");
+            // downloadLink.href = linkSource;
+            // downloadLink.download = fileName + ".pdf";
+            // downloadLink.click();
         }
 
 
@@ -696,10 +707,10 @@
                                 confirmButtonText: 'Download'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    downloadPDF(resul.filenya, resul.filename);
-                                    setTimeout(function() {
-                                        reloadPage(resul.redirrect);
-                                    }, 3000);
+                                    downloadPDF(resul.filenya, resul.filename, resul.redirrect);
+                                    // setTimeout(function() {
+                                    //     reloadPage(resul.redirrect);
+                                    // }, 3000);
                                 } else {
                                     reloadPage(resul.redirrect);
                                 }
