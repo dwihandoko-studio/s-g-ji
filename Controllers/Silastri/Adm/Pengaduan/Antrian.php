@@ -1011,10 +1011,10 @@ class Antrian extends BaseController
                         // } catch (\Throwable $th) {
                         //     //throw $th;
                         // }
-                        header('Content-Type: application/pdf');
-                        header('Content-Disposition: attachment; filename="' . basename($fileNya) . '"');
-                        header('Content-Length: ' . filesize($fileNya));
-                        readfile($fileNya);
+                        // header('Content-Type: application/pdf');
+                        // header('Content-Disposition: attachment; filename="' . basename($fileNya) . '"');
+                        // header('Content-Length: ' . filesize($fileNya));
+                        // readfile($fileNya);
 
                         $this->_db->transCommit();
                         $response = new \stdClass;
