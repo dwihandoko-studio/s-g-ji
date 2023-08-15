@@ -29,141 +29,145 @@
             <div class="col-lg-12">
                 <label class="col-form-label">Kepesertaan Bansos (Backoffice):</label>
                 <table id="table-bansos" class="table-bansos">
-                    <tr>
-                        <th>Nama</th>
-                        <th>NIK</th>
-                        <th>DTKS</th>
-                        <th>PKH</th>
-                        <th>BPNT</th>
-                        <th>PBI JK</th>
-                        <th>RST</th>
-                        <th>Bansos Lainnya</th>
-                        <th>Keterangan</th>
-                        <th>&nbsp;</th>
-                    </tr>
-                    <tr>
-                        <td><input class="form-control" type="text" name="nama_pemilik_bansos[]" />
-                            <div class="help-block nama_pemilik_bansos_0"></div>
-                        </td>
-                        <td><input class="form-control" type="text" name="nik_pemilik_bansos[]" />
-                            <div class="help-block nik_pemilik_bansos_0"></div>
-                        </td>
-                        <td style="vertical-align: top;">
-                            <div class="mt-2">
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_dtks_bansos_0[]" value="ya" id="_dtks_bansos_1_0">
-                                    <label class="form-check-label" for="_dtks_bansos_1_0">
-                                        Ya
-                                    </label>
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>NIK</th>
+                            <th>DTKS</th>
+                            <th>PKH</th>
+                            <th>BPNT</th>
+                            <th>PBI JK</th>
+                            <th>RST</th>
+                            <th>Bansos Lainnya</th>
+                            <th>Keterangan</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control" type="text" name="nama_pemilik_bansos[]" />
+                                <div class="help-block nama_pemilik_bansos_0"></div>
+                            </td>
+                            <td><input class="form-control" type="text" name="nik_pemilik_bansos[]" />
+                                <div class="help-block nik_pemilik_bansos_0"></div>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <div class="mt-2">
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_dtks_bansos_0" value="ya" id="_dtks_bansos_1_0">
+                                        <label class="form-check-label" for="_dtks_bansos_1_0">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_dtks_bansos_0" value="tidak" id="_dtks_bansos_2_0">
+                                        <label class="form-check-label" for="_dtks_bansos_2_0">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <br />
+                                    <div class="help-block _dtks_bansos_0"></div>
                                 </div>
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_dtks_bansos_0[]" value="tidak" id="_dtks_bansos_2_0">
-                                    <label class="form-check-label" for="_dtks_bansos_2_0">
-                                        Tidak
-                                    </label>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <div class="mt-2">
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_pkh_bansos_0" value="ya" id="_pkh_bansos_1_0">
+                                        <label class="form-check-label" for="_pkh_bansos_1_0">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_pkh_bansos_0" value="tidak" id="_pkh_bansos_2_0">
+                                        <label class="form-check-label" for="_pkh_bansos_2_0">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <br />
+                                    <div class="help-block _pkh_bansos_0"></div>
                                 </div>
-                                <br />
-                                <div class="help-block _dtks_bansos_0"></div>
-                            </div>
-                        </td>
-                        <td style="vertical-align: top;">
-                            <div class="mt-2">
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_pkh_bansos_0[]" value="ya" id="_pkh_bansos_1_0">
-                                    <label class="form-check-label" for="_pkh_bansos_1_0">
-                                        Ya
-                                    </label>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <div class="mt-2">
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_bpnt_bansos_0" value="ya" id="_bpnt_bansos_1_0">
+                                        <label class="form-check-label" for="_bpnt_bansos_1_0">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_bpnt_bansos_0" value="tidak" id="_bpnt_bansos_2_0">
+                                        <label class="form-check-label" for="_bpnt_bansos_2_0">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <br />
+                                    <div class="help-block _bpnt_bansos_0"></div>
                                 </div>
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_pkh_bansos_0[]" value="tidak" id="_pkh_bansos_2_0">
-                                    <label class="form-check-label" for="_pkh_bansos_2_0">
-                                        Tidak
-                                    </label>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <div class="mt-2">
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_pbi_jk_bansos_0" value="ya" id="_pbi_jk_bansos_1_0">
+                                        <label class="form-check-label" for="_pbi_jk_bansos_1_0">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_pbi_jk_bansos_0" value="tidak" id="_pbi_jk_bansos_2_0">
+                                        <label class="form-check-label" for="_pbi_jk_bansos_2_0">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <br />
+                                    <div class="help-block _pbi_jk_bansos_0"></div>
                                 </div>
-                                <br />
-                                <div class="help-block _pkh_bansos_0"></div>
-                            </div>
-                        </td>
-                        <td style="vertical-align: top;">
-                            <div class="mt-2">
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_bpnt_bansos_0[]" value="ya" id="_bpnt_bansos_1_0">
-                                    <label class="form-check-label" for="_bpnt_bansos_1_0">
-                                        Ya
-                                    </label>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <div class="mt-2">
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_rst_bansos_0" value="ya" id="_rst_bansos_1_0">
+                                        <label class="form-check-label" for="_rst_bansos_1_0">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_rst_bansos_0" value="tidak" id="_rst_bansos_2_0">
+                                        <label class="form-check-label" for="_rst_bansos_2_0">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <br />
+                                    <div class="help-block _rst_bansos_0"></div>
                                 </div>
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_bpnt_bansos_0[]" value="tidak" id="_bpnt_bansos_2_0">
-                                    <label class="form-check-label" for="_bpnt_bansos_2_0">
-                                        Tidak
-                                    </label>
+                            </td>
+                            <td style="vertical-align: top;">
+                                <div class="mt-2">
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_bansos_lain_bansos_0" value="ya" id="_bansos_lain_bansos_1_0">
+                                        <label class="form-check-label" for="_bansos_lain_bansos_1_0">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="_bansos_lain_bansos_0" value="tidak" id="_bansos_lain_bansos_2_0">
+                                        <label class="form-check-label" for="_bansos_lain_bansos_2_0">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                    <br />
+                                    <div class="help-block _bansos_lain_bansos_0"></div>
                                 </div>
-                                <br />
-                                <div class="help-block _bpnt_bansos_0"></div>
-                            </div>
-                        </td>
-                        <td style="vertical-align: top;">
-                            <div class="mt-2">
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_pbi_jk_bansos_0[]" value="ya" id="_pbi_jk_bansos_1_0">
-                                    <label class="form-check-label" for="_pbi_jk_bansos_1_0">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_pbi_jk_bansos_0[]" value="tidak" id="_pbi_jk_bansos_2_0">
-                                    <label class="form-check-label" for="_pbi_jk_bansos_2_0">
-                                        Tidak
-                                    </label>
-                                </div>
-                                <br />
-                                <div class="help-block _pbi_jk_bansos_0"></div>
-                            </div>
-                        </td>
-                        <td style="vertical-align: top;">
-                            <div class="mt-2">
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_rst_bansos_0[]" value="ya" id="_rst_bansos_1_0">
-                                    <label class="form-check-label" for="_rst_bansos_1_0">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_rst_bansos_0[]" value="tidak" id="_rst_bansos_2_0">
-                                    <label class="form-check-label" for="_rst_bansos_2_0">
-                                        Tidak
-                                    </label>
-                                </div>
-                                <br />
-                                <div class="help-block _rst_bansos_0"></div>
-                            </div>
-                        </td>
-                        <td style="vertical-align: top;">
-                            <div class="mt-2">
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_bansos_lain_bansos_0[]" value="ya" id="_bansos_lain_bansos_1_0">
-                                    <label class="form-check-label" for="_bansos_lain_bansos_1_0">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check  form-check-inline">
-                                    <input class="form-check-input" type="radio" name="_bansos_lain_bansos_0[]" value="tidak" id="_bansos_lain_bansos_2_0">
-                                    <label class="form-check-label" for="_bansos_lain_bansos_2_0">
-                                        Tidak
-                                    </label>
-                                </div>
-                                <br />
-                                <div class="help-block _bansos_lain_bansos_0"></div>
-                            </div>
-                        </td>
-                        <td><textarea class="form-control" name="keterangan_pemilik_bansos[]"></textarea>
-                            <div class="help-block keterangan_pemilik_bansos_0"></div>
-                        </td>
-                        <td>&nbsp;</td>
-                    </tr>
+                            </td>
+                            <td><textarea class="form-control" name="keterangan_pemilik_bansos[]"></textarea>
+                                <div class="help-block keterangan_pemilik_bansos_0"></div>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
                 </table>
                 <br>
-                <button type="button" onclick="addRowBansos('table-bansos')" id="addRowBansos" class="btn btn-success waves-effect btn-label waves-light"><i class="bx bxs-add-to-queue label-icon"></i> Tambah Peserta Bansos</button>
+                <button type="button" id="btnAddRowBansos" class="btn btn-success waves-effect btn-label waves-light"><i class="bx bxs-add-to-queue label-icon"></i> Tambah Peserta Bansos</button>
                 <br>
             </div>
             <hr />
@@ -274,6 +278,16 @@
         </div>
     </form>
     <script>
+        $(document).ready(function() {
+            initSelect2("_kepala_dinas_pilihan", ".contentApproveBodyModal");
+            initSelect2("_camat_pilihan", ".contentApproveBodyModal");
+            initSelect2("_kampung_pilihan", ".contentApproveBodyModal");
+
+            $("#btnAddRowBansos").on("click", function() {
+                addRowBansos('table-bansos');
+            });
+        });
+
         function addRowBansos(event) {
             const table = document.getElementById(event);
             const rowCountBansos = table.rows.length - 1;
@@ -300,18 +314,18 @@
                 cells[i + 2].innerHTML = `
             <div class="mt-2">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="${radioNames[i]}_bansos${rowCountBansos}[]" value="ya" id="${radioNames[i]}_bansos_1_${rowCountBansos}">
+                    <input class="form-check-input" type="radio" name="${radioNames[i]}_bansos_${rowCountBansos}" value="ya" id="${radioNames[i]}_bansos_1_${rowCountBansos}">
                     <label class="form-check-label" for="${radioNames[i]}_bansos_1_${rowCountBansos}">Ya</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="${radioNames[i]}_bansos${rowCountBansos}[]" value="tidak" id="${radioNames[i]}_bansos_2_${rowCountBansos}">
+                    <input class="form-check-input" type="radio" name="${radioNames[i]}_bansos_${rowCountBansos}" value="tidak" id="${radioNames[i]}_bansos_2_${rowCountBansos}">
                     <label class="form-check-label" for="${radioNames[i]}_bansos_2_${rowCountBansos}">Tidak</label>
                 </div>
                 <br />
                         <div class="help-block ${radioNames[i]}_bansos_${rowCountBansos}"></div>
             </div>`;
             }
-            cells[8].innerHTML = `<textarea class="form-control" name="keterangan_bansos[]"></textarea><br/><div class="help-block keterangan_pemilik_bansos_${rowCountBansos}"></div>`;
+            cells[8].innerHTML = `<textarea class="form-control" name="keterangan_pemilik_bansos[]"></textarea><div class="help-block keterangan_pemilik_bansos_${rowCountBansos}"></div>`;
             cells[9].innerHTML = '<button type="button" class="btn btn-danger btn-sm" onclick="deleteRowBansos(this)"><i class="bx bx-trash"></i></button>';
         }
 
@@ -395,10 +409,6 @@
             }
         }
 
-        initSelect2("_kepala_dinas_pilihan", ".contentApproveBodyModal");
-        initSelect2("_camat_pilihan", ".contentApproveBodyModal");
-        initSelect2("_kampung_pilihan", ".contentApproveBodyModal");
-
         function validateForm() {
             const uraianPermasalahan = document.getElementById('_uraian_permasalahan').value;
             const pokokPermasalahan = document.getElementById('_pokok_permasalahan').value;
@@ -469,95 +479,177 @@
             // console.log(bansosRows.length);
 
             bansosRows.forEach(function(row, index) {
-                if (index === 0) {
+                // if (index === 0) {
+
+                // } else {
+                const namaF = row.querySelector('input[name="nama_pemilik_bansos[]"]');
+                const nikF = row.querySelector('input[name="nik_pemilik_bansos[]"]');
+
+                if (!namaF || namaF === undefined || !nikF || nikF === undefined) {
+                    isValid = false;
+                    if (!namaF || namaF === undefined) {
+                        row.querySelector('.nama_pemilik_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama tidak boleh kosong</li></ul>';
+                    } else {
+                        const nama = namaF.value;
+                        if (nama.trim() === '') {
+                            row.querySelector('.nama_pemilik_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.nama_pemilik_bansos_' + index).innerHTML = '';
+                        }
+                    }
+                    if (!nikF || nikF === undefined) {
+                        row.querySelector('.nik_pemilik_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">NIK tidak boleh kosong</li></ul>';
+                    } else {
+                        const nik = nikF.value;
+                        if (nik.trim() === '') {
+                            row.querySelector('.nik_pemilik_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">NIK tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.nik_pemilik_bansos_' + index).innerHTML = '';
+                        }
+                    }
 
                 } else {
-                    const nama = row.querySelector('input[name="nama_pemilik_bansos[]"]').value;
-                    const nik = row.querySelector('input[name="nik_pemilik_bansos[]"]').value;
-                    const keterangan = row.querySelector('textarea[name="keterangan_pemilik_bansos[]"]').value;
 
-                    if (nama.trim() === '' || nik.trim() === '' || keterangan.trim() === '') {
+                    const nama = namaF.value;
+                    const nik = nikF.value;
+
+                    if (nama.trim() === '' || nik.trim() === '') {
                         isValid = false;
                         if (nama.trim() === '') {
-                            row.querySelector('.nama_pemilik_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama tidak boleh kosong</li></ul>';
+                            row.querySelector('.nama_pemilik_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama tidak boleh kosong</li></ul>';
                         } else {
-                            row.querySelector('.nama_pemilik_bansos_' + (index - 1)).innerHTML = '';
+                            row.querySelector('.nama_pemilik_bansos_' + index).innerHTML = '';
                         }
                         if (nik.trim() === '') {
-                            row.querySelector('.nik_pemilik_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">NIK tidak boleh kosong</li></ul>';
+                            row.querySelector('.nik_pemilik_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">NIK tidak boleh kosong</li></ul>';
                         } else {
-                            row.querySelector('.nik_pemilik_bansos_' + (index - 1)).innerHTML = '';
-                        }
-                        if (keterangan.trim() === '') {
-                            row.querySelector('.keterangan_pemilik_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Keterangan tidak boleh kosong</li></ul>';
-                        } else {
-                            row.querySelector('.keterangan_pemilik_bansos_' + (index - 1)).innerHTML = '';
+                            row.querySelector('.nik_pemilik_bansos_' + index).innerHTML = '';
                         }
                     } else {
-                        row.querySelector('.nama_pemilik_bansos_' + (index - 1)).innerHTML = '';
-                        row.querySelector('.nik_pemilik_bansos_' + (index - 1)).innerHTML = '';
-                        row.querySelector('.keterangan_pemilik_bansos_' + (index - 1)).innerHTML = '';
-                    }
-
-                    const dtks = row.querySelector("input[type='radio'][name='_dtks_bansos_" + (index - 1) + "[]']:checked");
-                    // const dtks = row.querySelector("input[type='radio'][name='_dtks_bansos_" + (index - 1) + "']:checked").val();
-                    const pkh = row.querySelector("input[type='radio'][name='_pkh_bansos_" + (index - 1) + "[]']:checked");
-                    const bpnt = row.querySelector("input[type='radio'][name='_bpnt_bansos_" + (index - 1) + "[]']:checked");
-                    const pbi_jk = row.querySelector("input[type='radio'][name='_pbi_jk_bansos_" + (index - 1) + "[]']:checked");
-                    const rst = row.querySelector("input[type='radio'][name='_rst_bansos_" + (index - 1) + "[]']:checked");
-                    const bansos_lain = row.querySelector("input[type='radio'][name='_bansos_lain_bansos_" + (index - 1) + "[]']:checked");
-
-                    console.log(dtks);
-                    // console.log(pkh);
-                    // console.log(bpnt);
-                    // console.log(pbi_jk);
-                    // console.log(rst);
-
-                    if (!dtks || dtks === undefined || !pkh || pkh === undefined || !bpnt || bpnt === undefined || !pbi_jk || pbi_jk === undefined || !rst || rst === undefined || !bansos_lain || bansos_lain === undefined) {
-                        isValid = false;
-                        if (!dtks || dtks === undefined) {
-                            row.querySelector('._dtks_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih DTKS dulu.</li></ul>';
-                        } else {
-                            row.querySelector('._dtks_bansos_' + (index - 1)).innerHTML = '';
-                        }
-                        if (!pkh || pkh === undefined) {
-                            row.querySelector('._pkh_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih PKH dulu.</li></ul>';
-                        } else {
-                            row.querySelector('._pkh_bansos_' + (index - 1)).innerHTML = '';
-                        }
-                        if (!bpnt || bpnt === undefined) {
-                            row.querySelector('._bpnt_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih BPNT dulu.</li></ul>';
-                        } else {
-                            row.querySelector('._bpnt_bansos_' + (index - 1)).innerHTML = '';
-                        }
-                        if (!pbi_jk || pbi_jk === undefined) {
-                            row.querySelector('._pbi_jk_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih PBI JK dulu.</li></ul>';
-                        } else {
-                            row.querySelector('._pbi_jk_bansos_' + (index - 1)).innerHTML = '';
-                        }
-                        if (!rst || rst === undefined) {
-                            row.querySelector('._rst_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih RST dulu.</li></ul>';
-                        } else {
-                            row.querySelector('._rst_bansos_' + (index - 1)).innerHTML = '';
-                        }
-                        if (!bansos_lain || bansos_lain === undefined) {
-                            row.querySelector('._bansos_lain_bansos_' + (index - 1)).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih Bansos lain dulu.</li></ul>';
-                        } else {
-                            row.querySelector('._bansos_lain_bansos_' + (index - 1)).innerHTML = '';
-                        }
-                    } else {
-                        row.querySelector('._dtks_bansos_' + (index - 1)).innerHTML = '';
-                        row.querySelector('._pkh_bansos_' + (index - 1)).innerHTML = '';
-                        row.querySelector('._bpnt_bansos_' + (index - 1)).innerHTML = '';
-                        row.querySelector('._pbi_jk_bansos_' + (index - 1)).innerHTML = '';
-                        row.querySelector('._rst_bansos_' + (index - 1)).innerHTML = '';
-                        row.querySelector('._bansos_lain_bansos_' + (index - 1)).innerHTML = '';
+                        row.querySelector('.nama_pemilik_bansos_' + index).innerHTML = '';
+                        row.querySelector('.nik_pemilik_bansos_' + index).innerHTML = '';
                     }
                 }
+
+                const dtks = row.querySelector("input[type='radio'][name='_dtks_bansos_" + index + "']:checked");
+                // const dtks = row.querySelector("input[type='radio'][name='_dtks_bansos_" + index + "']:checked").val();
+                const pkh = row.querySelector("input[type='radio'][name='_pkh_bansos_" + index + "']:checked");
+                const bpnt = row.querySelector("input[type='radio'][name='_bpnt_bansos_" + index + "']:checked");
+                const pbi_jk = row.querySelector("input[type='radio'][name='_pbi_jk_bansos_" + index + "']:checked");
+                const rst = row.querySelector("input[type='radio'][name='_rst_bansos_" + index + "']:checked");
+                const bansos_lain = row.querySelector("input[type='radio'][name='_bansos_lain_bansos_" + index + "']:checked");
+
+                // console.log(dtks);
+                // console.log(pkh);
+                // console.log(bpnt);
+                // console.log(pbi_jk);
+                // console.log(rst);
+
+                if (!dtks || dtks === undefined || !pkh || pkh === undefined || !bpnt || bpnt === undefined || !pbi_jk || pbi_jk === undefined || !rst || rst === undefined || !bansos_lain || bansos_lain === undefined) {
+                    isValid = false;
+                    if (!dtks || dtks === undefined) {
+                        row.querySelector('._dtks_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih DTKS dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._dtks_bansos_' + index).innerHTML = '';
+                    }
+                    if (!pkh || pkh === undefined) {
+                        row.querySelector('._pkh_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih PKH dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._pkh_bansos_' + index).innerHTML = '';
+                    }
+                    if (!bpnt || bpnt === undefined) {
+                        row.querySelector('._bpnt_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih BPNT dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._bpnt_bansos_' + index).innerHTML = '';
+                    }
+                    if (!pbi_jk || pbi_jk === undefined) {
+                        row.querySelector('._pbi_jk_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih PBI JK dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._pbi_jk_bansos_' + index).innerHTML = '';
+                    }
+                    if (!rst || rst === undefined) {
+                        row.querySelector('._rst_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih RST dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._rst_bansos_' + index).innerHTML = '';
+                    }
+                    if (!bansos_lain || bansos_lain === undefined) {
+                        row.querySelector('._bansos_lain_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih Bansos lain dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._bansos_lain_bansos_' + index).innerHTML = '';
+                    }
+                } else {
+                    const dtksv = dtks.value;
+                    console.log(dtksv);
+                    const pkhv = pkh.value;
+                    const bpntv = bpnt.value;
+                    const pbi_jkv = pbi_jk.value;
+                    const rstv = rst.value;
+                    const bansos_lainv = bansos_lain.value;
+                    if (dtksv.trim() === '') {
+                        row.querySelector('._dtks_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih DTKS dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._dtks_bansos_' + index).innerHTML = '';
+                    }
+                    if (pkhv.trim() === '') {
+                        row.querySelector('._pkh_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih PKH dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._pkh_bansos_' + index).innerHTML = '';
+                    }
+                    if (bpntv.trim() === '') {
+                        row.querySelector('._bpnt_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih BPNT dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._bpnt_bansos_' + index).innerHTML = '';
+                    }
+                    if (pbi_jkv.trim() === '') {
+                        row.querySelector('._pbi_jk_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih PBI JK dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._pbi_jk_bansos_' + index).innerHTML = '';
+                    }
+                    if (rstv.trim() === '') {
+                        row.querySelector('._rst_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih RST dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._rst_bansos_' + index).innerHTML = '';
+                    }
+                    if (bansos_lainv.trim() === '') {
+                        row.querySelector('._bansos_lain_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Pilih Bansos lain dulu.</li></ul>';
+                    } else {
+                        row.querySelector('._bansos_lain_bansos_' + index).innerHTML = '';
+                    }
+                    // row.querySelector('._dtks_bansos_' + (index - 1)).innerHTML = '';
+                    // row.querySelector('._pkh_bansos_' + (index - 1)).innerHTML = '';
+                    // row.querySelector('._bpnt_bansos_' + (index - 1)).innerHTML = '';
+                    // row.querySelector('._pbi_jk_bansos_' + (index - 1)).innerHTML = '';
+                    // row.querySelector('._rst_bansos_' + (index - 1)).innerHTML = '';
+                    // row.querySelector('._bansos_lain_bansos_' + (index - 1)).innerHTML = '';
+                }
+
+                const keteranganF = row.querySelector('textarea[name="keterangan_pemilik_bansos[]"]');
+
+                if (!keteranganF || keteranganF === undefined) {
+                    row.querySelector('.keterangan_pemilik_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Keterangan tidak boleh kosong</li></ul>';
+                } else {
+                    const keterangan = keteranganF.value;
+                    if (keterangan.trim() === '') {
+                        row.querySelector('.keterangan_pemilik_bansos_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Keterangan tidak boleh kosong</li></ul>';
+                    } else {
+                        row.querySelector('.keterangan_pemilik_bansos_' + index).innerHTML = '';
+                    }
+                }
+                // }
             });
 
             return isValid;
         }
+
+
+        function downloadPDF(pdf, fileName) {
+            const linkSource = `data:application/octet-stream;base64,${pdf}`;
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.download = fileName + ".pdf";
+            downloadLink.click();
+        }
+
 
         function saveTanggapanPengaduan(e) {
             // console.log(e.form);
@@ -574,6 +666,7 @@
                     })
                     .then(response => response.json())
                     .then(resul => {
+                        $('div.modal-content-loading-approve').unblock();
                         if (resul.status !== 200) {
                             if (resul.status === 401) {
                                 Swal.fire(
@@ -592,17 +685,36 @@
                                 );
                             }
                         } else {
-                            Swal.fire(
-                                'SELAMAT!',
-                                resul.message,
-                                'success'
-                            ).then((valRes) => {
-                                reloadPage(resul.redirrect);
+                            Swal.fire({
+                                title: 'SELAMAT!',
+                                text: resul.message,
+                                icon: 'success',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                cancelButtonText: 'Tutup',
+                                confirmButtonText: 'Download'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    downloadPDF(resul.filenya, resul.filename);
+                                    setTimeout(function() {
+                                        reloadPage(resul.redirrect);
+                                    }, 3000);
+                                } else {
+                                    reloadPage(resul.redirrect);
+                                }
                             })
+                            // Swal.fire(
+                            //     'SELAMAT!',
+                            //     resul.message,
+                            //     'success'
+                            // ).then((valRes) => {
+                            //     reloadPage(resul.redirrect);
+                            // })
                         }
                     })
                     .catch(error => {
-                        console.error('Error:', error);
+                        console.log('Error:', error);
                         $('div.modal-content-loading-approve').unblock();
                         Swal.fire(
                             'PERINGATAN!',

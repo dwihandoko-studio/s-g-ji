@@ -307,6 +307,17 @@ function tgl_indo($tgl, $replace_with = '-')
 	return $tanggal . ' ' . $bulan . ' ' . $tahun;
 }
 
+function tgl_hari_indo($tgl, $replace_with = '-')
+{
+	if (date_is_empty($tgl)) {
+		return $replace_with;
+	}
+	$tanggal = substr($tgl, 8, 2);
+	$bulan = getBulan(substr($tgl, 5, 2));
+	$tahun = substr($tgl, 0, 4);
+	return hari(strtotime($tgl)) . ', ' . $tanggal . ' ' . $bulan . ' ' . $tahun;
+}
+
 function tgl_bulan_indo($tgl, $length_bulan = 3, $replace_with = '-')
 {
 	if (date_is_empty($tgl)) {
@@ -1561,12 +1572,12 @@ function getNamaDinas($id = null)
 	}
 	$db      = \Config\Database::connect();
 
-	$data = $db->table('ref_dinas')
-		->select("dinas")
+	$data = $db->table('ref_instansi')
+		->select("instansi")
 		->where('id', $id)
 		->get()->getRowObject();
 	if ($data) {
-		return $data->dinas;
+		return $data->instansi;
 	}
 	return "-";
 }
