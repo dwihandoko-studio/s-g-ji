@@ -643,7 +643,8 @@
 
 
         function downloadPDF(pdf, fileName, redirrect) {
-            const linkSource = `data:application/octet-stream;base64,${pdf}`;
+            // const linkSource = `data:application/octet-stream;base64,${pdf}`;
+            const linkSource = `${pdf}`;
             const newTab = window.open(linkSource, '_blank');
             if (!newTab) {
                 Swal.fire(
