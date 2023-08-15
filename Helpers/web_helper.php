@@ -828,16 +828,40 @@ function cekGrantedVerifikasi($user_id)
 	return true;
 }
 
-function getDetailSekolahNaungan($npsn)
+function getBidangNaungan($user_id)
+{
+	$db      = \Config\Database::connect();
+	$dats = $db->table('hak_access_pengaduan')
+		->select("bidang")
+		->where('user_id', $user_id)
+		->get()->getResult();
+
+	if (count($dats) > 0) {
+		$bidangs = [];
+		foreach ($dats as $key => $value) {
+			$bidangs[] = $value->bidang;
+		}
+		return $bidangs;
+	}
+
+	return [""];
+}
+
+function grantedBidangNaungan($user_id, $bidang)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
 	$db      = \Config\Database::connect();
 
-	$grandted = $db->table('ref_sekolah')->where('npsn', $npsn)->get()->getRowObject();
-	if (!$grandted) {
-		return false;
+	$dats = $db->table('hak_access_pengaduan')
+		->where('user_id', $user_id)
+		->where('bidang', $bidang)
+		->countAllResults();
+
+	if ($dats > 0) {
+		return TRUE;
 	}
-	return $grandted;
+
+	return FALSE;
 }
 
 function getDetailGuruNaungan($idPtk)

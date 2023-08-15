@@ -42,7 +42,9 @@ class Antrian extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
-        $lists = $datamodel->get_datatables();
+        $bidangs = getBidangNaungan($user->data->id);
+
+        $lists = $datamodel->get_datatables($bidangs);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -77,8 +79,8 @@ class Antrian extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all(),
-            "recordsFiltered" => $datamodel->count_filtered(),
+            "recordsTotal" => $datamodel->count_all($bidangs),
+            "recordsFiltered" => $datamodel->count_filtered($bidangs),
             "data" => $data
         ];
         echo json_encode($output);
@@ -149,6 +151,17 @@ class Antrian extends BaseController
             $nik = htmlspecialchars($this->request->getVar('nik'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                session()->destroy();
+                delete_cookie('jwt');
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Session telah habis";
+                return json_encode($response);
+            }
+
             $current = $this->_db->table('_pengaduan a')
                 ->select("a.*")
                 // ->join('_profil_users_tb b', 'b.id = a.user_id')
@@ -157,12 +170,20 @@ class Antrian extends BaseController
                 ->where(['a.id' => $id, 'a.status_aduan' => 1])->get()->getRowObject();
 
             if ($current) {
-                $data['data'] = $current;
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->message = "Permintaan diizinkan";
-                $response->data = view('silastri/adm/pengaduan/antrian/detail', $data);
-                return json_encode($response);
+                $granted = grantedBidangNaungan($user->data->id, $current->diteruskan_ke);
+                if ($granted) {
+                    $data['data'] = $current;
+                    $response = new \stdClass;
+                    $response->status = 200;
+                    $response->message = "Permintaan diizinkan";
+                    $response->data = view('silastri/adm/pengaduan/antrian/detail', $data);
+                    return json_encode($response);
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Akses tidak dizinkan.";
+                    return json_encode($response);
+                }
             } else {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -228,6 +249,14 @@ class Antrian extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Pengaduan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $granted = grantedBidangNaungan($user->data->id, $oldData->diteruskan_ke);
+            if (!$granted) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Akses tidak diizinkan.";
                 return json_encode($response);
             }
 
@@ -301,7 +330,7 @@ class Antrian extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/su/layanan/antrian/tolak', $data);
+            $response->data = view('silastri/adm/pengaduan/antrian/tolak', $data);
             return json_encode($response);
         }
     }
@@ -365,11 +394,19 @@ class Antrian extends BaseController
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
             $keterangan = htmlspecialchars($this->request->getVar('keterangan'), true);
 
-            $oldData = $this->_db->table('_permohonan_temp')->where(['id' => $id])->get()->getRowArray();
+            $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowArray();
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Permohonan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $granted = grantedBidangNaungan($user->data->id, $oldData['diteruskan_ke']);
+            if (!$granted) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Akses tidak diizinkan.";
                 return json_encode($response);
             }
 
@@ -379,12 +416,12 @@ class Antrian extends BaseController
             $oldData['date_reject'] = $date;
             $oldData['admin_reject'] = $user->data->id;
             $oldData['keterangan_reject'] = $keterangan;
-            $oldData['status_permohonan'] = 3;
+            $oldData['status_aduan'] = 3;
 
             $this->_db->transBegin();
-            $this->_db->table('_permohonan_tolak')->insert($oldData);
+            $this->_db->table('_pengaduan_tolak')->insert($oldData);
             if ($this->_db->affectedRows() > 0) {
-                $this->_db->table('_permohonan_temp')->where('id', $oldData['id'])->delete();
+                $this->_db->table('_pengaduan')->where('id', $oldData['id'])->delete();
                 if ($this->_db->affectedRows() > 0) {
                     // try {
                     //     $riwayatLib = new Riwayatlib();
@@ -594,6 +631,14 @@ class Antrian extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Pengaduan tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $granted = grantedBidangNaungan($user->data->id, $oldData['diteruskan_ke']);
+            if (!$granted) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Akses tidak diizinkan.";
                 return json_encode($response);
             }
 
