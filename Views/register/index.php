@@ -123,14 +123,14 @@
                                         </div>
                                     </div>
                                     <div class="mt-3 d-grid">
-                                        <button class="btn btn-primary waves-effect waves-light" type="submit">Masuk</button>
+                                        <button class="btn btn-primary waves-effect waves-light" type="submit">DAFTAR</button>
                                     </div>
 
-                                    <div class="mt-4 text-center">
+                                    <!-- <div class="mt-4 text-center">
                                         <h5 class="font-size-14 mb-3">Daftar Dengan</h5>
 
-                                        <ul class="list-inline">
-                                            <!-- <li class="list-inline-item">
+                                        <ul class="list-inline"> -->
+                                    <!-- <li class="list-inline-item">
                                                 <a href="javascript::void()" class="social-list-item bg-primary text-white border-primary">
                                                     <i class="mdi mdi-facebook"></i>
                                                 </a>
@@ -140,13 +140,13 @@
                                                     <i class="mdi mdi-twitter"></i>
                                                 </a>
                                             </li> -->
-                                            <li class="list-inline-item">
+                                    <!-- <li class="list-inline-item">
                                                 <a href="javascript::void()" class="social-list-item bg-danger text-white border-danger">
                                                     <i class="mdi mdi-google"></i>
                                                 </a>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> -->
 
                                     <div class="mt-4 text-center">
                                         <a href="<?= base_url('auth') ?>" class="text-muted"><i class="mdi mdi-account-question"></i> Sudah Punya Akun? Masuk Sekarang.</a>

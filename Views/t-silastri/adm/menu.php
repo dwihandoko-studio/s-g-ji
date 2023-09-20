@@ -31,6 +31,7 @@
                         <li><a <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "antrian") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/adm/pengaduan/antrian') ?>" key="t-pengaduan-antrian">Antrian</a></li>
                         <li><a <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "selesai") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/adm/pengaduan/selesai') ?>" key="t-pengaduan-selesai">Selesai</a></li>
                         <li><a <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "ditolak") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/adm/pengaduan/ditolak') ?>" key="t-pengaduan-ditolak">Ditolak</a></li>
+                        <li><a <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "asesmenppks") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/adm/pengaduan/asesmenppks') ?>" key="t-pengaduan-asesmenppks">Assesment PPKS</a></li>
                     </ul>
                 </li>
 

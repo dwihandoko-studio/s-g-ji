@@ -386,6 +386,18 @@
             </div>
         </div>
     </div>
+
+    <div id="content-aktivasiCompleteModal" class="modal fade content-aktivasiCompleteModal" tabindex="-1" role="dialog" aria-labelledby="content-aktivasiCompleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content modal-content-loading">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="content-aktivasiCompleteModalLabel">Lengkapi Profil</h5>
+                </div>
+                <div class="contentAktivasiCompleteBodyModal">
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="<?= base_url() ?>/assets/libs/jquery/jquery.min.js"></script>
     <script src="<?= base_url() ?>/assets/js/blockUI.min.js"></script>
     <script src="<?= base_url() ?>/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -442,8 +454,15 @@
                 },
                 success: function(resul) {
                     $('div.modal-content-loading').unblock();
+                    $('.aktivasi-button-wa').attr('disabled', false);
                     if (resul.status == 200) {
-                        $('.contentAktivasiBodyModal').html(resul.data);
+                        $('#content-aktivasiCompleteModalLabel').html('PERINGATAN AKUN BELUM DILENGKAPI');
+                        $('.contentAktivasiCompleteBodyModal').html(resul.data);
+                        $('.content-aktivasiCompleteModal').modal({
+                            backdrop: 'static',
+                            keyboard: false,
+                        });
+                        $('.content-aktivasiCompleteModal').modal('show');
                     } else {
                         if (resul.status == 404) {
                             Swal.fire(
@@ -463,7 +482,7 @@
                                     reloadPage();
                                 })
                             } else {
-                                $('.aktivasi-button-wa').attr('disabled', false);
+                                // $('.aktivasi-button-wa').attr('disabled', false);
                                 Swal.fire(
                                     'PERINGATAN!!!',
                                     resul.message,

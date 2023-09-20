@@ -1657,6 +1657,23 @@ function getNamaBidang($id = null)
 	return "-";
 }
 
+function getNamaSdmFromNik($nik = null)
+{
+	if ($nik === NULL || $nik === "") {
+		return NULL;
+	}
+	$db      = \Config\Database::connect();
+
+	$data = $db->table('ref_sdm')
+		// ->select("bnikang")
+		->where('nik', $nik)
+		->get()->getRowObject();
+	if ($data) {
+		return $data;
+	}
+	return NULL;
+}
+
 function getNamaPengguna($id = null)
 {
 	if ($id === NULL || $id === "") {
@@ -1672,6 +1689,23 @@ function getNamaPengguna($id = null)
 		return $data->fullname;
 	}
 	return "-";
+}
+
+function getPetugasFromNik($nik = null)
+{
+	if ($nik === NULL || $nik === "") {
+		return NULL;
+	}
+	$db      = \Config\Database::connect();
+
+	$data = $db->table('ref_sdm')
+		// ->select("fullname")
+		->where('nik', $nik)
+		->get()->getRowObject();
+	if ($data) {
+		return $data;
+	}
+	return NULL;
 }
 
 function getLayananSilastri()

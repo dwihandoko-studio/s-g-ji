@@ -3,7 +3,7 @@
 namespace App\Controllers\Silastri\Adm\Pengaduan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Adm\Pengaduan\AntrianModel;
+use App\Models\Silastri\Adm\Pengaduan\AsesmenppksModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -15,7 +15,7 @@ use App\Libraries\Silastri\Riwayatpengaduanlib;
 use iio\libmergepdf\Merger;
 use Dompdf\Dompdf;
 
-class Antrian extends BaseController
+class Asesmenppks extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -32,7 +32,7 @@ class Antrian extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new AntrianModel($request);
+        $datamodel = new AsesmenppksModel($request);
 
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
@@ -42,9 +42,9 @@ class Antrian extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
-        $bidangs = getBidangNaungan($user->data->id);
+        // $bidangs = getBidangNaungan($user->data->id);
 
-        $lists = $datamodel->get_datatables($bidangs);
+        $lists = $datamodel->get_datatables($user->data->nik);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -59,7 +59,7 @@ class Antrian extends BaseController
             //                 <a class="dropdown-item" href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><i class="bx bx-transfer-alt font-size-16 align-middle"></i> &nbsp;Sync Dapodik</a>
             //             </div>
             //         </div>';
-            $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->nik . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
+            $action = '<a href="javascript:actionDetail(\'' . $list->id . '\', \'' . $list->nik_aduan . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->nama_aduan)) . '\');"><button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
                 <i class="bx bxs-show font-size-16 align-middle"></i> DETAIL</button>
                 </a>';
             //     <a href="javascript:actionSync(\'' . $list->id . '\', \'' . $list->id_ptk . '\', \'' . str_replace("'", "", $list->nama)  . '\', \'' . $list->nuptk  . '\', \'' . $list->npsn . '\');"><button type="button" class="btn btn-secondary btn-sm btn-rounded waves-effect waves-light mr-2 mb-1">
@@ -71,16 +71,15 @@ class Antrian extends BaseController
             $row[] = $action;
             $row[] = $list->kategori;
             $row[] = $list->kode_aduan;
-            $row[] = $list->nik;
-            $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
+            $row[] = $list->nik_aduan;
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama_aduan));
 
             $data[] = $row;
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all($bidangs),
-            "recordsFiltered" => $datamodel->count_filtered($bidangs),
+            "recordsTotal" => $datamodel->count_all($user->data->nik),
+            "recordsFiltered" => $datamodel->count_filtered($user->data->nik),
             "data" => $data
         ];
         echo json_encode($output);
@@ -88,12 +87,12 @@ class Antrian extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/adm/pengaduan/antrian/data'));
+        return redirect()->to(base_url('silastri/adm/pengaduan/asesmenppks/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'Antrian Pengaduan Layanan';
+        $data['title'] = 'Asesment Pengaduan Layanan PPKS';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -106,7 +105,7 @@ class Antrian extends BaseController
 
         $data['jeniss'] = ['Pengaduan Program Bantuan Sosial', 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)', 'Pengaduan Layanan Sosial', 'Lainnya'];
 
-        return view('silastri/adm/pengaduan/antrian/index', $data);
+        return view('silastri/adm/pengaduan/asesmenppks/index', $data);
     }
 
     public function detail()
@@ -163,11 +162,11 @@ class Antrian extends BaseController
             }
 
             $current = $this->_db->table('_pengaduan a')
-                ->select("a.*")
-                // ->join('_profil_users_tb b', 'b.id = a.user_id')
+                ->select("a.*,b.peserta_spt, b.tgl_spt, b.lokasi_spt")
+                ->join('_pengaduan_tanggapan_spt b', 'b.id = a.id')
                 ->join('ref_kecamatan c', 'c.id = a.kecamatan')
                 ->join('ref_kelurahan d', 'd.id = a.kelurahan')
-                ->where(['a.id' => $id, 'a.status_aduan' => 1])->get()->getRowObject();
+                ->where(['a.id' => $id, 'a.status_aduan' => 2])->get()->getRowObject();
 
             if ($current) {
                 $granted = grantedBidangNaungan($user->data->id, $current->diteruskan_ke);
@@ -176,7 +175,7 @@ class Antrian extends BaseController
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->message = "Permintaan diizinkan";
-                    $response->data = view('silastri/adm/pengaduan/antrian/detail', $data);
+                    $response->data = view('silastri/adm/pengaduan/asesmenppks/detail', $data);
                     return json_encode($response);
                 } else {
                     $response = new \stdClass;
@@ -244,7 +243,13 @@ class Antrian extends BaseController
             $id = htmlspecialchars($this->request->getVar('id'), true);
             $nama = htmlspecialchars($this->request->getVar('nama'), true);
 
-            $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowObject();
+            $oldData = $this->_db->table('_pengaduan a')
+                ->select("a.*,b.peserta_spt, b.tgl_spt, b.lokasi_spt")
+                ->join('_pengaduan_tanggapan_spt b', 'b.id = a.id')
+                ->join('ref_kecamatan c', 'c.id = a.kecamatan')
+                ->join('ref_kelurahan d', 'd.id = a.kelurahan')
+                ->where(['a.id' => $id, 'a.status_aduan' => 2])->get()->getRowObject();
+
             if (!$oldData) {
                 $response = new \stdClass;
                 $response->status = 400;
@@ -261,26 +266,138 @@ class Antrian extends BaseController
             }
 
             $data['id'] = $id;
+            $data['petugas'] = getPetugasFromNik($user->data->nik);
             $data['nama'] = $nama;
             $data['data'] = $oldData;
             $data['dinass'] = $this->_db->table('ref_instansi')->orderBy('id', 'ASC')->get()->getResult();
             $data['kecamatans'] = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'ASC')->get()->getResult();
             $data['kelurahans'] = $this->_db->table('ref_kelurahan')->orderBy('kelurahan', 'ASC')->get()->getResult();
+            $data['pekerjaans'] = $this->_db->table('_profil_users_tb')->select("pekerjaan, count(pekerjaan) as jumlah")->groupBy('pekerjaan')->orderBy('pekerjaan', 'ASC')->get()->getResult();
+            // $data['anak_kategori_ppkss'] = ["Anak dalam situasi darurat", "Anak yang berhadapan dengan hukum", "Anak dari kelompok minoritas dan terisolasi", "Anak yang dieksploitasi secara ekonomi dan/atau seksual", "Anak yang menjadi korban penyalahgunaan narkotika, alkohol, psikotropika, dan zat adiktif lainnya", "Anak yang menjadi korban pornografi", "Anak dengan HIV/AIDS", "Anak korban penculikan, penjualan,dan/atau perdagangan", "Anak korban Kekerasan fisik dan/atau psikis", "Anak korban kejahatan seksual", "Anak korban jaringan terorisme", "Anak Penyandang Disabilitas", "Anak korban perlakuan salah dan penelantaran", "Anak dengan perilaku sosial menyimpang", "Anak yang menjadi korban stigmatisasi dari pelabelan terkait dengan kondisi Orang Tuanya"];
+            // $data['disabilitas_kategori_ppkss'] = [
+            //     "Fisik (terganggunya fungsi gerak)",
+            //     "Intelektual (terganggunya fungsi pikir karena tingkat kecerdasan dibawah rata-rata)",
+            //     "Mental (terganggunya fungsi pikir, emosi, dan perilaku)",
+            //     "Sensorik (terganggunya salah satu fungsi dari panca indera)",
+            //     "Ganda (Penyandang Disabilitas yang mempunyai dua atau lebih ragam disabilitas, antara lain disabilitas rungu-wicara dan disabilitas netra-tuli)",
+            // ];
+            // $data['bencana_kategori_ppkss'] = [
+            //     "Tuna Susila",
+            //     "Gelandangan",
+            //     "Pengemis",
+            //     "Pemulung",
+            //     "Kelompok Minoritas",
+            //     "Bekas Warga Binaan Lembaga Pemasyarakatan (BWBLP)",
+            //     "Orang dengan HIV/AIDS (ODHA)",
+            //     "Korban Penyalahgunaan NAPZA",
+            //     "Korban Trafficking",
+            //     "Korban tindak kekerasan",
+            //     "Pekerja Migran Indonesia Bermasalah Sosial (PMBS) (PMIB)",
+            //     "Perempuan rawan sosial ekonomi",
+            //     "Korban bencana alam",
+            //     "Korban bencana sosial",
+            // ];
+            // $data['kategori_ppkss'] = [
+            //     "KBA (Korban Bencana Alam)",
+            //     "KBS (Korban Bencana Sosial)",
+            //     "Fakir Miskin",
+            //     "ANTAR (Anak Terlantar",
+            //     "ABT (Anak Balita Terlantar)",
+            //     "ABH (Anak Berhadapan Dengan Hukum)",
+            //     "ANJAL (Anak Jalanan)",
+            //     "ANAK SALAH (Anak Yang Mendapatkan Perlakuan Salah)",
+            //     "AMPK (Anak Yang Memerlukan Perlindungan Khusus)",
+            //     "LANSIA (Lanjut Usia)",
+            //     "ADK (Anak Dengan Kedisabilitasan)",
+            //     "PD (Penyandang Disabilitas)",
+            //     "KBSP (Keluarga Bermasalah Sosial Psikologis)",
+            //     "TUNA SUSILA",
+            //     "GELANDANGAN",
+            //     "PENGEMIS",
+            //     "PEMULUNG",
+            //     "PERSOSEK (Perempuan Rawan Sosial Ekonomi)",
+            //     "MINORITAS (Kelompok Minoritas)",
+            //     "WBINLAP (Bekas Warga Binaan Lembaga Pemasyarakatan)",
+            //     "ODHA (Orang Dengan HIV/AIDS)",
+            //     "NAPZA (Korban Penyalahgunaan NAPZA)",
+            //     "TRAFICKING (Korban Traficking)",
+            //     "KEKERASAN (Korban Kekerasan)",
+            //     "MIGRAN (Pekerja Migran Bermasalah Sosial)",
+            //     "KAT (Komunitas Adat Terpencil)",
+            // ];
+
+            $data['kategori_ppkss'] = [
+                [
+                    'name' => 'Anak',
+                    'id' => '1',
+                    'value' => [
+                        'Anak balita terlantar',
+                        'Anak terlantar',
+                        'Anak yang berhadapan dengan hukum',
+                        'Anak jalanan',
+                        'Anak dengan kedisabilitasan (ADK)',
+                        'Anak yang menjadi korban tindak kekerasan atau diperlakukan salah',
+                        'Anak yang memerlukan perlindungan khusus',
+                    ],
+                ],
+                [
+                    'name' => 'Lanjut Usia',
+                    'id' => '2',
+                    'value' => [
+                        'Membutuhkan bantuan dalam aktifitas sehari – hari (Activity Daily Living)',
+                        'Tidak membutuhkan bantuan dalam aktifitas sehari – hari (Activity Daily Living)',
+                    ],
+                ],
+                [
+                    'name' => 'Penyandang disabilitas',
+                    'id' => '3',
+                    'value' => [
+                        'Fisik (terganggunya fungsi gerak)',
+                        'Intelektual (terganggunya fungsi pikir karena tingkat kecerdasan dibawah rata-rata)',
+                        'Mental (terganggunya fungsi pikir, emosi, dan perilaku) Skizofrenia',
+                        'Sensorik    (terganggunya    salah    satu    fungsi    dari panca indera)',
+                        'Ganda (Penyandang  Disabilitas  yang  mempunyai  dua  atau lebih  ragam  disabilitas, antara  lain  disabilitas rungu- wicara dan disabilitas netra-tuli)',
+                    ],
+                ],
+                [
+                    'name' => 'Bencana',
+                    'id' => '4',
+                    'value' => [
+                        'Tuna Susila',
+                        'Gelandangan',
+                        'Pengemis',
+                        'Pemulung',
+                        'Kelompok Minoritas',
+                        'Bekas Warga Binaan Lembaga Pemasyarakatan (BWBLP)',
+                        'Orang dengan HIV/AIDS (ODHA)',
+                        'Korban Penyalahgunaan  NAPZA',
+                        'Korban trafficking',
+                        'Korban tindak kekerasan',
+                        'Pekerja Migran Bermasalah Sosial (PMBS)',
+                        'Korban bencana alam',
+                        'Korban bencana sosial',
+                        'Perempuan rawan sosial ekonomi',
+                        'Fakir Miskin',
+                        'Keluarga bermasalah sosial psikologis',
+                        'Komunitas Adat Terpencil',
+                    ],
+                ],
+            ];
 
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
 
-            switch ($oldData->kategori) {
-                case 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)':
-                    $data['sdm'] = $this->_db->table('ref_sdm')->orderBy('jenis', 'ASC')->orderBy('nama', 'ASC')->get()->getResult();
-                    $response->data = view('silastri/adm/pengaduan/antrian/form-tanggapan-ppks', $data);
-                    break;
+            // switch ($oldData->kategori) {
+            //     case 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)':
+            $data['sdm'] = $this->_db->table('ref_sdm')->orderBy('jenis', 'ASC')->orderBy('nama', 'ASC')->get()->getResult();
+            $response->data = view('silastri/adm/pengaduan/asesmenppks/form-asesment-ppks', $data);
+            //         break;
 
-                default:
-                    $response->data = view('silastri/adm/pengaduan/antrian/form-tanggapan', $data);
-                    break;
-            }
+            //     default:
+            //         $response->data = view('silastri/adm/pengaduan/antrian/form-tanggapan', $data);
+            //         break;
+            // }
             return json_encode($response);
         }
     }
@@ -481,7 +598,135 @@ class Antrian extends BaseController
         }
     }
 
-    public function tanggapispt()
+    //_penghasilan_ekonomi
+    // 1.	lebih dari 3 jt        
+    // 2.	500 rb s.d. 3 jt   
+    // 3.	kurang dari 500  rb
+
+    //_penghasilan_makan_ekonomi
+    // 1.	sebagaian besar untuk investasi                     
+    // 2.	sebagian besar untuk konsumsi dasar            
+
+    //_makan_ekonomi
+    // 1.	tiga kali/hari                                        
+    // 2.	dua kali/hari 
+    // 3.	satu kali/perhari  
+
+    //_kemampuan_pakaian_ekonomi
+    // 1.	tiga kali pertahun                               
+    // 2.	dua kali pertahun            
+    // 3.	satu kali/tahun
+
+    //_tempat_tinggal_ekonomi
+    // 1.	Milik Sendiri
+    // 2.	Sewa
+    // 3.	Menumpang
+    // 4.	Lembaga
+    // 5.	Telantar/Menggelandang
+
+    //_luas_lantai_ekonomi
+    // 1.	lebih dari 8 m²
+    // 2.	sampai dengan 8 m²
+
+    //_jenis_lantai_ekonomi
+    // 1.	Marmer/granit
+    // 2.	Keramik
+    // 3.	Parket/vinil/permadani
+    // 4.	Ubin/tegel/teraso kondisi bagus
+    // 5.	Kayu/papan kualitas tinggi 
+    // 6.	Ubin/tegel/teraso kondisi jelek/rusak
+    // 7.	Kayu/papan kualitas rendah
+    // 8.	Semen/bata merah
+    // 9.	Bambu
+    // 10.	Tanah  
+
+    //_jenis_dinding_ekonomi
+    // 1.	Tembok kondisi bagus
+    // 2.	Plesteran anyaman bambu/kawat kondisi bagus
+    // 3.	Kayu/papan/gypsum/GRC/calciboard kondisi bagus
+    // 4.	Tembok kondisi jelek/rusak
+    // 5.	Plesteran anyaman bambu/kawat kondisi jelek/rusak
+    // 6.	Kayu/papan/gypsum/GRC/calciboard kondisi jelek/rusak
+    // 7.	Anyaman bamboo
+    // 8.	Batang kayu
+    // 9.	Bambu
+
+    //_jenis_atap_ekonomi
+    // 01.	Beton/genteng beton
+    // 02.	Genteng keramik
+    // 03.	Genteng metal
+    // 04.	Genteng tanah liat kondisi bagus
+    // 05.	Genteng tanah liat kondisi jelek
+    // 06.	Seng
+    // 07.	Sirap
+    // 08.	Jerami/ijuk/daun daunan/rumbia
+    // 09.	Asbes
+    // 10.	Lainnya
+
+    //_milik_wc_ekonomi
+    // 01.	Ada, digunakan hanya Anggota keluarga sendiri
+    // 02.	Ada, digunakan bersama Anggota Keluarga dari keluarga tertentu
+    // 03.	Ada, di MCK komunal
+    // 04.	Ada, di MCK umum/siapapun munggunakan
+    // 05.	Ada, Anggota Keluarga tidak menggunkan
+    // 06.	Tidak ada fasilitas
+
+    //_jenis_wc_ekonomi
+    // 01.	Duduk / Leher angsa        
+    // 02.	Plengesengan       
+    // 03.	Cemplung/cubluk         
+    // 04.	Tidak pakai
+
+    //_penerangan_ekonomi
+    // 01.	Listrik PLN > 2.200 volt ampere  
+    // 02.	Listrik PLN  2.200 volt ampere  
+    // 03.	Listrik PLN  1.300 volt ampere  
+    // 04.	Listrik non PLN > 2.200 volt ampere 
+    // 05.	Listrik non PLN  2.200 volt ampere  
+    // 06.	Listrik non PLN  1.300 volt ampere  
+    // 07.	Listrik PLN  900 volt ampere  
+    // 08.	Listrik Non PLN  900 volt ampere 
+    // 09.	Listrik PLN  450 volt ampere  
+    // 10.	Listrik Non PLN  450 volt ampere                 
+    // 11.	Bukan listrik
+
+    //_sumber_air_minum_ekonomi
+    // 1.	Air kemasan bermerk
+    // 2.	Air isi ulang
+    // 3.	Leding
+    // 4.	Sumur bor/pompa
+    // 5.	Sumur terlindung
+    // 6.	Sumur tak terlindung 
+    // 7.	Mata air terlindung
+    // 8.	Mata air tak terlindung
+    // 9.	Air Permukaan (sungai/danau/waduk/kolam/irigasi)
+    // 10.	Air hujan
+    // 11.	Lainnya
+
+    //_bahan_bakar_masak_ekonomi
+    // 1.	Listrik
+    // 2.	Gas > 3 kg
+    // 3.	Gas kota/biogas
+    // 4.	gas 3 kg
+    // 5.	Minyak tanah
+    // 6.	Briket
+    // 7.	Arang
+    // 8.	Kayu bakar
+    // 9.	Tidak memasak di rumah
+
+    //_berobat_ekonomi
+    // 1.	Dokter                                                  
+    // 2.	Mantri                                
+    // 3.	Puskesmas    
+
+    //_rata_pendidikan_ekonomi
+    // 1.	Perguruan tinggi         
+    // 2.	SMA/sederajat              
+    // 3.	SMP/sederajat             
+    // 4.	SD/sederajat
+    // 5.	Tidak bersekolah
+
+    public function simpanassesment()
     {
         if ($this->request->getMethod() != 'post') {
             $response = new \stdClass;
@@ -503,446 +748,455 @@ class Antrian extends BaseController
                     'required' => 'Nama tidak boleh kosong. ',
                 ]
             ],
-            // 'media_pengaduan' => [
+            // '_gambaran_kasus' => [
             //     'rules' => 'required|trim',
             //     'errors' => [
-            //         'required' => 'Media pengaduan tidak boleh kosong. ',
+            //         'required' => 'Gambaran kasus tidak boleh kosong. ',
             //     ]
             // ],
-            '_tgl_spt' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Tanggal SPT tidak boleh kosong. ',
-                ]
-            ],
-            '_lokasi_tujuan' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Lokasi tujuan SPT ke tidak boleh kosong. ',
-                ]
-            ],
-            'nama_spt.*' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Nama Peserta SPT tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Silahkan lengkapi isian wajib.";
-            // $this->validator->getError('_id')
-            //     . $this->validator->getError('_nama')
-            //     // . $this->validator->getError('media_pengaduan')
-            //     . $this->validator->getError('_uraian_permasalahan')
-            //     . $this->validator->getError('_pokok_permasalahan')
-            //     // . $this->validator->getError('_nama_pemilik_bansos.*')
-            //     // . $this->validator->getError('_nik_pemilik_bansos.*')
-            //     // . $this->validator->getError('keterangan_pemilik_bansos.*')
-            //     . $this->validator->getError('_jawaban')
-            //     . $this->validator->getError('_saran_tindaklanjut');
-            return json_encode($response);
-        } else {
-            $namesSpt = $this->request->getVar('nama_spt');
-
-            $Profilelib = new Profilelib();
-            $user = $Profilelib->user();
-            if ($user->status != 200) {
-                delete_cookie('jwt');
-                session()->destroy();
-                $response = new \stdClass;
-                $response->status = 401;
-                $response->message = "Session telah habis";
-                $response->redirrect = base_url('auth');
-                return json_encode($response);
-            }
-
-            $id = htmlspecialchars($this->request->getVar('_id'), true);
-
-            $oldData = $this->_db->table('_pengaduan')->where(['id' => $id])->get()->getRowArray();
-            if (!$oldData) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Pengaduan tidak ditemukan.";
-                return json_encode($response);
-            }
-
-            $granted = grantedBidangNaungan($user->data->id, $oldData['diteruskan_ke']);
-            if (!$granted) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Akses tidak diizinkan.";
-                return json_encode($response);
-            }
-
-            // $nama = htmlspecialchars($this->request->getVar('_nama'), true);
-            $tgl_spt = htmlspecialchars($this->request->getVar('_tgl_spt'), true);
-            $lokasi_tujuan = htmlspecialchars($this->request->getVar('_lokasi_tujuan'), true);
-
-            $date = date('Y-m-d H:i:s');
-            $upData = [];
-            $upData['updated_at'] = $date;
-            $upData['date_approve'] = $date;
-            $upData['admin_approve'] = $user->data->id;
-            $upData['status_aduan'] = 2;
-
-            $this->_db->transBegin();
-            $this->_db->table('_pengaduan')->where('id', $oldData['id'])->update($upData);
-            if ($this->_db->affectedRows() > 0) {
-                $dataTindakLanjut = [
-                    'id' => $oldData['id'],
-                    'user_id' => $user->data->id,
-                    'kode_aduan' => $oldData['kode_aduan'],
-                    'tgl_spt' => $tgl_spt,
-                    'lokasi_spt' => $lokasi_tujuan,
-                    'peserta_spt' => json_encode($namesSpt),
-                    'created_at' => $date,
-                ];
-
-                $this->_db->table('_pengaduan_tanggapan_spt')->insert($dataTindakLanjut);
-                if ($this->_db->affectedRows() > 0) {
-                    $riwayatLib = new Riwayatpengaduanlib();
-                    try {
-                        $riwayatLib->create($user->data->id, "Meneruskan pengaduan: " . $oldData['kode_aduan'] . ", dengan penerusan assesmen dengan SPT ke $lokasi_tujuan", "submit", "bx bx-send", "riwayat/detailpengaduan?token=" . $oldData['id'], $oldData['id']);
-                    } catch (\Throwable $th) {
-                    }
-                    // $this->_db->transCommit();
-                    // try {
-                    $m = new Merger();
-                    $dataFileGambar = file_get_contents(FCPATH . './uploads/logo-lamteng.png');;
-                    $base64 = "data:image/png;base64," . base64_encode($dataFileGambar);
-                    $dataFileBsre = file_get_contents(FCPATH . './assets/bsre.png');;
-                    $base64bsre = "data:image/png;base64," . base64_encode($dataFileBsre);
-
-                    $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_aduan'] . '&choe=UTF-8'));
-
-                    $html   =  '<html>
-                        <head>
-                            <link href="';
-                    $html   .=              base_url('uploads/bootstrap.css');
-                    $html   .=          '" rel="stylesheet">
-                        </head>
-                        <body>
-                            <div class="container">
-                                <div class="row">
-                                    <table class="table table-responsive" style="border: none;">
-                                        <tbody>
-                                            <tr style="justify-content: center; text-align: center;">
-                                                <td width="13%">
-                                                    <img class="image-responsive" width="100px" height="100px" src="';
-                    $html   .=                                      $base64;
-                    $html   .=                                  '"/>
-                                                </td>
-                                                <td width="2%">
-                                                    &nbsp;&nbsp;&nbsp;
-                                                </td>
-                                                <td width="85%" style="justify-content: center; text-align: center;">
-                                                    <h3 style="margin: 0rem;font-size: 18px; font-weight: 500; text-align: center; justify-content: center;">PEMERINTAH KABUPATEN LAMPUNG TENGAH</h3>
-                                                    <h3 style="margin: 0rem;font-size: 20px; font-weight: 500; text-align: center;">DINAS SOSIAL</h3>
-                                                    <h3 style="margin: 0rem;font-size: 18px; font-weight: 500; text-align: center;">KABUPATEN LAMPUNG TENGAH</h3>
-                                                    <h4 style="margin: 0rem;font-size: 12px;font-weight: 400;" text-align: center;>Jl. Hi. Muchtar Gunung Sugih 34161 Telp. (0725) 529786 Fax. 529787</h4>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row">
-                                    <div style="text-align: center;margin-top: 30px;">
-                                        <h3 style="margin: 0rem;font-size: 14px;"><u>SURAT PERINTAH TUGAS</u></h3>
-                                        <p style="margin: 0rem;padding:0rem;">Nomor: 094/        /D.a.VI.07.e/' . date('Y') . '</p>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-left: 30px;margin-right:30px;">
-                                    <div style="text-align: justify;margin-top: 10px;">
-                                        <p style="margin-bottom: 5px; margin-top: 0px; font-size: 12px; padding-top: 0px; padding-bottom: 0px;">
-                                            <table style="border: none;font-size: 12px; margin-bottom: 0px; margin-top: 0px; padding-bottom: 0px; padding-top: 0px;">
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="font-size: 12px;vertical-align: top;">
-                                                            Dasar
-                                                        </td>
-                                                        <td style="font-size: 12px;vertical-align: top;">&nbsp;: &nbsp;</td>
-                                                        <td style="font-size: 12px;vertical-align: top;">Peraturan Menteri Sosial Republik Indonesia No. 09 Tahun 2018tentang Standar Teknis Pelayanan Dasar pada Standar Pelayanan Minimal Bidang Sosial di Daerah Provinsi dan di Daerah Kabupaten/Kota</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </p>
-                                        <p style="margin-top: 5px;font-size: 12px;vertical-align: top; text-align: center; margin-bottom: 0px;"><b>M E M E R I N T A H K A N</b></p>
-                                        <p style="margin-bottom: 15px; margin-top: 0px; font-size: 12px; padding-top: 0px; padding-bottom: 0px;">
-                                            <table style="border: none;font-size: 12px; margin-bottom: 0px; margin-top: 0px; padding-bottom: 0px; padding-top: 0px;">
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="font-size: 12px;vertical-align: top;">
-                                                            Kepada
-                                                        </td>
-                                                        <td style="font-size: 12px;vertical-align: top;">&nbsp;: &nbsp;</td>
-                                                        <td style="font-size: 12px;vertical-align: top;">
-                                                            &nbsp;
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="font-size: 12px;vertical-align: top;">
-                                                            &nbsp;
-                                                        </td>
-                                                        <td style="font-size: 12px;vertical-align: top;">&nbsp;</td>
-                                                        <td style="font-size: 12px;vertical-align: top;">
-                                                            <table border="0">';
-                    foreach ($namesSpt as $key => $value) {
-                        $pesertaDetail = getNamaSdmFromNik($value);
-                        $html .=                                '<tr style="vertical-align: top;margin-bottom: 15px;">
-                                                                    <td>' . $key + 1 . '</td>
-                                                                    <td>Nama</td>
-                                                                    <td>&nbsp;:&nbsp;</td>
-                                                                    <td>' . ($pesertaDetail ? ucwords($pesertaDetail->nama) : '-') . '</td>
-                                                                </tr>
-                                                                <tr style="vertical-align: top;margin-bottom: 15px;">
-                                                                    <td>&nbsp;</td>
-                                                                    <td>Pangkat / Golongan</td>
-                                                                    <td>&nbsp;:&nbsp;</td>
-                                                                    <td>' . ($pesertaDetail ? ($pesertaDetail->pangkat_golongan == NULL || $pesertaDetail->pangkat_golongan == "" ? '-' : $pesertaDetail->pangkat_golongan) : '-') . '</td>
-                                                                </tr>
-                                                                <tr style="vertical-align: top;margin-bottom: 15px;">
-                                                                    <td>&nbsp;</td>
-                                                                    <td>NIP/No Id TKSK/KP</td>
-                                                                    <td>&nbsp;:&nbsp;</td>
-                                                                    <td>' . ($pesertaDetail ? $pesertaDetail->nip : '-') . '</td>
-                                                                </tr>
-                                                                <tr style="vertical-align: top;margin-bottom: 15px;">
-                                                                    <td>&nbsp;</td>
-                                                                    <td>Jabatan</td>
-                                                                    <td>&nbsp;:&nbsp;</td>
-                                                                    <td>' . ($pesertaDetail ? $pesertaDetail->jabatan : '-') . '</td>
-                                                                </tr>
-                                                                ';
-                    }
-                    $html .=                                '</table>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </p>
-                                        <p style="margin-bottom: 15px; margin-top: 0px; font-size: 12px; padding-top: 0px; padding-bottom: 0px;">
-                                            <table style="border: none;font-size: 12px; margin-bottom: 0px; margin-top: 0px; padding-bottom: 0px; padding-top: 0px;">
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="font-size: 12px;vertical-align: top;">
-                                                            Untuk
-                                                        </td>
-                                                        <td style="font-size: 12px;vertical-align: top;">&nbsp;: &nbsp;</td>
-                                                        <td style="font-size: 12px;vertical-align: top;">
-                                                        Melaksanakan asesmen kepada pemerlu pelayanan kesejahteraan sosial pada hari <b>' . hari(strtotime($tgl_spt)) . '</b> tanggal <b>' . tgl_indo($tgl_spt) . '</b> di <b>' . ucwords($lokasi_tujuan) . '</b>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="font-size: 12px;vertical-align: top;">
-                                                            Catatan
-                                                        </td style="font-size: 12px;vertical-align: top;">
-                                                        <td>&nbsp;: &nbsp;</td>
-                                                        <td>
-                                                        &nbsp;
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="3" style="font-size: 12px;vertical-align: top;">
-                                                        <ol style="font-size: 12px;vertical-align: top;">
-                                                            <li style="font-size: 12px;vertical-align: top;margin-bottom: 5px;">
-                                                                Surat Perintah ini diberikan kepada yang bersangkutan untuk dilaksanakan dengan penuh rasa tanggung jawab.
-                                                            </li>
-                                                            <li style="font-size: 12px;vertical-align: top;margin-bottom: 5px;">
-                                                                Melaporkan hasil pelaksanaan tugas kepada Kepala Dinas Sosial Kabupaten Lampung Tengah.
-                                                            </li>
-                                                            <li style="font-size: 12px;vertical-align: top;margin-bottom: 5px;">
-                                                                Surat Perintah ini berlaku sejak tanggal dikeluarkan dan apabila dikemudian hari terdapat kekeliruan akan diperbaiki sebagaimana mestinya.
-                                                            </li>
-                                                        </ol>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </p>
-                                        <p style="margin-top: 20px;font-size: 12px;vertical-align: top;">
-                                            Demikianlah Surat Tugas ini dibuat untuk dapat dilaksanakan sebagaimana mestinya.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-left: 30px;margin-right:30px;">
-                                    <div>
-                                        <table style="width: 100%;max-width: 100%;" border="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td style="width: 60%"><center><img class="image-responsive" width="110px" height="110px" src="' . $qrCode . '"/></center></td>
-                                                    <td style="width: 40%">
-                                                        <br>
-                                                        <br>
-                                                        <span style="font-size: 12px;">&nbsp;dikeluarkan di  :  Gunung Sugih</span><br>
-                                                        <span style="font-size: 12px;">&nbsp;Pada Tanggal    &nbsp;:  ';
-                    $html   .=                                          tgl_indo(date('Y-m-d'));
-                    $html   .=                                      '</span><br>
-                                                        <table border="0" style="padding: 0px; background-color: #fff;">
-                                                            <tr>
-                                                                <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">Ditandatangani secara elektronik oleh : &nbsp;&nbsp;</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">Plt. Kepala Dinas Sosial</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">Kabupaten Lampung Tengah</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 0; padding-left: 0px; padding-top: 5px; padding-bottom: 5px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">
-                                                                    <img src="' . $base64bsre . '" alt="" height="65px">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;"><b><u>ARI NUGRAHA MUKTI, S.STP.,M.M</u></b></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">NIP. 19860720 200501 1 004</td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </body>
-                    </html>';
-
-                    try {
-                        $dompdf = new DOMPDF();
-                        $dompdf->setPaper('F4', 'potrait');
-                        $dompdf->loadHtml($html);
-                        $dompdf->render();
-                        $m->addRaw($dompdf->output());
-                        // unset($dompdf);
-
-                        // $dompdf1 = new DOMPDF();
-                        // // $dompdf = new Dompdf();
-                        // $dompdf1->set_paper('F4', 'landscape');
-                        // $dompdf1->load_html($lHtml);
-                        // $dompdf1->render();
-                        // $m->addRaw($dompdf1->output());
-
-                        $dir = FCPATH . "upload/spt/pdf";
-                        $fileNya = $dir . '/' . $oldData['kode_aduan'] . '.pdf';
-
-                        file_put_contents($fileNya, $m->merge());
-
-                        sleep(3);
-                        // } catch (\Throwable $th) {
-                        //     //throw $th;
-                        // }
-                        // header('Content-Type: application/pdf');
-                        // header('Content-Disposition: attachment; filename="' . basename($fileNya) . '"');
-                        // header('Content-Length: ' . filesize($fileNya));
-                        // readfile($fileNya);
-
-                        $this->_db->transCommit();
-                        $response = new \stdClass;
-                        $response->status = 200;
-                        $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
-                        $response->filenya = base_url('upload/spt/pdf') . '/' . $oldData['kode_aduan'] . '.pdf';
-                        $response->filename = $fileNya;
-                        $response->message = "Tanggapan Aduan " . $oldData['kode_aduan'] . " berhasil disimpan.";
-                        return json_encode($response);
-                    } catch (\Throwable $th) {
-                        $this->_db->transRollback();
-                        $response = new \stdClass;
-                        $response->status = 400;
-                        $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
-                        return json_encode($response);
-                    }
-                } else {
-                    $this->_db->transRollback();
-                    $response = new \stdClass;
-                    $response->status = 400;
-                    $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
-                    return json_encode($response);
-                }
-            } else {
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
-                return json_encode($response);
-            }
-        }
-    }
-
-    public function tanggapi()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            '_id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-            '_nama' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-            // 'media_pengaduan' => [
+            // '_kondisi_kesehatan' => [
             //     'rules' => 'required|trim',
             //     'errors' => [
-            //         'required' => 'Media pengaduan tidak boleh kosong. ',
+            //         'required' => 'Kondisi kesehatan tidak boleh kosong. ',
             //     ]
             // ],
-            '_uraian_permasalahan' => [
+            // '_kondisi_perekonomian_keluarga' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Kondisi perekonomian keluarga tidak boleh kosong. ',
+            //     ]
+            // ],
+            // '_permasalahan' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Permasalahan tidak boleh kosong. ',
+            //     ]
+            // ],
+            // '_identifikasi_kebutuhan' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Identifikasi kebutuhan tidak boleh kosong. ',
+            //     ]
+            // ],
+            // '_intervensi_telah_dilakukan' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Interversi yang telah dilakukan tidak boleh kosong. ',
+            //     ]
+            // ],
+            // '_saran_tindak_lanjut' => [
+            //     'rules' => 'required|trim',
+            //     'errors' => [
+            //         'required' => 'Saran / rencana tindak lanjut tidak boleh kosong. ',
+            //     ]
+            // ],
+            '_id_petugas_assesment' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Uraian Permasalahan tidak boleh kosong. ',
+                    'required' => 'Petugas assesment tidak boleh kosong. ',
                 ]
             ],
-            '_pokok_permasalahan' => [
+            '_tgl_assesment' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Pokok permasalahan ke tidak boleh kosong. ',
+                    'required' => 'Tanggal assesment tidak boleh kosong. ',
                 ]
             ],
-            'nik_pemilik_bansos.*' => [
-                'rules' => 'required',
+            '_provinsi_ktp' => [
+                'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'NIK pemilik bansos tidak boleh kosong. ',
+                    'required' => 'Provinsi KTP tidak boleh kosong. ',
                 ]
             ],
-            'nama_pemilik_bansos.*' => [
-                'rules' => 'required',
+            '_kabupaten_ktp' => [
+                'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Nama pemilik bansos tidak boleh kosong. ',
+                    'required' => 'Kabupaten KTP tidak boleh kosong. ',
                 ]
             ],
-            'keterangan_pemilik_bansos.*' => [
-                'rules' => 'required',
+            '_kecamatan_ktp' => [
+                'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Keterangan pemilik bansos tidak boleh kosong. ',
+                    'required' => 'kecamatan KTP tidak boleh kosong. ',
                 ]
             ],
+            '_kelurahan_ktp' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'kelurahan KTP tidak boleh kosong. ',
+                ]
+            ],
+            '_alamat_ktp' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'alamat KTP tidak boleh kosong. ',
+                ]
+            ],
+            '_provinsi_domisili' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Provinsi domisili tidak boleh kosong. ',
+                ]
+            ],
+            '_kabupaten_domisili' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kabupaten domisili tidak boleh kosong. ',
+                ]
+            ],
+            '_kecamatan_domisili' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'kecamatan domisili tidak boleh kosong. ',
+                ]
+            ],
+            '_kelurahan_domisili' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'kelurahan domisili tidak boleh kosong. ',
+                ]
+            ],
+            '_alamat_domisili' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'alamat domisili tidak boleh kosong. ',
+                ]
+            ],
+            '_nama_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_tempat_lahir_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tempat lahir PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_tgl_lahir_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal lahir PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_jenis_kelamin_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis kelamin PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_agama_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Agama PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_nik_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NIK PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_kk_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'KK PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_akta_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Akta PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_dtks_identitas' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'PPKS sudah masuk DTKS tidak boleh kosong. ',
+                ]
+            ],
+            // 'nik_pemilik_bansos.*' => [
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => 'NIK pemilik bansos tidak boleh kosong. ',
+            //     ]
+            // ],
+            // 'nama_pemilik_bansos.*' => [
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => 'Nama pemilik bansos tidak boleh kosong. ',
+            //     ]
+            // ],
+            // 'keterangan_pemilik_bansos.*' => [
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => 'Keterangan pemilik bansos tidak boleh kosong. ',
+            //     ]
+            // ],
 
-            '_jawaban' => [
+            '_pendidikan_terakhir_identitas' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Jawaban ke tidak boleh kosong. ',
+                    'required' => 'Pendidikan terakhir PPKS ke tidak boleh kosong. ',
                 ]
             ],
-            '_saran_tindaklanjut' => [
+            '_status_kawin_identitas' => [
                 'rules' => 'required|trim',
                 'errors' => [
-                    'required' => 'Saran tindaklanjut ke tidak boleh kosong. ',
+                    'required' => 'Status kawin PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_nama_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Nama pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_nohp_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'No hp pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_hubungan_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Hubungan pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_tempat_lahir_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tempat lahir pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_tgl_lahir_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tanggal lahir pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_jenis_kelamin_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis kelamin pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_agama_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Agama pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_nik_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'NIK pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_kk_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'KK pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_dtks_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pengampu PPKS sudah masuk DTKS tidak boleh kosong. ',
+                ]
+            ],
+            '_pendidikan_terakhir_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pendidikan terakhir pengampu PPKS ke tidak boleh kosong. ',
+                ]
+            ],
+            '_status_kawin_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Status kawin pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_pekerjaan_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pekerjaan pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_pengeluaran_perbulan_pengampu' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Pengeluaran perbulan pengampu PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_kategori_ppks' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kategori PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_kondisi_fisik_ppks' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kondisi fisik PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_detail_kondisi_fisik_ppks' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Penjelasan kondisi fisik PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_penghasilan_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Penghasilan PPKS perbulan tidak boleh kosong. ',
+                ]
+            ],
+            '_penghasilan_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Penghasilan PPKS perbulan tidak boleh kosong. ',
+                ]
+            ],
+            '_penghasilan_makan_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Penghasilan dan makan PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_makan_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Makan dalam sehari PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_kemampuan_pakaian_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kemampuan membeli pakaian dalam setahun PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_tempat_tinggal_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_tinggal_bersama_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'PPKS tinggal bersama tidak boleh kosong. ',
+                ]
+            ],
+            '_luas_lantai_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Luas lantai tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_jenis_lantai_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis lantai tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_jenis_dinding_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis dinding tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_jenis_atap_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis atap tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_milik_wc_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Memiliki WC pada tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_jenis_wc_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Jenis WC pada tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_penerangan_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Sumber penerangan pada tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_sumber_air_minum_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Sumber air minum pada tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_bahan_bakar_masak_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Bahan bakar memasak pada tempat tinggal PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_berobat_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kemampuan berobat PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_rata_pendidikan_ekonomi' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Rata-rata pendidikan pada keluarga PPKS tidak boleh kosong. ',
+                ]
+            ],
+            '_catatan_tambahan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Catatan tambahan tidak boleh kosong. ',
+                ]
+            ],
+            '_gambaran_kasus' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Gambaran kasus tidak boleh kosong. ',
+                ]
+            ],
+            '_kondisi_kesehatan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Kondisi perekonomian keluarga tidak boleh kosong. ',
+                ]
+            ],
+            '_permasalahan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Permasalahan tidak boleh kosong. ',
+                ]
+            ],
+            '_identifikasi_kebutuhan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Identifikasi kebutuhan tidak boleh kosong. ',
+                ]
+            ],
+            '_intervensi_telah_dilakukan' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Intervensi yang telah dilakukan tidak boleh kosong. ',
+                ]
+            ],
+            '_saran_tindak_lanjut' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Saran / Rencana tindak lanjut tidak boleh kosong. ',
                 ]
             ],
         ];
@@ -1494,6 +1748,50 @@ class Antrian extends BaseController
                 $response = new \stdClass;
                 $response->status = 400;
                 $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function getKelurahan()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $kels = $this->_db->table('ref_kelurahan')->where('id_kecamatan', $id)->orderBy('kelurahan', 'ASC')->get()->getResult();
+
+            if (count($kels) > 0) {
+                $x['kels'] = $kels;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('portal/ref_kelurahan', $x);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
                 return json_encode($response);
             }
         }
