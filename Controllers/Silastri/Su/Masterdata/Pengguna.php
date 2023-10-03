@@ -375,7 +375,7 @@ class Pengguna extends BaseController
         } else {
             $id = htmlspecialchars($this->request->getVar('action'), true);
 
-            $roles = $this->_db->table('_role_user')->whereNotIn('id', [1, 6, 7])->get()->getResult();
+            $roles = $this->_db->table('_role_user')->whereNotIn('id', [1])->get()->getResult();
             $wilayahs = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'ASC')->get()->getResult();
 
             if (count($roles) > 0 && count($wilayahs) > 0) {
