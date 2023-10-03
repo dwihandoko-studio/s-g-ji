@@ -111,9 +111,9 @@
     </form>
 
     <script>
-        initSelect2("_pekerjaan", ".content-aktivasiModal");
-        initSelect2("_kecamatan", ".content-aktivasiModal");
-        initSelect2("_kelurahan", ".content-aktivasiModal");
+        initSelect2("_pekerjaan", ".content-aktivasiCompleteModal");
+        initSelect2("_kecamatan", ".content-aktivasiCompleteModal");
+        initSelect2("_kelurahan", ".content-aktivasiCompleteModal");
 
         function changePekerjaan(event) {
             const color = $(event).attr('name');
