@@ -854,6 +854,7 @@ class Antrian extends BaseController
                         $this->_db->transRollback();
                         $response = new \stdClass;
                         $response->status = 400;
+                        $response->error = var_dump($th);
                         $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
                         return json_encode($response);
                     }
@@ -861,6 +862,7 @@ class Antrian extends BaseController
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
+                    $response->error = "Gagal Insert SPT";
                     $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
                     return json_encode($response);
                 }
@@ -868,6 +870,7 @@ class Antrian extends BaseController
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;
+                $response->error = "gagal pengaduan";
                 $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
                 return json_encode($response);
             }
