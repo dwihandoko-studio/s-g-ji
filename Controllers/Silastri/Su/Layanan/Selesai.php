@@ -3,7 +3,7 @@
 namespace App\Controllers\Silastri\Su\Layanan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Su\Layanan\ProsesModel;
+use App\Models\Silastri\Su\Layanan\SelesaiModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -13,7 +13,7 @@ use App\Libraries\Helplib;
 use App\Libraries\Silastri\Ttelib;
 use App\Libraries\Uuid;
 
-class Proses extends BaseController
+class Selesai extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -30,7 +30,7 @@ class Proses extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new ProsesModel($request);
+        $datamodel = new SelesaiModel($request);
 
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
@@ -72,12 +72,12 @@ class Proses extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/su/layanan/proses/data'));
+        return redirect()->to(base_url('silastri/su/layanan/selesai/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'Proses Permohonan Layanan';
+        $data['title'] = 'Selesai Permohonan Layanan';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -90,7 +90,7 @@ class Proses extends BaseController
 
         // $data['jeniss'] = ['Surat Keterangan DTKS untuk Pengajuan PIP', 'Surat Keterangan DTKS untuk Pendaftaran PPDB', 'Surat Keterangan DTKS untuk Pengajuan PLN', 'Lainnya'];
 
-        return view('silastri/su/layanan/proses/index', $data);
+        return view('silastri/su/layanan/selesai/index', $data);
     }
 
     public function detail()
@@ -99,7 +99,7 @@ class Proses extends BaseController
             return view('404', ['error' => "Akses tidak diizinkan."]);
         }
 
-        $data['title'] = 'Detail Proses Permohonan Layanan';
+        $data['title'] = 'Detail Selesai Permohonan Layanan';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -129,11 +129,11 @@ class Proses extends BaseController
             ->join('_profil_users_tb b', 'b.id = a.user_id')
             ->join('ref_kecamatan c', 'c.id = b.kecamatan')
             ->join('ref_kelurahan d', 'd.id = b.kelurahan')
-            ->where("a.id = '$id' AND (a.status_permohonan = 1 OR a.status_permohonan = 2)")->get()->getRowObject();
+            ->where(['a.id' => $id, 'a.status_permohonan' => 5])->get()->getRowObject();
 
         if ($current) {
             $data['data'] = $current;
-            return view('silastri/su/layanan/proses/detail-page', $data);
+            return view('silastri/su/layanan/selesai/detail-page', $data);
         } else {
             return view('404', ['error' => "Data tidak ditemukan."]);
         }
@@ -456,7 +456,7 @@ class Proses extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/su/layanan/proses/tolak', $data);
+            $response->data = view('silastri/su/layanan/selesai/tolak', $data);
             return json_encode($response);
         }
     }

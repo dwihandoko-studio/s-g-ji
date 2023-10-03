@@ -864,6 +864,28 @@ function grantedBidangNaungan($user_id, $bidang)
 	return FALSE;
 }
 
+function grantedCanAssesment($nik, $niks)
+{
+	$niksnya = json_decode($niks);
+	if (in_array($nik, $niksnya)) {
+		return TRUE;
+	}
+
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	// $db      = \Config\Database::connect();
+
+	// $dats = $db->table('hak_access_pengaduan')
+	// 	->where('user_id', $user_id)
+	// 	->where('bidang', $bidang)
+	// 	->countAllResults();
+
+	// if ($dats > 0) {
+	// 	return TRUE;
+	// }
+
+	return FALSE;
+}
+
 function getDetailGuruNaungan($idPtk)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
@@ -1713,4 +1735,510 @@ function getLayananSilastri()
 	$layanan = json_decode(file_get_contents(FCPATH . "uploads/layanans_silastri.json"), true);
 	$data = $layanan['layanans'];
 	return $data;
+}
+
+function getNameKategoriPPKS($val)
+{
+	try {
+		$vals = explode("--", $val);
+		return $vals[1];
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNamePenghasilanEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Lebih dari 3 jt';
+				break;
+			case '2':
+				return '500 rb s.d 3 jt';
+				break;
+			case '3':
+				return 'Kurang dari 500 rb';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNamePenghasilanMakanEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Sebagian besar untuk investasi';
+				break;
+			case '2':
+				return 'Sebagian besar untuk konsumsi dasar';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameMakanEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Tiga kali/hari';
+				break;
+			case '2':
+				return 'Dua kali/hari';
+				break;
+			case '3':
+				return 'Satu kali/hari';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameKemampuanPakaianEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Tiga kali/tahun';
+				break;
+			case '2':
+				return 'Dua kali/pertahun';
+				break;
+			case '3':
+				return 'Satu kali/pertahun';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameTempatTinggalEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Milik Sendiri';
+				break;
+			case '2':
+				return 'Sewa';
+				break;
+			case '3':
+				return 'Menumpang';
+				break;
+			case '4':
+				return 'Lembaga';
+				break;
+			case '5':
+				return 'Telantar/Menggelandang';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameLuasLantaiEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Lebih dari 8 m²';
+				break;
+			case '2':
+				return 'Sampai dengan 8 m²';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameJenisLantaiEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Marmer/granit';
+				break;
+			case '2':
+				return 'Keramik';
+				break;
+			case '3':
+				return 'Parket/vinil/permadani';
+				break;
+			case '4':
+				return 'Ubin/tegel/teraso kondisi bagus';
+				break;
+			case '5':
+				return 'Kayu/papan kualitas tinggi';
+				break;
+			case '6':
+				return 'Ubin/tegel/teraso kondisi jelek/rusak';
+				break;
+			case '7':
+				return 'Kayu/papan kualitas rendah';
+				break;
+			case '8':
+				return 'Semen/bata merah';
+				break;
+			case '9':
+				return 'Bambu';
+				break;
+			case '10':
+				return 'Tanah';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameJenisDindingEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Tembok kondisi bagus';
+				break;
+			case '2':
+				return 'Plesteran anyaman bambu/kawat kondisi bagus';
+				break;
+			case '3':
+				return 'Kayu/papan/gypsum/GRC/calciboard kondisi bagus';
+				break;
+			case '4':
+				return 'Tembok kondisi jelek/rusak';
+				break;
+			case '5':
+				return 'Plesteran anyaman bambu/kawat kondisi jelek/rusak';
+				break;
+			case '6':
+				return 'Kayu/papan/gypsum/GRC/calciboard kondisi jelek/rusak';
+				break;
+			case '7':
+				return 'Anyaman bamboo';
+				break;
+			case '8':
+				return 'Batang kayu';
+				break;
+			case '9':
+				return 'Bambu';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameJenisAtapEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Beton/genteng beton';
+				break;
+			case '2':
+				return 'Genteng keramik';
+				break;
+			case '3':
+				return 'Genteng metal';
+				break;
+			case '4':
+				return 'Genteng tanah liat kondisi bagus';
+				break;
+			case '5':
+				return 'Genteng tanah liat kondisi jelek';
+				break;
+			case '6':
+				return 'Seng';
+				break;
+			case '7':
+				return 'Sirap';
+				break;
+			case '8':
+				return 'Jerami/ijuk/daun daunan/rumbia';
+				break;
+			case '9':
+				return 'Asbes';
+				break;
+			case '9':
+				return 'Lainnya';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameMilikWcEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Ada, digunakan hanya Anggota keluarga sendiri';
+				break;
+			case '2':
+				return 'Ada, digunakan bersama Anggota Keluarga dari keluarga tertentu';
+				break;
+			case '3':
+				return 'Ada, di MCK komunal';
+				break;
+			case '4':
+				return 'Ada, di MCK umum/siapapun munggunakan';
+				break;
+			case '5':
+				return 'Ada, Anggota Keluarga tidak menggunkan';
+				break;
+			case '6':
+				return 'Tidak ada fasilitas';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameJenisWcEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Duduk / Leher angsa';
+				break;
+			case '2':
+				return 'Plengsengan';
+				break;
+			case '3':
+				return 'Cemplung / Cubluk';
+				break;
+			case '4':
+				return 'Tidak pakai';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNamePeneranganEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Listrik PLN > 2.200 volt ampere ';
+				break;
+			case '2':
+				return 'Listrik PLN  2.200 volt ampere';
+				break;
+			case '3':
+				return 'Listrik PLN  1.300 volt ampere';
+				break;
+			case '4':
+				return 'Listrik non PLN > 2.200 volt ampere';
+				break;
+			case '5':
+				return 'Listrik non PLN  2.200 volt ampere';
+				break;
+			case '6':
+				return 'Listrik non PLN  1.300 volt ampere';
+				break;
+			case '7':
+				return 'Listrik PLN  900 volt ampere';
+				break;
+			case '8':
+				return 'Listrik Non PLN  900 volt ampere';
+				break;
+			case '9':
+				return 'Listrik PLN  450 volt ampere';
+				break;
+			case '10':
+				return 'Listrik Non PLN  450 volt ampere';
+				break;
+			case '11':
+				return 'Bukan Listrik';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameSumberAirMinumEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Air kemasan bermerk';
+				break;
+			case '2':
+				return 'Air isi ulang';
+				break;
+			case '3':
+				return 'Leding';
+				break;
+			case '4':
+				return 'Sumur bor/pompa';
+				break;
+			case '5':
+				return 'Sumur terlindung';
+				break;
+			case '6':
+				return 'Sumur tak terlindung';
+				break;
+			case '7':
+				return 'Mata air terlindung';
+				break;
+			case '8':
+				return 'Mata air tak terlindung';
+				break;
+			case '9':
+				return 'Air Permukaan (sungai/danau/waduk/kolam/irigasi)';
+				break;
+			case '10':
+				return 'Air Huja';
+				break;
+			case '11':
+				return 'Lainnya';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameBahanBakarMasakEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Listrik';
+				break;
+			case '2':
+				return 'Gas > 3 kg';
+				break;
+			case '3':
+				return 'Gas kota/biogas';
+				break;
+			case '4':
+				return 'gas 3 kg';
+				break;
+			case '5':
+				return 'Minyak tanah';
+				break;
+			case '6':
+				return 'Briket';
+				break;
+			case '7':
+				return 'Arang';
+				break;
+			case '8':
+				return 'Kayu Bakar';
+				break;
+			case '9':
+				return 'Tidak memasak dirumah';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameBerobatEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Dokter';
+				break;
+			case '2':
+				return 'Mantri';
+				break;
+			case '3':
+				return 'Puskesmas';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getNameRataPendidikanEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '1':
+				return 'Perguruan Tinggi';
+				break;
+			case '2':
+				return 'SMA/Sederajat';
+				break;
+			case '3':
+				return 'SMP/Sederajat';
+				break;
+			case '4':
+				return 'SD/Sederajat';
+				break;
+			case '5':
+				return 'Tidak bersekolah';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
 }

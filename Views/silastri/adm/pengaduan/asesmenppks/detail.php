@@ -276,13 +276,13 @@
             const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
             const kode = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->kode_aduan)) ?>';
             Swal.fire({
-                title: 'Apakah anda yakin ingin menanggapi pengaduan layanan ini?',
-                text: "Tanggapi Pengaduan : <?= $data->kategori ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?> , dengan Kode Aduan: <?= $data->kode_aduan ?>",
+                title: 'Apakah anda yakin ingin melanjutkan assesment layanan ini?',
+                text: "Assesment Pengaduan : <?= $data->kategori ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?> , dengan Kode Aduan: <?= $data->kode_aduan ?>",
                 showCancelButton: true,
                 icon: 'question',
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Tanggapi!'
+                confirmButtonText: 'Ya, Assesment!'
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
@@ -320,7 +320,7 @@
                                     );
                                 }
                             } else {
-                                $('#content-approveModalLabel').html('TANGGAPI PENGADUAN LAYANAN <?= $data->kategori ?> dari ' + nama + ', dengan Kode Aduan: ' + kode);
+                                $('#content-approveModalLabel').html('ASSESMENT PENGADUAN LAYANAN <?= $data->kategori ?> dari ' + nama + ', dengan Kode Aduan: ' + kode);
                                 $('.contentApproveBodyModal').html(resul.data);
                                 $('.content-approveModal').modal({
                                     backdrop: 'static',

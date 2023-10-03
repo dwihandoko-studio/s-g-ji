@@ -5,7 +5,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <!-- <li class="menu-title" key="t-menu">Menu</li> -->
                 <li <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "home") ? ' class="mm-active"' : '' ?>>
-                    <a href="javascript: void(0);" class="waves-effect <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "home") ? ' mm-active' : '' ?>">
+                    <a href="<?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "home") ? 'javascript: void(0);' : base_url('silastri/adm/home') ?>" class="waves-effect <?= ($uri->getSegment(2) == "adm" && $uri->getSegment(3) == "home") ? ' mm-active' : '' ?>">
                         <i class="bx bx-home-circle"></i>
                         <span key="t-dashboards">Dashboard</span>
                     </a>

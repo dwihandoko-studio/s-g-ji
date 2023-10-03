@@ -108,8 +108,10 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Close</button>
-        <button type="button" onclick="actionTolak(this)" class="btn btn-danger waves-effect waves-light">Tolak Permohonan</button>
-        <button type="button" onclick="actionApprove(this)" class="btn btn-success waves-effect waves-light">Proses Permohonan</button>
+        <?php if ($data->status_permohonan !== 2) { ?>
+            <button type="button" onclick="actionTolak(this)" class="btn btn-danger waves-effect waves-light">Tolak Permohonan</button>
+            <button type="button" onclick="actionApprove(this)" class="btn btn-success waves-effect waves-light">Proses Permohonan</button>
+        <?php } ?>
     </div>
     <script>
         function actionTolak(e) {

@@ -2,13 +2,13 @@
     <form id="tindakLanjutPengaduanForm">
         <div class="modal-body">
             <input type="hidden" id="_id" name="_id" value="<?= $data->id ?>" />
-            <input type="hidden" id="_id_petugas_assesment" name="_id_petugas_assesment" value="<?= $petugas ? $petugas->id : '' ?>" />
+            <input type="hidden" id="_id_petugas_assesment" name="_id_petugas_assesment" value="<?= $petugas ? $petugas->nik : '' ?>" />
             <input type="hidden" id="_nama" name="_nama" value="<?= str_replace('&#039;', "`", str_replace("'", "`", $nama)) ?>" />
             <div class="row">
                 <h2>DATA PENUGASAN</h2>
                 <div class="col-lg-6">
                     <label class="col-form-label">Tanggal Assesment:</label>
-                    <input type="text" class="form-control" id="_tgl_asesment" name="_tgl_asesment" value="<?= date("Y-m-d") ?>" readonly />
+                    <input type="text" class="form-control" id="_tgl_asessment" name="_tgl_asessment" value="<?= date("Y-m-d") ?>" readonly />
                 </div>
                 <div class="col-lg-6">
                     <label class="col-form-label">Nama Petugas Assesment:</label>
@@ -152,7 +152,7 @@
                 </div>
                 <div class="col-lg-6">
                     <label class="col-form-label">NIK**:</label>
-                    <input type="text" class="form-control" id="_nik_identitas" name="_nik_identitas" />
+                    <input type="text" class="form-control" id="_nik_identitas" name="_nik_identitas" value="<?= $data->nik_aduan ?>" />
                     <div class="help-block _nik_identitas"></div>
                 </div>
                 <div class="col-lg-6">
@@ -189,7 +189,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td><input class="form-control" type="date" id="waktu_bansos_identitas_0" name="waktu_bansos_identitas[]" />
                                     <div class="help-block waktu_bansos_identitas_0"></div>
                                 </td>
@@ -209,7 +209,7 @@
                                     <div class="help-block keterangan_identitas_0"></div>
                                 </td>
                                 <td>&nbsp;</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                     <br>
@@ -333,7 +333,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td><input class="form-control" type="text" id="nama_bansos_pengampu_0" name="nama_bansos_pengampu[]" />
                                     <div class="help-block nama_bansos_pengampu_0"></div>
                                 </td>
@@ -341,7 +341,7 @@
                                     <div class="help-block tahun_bansos_pengampu_0"></div>
                                 </td>
                                 <td>&nbsp;</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                     <br>
@@ -703,6 +703,11 @@
                     <div class="help-block _kondisi_kesehatan"></div>
                 </div>
                 <div class="col-lg-12">
+                    <label class="col-form-label">Uraian Kondisi Perekonomian Keluarga:</label>
+                    <textarea rows="3" class="form-control" id="_kondisi_perekonomian_keluarga" name="_kondisi_perekonomian_keluarga"></textarea>
+                    <div class="help-block _kondisi_perekonomian_keluarga"></div>
+                </div>
+                <div class="col-lg-12">
                     <label class="col-form-label">Uraian Permasalahan:</label>
                     <textarea rows="3" class="form-control" id="_permasalahan" name="_permasalahan"></textarea>
                     <div class="help-block _permasalahan"></div>
@@ -721,6 +726,95 @@
                     <label class="col-form-label">Uraian Saran / Rencana Tindak Lanjut:</label>
                     <textarea rows="3" class="form-control" id="_saran_tindak_lanjut" name="_saran_tindak_lanjut"></textarea>
                     <div class="help-block _saran_tindak_lanjut"></div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="row mt-2">
+                        <label for="_tembusan" class="col-sm-3 col-form-label">Tembusan :</label>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-check form-checkbox-outline form-check-primary mb-3">
+                                        <input class="form-check-input" type="checkbox" id="_kepala_dinas" name="_kepala_dinas" onchange="changeTembusan(this)">
+                                        <label class="form-check-label" for="_kepala_dinas">
+                                            Kepala Dinas
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="mb-3 _kepala_dinas_pilihan_content" id="_kepala_dinas_pilihan_content" style="display: none;">
+                                        <label class="form-label">Pilih Kepala Dinas :</label>
+                                        <select class="form-control select2" id="_kepala_dinas_pilihan" name="_kepala_dinas_pilihan" style="width: 100%">
+                                            <option value=""> --- Pilih Kepala Dinas --- </option>
+                                            <?php if (isset($dinass)) { ?>
+                                                <?php if (count($dinass) > 0) { ?>
+                                                    <?php foreach ($dinass as $key => $value) { ?>
+                                                        <option value="<?= $value->id ?>"><?= $value->instansi ?></option>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </select>
+                                        <div class="help-block _kepala_dinas_pilihan"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-check form-checkbox-outline form-check-primary mb-3">
+                                        <input class="form-check-input" type="checkbox" id="_camat" name="_camat" onchange="changeTembusan(this)">
+                                        <label class="form-check-label" for="_camat">
+                                            Camat
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="mb-3 _camat_pilihan_content" id="_camat_pilihan_content" style="display: none;">
+                                        <label class="form-label">Pilih Camat :</label>
+                                        <select class="form-control select2 camat_pilihan" onchange="changeKecamatan(this)" id="_camat_pilihan" name="_camat_pilihan" style="width: 100%">
+                                            <option value=""> --- Pilih Camat --- </option>
+                                            <?php if (isset($kecamatans)) { ?>
+                                                <?php if (count($kecamatans) > 0) { ?>
+                                                    <?php foreach ($kecamatans as $key => $value) { ?>
+                                                        <option value="<?= $value->id ?>"><?= $value->kecamatan ?></option>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </select>
+                                        <div class="help-block _camat_pilihan"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-check form-checkbox-outline form-check-primary mb-3">
+                                        <input class="form-check-input" type="checkbox" id="_kampung" name="_kampung" onchange="changeTembusan(this)">
+                                        <label class="form-check-label" for="_kampung">
+                                            Kepala Kampung
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="mb-3 _kampung_pilihan_content" id="_kampung_pilihan_content" style="display: none;">
+                                        <label class="form-label">Pilih Kepala Kampung :</label>
+                                        <select class="form-control select2 kampung_pilihan" id="_kampung_pilihan" name="_kampung_pilihan" style="width: 100%">
+                                            <option value=""> --- Pilih Kepala Kampung --- </option>
+                                            <?php if (isset($kelurahans)) { ?>
+                                                <?php if (count($kelurahans) > 0) { ?>
+                                                    <?php foreach ($kelurahans as $key => $value) { ?>
+                                                        <option value="<?= $value->id ?>"><?= $value->kelurahan ?></option>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </select>
+                                        <div class="help-block _kampung_pilihan"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <hr />
@@ -796,6 +890,7 @@
 
             const gambaran_kasus = document.getElementById('_gambaran_kasus').value;
             const kondisi_kesehatan = document.getElementById('_kondisi_kesehatan').value;
+            const kondisi_perekonomian_keluarga = document.getElementById('_kondisi_perekonomian_keluarga').value;
             const permasalahan = document.getElementById('_permasalahan').value;
             const identifikasi_kebutuhan = document.getElementById('_identifikasi_kebutuhan').value;
             const intervensi_telah_dilakukan = document.getElementById('_intervensi_telah_dilakukan').value;
@@ -923,109 +1018,112 @@
                 document.querySelector('._dtks_identitas').innerHTML = '';
             }
 
-            identitasRows.forEach(function(row, index) {
-                // if (index === 0) {
+            if (identitasRows.length > 0) {
 
-                // } else {
-                const namaI = row.querySelector('input[name="nama_bansos_identitas[]"]');
+                identitasRows.forEach(function(row, index) {
+                    // if (index === 0) {
 
-                if (!namaI || namaI === undefined) {
-                    console.log(16);
-                    isValid = false;
-                    row.querySelector('.nama_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama Bansos PPKS tidak boleh kosong</li></ul>';
-                } else {
-                    const namaidentitas = namaI.value;
-                    if (namaidentitas.trim() === '') {
-                        console.log(17);
+                    // } else {
+                    const namaI = row.querySelector('input[name="nama_bansos_identitas[]"]');
+
+                    if (!namaI || namaI === undefined) {
+                        console.log(16);
                         isValid = false;
                         row.querySelector('.nama_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama Bansos PPKS tidak boleh kosong</li></ul>';
                     } else {
-                        row.querySelector('.nama_bansos_identitas_' + index).innerHTML = '';
+                        const namaidentitas = namaI.value;
+                        if (namaidentitas.trim() === '') {
+                            console.log(17);
+                            isValid = false;
+                            row.querySelector('.nama_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama Bansos PPKS tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.nama_bansos_identitas_' + index).innerHTML = '';
+                        }
                     }
-                }
 
-                const waktuI = row.querySelector('input[name="waktu_bansos_identitas[]"]');
+                    const waktuI = row.querySelector('input[name="waktu_bansos_identitas[]"]');
 
-                if (!waktuI || waktuI === undefined) {
-                    console.log(18);
-                    isValid = false;
-                    row.querySelector('.waktu_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">waktu Bansos PPKS tidak boleh kosong</li></ul>';
-                } else {
-                    const waktuidentitas = waktuI.value;
-                    if (waktuidentitas.trim() === '') {
-                        console.log(19);
+                    if (!waktuI || waktuI === undefined) {
+                        console.log(18);
                         isValid = false;
                         row.querySelector('.waktu_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">waktu Bansos PPKS tidak boleh kosong</li></ul>';
                     } else {
-                        row.querySelector('.waktu_bansos_identitas_' + index).innerHTML = '';
+                        const waktuidentitas = waktuI.value;
+                        if (waktuidentitas.trim() === '') {
+                            console.log(19);
+                            isValid = false;
+                            row.querySelector('.waktu_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">waktu Bansos PPKS tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.waktu_bansos_identitas_' + index).innerHTML = '';
+                        }
                     }
-                }
-                const sumberI = row.querySelector('input[name="sumber_anggaran_identitas[]"]');
+                    const sumberI = row.querySelector('input[name="sumber_anggaran_identitas[]"]');
 
-                if (!sumberI || sumberI === undefined) {
-                    console.log(20);
-                    isValid = false;
-                    row.querySelector('.sumber_anggaran_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Sumber Anggaran Bansos PPKS tidak boleh kosong</li></ul>';
-                } else {
-                    const sumberidentitas = sumberI.value;
-                    if (sumberidentitas.trim() === '') {
-                        console.log(21);
+                    if (!sumberI || sumberI === undefined) {
+                        console.log(20);
                         isValid = false;
                         row.querySelector('.sumber_anggaran_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Sumber Anggaran Bansos PPKS tidak boleh kosong</li></ul>';
                     } else {
-                        row.querySelector('.sumber_anggaran_identitas_' + index).innerHTML = '';
+                        const sumberidentitas = sumberI.value;
+                        if (sumberidentitas.trim() === '') {
+                            console.log(21);
+                            isValid = false;
+                            row.querySelector('.sumber_anggaran_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Sumber Anggaran Bansos PPKS tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.sumber_anggaran_identitas_' + index).innerHTML = '';
+                        }
                     }
-                }
-                const jumlahI = row.querySelector('input[name="jumlah_bansos_identitas[]"]');
+                    const jumlahI = row.querySelector('input[name="jumlah_bansos_identitas[]"]');
 
-                if (!jumlahI || jumlahI === undefined) {
-                    console.log(22);
-                    isValid = false;
-                    row.querySelector('.jumlah_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Jumlah Bansos PPKS tidak boleh kosong</li></ul>';
-                } else {
-                    const jumlahidentitas = jumlahI.value;
-                    if (jumlahidentitas.trim() === '') {
-                        console.log(23);
+                    if (!jumlahI || jumlahI === undefined) {
+                        console.log(22);
                         isValid = false;
                         row.querySelector('.jumlah_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Jumlah Bansos PPKS tidak boleh kosong</li></ul>';
                     } else {
-                        row.querySelector('.jumlah_bansos_identitas_' + index).innerHTML = '';
+                        const jumlahidentitas = jumlahI.value;
+                        if (jumlahidentitas.trim() === '') {
+                            console.log(23);
+                            isValid = false;
+                            row.querySelector('.jumlah_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Jumlah Bansos PPKS tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.jumlah_bansos_identitas_' + index).innerHTML = '';
+                        }
                     }
-                }
-                const satuanI = row.querySelector('input[name="satuan_bansos_identitas[]"]');
+                    const satuanI = row.querySelector('input[name="satuan_bansos_identitas[]"]');
 
-                if (!satuanI || satuanI === undefined) {
-                    console.log(24);
-                    isValid = false;
-                    row.querySelector('.satuan_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">satuan Bansos PPKS tidak boleh kosong</li></ul>';
-                } else {
-                    const satuanidentitas = satuanI.value;
-                    if (satuanidentitas.trim() === '') {
-                        console.log(25);
+                    if (!satuanI || satuanI === undefined) {
+                        console.log(24);
                         isValid = false;
                         row.querySelector('.satuan_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">satuan Bansos PPKS tidak boleh kosong</li></ul>';
                     } else {
-                        row.querySelector('.satuan_bansos_identitas_' + index).innerHTML = '';
+                        const satuanidentitas = satuanI.value;
+                        if (satuanidentitas.trim() === '') {
+                            console.log(25);
+                            isValid = false;
+                            row.querySelector('.satuan_bansos_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">satuan Bansos PPKS tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.satuan_bansos_identitas_' + index).innerHTML = '';
+                        }
                     }
-                }
-                const keteranganI = row.querySelector('textarea[name="keterangan_identitas[]"]');
+                    const keteranganI = row.querySelector('textarea[name="keterangan_identitas[]"]');
 
-                if (!keteranganI || keteranganI === undefined) {
-                    console.log(26);
-                    isValid = false;
-                    row.querySelector('.keterangan_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;"Keterangan Bansos PPKS tidak boleh kosong</li></ul>';
-                } else {
-                    const keteranganidentitas = keteranganI.value;
-                    if (keteranganidentitas.trim() === '') {
-                        console.log(27);
+                    if (!keteranganI || keteranganI === undefined) {
+                        console.log(26);
                         isValid = false;
-                        row.querySelector('.keterangan_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Keterangan Bansos PPKS tidak boleh kosong</li></ul>';
+                        row.querySelector('.keterangan_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;"Keterangan Bansos PPKS tidak boleh kosong</li></ul>';
                     } else {
-                        row.querySelector('.keterangan_identitas_' + index).innerHTML = '';
+                        const keteranganidentitas = keteranganI.value;
+                        if (keteranganidentitas.trim() === '') {
+                            console.log(27);
+                            isValid = false;
+                            row.querySelector('.keterangan_identitas_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Keterangan Bansos PPKS tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.keterangan_identitas_' + index).innerHTML = '';
+                        }
                     }
-                }
 
-            });
+                });
+            }
 
             if (pendidikan_terakhir_identitas.trim() === '') {
                 console.log(28);
@@ -1133,45 +1231,47 @@
                 document.querySelector('._dtks_pengampu').innerHTML = '';
             }
 
-            pengampuRows.forEach(function(row, index) {
-                // if (index === 0) {
+            if (pengampuRows.length > 0) {
+                pengampuRows.forEach(function(row, index) {
+                    // if (index === 0) {
 
-                // } else {
-                const namaP = row.querySelector('input[name="nama_bansos_pengampu[]"]');
+                    // } else {
+                    const namaP = row.querySelector('input[name="nama_bansos_pengampu[]"]');
 
-                if (!namaP || namaP === undefined) {
-                    console.log(41);
-                    isValid = false;
-                    row.querySelector('.nama_bansos_pengampu_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama Bansos Pengampu PPKS tidak boleh kosong</li></ul>';
-                } else {
-                    const namapengampu = namaP.value;
-                    if (namapengampu.trim() === '') {
-                        console.log(42);
+                    if (!namaP || namaP === undefined) {
+                        console.log(41);
                         isValid = false;
                         row.querySelector('.nama_bansos_pengampu_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama Bansos Pengampu PPKS tidak boleh kosong</li></ul>';
                     } else {
-                        row.querySelector('.nama_bansos_pengampu_' + index).innerHTML = '';
+                        const namapengampu = namaP.value;
+                        if (namapengampu.trim() === '') {
+                            console.log(42);
+                            isValid = false;
+                            row.querySelector('.nama_bansos_pengampu_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Nama Bansos Pengampu PPKS tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.nama_bansos_pengampu_' + index).innerHTML = '';
+                        }
                     }
-                }
 
-                const tahunP = row.querySelector('input[name="tahun_bansos_pengampu[]"]');
+                    const tahunP = row.querySelector('input[name="tahun_bansos_pengampu[]"]');
 
-                if (!tahunP || tahunP === undefined) {
-                    console.log(43);
-                    isValid = false;
-                    row.querySelector('.tahun_bansos_pengampu_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Tahun Bansos Pengampu PPKS tidak boleh kosong</li></ul>';
-                } else {
-                    const tahunpengampu = tahunP.value;
-                    if (tahunpengampu.trim() === '') {
-                        console.log(44);
+                    if (!tahunP || tahunP === undefined) {
+                        console.log(43);
                         isValid = false;
                         row.querySelector('.tahun_bansos_pengampu_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Tahun Bansos Pengampu PPKS tidak boleh kosong</li></ul>';
                     } else {
-                        row.querySelector('.tahun_bansos_pengampu_' + index).innerHTML = '';
+                        const tahunpengampu = tahunP.value;
+                        if (tahunpengampu.trim() === '') {
+                            console.log(44);
+                            isValid = false;
+                            row.querySelector('.tahun_bansos_pengampu_' + index).innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Tahun Bansos Pengampu PPKS tidak boleh kosong</li></ul>';
+                        } else {
+                            row.querySelector('.tahun_bansos_pengampu_' + index).innerHTML = '';
+                        }
                     }
-                }
 
-            });
+                });
+            }
 
             if (pendidikan_terakhir_pengampu.trim() === '') {
                 console.log(45);
@@ -1407,6 +1507,13 @@
             } else {
                 document.querySelector('._kondisi_kesehatan').innerHTML = '';
             }
+            if (kondisi_perekonomian_keluarga.trim() === '') {
+                console.log(71);
+                isValid = false;
+                document.querySelector('._kondisi_perekonomian_keluarga').innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Uraian kondisi perekonomian keluarga tidak boleh kosong.</li></ul>';
+            } else {
+                document.querySelector('._kondisi_perekonomian_keluarga').innerHTML = '';
+            }
             if (permasalahan.trim() === '') {
                 console.log(71);
                 isValid = false;
@@ -1434,6 +1541,36 @@
                 document.querySelector('._saran_tindak_lanjut').innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Uraian Saran / Rencana tindak lanjut tidak boleh kosong.</li></ul>';
             } else {
                 document.querySelector('._saran_tindak_lanjut').innerHTML = '';
+            }
+
+            if ($('#_kepala_dinas').is(":checked")) {
+                const kepala_dinas_pilihan = document.getElementById('_kepala_dinas_pilihan').value;
+                if (kepala_dinas_pilihan.trim() === '') {
+                    isValid = false;
+                    document.querySelector('._kepala_dinas_pilihan').innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih tembusan kepala dinas.</li></ul>';
+                } else {
+                    document.querySelector('._kepala_dinas_pilihan').innerHTML = '';
+                }
+            }
+
+            if ($('#_camat').is(":checked")) {
+                const camat_pilihan = document.getElementById('_camat_pilihan').value;
+                if (camat_pilihan.trim() === '') {
+                    isValid = false;
+                    document.querySelector('._camat_pilihan').innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih tembusan camat.</li></ul>';
+                } else {
+                    document.querySelector('._camat_pilihan').innerHTML = '';
+                }
+            }
+
+            if ($('#_kampung').is(":checked")) {
+                const kampung_pilihan = document.getElementById('_kampung_pilihan').value;
+                if (kampung_pilihan.trim() === '') {
+                    isValid = false;
+                    document.querySelector('._kampung_pilihan').innerHTML = '<ul role="alert" style="color: #dc3545; list-style-type: none; margin-block-start: 0px; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih tembusan kepala kampung/kelurahan.</li></ul>';
+                } else {
+                    document.querySelector('._kampung_pilihan').innerHTML = '';
+                }
             }
 
             return isValid;
@@ -1552,6 +1689,10 @@
             initSelect2("_kelurahan_domisili", ".contentApproveBodyModal");
             initSelect2("_kategori_ppks", ".contentApproveBodyModal");
 
+            initSelect2("_kepala_dinas_pilihan", ".contentApproveBodyModal");
+            initSelect2("_camat_pilihan", ".contentApproveBodyModal");
+            initSelect2("_kampung_pilihan", ".contentApproveBodyModal");
+
             $("#btnAddRowBansosIdentitas").on("click", function() {
                 addRowIdentitas('table-bansos-identitas');
             });
@@ -1561,14 +1702,76 @@
             });
         });
 
+        function changeTembusan(event) {
+            const kadis = $(event).attr('id');
+            if ($('#' + kadis).is(":checked")) {
+                document.getElementById(kadis + "_pilihan_content").style.display = "block";
+            } else {
+                document.getElementById(kadis + "_pilihan_content").style.display = "none";
+            }
+        }
+
+        function changeKecamatan(event) {
+            const color = $(event).attr('name');
+            $(event).removeAttr('style');
+            $('.' + color).html('');
+
+            if (event.value !== "") {
+                $.ajax({
+                    url: './getKelurahan',
+                    type: 'POST',
+                    data: {
+                        id: event.value,
+                    },
+                    dataType: 'JSON',
+                    beforeSend: function() {
+                        $('.kelurahan').html("");
+                        $('div._kampung_pilihan_content').block({
+                            message: '<i class="las la-spinner la-spin la-3x la-fw"></i><span class="sr-only">Loading...</span>'
+                        });
+                    },
+                    success: function(resul) {
+                        $('div._kampung_pilihan_content').unblock();
+                        if (resul.status == 200) {
+                            $('.kampung_pilihan').html(resul.data);
+                        } else {
+                            if (resul.status == 401) {
+                                Swal.fire(
+                                    'PERINGATAN!',
+                                    resul.message,
+                                    'warning'
+                                ).then((valRes) => {
+                                    reloadPage(resul.redirrect);
+                                })
+                            } else {
+                                Swal.fire(
+                                    'PERINGATAN!!!',
+                                    resul.message,
+                                    'warning'
+                                );
+                            }
+                        }
+                    },
+                    error: function(data) {
+                        $('div._kampung_pilihan_content').unblock();
+                        Swal.fire(
+                            'PERINGATAN!',
+                            "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                            'warning'
+                        );
+                    }
+                });
+            }
+        }
+
         function addRowIdentitas(event) {
             const table = document.getElementById(event);
-            const rowCount = table.rows.length - 1;
+            const rowCount = table.rows.length;
 
             const newRow = table.insertRow(-1);
             const cells = [];
 
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 7; i++) {
                 cells[i] = newRow.insertCell(i);
                 // if (i > 1 && i < 8) {
                 cells[i].setAttribute("style", "vertical-align: top;");
@@ -1596,12 +1799,12 @@
 
         function addRowPengampu(event) {
             const tablePengampu = document.getElementById(event);
-            const rowCountPengampu = tablePengampu.rows.length - 1;
+            const rowCountPengampu = tablePengampu.rows.length;
 
             const newRowPengampu = tablePengampu.insertRow(-1);
             const cellsPengampu = [];
 
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < 3; i++) {
                 cellsPengampu[i] = newRowPengampu.insertCell(i);
                 // if (i > 1 && i < 8) {
                 cellsPengampu[i].setAttribute("style", "vertical-align: top;");
@@ -1690,14 +1893,14 @@
         function saveAssesmentPengaduan(e) {
             // console.log(e.form);
             if (validateForm()) {
-                console.log("mulai");
+                // console.log("mulai");
                 $('div.modal-content-loading-approve').block({
                     message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
                 });
                 let formData = new FormData(document.getElementById('tindakLanjutPengaduanForm'));
                 // var formData = new FormData(e.form);
 
-                console.log("going send");
+                // console.log("going send");
                 fetch('./simpanassesment', {
                         method: 'POST',
                         body: formData
@@ -1723,25 +1926,25 @@
                                 );
                             }
                         } else {
-                            // Swal.fire({
-                            //     title: 'SELAMAT!',
-                            //     text: resul.message,
-                            //     icon: 'success',
-                            //     showCancelButton: true,
-                            //     confirmButtonColor: '#3085d6',
-                            //     cancelButtonColor: '#d33',
-                            //     cancelButtonText: 'Tutup',
-                            //     confirmButtonText: 'Download'
-                            // }).then((result) => {
-                            //     if (result.isConfirmed) {
-                            //         downloadPDF(resul.filenya, resul.filename, resul.redirrect);
-                            //         // setTimeout(function() {
-                            //         //     reloadPage(resul.redirrect);
-                            //         // }, 3000);
-                            //     } else {
-                            //         reloadPage(resul.redirrect);
-                            //     }
-                            // })
+                            Swal.fire({
+                                title: 'SELAMAT!',
+                                text: resul.message,
+                                icon: 'success',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                cancelButtonText: 'Tutup',
+                                confirmButtonText: 'Download'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    downloadPDF(resul.filenya, resul.filename, resul.redirrect);
+                                    // setTimeout(function() {
+                                    //     reloadPage(resul.redirrect);
+                                    // }, 3000);
+                                } else {
+                                    reloadPage(resul.redirrect);
+                                }
+                            })
                             // Swal.fire(
                             //     'SELAMAT!',
                             //     resul.message,
