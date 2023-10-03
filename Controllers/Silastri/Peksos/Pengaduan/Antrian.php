@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Silastri\Adm\Pengaduan;
+namespace App\Controllers\Silastri\Peksos\Pengaduan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Adm\Pengaduan\AntrianModel;
+use App\Models\Silastri\Peksos\Pengaduan\AntrianModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -88,7 +88,7 @@ class Antrian extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/adm/pengaduan/antrian/data'));
+        return redirect()->to(base_url('silastri/peksos/pengaduan/antrian/data'));
     }
 
     public function data()
@@ -106,7 +106,7 @@ class Antrian extends BaseController
 
         $data['jeniss'] = ['Pengaduan Program Bantuan Sosial', 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)', 'Pengaduan Layanan Sosial', 'Lainnya'];
 
-        return view('silastri/adm/pengaduan/antrian/index', $data);
+        return view('silastri/peksos/pengaduan/antrian/index', $data);
     }
 
     public function detail()
@@ -176,7 +176,7 @@ class Antrian extends BaseController
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->message = "Permintaan diizinkan";
-                    $response->data = view('silastri/adm/pengaduan/antrian/detail', $data);
+                    $response->data = view('silastri/peksos/pengaduan/antrian/detail', $data);
                     return json_encode($response);
                 } else {
                     $response = new \stdClass;
@@ -274,11 +274,11 @@ class Antrian extends BaseController
             switch ($oldData->kategori) {
                 case 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)':
                     $data['sdm'] = $this->_db->table('ref_sdm')->orderBy('jenis', 'ASC')->orderBy('nama', 'ASC')->get()->getResult();
-                    $response->data = view('silastri/adm/pengaduan/antrian/form-tanggapan-ppks', $data);
+                    $response->data = view('silastri/peksos/pengaduan/antrian/form-tanggapan-ppks', $data);
                     break;
 
                 default:
-                    $response->data = view('silastri/adm/pengaduan/antrian/form-tanggapan', $data);
+                    $response->data = view('silastri/peksos/pengaduan/antrian/form-tanggapan', $data);
                     break;
             }
             return json_encode($response);
@@ -341,7 +341,7 @@ class Antrian extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/pengaduan/antrian/tolak', $data);
+            $response->data = view('silastri/peksos/pengaduan/antrian/tolak', $data);
             return json_encode($response);
         }
     }
@@ -845,7 +845,7 @@ class Antrian extends BaseController
                         $this->_db->transCommit();
                         $response = new \stdClass;
                         $response->status = 200;
-                        $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
+                        $response->redirrect = base_url('silastri/peksos/pengaduan/antrian');
                         $response->filenya = base_url('upload/spt/pdf') . '/' . $oldData['kode_aduan'] . '.pdf';
                         $response->filename = $fileNya;
                         $response->message = "Tanggapan Aduan " . $oldData['kode_aduan'] . " berhasil disimpan.";
@@ -1470,7 +1470,7 @@ class Antrian extends BaseController
                         $this->_db->transCommit();
                         $response = new \stdClass;
                         $response->status = 200;
-                        $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
+                        $response->redirrect = base_url('silastri/peksos/pengaduan/antrian');
                         $response->filenya = base_url('upload/pengaduan/pdf') . '/' . $oldData['kode_aduan'] . '.pdf';
                         $response->filename = $fileNya;
                         $response->message = "Tanggapan Aduan " . $oldData['kode_aduan'] . " berhasil disimpan.";

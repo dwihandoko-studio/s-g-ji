@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Silastri\Adm\Pengaduan;
+namespace App\Controllers\Silastri\Peksos\Pengaduan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Adm\Pengaduan\AsesmenppksModel;
+use App\Models\Silastri\Peksos\Pengaduan\AsesmenppksModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -87,7 +87,7 @@ class Asesmenppks extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/adm/pengaduan/asesmenppks/data'));
+        return redirect()->to(base_url('silastri/peksos/pengaduan/asesmenppks/data'));
     }
 
     public function data()
@@ -105,7 +105,7 @@ class Asesmenppks extends BaseController
 
         $data['jeniss'] = ['Pengaduan Program Bantuan Sosial', 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)', 'Pengaduan Layanan Sosial', 'Lainnya'];
 
-        return view('silastri/adm/pengaduan/asesmenppks/index', $data);
+        return view('silastri/peksos/pengaduan/asesmenppks/index', $data);
     }
 
     public function detail()
@@ -175,7 +175,7 @@ class Asesmenppks extends BaseController
                     $response = new \stdClass;
                     $response->status = 200;
                     $response->message = "Permintaan diizinkan";
-                    $response->data = view('silastri/adm/pengaduan/asesmenppks/detail', $data);
+                    $response->data = view('silastri/peksos/pengaduan/asesmenppks/detail', $data);
                     return json_encode($response);
                 } else {
                     $response = new \stdClass;
@@ -391,11 +391,11 @@ class Asesmenppks extends BaseController
             // switch ($oldData->kategori) {
             //     case 'Pengaduan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS)':
             $data['sdm'] = $this->_db->table('ref_sdm')->orderBy('jenis', 'ASC')->orderBy('nama', 'ASC')->get()->getResult();
-            $response->data = view('silastri/adm/pengaduan/asesmenppks/form-asesment-ppks', $data);
+            $response->data = view('silastri/peksos/pengaduan/asesmenppks/form-asesment-ppks', $data);
             //         break;
 
             //     default:
-            //         $response->data = view('silastri/adm/pengaduan/antrian/form-tanggapan', $data);
+            //         $response->data = view('silastri/peksos/pengaduan/antrian/form-tanggapan', $data);
             //         break;
             // }
             return json_encode($response);
@@ -458,7 +458,7 @@ class Asesmenppks extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/pengaduan/antrian/tolak', $data);
+            $response->data = view('silastri/peksos/pengaduan/antrian/tolak', $data);
             return json_encode($response);
         }
     }
@@ -2586,7 +2586,7 @@ class Asesmenppks extends BaseController
                                 $this->_db->transCommit();
                                 $response = new \stdClass;
                                 $response->status = 200;
-                                $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
+                                $response->redirrect = base_url('silastri/peksos/pengaduan/antrian');
                                 $response->filenya = base_url('upload/assesment/pdf') . '/' . $oldData->kode_aduan . '.pdf';
                                 $response->filename = $fileNya;
                                 $response->message = "Assesment Aduan " . $oldData->kode_aduan . " berhasil disimpan.";
