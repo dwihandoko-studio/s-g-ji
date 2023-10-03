@@ -80,6 +80,13 @@ class Filterauth implements FilterInterface
                                             if ($uriLevel != "operator") {
                                                 return redirect()->to(base_url('silastri/operator/home'));
                                             }
+                                        } else if ($level == 6) { //Operator
+                                            if ($uriLevel === "" || $uriLevel === "index") {
+                                                return redirect()->to(base_url('silastri/peksos/home'));
+                                            }
+                                            if ($uriLevel != "peksos") {
+                                                return redirect()->to(base_url('silastri/peksos/home'));
+                                            }
                                         } else {
                                             return redirect()->to(base_url('portal'));
                                         }
@@ -271,6 +278,47 @@ class Filterauth implements FilterInterface
                                         }
                                         if ($uriLevel != "operator") {
                                             return redirect()->to(base_url('silastri/operator/home'));
+                                        }
+                                        // else {
+                                        //     $uriMainMenu = $uri->getSegment(3);
+                                        //     if ($uriLevel == "opk" && $uriMainMenu == "home") {
+                                        //     } else {
+                                        //         $dataAccess = listHakAksesAllow();
+                                        //         if (!$dataAccess) {
+                                        //             return redirect()->to(base_url('situgu/opk/home'));
+                                        //         }
+
+                                        //         if (!(menu_showed_access($dataAccess, $uriMainMenu))) {
+                                        //             return redirect()->to(base_url('situgu/opk/home'));
+                                        //         }
+
+                                        //         $uriMainSubMenu = $uri->getSegment(4);
+
+                                        //         if (!(submenu_showed_access($dataAccess, $uriMainMenu, $uriMainSubMenu))) {
+                                        //             return redirect()->to(base_url('situgu/opk/notallow'));
+                                        //             // return redirect()->to(base_url('a/home'));
+                                        //         }
+
+                                        //         $uriMainSubMenuAksi = $uri->getSegment(5);
+
+                                        //         if (!(access_allowed_new($dataAccess, $uriMainMenu, $uriMainSubMenu, $uriMainSubMenuAksi))) {
+                                        //             if ($uriMainSubMenuAksi == "" || $uriMainSubMenuAksi == "data") {
+                                        //                 return redirect()->to(base_url('situgu/opk/notallow'));
+                                        //             } else {
+                                        //                 $response = new \stdClass;
+                                        //                 $response->status = 400;
+                                        //                 $response->message = "Akses tidak diizinkan.";
+                                        //                 return json_encode($response);
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // }
+                                    } else if ($level == 6) { //Peksos
+                                        if ($uriLevel === "" || $uriLevel === "index") {
+                                            return redirect()->to(base_url('silastri/peksos/home'));
+                                        }
+                                        if ($uriLevel != "peksos") {
+                                            return redirect()->to(base_url('silastri/peksos/home'));
                                         }
                                         // else {
                                         //     $uriMainMenu = $uri->getSegment(3);
