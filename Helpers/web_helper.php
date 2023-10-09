@@ -1741,7 +1741,15 @@ function getNameKategoriPPKS($val)
 {
 	try {
 		$vals = explode("--", $val);
-		return $vals[1];
+		if ($vals[0] == "1") {
+			return "ANAK - " . $vals[1];
+		} else if ($vals[0] == "2") {
+			return "LANJUT USIA - " . $vals[1];
+		} else if ($vals[0] == "3") {
+			return "Penyandang Disabilitas - " . $vals[1];
+		} else if ($vals[0] == "4") {
+			return "BENCANA - " . $vals[1];
+		}
 	} catch (\Throwable $th) {
 		return $val;
 	}

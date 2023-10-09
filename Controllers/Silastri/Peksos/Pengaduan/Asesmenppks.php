@@ -1207,6 +1207,97 @@ class Asesmenppks extends BaseController
             ],
         ];
 
+        $filenamelampiranktp = dot_array_search('_file_ktp.name', $_FILES);
+        if ($filenamelampiranktp != '') {
+            $lampiranValKtp = [
+                '_file_ktp' => [
+                    'rules' => 'uploaded[_file_ktp]|max_size[_file_ktp,2048]|mime_in[_file_ktp,image/jpeg,image/jpg,image/png]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranValKtp);
+        }
+
+        $filenamelampirankk = dot_array_search('_file_kk.name', $_FILES);
+        if ($filenamelampirankk != '') {
+            $lampiranValkk = [
+                '_file_kk' => [
+                    'rules' => 'uploaded[_file_kk]|max_size[_file_kk,2048]|mime_in[_file_kk,image/jpeg,image/jpg,image/png]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranValkk);
+        }
+
+        $filenamelampiranrumah_depan = dot_array_search('_file_rumah_depan.name', $_FILES);
+        if ($filenamelampiranrumah_depan != '') {
+            $lampiranValrumah_depan = [
+                '_file_rumah_depan' => [
+                    'rules' => 'uploaded[_file_rumah_depan]|max_size[_file_rumah_depan,2048]|mime_in[_file_rumah_depan,image/jpeg,image/jpg,image/png]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranValrumah_depan);
+        }
+
+        $filenamelampiranrumah_kiri = dot_array_search('_file_rumah_kiri.name', $_FILES);
+        if ($filenamelampiranrumah_kiri != '') {
+            $lampiranValrumah_kiri = [
+                '_file_rumah_kiri' => [
+                    'rules' => 'uploaded[_file_rumah_kiri]|max_size[_file_rumah_kiri,2048]|mime_in[_file_rumah_kiri,image/jpeg,image/jpg,image/png]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranValrumah_kiri);
+        }
+
+        $filenamelampiranrumah_kanan = dot_array_search('_file_rumah_kanan.name', $_FILES);
+        if ($filenamelampiranrumah_kanan != '') {
+            $lampiranValrumah_kanan = [
+                '_file_rumah_kanan' => [
+                    'rules' => 'uploaded[_file_rumah_kanan]|max_size[_file_rumah_kanan,2048]|mime_in[_file_rumah_kanan,image/jpeg,image/jpg,image/png]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranValrumah_kanan);
+        }
+
+        $filenamelampiranrumah_belakang = dot_array_search('_file_rumah_belakang.name', $_FILES);
+        if ($filenamelampiranrumah_belakang != '') {
+            $lampiranValrumah_belakang = [
+                '_file_rumah_belakang' => [
+                    'rules' => 'uploaded[_file_rumah_belakang]|max_size[_file_rumah_belakang,2048]|mime_in[_file_rumah_belakang,image/jpeg,image/jpg,image/png]',
+                    'errors' => [
+                        'uploaded' => 'Pilih lampiran dokumen terlebih dahulu. ',
+                        'max_size' => 'Ukuran lampiran dokumen terlalu besar. ',
+                        'mime_in' => 'Ekstensi yang anda upload harus berekstensi gambar. '
+                    ]
+                ],
+            ];
+            $rules = array_merge($rules, $lampiranValrumah_belakang);
+        }
+
+
         if (!$this->validate($rules)) {
             $response = new \stdClass;
             $response->status = 400;
@@ -1413,7 +1504,7 @@ class Asesmenppks extends BaseController
             $intervensi_telah_dilakukan = htmlspecialchars($this->request->getVar('_intervensi_telah_dilakukan'), true) ?? NULL;
             $saran_tindak_lanjut = htmlspecialchars($this->request->getVar('_saran_tindak_lanjut'), true) ?? NULL;
 
-            $lampiran = NULL;
+            $lampiran = "";
 
             $oldData = $this->_db->table('_pengaduan a')
                 ->select("a.*,b.peserta_spt, b.tgl_spt, b.lokasi_spt")
@@ -1443,6 +1534,104 @@ class Asesmenppks extends BaseController
             $kampung = $this->request->getVar('_kampung') ? htmlspecialchars($this->request->getVar('_kampung'), true) : NULL;
             $kampung_pilihan = $this->request->getVar('_kampung_pilihan') ? htmlspecialchars($this->request->getVar('_kampung_pilihan'), true) : NULL;
             // $jumlah_lampiran = $this->request->getVar('_jumlah_lampiran') ? htmlspecialchars($this->request->getVar('_jumlah_lampiran'), true) : '0';
+
+            $dir = FCPATH . "uploads/assesment/lampiran";
+
+            if ($filenamelampiranktp != '') {
+                $lampiranktp = $this->request->getFile('_file_ktp');
+                $filesNamelampiranktp = $lampiranktp->getName();
+                $newNamelampiranktp = _create_name_foto($filesNamelampiranktp);
+
+                if ($lampiranktp->isValid() && !$lampiranktp->hasMoved()) {
+                    $lampiranktp->move($dir, $newNamelampiranktp);
+                    $lampiran .= $newNamelampiranktp . ';';
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran assesment.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampirankk != '') {
+                $lampirankk = $this->request->getFile('_file_kk');
+                $filesNamelampirankk = $lampirankk->getName();
+                $newNamelampirankk = _create_name_foto($filesNamelampirankk);
+
+                if ($lampirankk->isValid() && !$lampirankk->hasMoved()) {
+                    $lampirankk->move($dir, $newNamelampirankk);
+                    $lampiran .= $newNamelampirankk . ';';
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran assesment.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampiranrumah_depan != '') {
+                $lampiranrumah_depan = $this->request->getFile('_file_rumah_depan');
+                $filesNamelampiranrumah_depan = $lampiranrumah_depan->getName();
+                $newNamelampiranrumah_depan = _create_name_foto($filesNamelampiranrumah_depan);
+
+                if ($lampiranrumah_depan->isValid() && !$lampiranrumah_depan->hasMoved()) {
+                    $lampiranrumah_depan->move($dir, $newNamelampiranrumah_depan);
+                    $lampiran .= $newNamelampiranrumah_depan . ';';
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran assesment.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampiranrumah_kiri != '') {
+                $lampiranrumah_kiri = $this->request->getFile('_file_rumah_kiri');
+                $filesNamelampiranrumah_kiri = $lampiranrumah_kiri->getName();
+                $newNamelampiranrumah_kiri = _create_name_foto($filesNamelampiranrumah_kiri);
+
+                if ($lampiranrumah_kiri->isValid() && !$lampiranrumah_kiri->hasMoved()) {
+                    $lampiranrumah_kiri->move($dir, $newNamelampiranrumah_kiri);
+                    $lampiran .= $newNamelampiranrumah_kiri . ';';
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran assesment.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampiranrumah_kanan != '') {
+                $lampiranrumah_kanan = $this->request->getFile('_file_rumah_kanan');
+                $filesNamelampiranrumah_kanan = $lampiranrumah_kanan->getName();
+                $newNamelampiranrumah_kanan = _create_name_foto($filesNamelampiranrumah_kanan);
+
+                if ($lampiranrumah_kanan->isValid() && !$lampiranrumah_kanan->hasMoved()) {
+                    $lampiranrumah_kanan->move($dir, $newNamelampiranrumah_kanan);
+                    $lampiran .= $newNamelampiranrumah_kanan . ';';
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran assesment.";
+                    return json_encode($response);
+                }
+            }
+
+            if ($filenamelampiranrumah_belakang != '') {
+                $lampiranrumah_belakang = $this->request->getFile('_file_rumah_belakang');
+                $filesNamelampiranrumah_belakang = $lampiranrumah_belakang->getName();
+                $newNamelampiranrumah_belakang = _create_name_foto($filesNamelampiranrumah_belakang);
+
+                if ($lampiranrumah_belakang->isValid() && !$lampiranrumah_belakang->hasMoved()) {
+                    $lampiranrumah_belakang->move($dir, $newNamelampiranrumah_belakang);
+                    $lampiran .= $newNamelampiranrumah_belakang . ';';
+                } else {
+                    $response = new \stdClass;
+                    $response->status = 400;
+                    $response->message = "Gagal mengupload lampiran assesment.";
+                    return json_encode($response);
+                }
+            }
 
             $date = date('Y-m-d H:i:s');
             $upData = [];
@@ -1540,7 +1729,6 @@ class Asesmenppks extends BaseController
             }
 
             $skor_total = $skor_assesment['penghasilan'] + $skor_assesment['penghasilan_makan'] + $skor_assesment['makan'] + $skor_assesment['kemampuan_pakaian'] + $skor_assesment['tempat_tinggal'] + $skor_assesment['luas_lantai'] + $skor_assesment['jenis_lantai'] + $skor_assesment['jenis_dinding'] + $skor_assesment['jenis_atap'] + $skor_assesment['milik_wc'] + $skor_assesment['jenis_wc'] + $skor_assesment['penerangan'] + $skor_assesment['sumber_air_minum'] + $skor_assesment['bahan_bakar_masak'] + $skor_assesment['berobat'] + $skor_assesment['rata_pendidikan'];
-
 
             $this->_db->transBegin();
             $this->_db->table('_pengaduan')->where('id', $oldData->id)->update($upData);
@@ -2569,6 +2757,16 @@ class Asesmenppks extends BaseController
                                 $dompdf1->render();
                                 $m->addRaw($dompdf1->output());
 
+                                if ($lampiran !== "") {
+                                    $xx['files'] = $lampiran;
+                                    $dompdf2 = new DOMPDF();
+                                    // // $dompdf = new Dompdf();
+                                    $dompdf2->setPaper('F4', 'potrait');
+                                    $dompdf2->loadHtml(view('silastri/peksos/pengaduan/asesmenppks/template_lampiran_assesment', $xx));
+                                    $dompdf2->render();
+                                    $m->addRaw($dompdf2->output());
+                                }
+
                                 $dir = FCPATH . "upload/assesment/pdf";
                                 $fileNya = $dir . '/' . $oldData->kode_aduan . '.pdf';
 
@@ -2592,6 +2790,24 @@ class Asesmenppks extends BaseController
                                 $response->message = "Assesment Aduan " . $oldData->kode_aduan . " berhasil disimpan.";
                                 return json_encode($response);
                             } catch (\Throwable $th) {
+                                if ($filenamelampiranktp != '') {
+                                    unlink($dir . '/' . $newNamelampiranktp);
+                                }
+                                if ($filenamelampirankk != '') {
+                                    unlink($dir . '/' . $newNamelampirankk);
+                                }
+                                if ($filenamelampiranrumah_depan != '') {
+                                    unlink($dir . '/' . $newNamelampiranrumah_depan);
+                                }
+                                if ($filenamelampiranrumah_kiri != '') {
+                                    unlink($dir . '/' . $newNamelampiranrumah_kiri);
+                                }
+                                if ($filenamelampiranrumah_kanan != '') {
+                                    unlink($dir . '/' . $newNamelampiranrumah_kanan);
+                                }
+                                if ($filenamelampiranrumah_belakang != '') {
+                                    unlink($dir . '/' . $newNamelampiranrumah_belakang);
+                                }
                                 $this->_db->transRollback();
                                 $response = new \stdClass;
                                 $response->status = 400;
@@ -2600,6 +2816,24 @@ class Asesmenppks extends BaseController
                                 return json_encode($response);
                             }
                         } else {
+                            if ($filenamelampiranktp != '') {
+                                unlink($dir . '/' . $newNamelampiranktp);
+                            }
+                            if ($filenamelampirankk != '') {
+                                unlink($dir . '/' . $newNamelampirankk);
+                            }
+                            if ($filenamelampiranrumah_depan != '') {
+                                unlink($dir . '/' . $newNamelampiranrumah_depan);
+                            }
+                            if ($filenamelampiranrumah_kiri != '') {
+                                unlink($dir . '/' . $newNamelampiranrumah_kiri);
+                            }
+                            if ($filenamelampiranrumah_kanan != '') {
+                                unlink($dir . '/' . $newNamelampiranrumah_kanan);
+                            }
+                            if ($filenamelampiranrumah_belakang != '') {
+                                unlink($dir . '/' . $newNamelampiranrumah_belakang);
+                            }
                             $this->_db->transRollback();
                             $response = new \stdClass;
                             $response->status = 400;
@@ -2607,6 +2841,24 @@ class Asesmenppks extends BaseController
                             return json_encode($response);
                         }
                     } else {
+                        if ($filenamelampiranktp != '') {
+                            unlink($dir . '/' . $newNamelampiranktp);
+                        }
+                        if ($filenamelampirankk != '') {
+                            unlink($dir . '/' . $newNamelampirankk);
+                        }
+                        if ($filenamelampiranrumah_depan != '') {
+                            unlink($dir . '/' . $newNamelampiranrumah_depan);
+                        }
+                        if ($filenamelampiranrumah_kiri != '') {
+                            unlink($dir . '/' . $newNamelampiranrumah_kiri);
+                        }
+                        if ($filenamelampiranrumah_kanan != '') {
+                            unlink($dir . '/' . $newNamelampiranrumah_kanan);
+                        }
+                        if ($filenamelampiranrumah_belakang != '') {
+                            unlink($dir . '/' . $newNamelampiranrumah_belakang);
+                        }
                         $this->_db->transRollback();
                         $response = new \stdClass;
                         $response->status = 400;
@@ -2614,6 +2866,24 @@ class Asesmenppks extends BaseController
                         return json_encode($response);
                     }
                 } else {
+                    if ($filenamelampiranktp != '') {
+                        unlink($dir . '/' . $newNamelampiranktp);
+                    }
+                    if ($filenamelampirankk != '') {
+                        unlink($dir . '/' . $newNamelampirankk);
+                    }
+                    if ($filenamelampiranrumah_depan != '') {
+                        unlink($dir . '/' . $newNamelampiranrumah_depan);
+                    }
+                    if ($filenamelampiranrumah_kiri != '') {
+                        unlink($dir . '/' . $newNamelampiranrumah_kiri);
+                    }
+                    if ($filenamelampiranrumah_kanan != '') {
+                        unlink($dir . '/' . $newNamelampiranrumah_kanan);
+                    }
+                    if ($filenamelampiranrumah_belakang != '') {
+                        unlink($dir . '/' . $newNamelampiranrumah_belakang);
+                    }
                     $this->_db->transRollback();
                     $response = new \stdClass;
                     $response->status = 400;
@@ -2621,6 +2891,24 @@ class Asesmenppks extends BaseController
                     return json_encode($response);
                 }
             } else {
+                if ($filenamelampiranktp != '') {
+                    unlink($dir . '/' . $newNamelampiranktp);
+                }
+                if ($filenamelampirankk != '') {
+                    unlink($dir . '/' . $newNamelampirankk);
+                }
+                if ($filenamelampiranrumah_depan != '') {
+                    unlink($dir . '/' . $newNamelampiranrumah_depan);
+                }
+                if ($filenamelampiranrumah_kiri != '') {
+                    unlink($dir . '/' . $newNamelampiranrumah_kiri);
+                }
+                if ($filenamelampiranrumah_kanan != '') {
+                    unlink($dir . '/' . $newNamelampiranrumah_kanan);
+                }
+                if ($filenamelampiranrumah_belakang != '') {
+                    unlink($dir . '/' . $newNamelampiranrumah_belakang);
+                }
                 $this->_db->transRollback();
                 $response = new \stdClass;
                 $response->status = 400;

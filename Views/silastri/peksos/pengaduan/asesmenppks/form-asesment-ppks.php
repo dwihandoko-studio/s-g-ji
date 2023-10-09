@@ -816,6 +816,78 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="col-lg-12 mt-2">
+                    <label class="col-form-label"><b>Bantuan Sosial yang Pernah / Sedang diterima saat ini:</b></label>
+                    <table id="table-bansos-identitas-1" class="table-bansos-identitas-1">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Nama Bantuan</th>
+                                <th>Jumlah</th>
+                                <th>Satuan</th>
+                                <th>Sumber Dana / Instansi Pemberi</th>
+                                <th>Keterangan</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div> -->
+                <div class="col-lg-12">
+                    <h4>Lampiran Dokumen Assesment</h4>
+                    <p style="margin-bottom: 30px;">Silahkan lampirkan dokumen assesment (KTP, KK, Foto Rumah 4 Sisi).</p>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mt-3">
+                                <label for="_file_ktp" class="form-label">Lampiran KTP : </label>
+                                <input class="form-control" type="file" id="_file_ktp" name="_file_ktp" onFocus="inputFocus(this);" accept="image/*" onchange="loadFile('_file_ktp', 'KTP PPKS')">
+                                <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                <div class="help-block _file_ktp" for="_file_ktp"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-3">
+                                <label for="_file_kk" class="form-label">Lampiran Kartu Keluarga : </label>
+                                <input class="form-control" type="file" id="_file_kk" name="_file_kk" onFocus="inputFocus(this);" accept="image/*" onchange="loadFile('_file_kk', 'Kartu Keluarga')">
+                                <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                <div class="help-block _file_kk" for="_file_kk"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-3">
+                                <label for="_file_rumah_depan" class="form-label">Lampiran Foto Rumah Tampak Depan : </label>
+                                <input class="form-control" type="file" id="_file_rumah_depan" name="_file_rumah_depan" onFocus="inputFocus(this);" accept="image/*" onchange="loadFile('_file_rumah_depan', 'Foto Rumah Tampak Depan')">
+                                <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                <div class="help-block _file_rumah_depan" for="_file_rumah_depan"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-3">
+                                <label for="_file_rumah_kiri" class="form-label">Lampiran Foto Rumah Tampak Kiri : </label>
+                                <input class="form-control" type="file" id="_file_rumah_kiri" name="_file_rumah_kiri" onFocus="inputFocus(this);" accept="image/*" onchange="loadFile('_file_rumah_kiri', 'Foto Rumah Tampak Kiri')">
+                                <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                <div class="help-block _file_rumah_kiri" for="_file_rumah_kiri"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-3">
+                                <label for="_file_rumah_kanan" class="form-label">Lampiran Foto Rumah Tampak Kanan : </label>
+                                <input class="form-control" type="file" id="_file_rumah_kanan" name="_file_rumah_kanan" onFocus="inputFocus(this);" accept="image/*" onchange="loadFile('_file_rumah_kanan', 'Foto Rumah Tampak Kanan')">
+                                <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                <div class="help-block _file_rumah_kanan" for="_file_rumah_kanan"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-3">
+                                <label for="_file_rumah_belakang" class="form-label">Lampiran Foto Rumah Tampak Belakang : </label>
+                                <input class="form-control" type="file" id="_file_rumah_belakang" name="_file_rumah_belakang" onFocus="inputFocus(this);" accept="image/*" onchange="loadFile('_file_rumah_belakang', 'Foto Rumah Tampak Belakang')">
+                                <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                <div class="help-block _file_rumah_belakang" for="_file_rumah_belakang"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <hr />
         </div>
@@ -826,6 +898,59 @@
         </div>
     </form>
     <script>
+        function loadFile(event, preview) {
+            const input = document.getElementsByName(event)[0];
+            if (input.files && input.files[0]) {
+                var file = input.files[0];
+
+                var mime_types = ['image/jpg', 'image/jpeg', 'image/png'];
+
+                if (mime_types.indexOf(file.type) == -1) {
+                    input.value = "";
+                    $('.imagePreviewUpload' + preview).attr('src', '');
+                    Swal.fire(
+                        'Warning!!!',
+                        "Hanya file type gambar yang diizinkan.",
+                        'warning'
+                    );
+                    return false;
+                }
+
+                if (file.size > 2 * 1024 * 1000) {
+                    input.value = "";
+                    $('.imagePreviewUpload' + preview).attr('src', '');
+                    Swal.fire(
+                        'Warning!!!',
+                        "Ukuran file tidak boleh lebih dari 2 Mb.",
+                        'warning'
+                    );
+                    return false;
+                }
+
+                if (file.type === 'application/pdf') {
+                    input.value = "";
+                    $('.imagePreviewUpload' + preview).attr('src', '');
+                    Swal.fire(
+                        'Warning!!!',
+                        "Hanya file type gambar yang diizinkan.",
+                        'warning'
+                    );
+                    return false;
+                } else {
+                    // var reader = new FileReader();
+
+                    // reader.onload = function(e) {
+                    //     $('.imagePreviewUpload' + preview).attr('src', e.target.result);
+                    // }
+
+                    // reader.readAsDataURL(input.files[0]);
+                }
+
+            } else {
+                console.log("failed Load");
+            }
+        }
+
         function validateForm() {
             const kecamatan_ktp = document.getElementById('_kecamatan_ktp').value;
             const kelurahan_ktp = document.getElementById('_kelurahan_ktp').value;
@@ -874,6 +999,7 @@
             const kemampuan_pakaian_ekonomi = document.getElementById('_kemampuan_pakaian_ekonomi').value;
             const tempat_tinggal_ekonomi = document.getElementById('_tempat_tinggal_ekonomi').value;
             const tinggal_bersama_ekonomi = document.getElementById('_tinggal_bersama_ekonomi').value;
+            const tinggal_bersama_ekonomi_detail = document.getElementById('_tinggal_bersama_ekonomi_detail').value;
             const luas_lantai_ekonomi = document.getElementById('_luas_lantai_ekonomi').value;
             const jenis_lantai_ekonomi = document.getElementById('_jenis_lantai_ekonomi').value;
             const jenis_dinding_ekonomi = document.getElementById('_jenis_dinding_ekonomi').value;

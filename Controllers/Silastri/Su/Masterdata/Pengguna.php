@@ -66,6 +66,20 @@ class Pengguna extends BaseController
                             </div>
                         </div>';
                     break;
+                case 6:
+                    $action = '<div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
+                            <div class="dropdown-menu" style="">
+                                <a class="dropdown-item" href="javascript:actionDetail(\'' . $list->id . '\', \'' . str_replace("'", "", $list->fullname) . '\');"><i class="bx bxs-show font-size-16 align-middle"></i> &nbsp;Detail</a>
+                                <a class="dropdown-item" href="javascript:actionResetPassword(\'' . $list->id . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->fullname))  . '\', \'' . $list->email  . '\', \'' . $list->nik . '\');"><i class="bx bx-key font-size-16 align-middle"></i> &nbsp;Reset Password</a>
+                                <a class="dropdown-item" href="javascript:actionEditRole(\'' . $list->id . '\', \'' . $list->role_user . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->fullname))  . '\');"><i class="bx bx-shuffle font-size-16 align-middle"></i> &nbsp;Edit Role</a>
+                                <a class="dropdown-item" href="javascript:actionHapus(\'' . $list->id . '\', \'' . str_replace("'", "", $list->fullname)  . '\', \'' . $list->email . '\');"><i class="bx bx-trash font-size-16 align-middle"></i> &nbsp;Hapus</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:actionJadikanAdminLayanan(\'' . $list->id . '\', \'' . $list->role_user . '\', \'' . str_replace('&#039;', "`", str_replace("'", "`", $list->fullname))  . '\');"><i class="bx bx-shuffle font-size-16 align-middle"></i> &nbsp;Jadikan Admin Layanan</a>
+                            </div>
+                        </div>';
+                    break;
+
                 default:
                     $action = '<div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Action <i class="mdi mdi-chevron-down"></i></button>
@@ -806,6 +820,55 @@ class Pengguna extends BaseController
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
                 $response->data = view('silastri/su/masterdata/pengguna/edit', $data);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function jadikanadmin()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $role = htmlspecialchars($this->request->getVar('role'), true);
+            $nama = htmlspecialchars($this->request->getVar('nama'), true);
+
+            $current = $this->_db->table('v_user')
+                ->where('id', $id)->get()->getRowObject();
+            $roles = $this->_db->table('_role_user')->whereNotIn('id', [1])->get()->getResult();
+
+            if ($current) {
+                $data['data'] = $current;
+                $data['roles'] = $roles;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('silastri/su/masterdata/pengguna/jadikan-admin-layanan', $data);
                 return json_encode($response);
             } else {
                 $response = new \stdClass;

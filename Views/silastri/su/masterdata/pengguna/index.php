@@ -208,6 +208,50 @@
         });
     }
 
+    function actionJadikanAdminLayanan(id, role, nama) {
+        $.ajax({
+            url: "./jadikanadmin",
+            type: 'POST',
+            data: {
+                id: id,
+                role: role,
+                nama: nama,
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                $('div.main-content').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.main-content').unblock();
+                if (resul.status !== 200) {
+                    Swal.fire(
+                        'Failed!',
+                        resul.message,
+                        'warning'
+                    );
+                } else {
+                    $('#content-roleModalLabel').html('JADIKAN ADMIN LAYANAN');
+                    $('.contentroleBodyModal').html(resul.data);
+                    $('.content-roleModal').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                    });
+                    $('.content-roleModal').modal('show');
+                }
+            },
+            error: function() {
+                $('div.main-content').unblock();
+                Swal.fire(
+                    'Failed!',
+                    "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
+            }
+        });
+    }
+
     function actionEditRole(id, role, nama) {
         $.ajax({
             url: "./editrole",
