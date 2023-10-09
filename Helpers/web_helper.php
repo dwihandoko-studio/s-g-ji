@@ -847,6 +847,21 @@ function getBidangNaungan($user_id)
 	return [""];
 }
 
+function getBidangNaunganMenu($user_id)
+{
+	$db      = \Config\Database::connect();
+	$dats = $db->table('hak_access_pengaduan')
+		->select("bidang")
+		->where('user_id', $user_id)
+		->get()->getResult();
+
+	if (count($dats) > 0) {
+		return true;
+	}
+
+	return false;
+}
+
 function grantedBidangNaungan($user_id, $bidang)
 {
 	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'

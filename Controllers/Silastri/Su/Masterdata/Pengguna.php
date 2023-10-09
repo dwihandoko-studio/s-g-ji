@@ -860,11 +860,11 @@ class Pengguna extends BaseController
 
             $current = $this->_db->table('v_user')
                 ->where('id', $id)->get()->getRowObject();
-            $roles = $this->_db->table('_role_user')->whereNotIn('id', [1])->get()->getResult();
+            $bidang = $this->_db->table('ref_bidang')->get()->getResult();
 
             if ($current) {
                 $data['data'] = $current;
-                $data['roles'] = $roles;
+                $data['bidangs'] = $bidang;
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
@@ -1011,6 +1011,106 @@ class Pengguna extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Data berhasil diupdate.";
+                $response->redirect = base_url('silastri/su/masterdata/pengguna');
+                return json_encode($response);
+            } else {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal mengupate data";
+                return json_encode($response);
+            }
+        }
+    }
+
+    public function addbidangnaungan()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+            'bidang' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Bidang tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('bidang')
+                . $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $Profilelib = new Profilelib();
+            $user = $Profilelib->user();
+            if ($user->status != 200) {
+                delete_cookie('jwt');
+                session()->destroy();
+                $response = new \stdClass;
+                $response->status = 401;
+                $response->message = "Permintaan diizinkan";
+                return json_encode($response);
+            }
+
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+            $bidang = htmlspecialchars($this->request->getVar('bidang'), true);
+
+            $oldData =  $this->_db->table('v_user')->where('id', $id)->get()->getRowObject();
+
+            if (!$oldData) {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan.";
+                return json_encode($response);
+            }
+
+            $cekData =  $this->_db->table('hak_access_pengaduan')->where(['user_id' => $id, 'bidang' => $bidang])->get()->getRowObject();
+
+            if (
+                $cekData
+            ) {
+                $response = new \stdClass;
+                $response->status = 201;
+                $response->message = "Hak access untuk pengguna pada pengaduan bidang $bidang sudah ada.";
+                $response->redirect = base_url('silastri/su/masterdata/pengguna');
+                return json_encode($response);
+            }
+
+            $dataProfil = [
+                'user_id' => $id,
+                'bidang' => $bidang,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+
+            $this->_db->transBegin();
+
+            try {
+                $this->_db->table('hak_access_pengaduan')->insert($dataProfil);
+            } catch (\Exception $e) {
+                $this->_db->transRollback();
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Gagal menyimpan data baru.";
+                return json_encode($response);
+            }
+            if ($this->_db->affectedRows() > 0) {
+                $this->_db->transCommit();
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Data berhasil disimpan.";
                 $response->redirect = base_url('silastri/su/masterdata/pengguna');
                 return json_encode($response);
             } else {

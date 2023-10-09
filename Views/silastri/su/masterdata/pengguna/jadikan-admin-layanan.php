@@ -4,29 +4,19 @@
         <div class="modal-body loading-get-data">
             <div class="row">
                 <div class="col-lg-12">
-                    <label for="_fullname" class="col-form-label">Nama Lengkap:</label>
-                    <input type="text" class="form-control fullname" value="<?= $data->fullname ?>" id="_fullname" name="_fullname" placeholder="Fullname..." onfocusin="inputFocus(this);" readonly />
-                    <div class="help-block _fullname"></div>
-                </div>
-                <div class="col-lg-12">
-                    <label for="_nik" class="col-form-label">NIK:</label>
-                    <input type="text" class="form-control nik" value="<?= $data->email ?>" id="_nik" name="_nik" placeholder="NIK..." onfocusin="inputFocus(this);" readonly />
-                    <div class="help-block _nik"></div>
-                </div>
-                <div class="col-lg-12">
                     <div class="mb-3">
-                        <label for="_role" class="col-form-label">Pilih Role:</label>
-                        <select class="form-control select2" id="_role" name="_role" style="width: 100%" required>
+                        <label for="_bidang" class="col-form-label">Pilih Bidang:</label>
+                        <select class="form-control select2" id="_bidang" name="_bidang" style="width: 100%" required>
                             <option value="">&nbsp;</option>
-                            <?php if (isset($roles)) {
-                                if (count($roles) > 0) {
-                                    foreach ($roles as $key => $value) { ?>
-                                        <option value="<?= $value->id ?>" <?= $value->id == $data->role_user ? ' selected' : '' ?>><?= $value->role ?></option>
+                            <?php if (isset($bidangs)) {
+                                if (count($bidangs) > 0) {
+                                    foreach ($bidangs as $key => $value) { ?>
+                                        <option value="<?= $value->id ?>"><?= $value->bidang ?></option>
                             <?php }
                                 }
                             } ?>
                         </select>
-                        <div class="help-block _role"></div>
+                        <div class="help-block _bidang"></div>
                     </div>
                 </div>
             </div>
@@ -52,28 +42,19 @@
         $("#formEditModalData").on("submit", function(e) {
             e.preventDefault();
             const id = document.getElementsByName('_id')[0].value;
-            const fullname = document.getElementsByName('_fullname')[0].value;
-            const nik = document.getElementsByName('_nik')[0].value;
-            const role = document.getElementsByName('_role')[0].value;
+            const bidang = document.getElementsByName('_bidang')[0].value;
 
-            if (fullname === "") {
-                $("input#_fullname").css("color", "#dc3545");
-                $("input#_fullname").css("border-color", "#dc3545");
-                $('._fullname').html('<ul role="alert" style="color: #dc3545; list-style-type:none; padding-inline-start: 10px;"><li style="color: #dc3545;">Fullname tidak boleh kosong.</li></ul>');
-                return false;
-            }
-
-            if (role === "") {
-                $("select#_role").css("color", "#dc3545");
-                $("select#_role").css("border-color", "#dc3545");
-                $('._role').html('<ul role="alert" style="color: #dc3545; list-style-type:none; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih role pengguna.</li></ul>');
+            if (bidang === "") {
+                $("select#_bidang").css("color", "#dc3545");
+                $("select#_bidang").css("border-color", "#dc3545");
+                $('._bidang').html('<ul role="alert" style="color: #dc3545; list-style-type:none; padding-inline-start: 10px;"><li style="color: #dc3545;">Silahkan pilih bidang.</li></ul>');
                 return false;
             }
 
             const formUpload = new FormData();
 
             formUpload.append('id', id);
-            formUpload.append('role', role);
+            formUpload.append('bidang', bidang);
 
             $.ajax({
                 xhr: function() {
@@ -88,7 +69,7 @@
                     }, false);
                     return xhr;
                 },
-                url: "./editSaveRole",
+                url: "./addbidangnaungan",
                 type: 'POST',
                 data: formUpload,
                 contentType: false,

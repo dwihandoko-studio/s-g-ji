@@ -28,9 +28,13 @@
                         <span key="t-pengaduans">Pengaduan</span>
                     </a>
                     <ul class="sub-menu  <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
-                        <!-- <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "antrian") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/antrian') ?>" key="t-pengaduan-antrian">Antrian</a></li>
-                        <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "selesai") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/selesai') ?>" key="t-pengaduan-selesai">Selesai</a></li>
-                        <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "ditolak") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/ditolak') ?>" key="t-pengaduan-ditolak">Ditolak</a></li> -->
+                        <?php if (isset($user)) {
+                            if (getBidangNaunganMenu($user->id)) { ?>
+                                <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "antrian") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/antrian') ?>" key="t-pengaduan-antrian">Antrian</a></li>
+                                <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "selesai") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/selesai') ?>" key="t-pengaduan-selesai">Selesai</a></li>
+                                <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "ditolak") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/ditolak') ?>" key="t-pengaduan-ditolak">Ditolak</a></li>
+                        <?php }
+                        } ?>
                         <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "asesmenppks") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/asesmenppks') ?>" key="t-pengaduan-asesmenppks">Assesment PPKS</a></li>
                     </ul>
                 </li>
