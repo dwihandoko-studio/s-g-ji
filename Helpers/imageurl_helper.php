@@ -85,6 +85,40 @@ if (!function_exists('_create_name_foto')) {
     }
 }
 
+if (!function_exists('_create_name_excel')) {
+    function _create_name_excel($string)
+    {
+        $file_parts = pathinfo($string);
+        $exts = $file_parts['extension'];
+        $date = 'file-' . date('Y-m-d') . '-at-' . date('H-i-s') . '-' . rand(1000000, 9999999);
+
+        //var_dump($exts);die;
+
+        $replace = '-';
+        if ($exts == 'xls') {
+            $string = str_replace(".xls", "", $string);
+            $ext = '.xls';
+        } elseif ($exts == 'xlsx') {
+            $string = str_replace(".xlsx", "", $string);
+            $ext = '.xlsx';
+        } else {
+            $ext = '.txt';
+        }
+        $string = strtolower($string);
+        //replace / and . with white space     
+        $string = preg_replace("/[\/\.]/", " ", $string);
+        $string = preg_replace("/[^a-z0-9_\s-]/", "", $string);
+        //remove multiple dashes or whitespaces     
+        $string = preg_replace("/[\s-]+/", " ", $string);
+        //convert whitespaces and underscore to $replace     
+        $string = preg_replace("/[\s_]/", $replace, $string);
+        //limit the slug size     
+        $string = substr($string, 0, 100);
+        //text is generated     
+        return ($ext) ? $date . $ext : $date . $ext;
+    }
+}
+
 if (!function_exists('searchFromArray')) {
     function searchFromArray($array, $key, $value)
     {

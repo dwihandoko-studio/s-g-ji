@@ -238,10 +238,10 @@
                                         <div class="help-block _kecamatan_lembaga"></div>
                                     </div>
                                 </div>
-                                <div class="row mb-2">
+                                <div class="row mb-2 select2-kelurahan-loading">
                                     <label for="_kelurahan_lembaga" class="col-sm-3 col-form-label">Kelurahan (Lembaga) :</label>
                                     <div class="col-sm-8">
-                                        <select class="form-control select2 kecamatan_lembaga" id="_kelurahan_lembaga" name="_kelurahan_lembaga" style="width: 100%" required>
+                                        <select class="form-control select2 kelurahan_lembaga" id="_kelurahan_lembaga" name="_kelurahan_lembaga" style="width: 100%" required>
                                             <option value=""> --- Pilih Kecamatan Dulu --- </option>
                                         </select>
                                         <div class="help-block _kelurahan_lembaga"></div>
@@ -543,117 +543,626 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptBottom'); ?>
-
+<script src="<?= base_url() ?>/assets/libs/select2/js/select2.min.js"></script>
+<script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyChdWD-7HQXG7sI1tqbQ43WJuMx7TJ7uuY&sensor=false&libraries=places'></script>
+<script src="<?= base_url('assets'); ?>/js/locationpicker.jquery.min.js"></script>
 <script>
+    initSelect2("_kecamatan_lembaga", ".page-content");
+    initSelect2("_kelurahan_lembaga", ".page-content");
+
     $("#formAddData").on("submit", function(e) {
         e.preventDefault();
-        const indikator1 = $("input[type='radio'][name='_indikator_1']:checked").val();
-        const indikator2 = $("input[type='radio'][name='_indikator_2']:checked").val();
-        const indikator3 = $("input[type='radio'][name='_indikator_3']:checked").val();
-        const indikator4 = $("input[type='radio'][name='_indikator_4']:checked").val();
-        const indikator5 = $("input[type='radio'][name='_indikator_5']:checked").val();
-        const indikator6 = $("input[type='radio'][name='_indikator_6']:checked").val();
+        // const indikator1 = $("input[type='radio'][name='_indikator_1']:checked").val();
+        // const indikator2 = $("input[type='radio'][name='_indikator_2']:checked").val();
+        // const indikator3 = $("input[type='radio'][name='_indikator_3']:checked").val();
+        // const indikator4 = $("input[type='radio'][name='_indikator_4']:checked").val();
+        // const indikator5 = $("input[type='radio'][name='_indikator_5']:checked").val();
+        // const indikator6 = $("input[type='radio'][name='_indikator_6']:checked").val();
 
         const nama = document.getElementsByName('_nama')[0].value;
         const nik = document.getElementsByName('_nik')[0].value;
         const kk = document.getElementsByName('_kk')[0].value;
-        const jenis = document.getElementsByName('_jenis')[0].value;
-        const keterangan = document.getElementsByName('_jenis_detail')[0].value;
+        const nama_lembaga = document.getElementsByName('_nama_lembaga')[0].value;
+        const jenis_lembaga = document.getElementsByName('_jenis_lembaga')[0].value;
+        const tgl_berdiri = document.getElementsByName('_tgl_berdiri')[0].value;
+        const nama_notaris = document.getElementsByName('_nama_notaris')[0].value;
+        const no_tanggal_notaris = document.getElementsByName('_no_tanggal_notaris')[0].value;
+        const no_pendaftaran_kemenkumham = document.getElementsByName('_no_pendaftaran_kemenkumham')[0].value;
+        const akreditasi_lembaga = document.getElementsByName('_akreditasi_lembaga')[0].value;
+        const no_surat_akreditasi = document.getElementsByName('_no_surat_akreditasi')[0].value;
+        const tgl_habis_berlaku_akreditasi = document.getElementsByName('_tgl_habis_berlaku_akreditasi')[0].value;
+        const nomor_wajib_pajak = document.getElementsByName('_nomor_wajib_pajak')[0].value;
+        const modal_usaha = document.getElementsByName('_modal_usaha')[0].value;
+        const status_lembaga = document.getElementsByName('_status_lembaga')[0].value;
+        const lingkup_wilayah_kerja = document.getElementsByName('_lingkup_wilayah_kerja')[0].value;
+        const bidang_kegiatan = document.getElementsByName('_bidang_kegiatan')[0].value;
+        const no_telp_lembaga = document.getElementsByName('_no_telp_lembaga')[0].value;
+        const email_lembaga = document.getElementsByName('_email_lembaga')[0].value;
+        const alamat_lembaga = document.getElementsByName('_alamat_lembaga')[0].value;
+        const rt_lembaga = document.getElementsByName('_rt_lembaga')[0].value;
+        const rw_lembaga = document.getElementsByName('_rw_lembaga')[0].value;
+        const kecamatan_lembaga = document.getElementsByName('_kecamatan_lembaga')[0].value;
+        const kelurahan_lembaga = document.getElementsByName('_kelurahan_lembaga')[0].value;
+        const nama_ketua = document.getElementsByName('_nama_ketua')[0].value;
+        const nik_ketua = document.getElementsByName('_nik_ketua')[0].value;
+        const nohp_ketua = document.getElementsByName('_nohp_ketua')[0].value;
+        const nama_sekretaris = document.getElementsByName('_nama_sekretaris')[0].value;
+        const nik_sekretaris = document.getElementsByName('_nik_sekretaris')[0].value;
+        const nohp_sekretaris = document.getElementsByName('_nohp_sekretaris')[0].value;
+        const nama_bendahara = document.getElementsByName('_nama_bendahara')[0].value;
+        const nik_bendahara = document.getElementsByName('_nik_bendahara')[0].value;
+        const nohp_bendahara = document.getElementsByName('_nohp_bendahara')[0].value;
+        const jumlah_pengurus = document.getElementsByName('_jumlah_pengurus')[0].value;
+        const jumlah_binaan_dalam_lembaga = document.getElementsByName('_jumlah_binaan_dalam_lembaga')[0].value;
+        const jumlah_binaan_luar_lembaga = document.getElementsByName('_jumlah_binaan_luar_lembaga')[0].value;
+        const koordinat = document.getElementsByName('_koordinat')[0].value;
+        // const keterangan = document.getElementsByName('_jenis_detail')[0].value;
 
-        const fileKtp = document.getElementsByName('_file_ktp')[0].value;
-        const fileKk = document.getElementsByName('_file_kk')[0].value;
-        const filePernyataan = document.getElementsByName('_file_pernyataan')[0].value;
-        const fileFotoRumah = document.getElementsByName('_file_foto_rumah')[0].value;
+        const fileKtpKetua = document.getElementsByName('_file_ktp_ketua')[0].value;
+        const fileKtpSekretaris = document.getElementsByName('_file_ktp_sekretaris')[0].value;
+        const fileKtpBendahara = document.getElementsByName('_file_ktp_bendahara')[0].value;
+        const fileAktaNotaris = document.getElementsByName('_file_akta_notaris')[0].value;
+        const filePengesahanKemenkumham = document.getElementsByName('_file_pengesahan_kemenkumham')[0].value;
+        const fileAdrt = document.getElementsByName('_file_adrt')[0].value;
+        const fileKeteranganDomisili = document.getElementsByName('_file_keterangan_domisili')[0].value;
+        const fileAkreditasi = document.getElementsByName('_file_akreditasi')[0].value;
+        const fileStrukturOrganisasi = document.getElementsByName('_file_struktur_organisasi')[0].value;
+        const fileNpwp = document.getElementsByName('_file_npwp')[0].value;
+        const fileFotoLokasi = document.getElementsByName('_file_foto_lokasi')[0].value;
+        const fileFotoUsahaEkonomiProduktif = document.getElementsByName('_file_foto_usaha_ekonomi_produktif')[0].value;
+        const fileLogoLembaga = document.getElementsByName('_file_logo_lembaga')[0].value;
+        const fileDataBinaan = document.getElementsByName('_file_data_binaan')[0].value;
 
-        if (jenis === "") {
-            $("select#_jenis").css("color", "#dc3545");
-            $("select#_jenis").css("border-color", "#dc3545");
-            $('._jenis-error').html('Silahkan pilih jenis SKTM');
+        if (nama_lembaga === "" || nama_lembaga === undefined) {
+            $("input#_nama_lembaga").css("color", "#dc3545");
+            $("input#_nama_lembaga").css("border-color", "#dc3545");
+            $('._nama_lembaga').html('Masukkan Nama Lembaga');
 
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan pilih peruntukan SKTM.",
+                "Silahkan masukkan nama lembaga.",
                 'warning'
             );
             return false;
         }
 
-        if (indikator1 === undefined || indikator1 === "") {
+        if (jenis_lembaga === "") {
+            $("select#_jenis_lembaga").css("color", "#dc3545");
+            $("select#_jenis_lembaga").css("border-color", "#dc3545");
+            $('._jenis_lembaga').html('Silahkan pilih jenis Lembaga');
+
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan pilih isian indikator 1.",
+                "Silahkan pilih jenis Lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (tgl_berdiri === "" || tgl_berdiri === undefined) {
+            $("input#_tgl_berdiri").css("color", "#dc3545");
+            $("input#_tgl_berdiri").css("border-color", "#dc3545");
+            $('._tgl_berdiri').html('Masukkan Tanggal Berdiri Lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan tanggal berdiri lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nama_notaris === "" || nama_notaris === undefined) {
+            $("input#_nama_notaris").css("color", "#dc3545");
+            $("input#_nama_notaris").css("border-color", "#dc3545");
+            $('._nama_notaris').html('Masukkan nama notaris');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan nama notaris.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (no_pendaftaran_kemenkumham === "" || no_pendaftaran_kemenkumham === undefined) {
+            $("input#_no_pendaftaran_kemenkumham").css("color", "#dc3545");
+            $("input#_no_pendaftaran_kemenkumham").css("border-color", "#dc3545");
+            $('._no_pendaftaran_kemenkumham').html('Masukkan no pendaftaran kemenkumham');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan no pendaftaran kemenkumham.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (akreditasi_lembaga === "") {
+            $("select#_akreditasi_lembaga").css("color", "#dc3545");
+            $("select#_akreditasi_lembaga").css("border-color", "#dc3545");
+            $('._akreditasi_lembaga').html('Silahkan pilih akreditasi Lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan pilih akreditasi Lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (no_surat_akreditasi === "" || no_surat_akreditasi === undefined) {
+            $("input#_no_surat_akreditasi").css("color", "#dc3545");
+            $("input#_no_surat_akreditasi").css("border-color", "#dc3545");
+            $('._no_surat_akreditasi').html('Masukkan no surat akreditasi');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan no surat akreditasi.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (tgl_habis_berlaku_akreditasi === "" || tgl_habis_berlaku_akreditasi === undefined) {
+            $("input#_tgl_habis_berlaku_akreditasi").css("color", "#dc3545");
+            $("input#_tgl_habis_berlaku_akreditasi").css("border-color", "#dc3545");
+            $('._tgl_habis_berlaku_akreditasi').html('Masukkan tanggal habis masa berlaku akreditasi');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan tanggal habis masa berlaku akreditasi.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nomor_wajib_pajak === "" || nomor_wajib_pajak === undefined) {
+            $("input#_nomor_wajib_pajak").css("color", "#dc3545");
+            $("input#_nomor_wajib_pajak").css("border-color", "#dc3545");
+            $('._nomor_wajib_pajak').html('Masukkan npwp lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan npwp lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        // if (modal_usaha === "" || modal_usaha === undefined) {
+        //     $("input#_modal_usaha").css("color", "#dc3545");
+        //     $("input#_modal_usaha").css("border-color", "#dc3545");
+        //     $('._modal_usaha').html('Masukkan modah usaha (UEP) lembaga');
+
+        //     Swal.fire(
+        //         'Peringatan..!!',
+        //         "Silahkan masukkan modah usaha (UEP) lembaga.",
+        //         'warning'
+        //     );
+        //     return false;
+        // }
+
+        if (status_lembaga === "") {
+            $("select#_status_lembaga").css("color", "#dc3545");
+            $("select#_status_lembaga").css("border-color", "#dc3545");
+            $('._status_lembaga').html('Silahkan pilih status Lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan pilih status Lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (lingkup_wilayah_kerja === "") {
+            $("select#_lingkup_wilayah_kerja").css("color", "#dc3545");
+            $("select#_lingkup_wilayah_kerja").css("border-color", "#dc3545");
+            $('._lingkup_wilayah_kerja').html('Silahkan pilih lingkup wilayah kerja Lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan pilih lingkup wilayah kerja Lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (bidang_kegiatan === "" || bidang_kegiatan === undefined) {
+            $("input#_bidang_kegiatan").css("color", "#dc3545");
+            $("input#_bidang_kegiatan").css("border-color", "#dc3545");
+            $('._bidang_kegiatan').html('Masukkan bidang kegiatan lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan bidang kegiatan lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (no_telp_lembaga === "" || no_telp_lembaga === undefined) {
+            $("input#_no_telp_lembaga").css("color", "#dc3545");
+            $("input#_no_telp_lembaga").css("border-color", "#dc3545");
+            $('._no_telp_lembaga').html('Masukkan no telp lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan no telp lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (email_lembaga === "" || email_lembaga === undefined) {
+            $("input#_email_lembaga").css("color", "#dc3545");
+            $("input#_email_lembaga").css("border-color", "#dc3545");
+            $('._email_lembaga').html('Masukkan email lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan email lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (alamat_lembaga === "" || alamat_lembaga === undefined) {
+            $("textarea#_alamat_lembaga").css("color", "#dc3545");
+            $("textarea#_alamat_lembaga").css("border-color", "#dc3545");
+            $('._alamat_lembaga').html('Masukkan alamat lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan alamat lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (rt_lembaga === "" || rt_lembaga === undefined) {
+            $("input#_rt_lembaga").css("color", "#dc3545");
+            $("input#_rt_lembaga").css("border-color", "#dc3545");
+            $('._rt_lembaga').html('Masukkan alamat RT lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan alamat RT lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (rw_lembaga === "" || rw_lembaga === undefined) {
+            $("input#_rw_lembaga").css("color", "#dc3545");
+            $("input#_rw_lembaga").css("border-color", "#dc3545");
+            $('._rw_lembaga').html('Masukkan alamat RW lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan alamat RW lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (kecamatan_lembaga === "") {
+            $("select#_kecamatan_lembaga").css("color", "#dc3545");
+            $("select#_kecamatan_lembaga").css("border-color", "#dc3545");
+            $('._kecamatan_lembaga').html('Silahkan pilih alamat kecamatan Lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan pilih alamat kecamatan Lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (kelurahan_lembaga === "") {
+            $("select#_kelurahan_lembaga").css("color", "#dc3545");
+            $("select#_kelurahan_lembaga").css("border-color", "#dc3545");
+            $('._kelurahan_lembaga').html('Silahkan pilih alamat kelurahan Lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan pilih alamat kelurahan Lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nama_ketua === "" || nama_ketua === undefined) {
+            $("input#_nama_ketua").css("color", "#dc3545");
+            $("input#_nama_ketua").css("border-color", "#dc3545");
+            $('._nama_ketua').html('Masukkan nama ketua lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan nama ketua lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nik_ketua === "" || nik_ketua === undefined) {
+            $("input#_nik_ketua").css("color", "#dc3545");
+            $("input#_nik_ketua").css("border-color", "#dc3545");
+            $('._nik_ketua').html('Masukkan nik ketua lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan nik ketua lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nohp_ketua === "" || nohp_ketua === undefined) {
+            $("input#_nohp_ketua").css("color", "#dc3545");
+            $("input#_nohp_ketua").css("border-color", "#dc3545");
+            $('._nohp_ketua').html('Masukkan no handphone ketua lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan no handphone ketua lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nama_sekretaris === "" || nama_sekretaris === undefined) {
+            $("input#_nama_sekretaris").css("color", "#dc3545");
+            $("input#_nama_sekretaris").css("border-color", "#dc3545");
+            $('._nama_sekretaris').html('Masukkan nama sekretaris lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan nama sekretaris lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nik_sekretaris === "" || nik_sekretaris === undefined) {
+            $("input#_nik_sekretaris").css("color", "#dc3545");
+            $("input#_nik_sekretaris").css("border-color", "#dc3545");
+            $('._nik_sekretaris').html('Masukkan nik sekretaris lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan nik sekretaris lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nohp_sekretaris === "" || nohp_sekretaris === undefined) {
+            $("input#_nohp_sekretaris").css("color", "#dc3545");
+            $("input#_nohp_sekretaris").css("border-color", "#dc3545");
+            $('._nohp_sekretaris').html('Masukkan no handphone sekretaris lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan no handphone sekretaris lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nama_bendahara === "" || nama_bendahara === undefined) {
+            $("input#_nama_bendahara").css("color", "#dc3545");
+            $("input#_nama_bendahara").css("border-color", "#dc3545");
+            $('._nama_bendahara').html('Masukkan nama bendahara lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan nama bendahara lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nik_bendahara === "" || nik_bendahara === undefined) {
+            $("input#_nik_bendahara").css("color", "#dc3545");
+            $("input#_nik_bendahara").css("border-color", "#dc3545");
+            $('._nik_bendahara').html('Masukkan nik bendahara lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan nik bendahara lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (nohp_bendahara === "" || nohp_bendahara === undefined) {
+            $("input#_nohp_bendahara").css("color", "#dc3545");
+            $("input#_nohp_bendahara").css("border-color", "#dc3545");
+            $('._nohp_bendahara').html('Masukkan no handphone bendahara lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan no handphone bendahara lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (jumlah_pengurus === "" || jumlah_pengurus === undefined) {
+            $("input#_jumlah_pengurus").css("color", "#dc3545");
+            $("input#_jumlah_pengurus").css("border-color", "#dc3545");
+            $('._jumlah_pengurus').html('Masukkan jumlah pengurus lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan jumlah pengurus lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (jumlah_binaan_dalam_lembaga === "" || jumlah_binaan_dalam_lembaga === undefined) {
+            $("input#_jumlah_binaan_dalam_lembaga").css("color", "#dc3545");
+            $("input#_jumlah_binaan_dalam_lembaga").css("border-color", "#dc3545");
+            $('._jumlah_binaan_dalam_lembaga').html('Masukkan jumlah binaan dalam lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan jumlah binaan dalam lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (jumlah_binaan_luar_lembaga === "" || jumlah_binaan_luar_lembaga === undefined) {
+            $("input#_jumlah_binaan_luar_lembaga").css("color", "#dc3545");
+            $("input#_jumlah_binaan_luar_lembaga").css("border-color", "#dc3545");
+            $('._jumlah_binaan_luar_lembaga').html('Masukkan jumlah binaan luar lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan jumlah binaan luar lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (koordinat === "" || koordinat === undefined) {
+            $("input#_koordinat").css("color", "#dc3545");
+            $("input#_koordinat").css("border-color", "#dc3545");
+            $('._koordinat').html('Masukkan koordinat domisili lembaga');
+
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan masukkan koordinat domisili lembaga.",
+                'warning'
+            );
+            return false;
+        }
+
+        if (fileKtpKetua === "") {
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan lampirkan dokumen KTP Ketua.",
                 'warning'
             );
             return;
         }
-        if (indikator2 === undefined || indikator2 === "") {
+
+        if (fileKtpSekretaris === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan pilih isian indikator 2.",
+                "Silahkan lampirkan dokumen KTP Sekretaris.",
                 'warning'
             );
             return;
         }
-        if (indikator3 === undefined || indikator3 === "") {
+
+        if (fileKtpBendahara === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan pilih isian indikator 3.",
+                "Silahkan lampirkan dokumen KTP Bendahara.",
                 'warning'
             );
             return;
         }
-        if (indikator4 === undefined || indikator4 === "") {
+
+        if (fileAktaNotaris === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan pilih isian indikator 4.",
+                "Silahkan lampirkan dokumen Akta Notaris.",
                 'warning'
             );
             return;
         }
-        if (indikator5 === undefined || indikator5 === "") {
+
+        if (filePengesahanKemenkumham === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan pilih isian indikator 5.",
+                "Silahkan lampirkan dokumen Pengesahan Kemenkumham.",
                 'warning'
             );
             return;
         }
-        if (indikator6 === undefined || indikator6 === "") {
+
+        if (fileAdrt === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan pilih isian indikator 6.",
+                "Silahkan lampirkan dokumen ADRT.",
                 'warning'
             );
             return;
         }
-        if (fileKtp === "") {
+
+        if (fileKeteranganDomisili === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan lampirkan dokumen KTP.",
+                "Silahkan lampirkan dokumen Keterangan Domisili.",
                 'warning'
             );
             return;
         }
-        if (fileKk === "") {
+
+        if (fileAkreditasi === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan lampirkan dokumen KK.",
+                "Silahkan lampirkan dokumen Akreditasi.",
                 'warning'
             );
             return;
         }
-        if (filePernyataan === "") {
+
+        if (fileStrukturOrganisasi === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan lampirkan dokumen Pernyataan.",
+                "Silahkan lampirkan dokumen Struktur Organisasi.",
                 'warning'
             );
             return;
         }
-        if (fileFotoRumah === "") {
+
+        if (fileNpwp === "") {
             Swal.fire(
                 'Peringatan..!!',
-                "Silahkan lampirkan dokumen Foto Rumah.",
+                "Silahkan lampirkan dokumen NPWP Lembaga.",
+                'warning'
+            );
+            return;
+        }
+
+        if (fileFotoLokasi === "") {
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan lampirkan dokumen Foto Lokasi.",
+                'warning'
+            );
+            return;
+        }
+
+        if (fileFotoUsahaEkonomiProduktif === "") {
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan lampirkan dokumen Foto Usaha Ekonomi Produktif (UEP).",
+                'warning'
+            );
+            return;
+        }
+
+        if (fileLogoLembaga === "") {
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan lampirkan dokumen Logo Lembaga.",
+                'warning'
+            );
+            return;
+        }
+
+        if (fileDataBinaan === "") {
+            Swal.fire(
+                'Peringatan..!!',
+                "Silahkan lampirkan data binaan.",
                 'warning'
             );
             return;
@@ -661,30 +1170,76 @@
 
         const formUpload = new FormData();
 
-        const file_ktp = document.getElementsByName('_file_ktp')[0].files[0];
-        formUpload.append('_file_ktp', file_ktp);
-        const file_kk = document.getElementsByName('_file_kk')[0].files[0];
-        formUpload.append('_file_kk', file_kk);
-        const file_pernyataan = document.getElementsByName('_file_pernyataan')[0].files[0];
-        formUpload.append('_file_pernyataan', file_pernyataan);
-        const file_foto_rumah = document.getElementsByName('_file_foto_rumah')[0].files[0];
-        formUpload.append('_file_foto_rumah', file_foto_rumah);
+        const file_ktp_ketua = document.getElementsByName('_file_ktp_ketua')[0].files[0];
+        formUpload.append('_file_ktp_ketua', file_ktp_ketua);
+        const file_ktp_sekretaris = document.getElementsByName('_file_ktp_sekretaris')[0].files[0];
+        formUpload.append('_file_ktp_sekretaris', file_ktp_sekretaris);
+        const file_ktp_bendahara = document.getElementsByName('_file_ktp_bendahara')[0].files[0];
+        formUpload.append('_file_ktp_bendahara', file_ktp_bendahara);
+        const file_akta_notaris = document.getElementsByName('_file_akta_notaris')[0].files[0];
+        formUpload.append('_file_akta_notaris', file_akta_notaris);
+        const file_pengesahan_kemenkumham = document.getElementsByName('_file_pengesahan_kemenkumham')[0].files[0];
+        formUpload.append('_file_pengesahan_kemenkumham', file_pengesahan_kemenkumham);
+        const file_adrt = document.getElementsByName('_file_adrt')[0].files[0];
+        formUpload.append('_file_adrt', file_adrt);
+        const file_keterangan_domisili = document.getElementsByName('_file_keterangan_domisili')[0].files[0];
+        formUpload.append('_file_keterangan_domisili', file_keterangan_domisili);
+        const file_akreditasi = document.getElementsByName('_file_akreditasi')[0].files[0];
+        formUpload.append('_file_akreditasi', file_akreditasi);
+        const file_struktur_organisasi = document.getElementsByName('_file_struktur_organisasi')[0].files[0];
+        formUpload.append('_file_struktur_organisasi', file_struktur_organisasi);
+        const file_npwp = document.getElementsByName('_file_npwp')[0].files[0];
+        formUpload.append('_file_npwp', file_npwp);
+        const file_foto_lokasi = document.getElementsByName('_file_foto_lokasi')[0].files[0];
+        formUpload.append('_file_foto_lokasi', file_foto_lokasi);
+        const file_foto_usaha_ekonomi_produktif = document.getElementsByName('_file_foto_usaha_ekonomi_produktif')[0].files[0];
+        formUpload.append('_file_foto_usaha_ekonomi_produktif', file_foto_usaha_ekonomi_produktif);
+        const file_logo_lembaga = document.getElementsByName('_file_logo_lembaga')[0].files[0];
+        formUpload.append('_file_logo_lembaga', file_logo_lembaga);
+        const file_data_binaan = document.getElementsByName('_file_data_binaan')[0].files[0];
+        formUpload.append('_file_data_binaan', file_data_binaan);
 
         formUpload.append('nama', nama);
         formUpload.append('nik', nik);
         formUpload.append('kk', kk);
-        formUpload.append('jenis', jenis);
-        formUpload.append('indikator1', indikator1);
-        formUpload.append('indikator2', indikator2);
-        formUpload.append('indikator3', indikator3);
-        formUpload.append('indikator4', indikator4);
-        formUpload.append('indikator5', indikator5);
-        formUpload.append('indikator6', indikator6);
-        formUpload.append('keterangan', keterangan);
+        formUpload.append('nama_lembaga', nama_lembaga);
+        formUpload.append('jenis_lembaga', jenis_lembaga);
+        formUpload.append('tgl_berdiri', tgl_berdiri);
+        formUpload.append('nama_notaris', nama_notaris);
+        formUpload.append('no_tanggal_notaris', no_tanggal_notaris);
+        formUpload.append('no_pendaftaran_kemenkumham', no_pendaftaran_kemenkumham);
+        formUpload.append('akreditasi_lembaga', akreditasi_lembaga);
+        formUpload.append('no_surat_akreditasi', no_surat_akreditasi);
+        formUpload.append('tgl_habis_berlaku_akreditasi', tgl_habis_berlaku_akreditasi);
+        formUpload.append('nomor_wajib_pajak', nomor_wajib_pajak);
+        formUpload.append('modal_usaha', modal_usaha);
+        formUpload.append('status_lembaga', status_lembaga);
+        formUpload.append('lingkup_wilayah_kerja', lingkup_wilayah_kerja);
+        formUpload.append('bidang_kegiatan', bidang_kegiatan);
+        formUpload.append('no_telp_lembaga', no_telp_lembaga);
+        formUpload.append('email_lembaga', email_lembaga);
+        formUpload.append('alamat_lembaga', alamat_lembaga);
+        formUpload.append('rt_lembaga', rt_lembaga);
+        formUpload.append('rw_lembaga', rw_lembaga);
+        formUpload.append('kecamatan_lembaga', kecamatan_lembaga);
+        formUpload.append('kelurahan_lembaga', kelurahan_lembaga);
+        formUpload.append('nama_ketua', nama_ketua);
+        formUpload.append('nik_ketua', nik_ketua);
+        formUpload.append('nohp_ketua', nohp_ketua);
+        formUpload.append('nama_sekretaris', nama_sekretaris);
+        formUpload.append('nik_sekretaris', nik_sekretaris);
+        formUpload.append('nohp_sekretaris', nohp_sekretaris);
+        formUpload.append('nama_bendahara', nama_bendahara);
+        formUpload.append('nik_bendahara', nik_bendahara);
+        formUpload.append('nohp_bendahara', nohp_bendahara);
+        formUpload.append('jumlah_pengurus', jumlah_pengurus);
+        formUpload.append('jumlah_binaan_dalam_lembaga', jumlah_binaan_dalam_lembaga);
+        formUpload.append('jumlah_binaan_luar_lembaga', jumlah_binaan_luar_lembaga);
+        formUpload.append('koordinat', koordinat);
 
         Swal.fire({
             title: 'Apakah anda yakin ingin mengajukan permohonan data ini?',
-            text: "Ajukan permohonan : SKTM",
+            text: "Ajukan permohonan : LKSA",
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
@@ -718,12 +1273,12 @@
                         ambilId("status").style.color = "blue";
                         ambilId("progressBar").value = 0;
                         ambilId("loaded_n_total").innerHTML = "";
-                        $('div.main-content').block({
+                        $('div.page-content').block({
                             message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
                         });
                     },
                     success: function(resul) {
-                        $('div.main-content').unblock();
+                        $('div.page-content').unblock();
 
                         if (resul.status !== 200) {
                             // ambilId("status").innerHTML = "gagal";
@@ -772,7 +1327,7 @@
                         console.log(erro);
                         // ambilId("status").innerHTML = "Upload Failed";
                         ambilId("status").style.color = "red";
-                        $('div.main-content').unblock();
+                        $('div.page-content').unblock();
                         Swal.fire(
                             'PERINGATAN!',
                             "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
@@ -794,6 +1349,178 @@
             document.getElementById("_jenis_detail").style.display = "block";
         } else {
             document.getElementById("_jenis_detail").style.display = "none";
+        }
+    }
+
+    function actionMouseHoverLocation(event) {
+        event.style.color = '#fff';
+        event.style.background = '#0A48B3';
+        $('.action-location-icon').css('color', '#fff');
+    }
+
+    function actionMouseOutHoverLocation(event) {
+        event.style.color = '#adb5bd';
+        event.style.background = '#fff';
+        $('.action-location-icon').css('color', '#adb5bd');
+    }
+
+    function pickCoordinat() {
+        const lat = document.getElementsByName('_latitude')[0].value;
+        const long = document.getElementsByName('_longitude')[0].value;
+
+        $.ajax({
+            url: "./location",
+            type: 'POST',
+            data: {
+                lat: lat,
+                long: long,
+            },
+            dataType: 'JSON',
+            beforeSend: function() {
+                $('div.page-content').block({
+                    message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
+                });
+            },
+            success: function(resul) {
+                $('div.page-content').unblock();
+
+                if (resul.status !== 200) {
+                    Swal.fire(
+                        'Failed!',
+                        resul.message,
+                        'warning'
+                    );
+                } else {
+                    $('#content-detailModalLabel').html('AMBIL LOKASI');
+                    $('.contentBodyModal').html(resul.data);
+                    $('.content-detailModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('.content-detailModal').modal('show');
+
+                    var map = L.map("map_inits").setView([lat, long], 12);
+                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors | Supported By <a href="https://kntechline.id">Kntechline.id</a>'
+                    }).addTo(map);
+
+                    var lati = lat;
+                    var longi = long;
+                    var marker;
+
+                    marker = L.marker({
+                        lat: lat,
+                        lng: long
+                    }, {
+                        draggable: true
+                    }).addTo(map);
+                    document.getElementById('_lat').value = lati;
+                    document.getElementById('_long').value = longi;
+
+                    var onDrag = function(e) {
+                        var latlng = marker.getLatLng();
+                        lati = latlng.lat;
+                        longi = latlng.lng;
+                        document.getElementById('_lat').value = latlng.lat;
+                        document.getElementById('_long').value = latlng.lng;
+                    };
+
+                    var onClick = function(e) {
+                        map.removeLayer(marker);
+                        // map.off('click', onClick); //turn off listener for map click
+                        marker = L.marker(e.latlng, {
+                            draggable: true
+                        }).addTo(map);
+                        lati = e.latlng.lat;
+                        longi = e.latlng.lng;
+                        document.getElementById('_lat').value = lati;
+                        document.getElementById('_long').value = longi;
+
+                        // marker.on('drag', onDrag);
+                    };
+                    marker.on('drag', onDrag);
+                    map.on('click', onClick);
+
+                    setTimeout(function() {
+                        map.invalidateSize();
+                        // console.log("maps opened");
+                        $("h6#title_map").css("display", "block");
+                    }, 1000);
+
+                }
+            },
+            error: function() {
+                $('div.page-content').unblock();
+                Swal.fire(
+                    'Failed!',
+                    "Trafik sedang penuh, silahkan ulangi beberapa saat lagi.",
+                    'warning'
+                );
+            }
+        });
+    }
+
+    function takedKoordinat() {
+        const latitu = document.getElementsByName('_lat')[0].value;
+        const longitu = document.getElementsByName('_long')[0].value;
+
+        document.getElementById('_latitude').value = latitu;
+        document.getElementById('_longitude').value = longitu;
+        document.getElementById('_koordinat').value = latitu + "," + longitu;
+
+        $('.content-detailModal').modal('hide');
+    }
+
+    function changeKecamatan(event) {
+        const color = $(event).attr('name');
+        $(event).removeAttr('style');
+        $('.' + color).html('');
+
+        if (event.value !== "") {
+            $.ajax({
+                url: './getKelurahan',
+                type: 'POST',
+                data: {
+                    id: event.value,
+                },
+                dataType: 'JSON',
+                beforeSend: function() {
+                    $('.kelurahan_lembaga').html("");
+                    $('div.select2-kelurahan-loading').block({
+                        message: '<i class="las la-spinner la-spin la-3x la-fw"></i><span class="sr-only">Loading...</span>'
+                    });
+                },
+                success: function(resul) {
+                    $('div.select2-kelurahan-loading').unblock();
+                    if (resul.status == 200) {
+                        $('.kelurahan_lembaga').html(resul.data);
+                    } else {
+                        if (resul.status == 401) {
+                            Swal.fire(
+                                'PERINGATAN!',
+                                resul.message,
+                                'warning'
+                            ).then((valRes) => {
+                                reloadPage(resul.redirrect);
+                            })
+                        } else {
+                            Swal.fire(
+                                'PERINGATAN!!!',
+                                resul.message,
+                                'warning'
+                            );
+                        }
+                    }
+                },
+                error: function(data) {
+                    $('div.select2-kelurahan-loading').unblock();
+                    Swal.fire(
+                        'PERINGATAN!',
+                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
+                        'warning'
+                    );
+                }
+            });
         }
     }
 
@@ -884,12 +1611,26 @@
         }
     }
 
-    $(document).ready(function() {});
+    $(document).ready(function() {
+
+    });
 </script>
 <?= $this->endSection(); ?>
 
 <?= $this->section('scriptTop'); ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+<link href="<?= base_url() ?>/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 <style>
+    #map_inits {
+        width: 100%;
+        height: 400px;
+    }
+
+    .leaflet-tooltip {
+        pointer-events: auto
+    }
+
     .preview-image-upload-ktp {
         position: relative;
     }
