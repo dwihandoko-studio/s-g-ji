@@ -193,7 +193,7 @@ class Pbi extends BaseController
         $data['user'] = $user->data;
         $data['data'] = $user->data;
 
-        $data['jeniss'] = ['Rekomendasi Pengusulan Baru Peserta PBI APBD', 'Rekomendasi Pengusulan Pengaktifan PBI APBD'];
+        $data['jeniss'] = ['Rekomendasi Pengusulan Baru Peserta PBI APBD', 'Rekomendasi Pengusulan Pengaktifan PBI APBD', 'Rekomendasi Pengusulan Reaktifasi PBI JK'];
 
         return view('silastri/peng/layanan/pbi/add', $data);
     }

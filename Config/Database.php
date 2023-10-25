@@ -50,6 +50,16 @@ class Database extends Config
         'port'     => 3306,
     ];
 
+    public $additionalDBGroup = [
+        'DSN'      => '',
+        'hostname' => '192.168.33.3',
+        'username' => 'backbone_disdikbud',
+        'password' => 'kominfo@2020',
+        'database' => 'backbone_disdikbud',
+        'DBDriver' => 'MySQLi',
+        'port'     => 33069,
+    ];
+
     /**
      * This database connection is used when
      * running PHPUnit database tests.
