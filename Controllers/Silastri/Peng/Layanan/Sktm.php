@@ -193,7 +193,7 @@ class Sktm extends BaseController
         $data['user'] = $user->data;
         $data['data'] = $user->data;
 
-        $data['jeniss'] = ['SKTM Rekomendasi Keringanan Biaya Pengobatan Rumah Sakit Umum Daerah', 'SKTM Pengusulan Baru Peserta PBI APBD', 'SKTM Pengusulan Pengaktifan PBI APBD', 'Lainnya'];
+        $data['jeniss'] = ['SKTM Rekomendasi Keringanan Biaya Pengobatan Rumah Sakit', 'SKTM Pengusulan PBI APBD', 'SKTM Pengusulan PBI JK (APBN)'];
 
         return view('silastri/peng/layanan/sktm/add', $data);
     }
