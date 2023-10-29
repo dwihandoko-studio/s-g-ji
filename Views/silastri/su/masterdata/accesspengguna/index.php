@@ -253,6 +253,7 @@
 <link href="<?= base_url() ?>/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 <script src="<?= base_url() ?>/assets/libs/ckeditor5-custom/build/ckeditor.js"></script>
 <link href="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url() ?>/assets/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
 
 <style>
     .preview-image-upload {
