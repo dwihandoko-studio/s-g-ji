@@ -39,7 +39,8 @@ class Antrian extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
-        $lists = $datamodel->get_datatables();
+        $layanans = getGrantedAccessLayanan($user->data->id);
+        $lists = $datamodel->get_datatables($layanans);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -75,8 +76,8 @@ class Antrian extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all(),
-            "recordsFiltered" => $datamodel->count_filtered(),
+            "recordsTotal" => $datamodel->count_all($layanans),
+            "recordsFiltered" => $datamodel->count_filtered($layanans),
             "data" => $data
         ];
         echo json_encode($output);

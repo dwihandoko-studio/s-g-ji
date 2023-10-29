@@ -840,6 +840,25 @@ function cekGrantedLayanan($user_id, $bidang)
 	return true;
 }
 
+function getGrantedAccessLayanan($user_id)
+{
+	$db      = \Config\Database::connect();
+	$dats = $db->table('hak_access_layanan')
+		->select("bidang")
+		->where('user_id', $user_id)
+		->get()->getResult();
+
+	if (count($dats) > 0) {
+		$bidangs = [];
+		foreach ($dats as $key => $value) {
+			$bidangs[] = $value->bidang;
+		}
+		return $bidangs;
+	}
+
+	return [""];
+}
+
 function getBidangNaungan($user_id)
 {
 	$db      = \Config\Database::connect();

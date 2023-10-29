@@ -49,33 +49,33 @@ class Accesspengguna extends BaseController
                     $row[] = '-';
                     break;
                 default:
-                    if (cekGrantedLayanan($list->id, '2')) {
-                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'2\')" id="' . $list->id . '-2" switch="none" checked />
-                        <label for="' . $list->id . '-2" data-on-label="On" data-off-label="Off"></label>';
+                    if (cekGrantedLayanan($list->id, 'SKDTKS')) {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'SKDTKS\')" id="' . $list->id . '-SKDTKS" switch="none" checked />
+                        <label for="' . $list->id . '-SKDTKS" data-on-label="On" data-off-label="Off"></label>';
                     } else {
-                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'2\')" id="' . $list->id . '-2" switch="none" />
-                        <label for="' . $list->id . '-2" data-on-label="On" data-off-label="Off"></label>';
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'SKDTKS\')" id="' . $list->id . '-SKDTKS" switch="none" />
+                        <label for="' . $list->id . '-SKDTKS" data-on-label="On" data-off-label="Off"></label>';
                     }
-                    if (cekGrantedLayanan($list->id, '3')) {
-                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'3\')" id="' . $list->id . '-3" switch="none" checked />
-                        <label for="' . $list->id . '-3" data-on-label="On" data-off-label="Off"></label>';
+                    if (cekGrantedLayanan($list->id, 'SKTM')) {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'SKTM\')" id="' . $list->id . '-SKTM" switch="none" checked />
+                        <label for="' . $list->id . '-SKTM" data-on-label="On" data-off-label="Off"></label>';
                     } else {
-                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'3\')" id="' . $list->id . '-3" switch="none" />
-                        <label for="' . $list->id . '-3" data-on-label="On" data-off-label="Off"></label>';
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'SKTM\')" id="' . $list->id . '-SKTM" switch="none" />
+                        <label for="' . $list->id . '-SKTM" data-on-label="On" data-off-label="Off"></label>';
                     }
-                    if (cekGrantedLayanan($list->id, '4')) {
-                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'4)" id="' . $list->id . '-4" switch="none" checked />
-                        <label for="' . $list->id . '-4" data-on-label="On" data-off-label="Off"></label>';
+                    if (cekGrantedLayanan($list->id, 'PBI')) {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'PBI)" id="' . $list->id . '-PBI" switch="none" checked />
+                        <label for="' . $list->id . '-PBI" data-on-label="On" data-off-label="Off"></label>';
                     } else {
-                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'4\')" id="' . $list->id . '-4" switch="none" />
-                        <label for="' . $list->id . '-4" data-on-label="On" data-off-label="Off"></label>';
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'PBI\')" id="' . $list->id . '-PBI" switch="none" />
+                        <label for="' . $list->id . '-PBI" data-on-label="On" data-off-label="Off"></label>';
                     }
-                    if (cekGrantedLayanan($list->id, '5')) {
-                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'5)" id="' . $list->id . '-5" switch="none" checked />
-                        <label for="' . $list->id . '-5" data-on-label="On" data-off-label="Off"></label>';
+                    if (cekGrantedLayanan($list->id, 'LKS')) {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'LKS)" id="' . $list->id . '-LKS" switch="none" checked />
+                        <label for="' . $list->id . '-LKS" data-on-label="On" data-off-label="Off"></label>';
                     } else {
-                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'5\')" id="' . $list->id . '-5" switch="none" />
-                        <label for="' . $list->id . '-5" data-on-label="On" data-off-label="Off"></label>';
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'LKS\')" id="' . $list->id . '-LKS" switch="none" />
+                        <label for="' . $list->id . '-LKS" data-on-label="On" data-off-label="Off"></label>';
                     }
                     break;
             }
