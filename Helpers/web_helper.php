@@ -828,6 +828,18 @@ function cekGrantedVerifikasi($user_id)
 	return true;
 }
 
+function cekGrantedLayanan($user_id, $bidang)
+{
+	// SELECT COUNT(*) as total FROM _tb_pendaftar WHERE peserta_didik_id = ? AND via_jalur = 'PELIMPAHAN'
+	$db      = \Config\Database::connect();
+
+	$grandted = $db->table('hak_access_layanan')->where(['user_id' => $user_id, 'bidang' => $bidang])->get()->getRowObject();
+	if (!$grandted) {
+		return false;
+	}
+	return true;
+}
+
 function getBidangNaungan($user_id)
 {
 	$db      = \Config\Database::connect();

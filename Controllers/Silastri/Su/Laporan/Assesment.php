@@ -67,6 +67,7 @@ class Assesment extends BaseController
             $row[] = $list->nik_orang_assesment;
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama_orang_assesment));
             $row[] = $list->kk_orang_assesment;
+            // $row[] = $list->kk_orang_assesment;
 
             $data[] = $row;
         }
