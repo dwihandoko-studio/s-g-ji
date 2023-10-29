@@ -10,7 +10,7 @@ class PenggunaModel extends Model
     protected $table = "v_user a";
     protected $column_order = array(null, null, 'a.nik', 'a.fullname', 'a.email', 'a.no_hp', 'a.role_user', 'a.kecamatan', 'a.is_active', 'a.email_verified', 'a.wa_verified');
     protected $column_search = array('a.nik', 'a.fullname', 'a.email', 'a.no_hp');
-    protected $order = array('a.role_user' => 'asc', 'a.fullname' => 'asc');
+    // protected $order = array('a.role_user' => 'desc', 'a.fullname' => 'asc');
     protected $request;
     protected $db;
     protected $dt;
@@ -40,12 +40,14 @@ class PenggunaModel extends Model
             $i++;
         }
 
-        if ($this->request->getPost('order')) {
-            $this->dt->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
-        } else if (isset($this->order)) {
-            $order = $this->order;
-            $this->dt->orderBy(key($order), $order[key($order)]);
-        }
+        $this->dt->orderBy('a.role_user', 'DESC');
+        $this->dt->orderBy('a.fullname', 'ASC');
+        // if ($this->request->getPost('order')) {
+        //     $this->dt->orderBy($this->column_order[$this->request->getPost('order')['0']['column']], $this->request->getPost('order')['0']['dir']);
+        // } else if (isset($this->order)) {
+        //     $order = $this->order;
+        //     $this->dt->orderBy(key($order), $order[key($order)]);
+        // }
     }
     function get_datatables()
     {
