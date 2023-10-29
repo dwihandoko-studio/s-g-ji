@@ -45,11 +45,12 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive mb-0" data-pattern="priority-columns">
-                            <table id="data-datatables" class="table table-striped">
-                                <!-- <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100"> -->
-                                <thead>
-                                    <!-- <tr>
+                        <div class="table-rep-plugin">
+                            <div class="table-responsive mb-0" data-pattern="priority-columns">
+                                <table id="data-datatables" class="table table-striped">
+                                    <!-- <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100"> -->
+                                    <thead>
+                                        <!-- <tr>
                                         <th rowspan="2" data-orderable="false">#</th>
                                         <th rowspan="2">NIK</th>
                                         <th rowspan="2">NAMA</th>
@@ -59,19 +60,20 @@
                                             <div class="text-center">AKSES LAYANAN</div>
                                         </th>
                                     </tr> -->
-                                    <tr>
-                                        <th>#</th>
-                                        <th>NIK</th>
-                                        <th>NAMA</th>
-                                        <th>EMAIL</th>
-                                        <th>ROLE</th>
-                                        <th>Bidang Pemberdayaan Sosial</th>
-                                        <th>Bidang Rehabilitasi Sosial</th>
-                                        <th>Bidang Perlindungan dan jaminan sosial</th>
-                                        <th>Bidang Bencana</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>NIK</th>
+                                            <th>NAMA</th>
+                                            <th>EMAIL</th>
+                                            <th>ROLE</th>
+                                            <th>Bidang Pemberdayaan Sosial</th>
+                                            <th>Bidang Rehabilitasi Sosial</th>
+                                            <th>Bidang Perlindungan dan jaminan sosial</th>
+                                            <th>Bidang Bencana</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -126,6 +128,7 @@
 <script src="<?= base_url() ?>/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="<?= base_url() ?>/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 <script src="<?= base_url() ?>/assets/libs/dropzone/min/dropzone.min.js"></script>
+<script src="<?= base_url() ?>/assets/libs/admin-resources/rwd-table/rwd-table.min.js"></script>
 
 <script>
     function aksiChange(event, id, val, bidang) {
@@ -211,6 +214,10 @@
     }
 
     $(document).ready(function() {
+        $(".table-responsive").responsiveTable({
+            addDisplayAllBtn: "btn btn-secondary"
+        });
+        $(".btn-toolbar [data-toggle=dropdown]").attr("data-bs-toggle", "dropdown");
 
         let tableDatatables = $('#data-datatables').DataTable({
             "processing": true,
