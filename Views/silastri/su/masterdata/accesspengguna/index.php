@@ -66,10 +66,10 @@
                                             <th>NAMA</th>
                                             <th>EMAIL</th>
                                             <th>ROLE</th>
-                                            <th>Bidang Pemberdayaan Sosial</th>
-                                            <th>Bidang Rehabilitasi Sosial</th>
-                                            <th>Bidang Perlindungan dan jaminan sosial</th>
-                                            <th>Bidang Bencana</th>
+                                            <th>SKDTKS</th>
+                                            <th>SKTM</th>
+                                            <th>PBI</th>
+                                            <th>LKS/LKSA</th>
                                         </tr>
                                     </thead>
                                 </table>
