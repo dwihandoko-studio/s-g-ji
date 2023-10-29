@@ -45,26 +45,29 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" data-orderable="false">#</th>
-                                    <th rowspan="2">NIK</th>
-                                    <th rowspan="2">NAMA</th>
-                                    <th rowspan="2">EMAIL</th>
-                                    <th rowspan="2">ROLE</th>
-                                    <th colspan="4" data-orderable="false">
-                                        <div class="text-center">AKSES LAYANAN</div>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>Bidang Pemberdayaan Sosial</th>
-                                    <th>Bidang Rehabilitasi Sosial</th>
-                                    <th>Bidang Perlindungan dan jaminan sosial</th>
-                                    <th>Bidang Bencana</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="table-responsive mb-0" data-pattern="priority-columns">
+                            <table id="data-datatables" class="table table-striped">
+                                <!-- <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100"> -->
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" data-orderable="false">#</th>
+                                        <th rowspan="2">NIK</th>
+                                        <th rowspan="2">NAMA</th>
+                                        <th rowspan="2">EMAIL</th>
+                                        <th rowspan="2">ROLE</th>
+                                        <th colspan="4" data-orderable="false">
+                                            <div class="text-center">AKSES LAYANAN</div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>Bidang Pemberdayaan Sosial</th>
+                                        <th>Bidang Rehabilitasi Sosial</th>
+                                        <th>Bidang Perlindungan dan jaminan sosial</th>
+                                        <th>Bidang Bencana</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
