@@ -49,11 +49,9 @@
                             <thead>
                                 <tr>
                                     <th rowspan="2" data-orderable="false">#</th>
-                                    <th rowspan="2" data-orderable="false">Aksi</th>
                                     <th rowspan="2">NIK</th>
                                     <th rowspan="2">NAMA</th>
                                     <th rowspan="2">EMAIL</th>
-                                    <th rowspan="2">NO HP</th>
                                     <th rowspan="2">ROLE</th>
                                     <th colspan="4" data-orderable="false">
                                         <div class="text-center">AKSES LAYANAN</div>

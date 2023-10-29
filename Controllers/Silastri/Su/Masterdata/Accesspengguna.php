@@ -40,7 +40,6 @@ class Accesspengguna extends BaseController
             $row[] = $list->nik;
             $row[] = $list->fullname;
             $row[] = $list->email;
-            $row[] = $list->no_hp;
             $row[] = $list->role_name;
             if (cekGrantedLayanan($list->id, '2')) {
                 $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'2\')" id="' . $list->id . '-2" switch="none" checked />
