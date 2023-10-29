@@ -17,6 +17,7 @@
                     </a>
                     <ul class="sub-menu  <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
                         <li><a <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "pengguna") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/su/masterdata/pengguna') ?>" key="t-masterdata-pengguna">Pengguna</a></li>
+                        <li><a <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "masterdata" && $uri->getSegment(4) == "accesspengguna") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/su/masterdata/accesspengguna') ?>" key="t-masterdata-accesspengguna">Akses Pengguna</a></li>
                     </ul>
                 </li>
                 <li <?= ($uri->getSegment(2) == "su" && $uri->getSegment(3) == "layanan") ? ' class="mm-active"' : '' ?>>

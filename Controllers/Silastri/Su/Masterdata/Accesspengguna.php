@@ -41,33 +41,43 @@ class Accesspengguna extends BaseController
             $row[] = $list->fullname;
             $row[] = $list->email;
             $row[] = $list->role_name;
-            if (cekGrantedLayanan($list->id, '2')) {
-                $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'2\')" id="' . $list->id . '-2" switch="none" checked />
+            switch ($list->role_user) {
+                case 2:
+                    $row[] = '-';
+                    $row[] = '-';
+                    $row[] = '-';
+                    $row[] = '-';
+                    break;
+                default:
+                    if (cekGrantedLayanan($list->id, '2')) {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'2\')" id="' . $list->id . '-2" switch="none" checked />
                         <label for="' . $list->id . '-2" data-on-label="On" data-off-label="Off"></label>';
-            } else {
-                $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'2\')" id="' . $list->id . '-2" switch="none" />
+                    } else {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'2\')" id="' . $list->id . '-2" switch="none" />
                         <label for="' . $list->id . '-2" data-on-label="On" data-off-label="Off"></label>';
-            }
-            if (cekGrantedLayanan($list->id, '3')) {
-                $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'3\')" id="' . $list->id . '-3" switch="none" checked />
+                    }
+                    if (cekGrantedLayanan($list->id, '3')) {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'3\')" id="' . $list->id . '-3" switch="none" checked />
                         <label for="' . $list->id . '-3" data-on-label="On" data-off-label="Off"></label>';
-            } else {
-                $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'3\')" id="' . $list->id . '-3" switch="none" />
+                    } else {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'3\')" id="' . $list->id . '-3" switch="none" />
                         <label for="' . $list->id . '-3" data-on-label="On" data-off-label="Off"></label>';
-            }
-            if (cekGrantedLayanan($list->id, '4')) {
-                $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'4)" id="' . $list->id . '-4" switch="none" checked />
+                    }
+                    if (cekGrantedLayanan($list->id, '4')) {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'4)" id="' . $list->id . '-4" switch="none" checked />
                         <label for="' . $list->id . '-4" data-on-label="On" data-off-label="Off"></label>';
-            } else {
-                $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'4\')" id="' . $list->id . '-4" switch="none" />
+                    } else {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'4\')" id="' . $list->id . '-4" switch="none" />
                         <label for="' . $list->id . '-4" data-on-label="On" data-off-label="Off"></label>';
-            }
-            if (cekGrantedLayanan($list->id, '5')) {
-                $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'5)" id="' . $list->id . '-5" switch="none" checked />
+                    }
+                    if (cekGrantedLayanan($list->id, '5')) {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'0\',\'5)" id="' . $list->id . '-5" switch="none" checked />
                         <label for="' . $list->id . '-5" data-on-label="On" data-off-label="Off"></label>';
-            } else {
-                $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'5\')" id="' . $list->id . '-5" switch="none" />
+                    } else {
+                        $row[] = '<input type="checkbox" onchange="aksiChange(this, \'' . $list->id . '\',\'1\',\'5\')" id="' . $list->id . '-5" switch="none" />
                         <label for="' . $list->id . '-5" data-on-label="On" data-off-label="Off"></label>';
+                    }
+                    break;
             }
 
             $data[] = $row;
