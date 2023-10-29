@@ -49,7 +49,7 @@
                             <table id="data-datatables" class="table table-striped">
                                 <!-- <table id="data-datatables" class="table table-bordered dt-responsive  nowrap w-100"> -->
                                 <thead>
-                                    <tr>
+                                    <!-- <tr>
                                         <th rowspan="2" data-orderable="false">#</th>
                                         <th rowspan="2">NIK</th>
                                         <th rowspan="2">NAMA</th>
@@ -58,8 +58,13 @@
                                         <th colspan="4" data-orderable="false">
                                             <div class="text-center">AKSES LAYANAN</div>
                                         </th>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
+                                        <th>#</th>
+                                        <th>NIK</th>
+                                        <th>NAMA</th>
+                                        <th>EMAIL</th>
+                                        <th>ROLE</th>
                                         <th>Bidang Pemberdayaan Sosial</th>
                                         <th>Bidang Rehabilitasi Sosial</th>
                                         <th>Bidang Perlindungan dan jaminan sosial</th>
