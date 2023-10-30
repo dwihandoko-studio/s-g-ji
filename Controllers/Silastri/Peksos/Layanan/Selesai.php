@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Silastri\Adm\Layanan;
+namespace App\Controllers\Silastri\Peksos\Layanan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Adm\Layanan\SelesaiModel;
+use App\Models\Silastri\Peksos\Layanan\SelesaiModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
