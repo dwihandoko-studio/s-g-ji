@@ -51,11 +51,12 @@ class ApprovalModel extends Model
             $this->dt->orderBy(key($order), $order[key($order)]);
         }
     }
-    function get_datatables()
+    function get_datatables($layanan)
     {
         // $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, a.date_matching, a.date_terbitsk");
         // $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         // $this->dt->whereIn('a.status_usulan', [6]);
+        $this->dt->whereIn('a.layanan', $layanan);
         if ($this->request->getPost('layanan')) {
             if ($this->request->getPost('layanan') !== "") {
 
@@ -69,11 +70,12 @@ class ApprovalModel extends Model
         return $query->getResult();
     }
 
-    function count_filtered()
+    function count_filtered($layanan)
     {
         // $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, a.date_matching, a.date_terbitsk");
         // $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         // $this->dt->whereIn('a.status_usulan', [6]);
+        $this->dt->whereIn('a.layanan', $layanan);
         if ($this->request->getPost('layanan')) {
             if ($this->request->getPost('layanan') !== "") {
 
@@ -85,11 +87,12 @@ class ApprovalModel extends Model
         return $this->dt->countAllResults();
     }
 
-    public function count_all()
+    public function count_all($layanan)
     {
         // $this->dt->select("a.id as id_usulan, a.date_approve, a.kode_usulan, a.id_ptk, a.id_tahun_tw, a.status_usulan, a.date_approve_sptjm, b.nama, b.nik, b.nuptk, b.jenis_ptk, b.kecamatan, a.date_matching, a.date_terbitsk");
         // $this->dt->join('_ptk_tb b', 'a.id_ptk = b.id');
         // $this->dt->whereIn('a.status_usulan', [6]);
+        $this->dt->whereIn('a.layanan', $layanan);
         if ($this->request->getPost('layanan')) {
             if ($this->request->getPost('layanan') !== "") {
 

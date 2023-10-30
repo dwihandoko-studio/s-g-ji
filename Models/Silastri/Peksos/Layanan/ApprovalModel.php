@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Silastri\Adm\Layanan;
+namespace App\Models\Silastri\Peksos\Layanan;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;
 
-class ProsesModel extends Model
+class ApprovalModel extends Model
 {
     protected $table = "_permohonan a";
     protected $column_order = array(null, null, 'a.layanan', 'a.kode_permohonan', 'a.nik', 'a.nama', 'b.kk', 'a.jenis');
@@ -27,7 +27,7 @@ class ProsesModel extends Model
     {
         $this->dt->select("a.id as id_permohonan, a.layanan, a.kode_permohonan, a.user_id, a.nik, a.nama, a.jenis, a.kelurahan, b.kk");
         $this->dt->join('_profil_users_tb b', 'b.id = a.user_id');
-        $this->dt->where("(a.status_permohonan = 1)");
+        $this->dt->where("(a.status_permohonan = 2)");
 
         $i = 0;
         foreach ($this->column_search as $item) {

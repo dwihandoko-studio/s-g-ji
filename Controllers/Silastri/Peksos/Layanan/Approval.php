@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Silastri\Adm\Layanan;
+namespace App\Controllers\Silastri\Peksos\Layanan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Adm\Layanan\ApprovalModel;
+use App\Models\Silastri\Peksos\Layanan\ApprovalModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -72,7 +72,7 @@ class Approval extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/adm/layanan/approval/data'));
+        return redirect()->to(base_url('silastri/peksos/layanan/approval/data'));
     }
 
     public function data()
@@ -90,7 +90,7 @@ class Approval extends BaseController
 
         // $data['jeniss'] = ['Surat Keterangan DTKS untuk Pengajuan PIP', 'Surat Keterangan DTKS untuk Pendaftaran PPDB', 'Surat Keterangan DTKS untuk Pengajuan PLN', 'Lainnya'];
 
-        return view('silastri/adm/layanan/approval/index', $data);
+        return view('silastri/peksos/layanan/approval/index', $data);
     }
 
     public function detail()
@@ -133,7 +133,7 @@ class Approval extends BaseController
 
         if ($current) {
             $data['data'] = $current;
-            return view('silastri/adm/layanan/approval/detail-page', $data);
+            return view('silastri/peksos/layanan/approval/detail-page', $data);
         } else {
             return view('404', ['error' => "Data tidak ditemukan."]);
         }
@@ -262,7 +262,7 @@ class Approval extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
+                $response->redirrect = base_url('silastri/peksos/layanan/approval');
                 $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
                 return json_encode($response);
                 // } else {
@@ -380,7 +380,7 @@ class Approval extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
+                $response->redirrect = base_url('silastri/peksos/layanan/approval');
                 $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
                 return json_encode($response);
                 // } else {
@@ -456,7 +456,7 @@ class Approval extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/layanan/proses/tolak', $data);
+            $response->data = view('silastri/peksos/layanan/proses/tolak', $data);
             return json_encode($response);
         }
     }
@@ -526,7 +526,7 @@ class Approval extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/layanan/proses/form-upload', $data);
+            $response->data = view('silastri/peksos/layanan/proses/form-upload', $data);
             return json_encode($response);
         }
     }
@@ -706,7 +706,7 @@ class Approval extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
+                $response->redirrect = base_url('silastri/peksos/layanan/approval');
                 $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
                 return json_encode($response);
                 // } else {
@@ -834,7 +834,7 @@ class Approval extends BaseController
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->redirrect = base_url('silastri/adm/layanan/antrian');
+                    $response->redirrect = base_url('silastri/peksos/layanan/antrian');
                     $response->message = "Tolak Selesai Permohonan $nama berhasil dilakukan.";
                     return json_encode($response);
                 } else {

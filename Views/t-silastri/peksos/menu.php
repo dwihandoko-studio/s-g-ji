@@ -10,7 +10,7 @@
                         <span key="t-dashboards">Dashboard</span>
                     </a>
                 </li>
-                <!-- <li <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "layanan") ? ' class="mm-active"' : '' ?>>
+                <li <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "layanan") ? ' class="mm-active"' : '' ?>>
                     <a href="javascript: void(0);" class="has-arrow waves-effect <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "layanan") ? ' mm-active' : '' ?>">
                         <i class="bx bx-package"></i>
                         <span key="t-layanans">Layanan</span>
@@ -21,7 +21,7 @@
                         <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "layanan" && $uri->getSegment(4) == "selesai") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/layanan/selesai') ?>" key="t-layanan-selesai">Selesai</a></li>
                         <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "layanan" && $uri->getSegment(4) == "ditolak") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/layanan/ditolak') ?>" key="t-layanan-ditolak">Ditolak</a></li>
                     </ul>
-                </li> -->
+                </li>
                 <li <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan") ? ' class="mm-active"' : '' ?>>
                     <a href="javascript: void(0);" class="has-arrow waves-effect <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan") ? ' mm-active' : '' ?>">
                         <i class="bx bx-package"></i>

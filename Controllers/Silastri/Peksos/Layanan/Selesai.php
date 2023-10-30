@@ -3,7 +3,7 @@
 namespace App\Controllers\Silastri\Adm\Layanan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Adm\Layanan\ApprovalModel;
+use App\Models\Silastri\Adm\Layanan\SelesaiModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -13,7 +13,7 @@ use App\Libraries\Helplib;
 use App\Libraries\Silastri\Ttelib;
 use App\Libraries\Uuid;
 
-class Approval extends BaseController
+class Selesai extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -30,7 +30,7 @@ class Approval extends BaseController
     public function getAll()
     {
         $request = Services::request();
-        $datamodel = new ApprovalModel($request);
+        $datamodel = new SelesaiModel($request);
 
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
@@ -72,12 +72,12 @@ class Approval extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/adm/layanan/approval/data'));
+        return redirect()->to(base_url('silastri/peksos/layanan/selesai/data'));
     }
 
     public function data()
     {
-        $data['title'] = 'Menunggu Approval TTE Permohonan Layanan';
+        $data['title'] = 'Selesai Permohonan Layanan';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -90,7 +90,7 @@ class Approval extends BaseController
 
         // $data['jeniss'] = ['Surat Keterangan DTKS untuk Pengajuan PIP', 'Surat Keterangan DTKS untuk Pendaftaran PPDB', 'Surat Keterangan DTKS untuk Pengajuan PLN', 'Lainnya'];
 
-        return view('silastri/adm/layanan/approval/index', $data);
+        return view('silastri/peksos/layanan/selesai/index', $data);
     }
 
     public function detail()
@@ -99,7 +99,7 @@ class Approval extends BaseController
             return view('404', ['error' => "Akses tidak diizinkan."]);
         }
 
-        $data['title'] = 'Detail Menunggu Approval Permohonan Layanan';
+        $data['title'] = 'Detail Selesai Permohonan Layanan';
         $Profilelib = new Profilelib();
         $user = $Profilelib->user();
         if ($user->status != 200) {
@@ -125,15 +125,18 @@ class Approval extends BaseController
                 c.id as id_kecamatan, 
                 c.kecamatan as nama_kecamatan, 
                 d.id as id_kelurahan, 
-                d.kelurahan as nama_kelurahan")
+                d.kelurahan as nama_kelurahan,
+                e.file_dokumen_tte
+                ")
             ->join('_profil_users_tb b', 'b.id = a.user_id')
             ->join('ref_kecamatan c', 'c.id = b.kecamatan')
             ->join('ref_kelurahan d', 'd.id = b.kelurahan')
-            ->where("a.id = '$id' AND (a.status_permohonan = 1 OR a.status_permohonan = 2)")->get()->getRowObject();
+            ->join('_file_tte e', 'e.id = a.id')
+            ->where(['a.id' => $id, 'a.status_permohonan' => 5])->get()->getRowObject();
 
         if ($current) {
             $data['data'] = $current;
-            return view('silastri/adm/layanan/approval/detail-page', $data);
+            return view('silastri/peksos/layanan/selesai/detail-page', $data);
         } else {
             return view('404', ['error' => "Data tidak ditemukan."]);
         }
@@ -262,7 +265,7 @@ class Approval extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
+                $response->redirrect = base_url('silastri/peksos/layanan/approval');
                 $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
                 return json_encode($response);
                 // } else {
@@ -380,7 +383,7 @@ class Approval extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
+                $response->redirrect = base_url('silastri/peksos/layanan/approval');
                 $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
                 return json_encode($response);
                 // } else {
@@ -456,274 +459,8 @@ class Approval extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/layanan/proses/tolak', $data);
+            $response->data = view('silastri/peksos/layanan/selesai/tolak', $data);
             return json_encode($response);
-        }
-    }
-
-    public function formupload()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id')
-                . $this->validator->getError('nama');
-            return json_encode($response);
-        } else {
-            $Profilelib = new Profilelib();
-            $user = $Profilelib->user();
-            if ($user->status != 200) {
-                delete_cookie('jwt');
-                session()->destroy();
-                $response = new \stdClass;
-                $response->status = 401;
-                $response->message = "Session telah habis";
-                $response->redirect = base_url('auth');
-                return json_encode($response);
-            }
-            // $canUsulTamsil = canUsulTamsil();
-
-            // if ($canUsulTamsil && $canUsulTamsil->code !== 200) {
-            //     return json_encode($canUsulTamsil);
-            // }
-
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-
-            $oldData = $this->_db->table('_permohonan')->where('id', $id)->get()->getRowObject();
-            if (!$oldData) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Data permohonan layanan tidak ditemukan.";
-                return json_encode($response);
-            }
-
-            $data['id'] = $id;
-            $data['nama'] = $nama;
-            $data['data'] = $oldData;
-            $response = new \stdClass;
-            $response->status = 200;
-            $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/layanan/proses/form-upload', $data);
-            return json_encode($response);
-        }
-    }
-
-    public function uploadSave()
-    {
-        if ($this->request->getMethod() != 'post') {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = "Permintaan tidak diizinkan";
-            return json_encode($response);
-        }
-
-        $rules = [
-            'id' => [
-                'rules' => 'required|trim',
-                'errors' => [
-                    'required' => 'Id tidak boleh kosong. ',
-                ]
-            ],
-            'nama' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Nama tidak boleh kosong. ',
-                ]
-            ],
-            '_file' => [
-                'rules' => 'uploaded[_file]|max_size[_file,2048]|mime_in[_file,application/pdf]',
-                'errors' => [
-                    'uploaded' => 'Pilih file terlebih dahulu. ',
-                    'max_size' => 'Ukuran file terlalu besar, Maximum 2Mb. ',
-                    'mime_in' => 'Ekstensi yang anda upload harus berekstensi pdf. '
-                ]
-            ],
-        ];
-
-        if (!$this->validate($rules)) {
-            $response = new \stdClass;
-            $response->status = 400;
-            $response->message = $this->validator->getError('id')
-                . $this->validator->getError('nama')
-                . $this->validator->getError('_file');
-            return json_encode($response);
-        } else {
-            $Profilelib = new Profilelib();
-            $user = $Profilelib->user();
-            if ($user->status != 200) {
-                delete_cookie('jwt');
-                session()->destroy();
-                $response = new \stdClass;
-                $response->status = 401;
-                $response->message = "Permintaan diizinkan";
-                return json_encode($response);
-            }
-
-            $id = htmlspecialchars($this->request->getVar('id'), true);
-            $nama = htmlspecialchars($this->request->getVar('nama'), true);
-
-            $oldData = $this->_db->table('_permohonan')->where(['id' => $id])->get()->getRowArray();
-            if (!$oldData) {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Usulan tidak ditemukan.";
-                return json_encode($response);
-            }
-
-            $dir = "";
-            $dir_temp = '';
-            $table_db = '';
-
-            switch ($oldData['layanan']) {
-                case 'SKDTKS':
-                    $dir = FCPATH . "upload/dtks";
-                    $dir_temp = FCPATH . "upload/dtks-temp";
-                    $field_db = 'pangkat_terakhir';
-                    $table_db = '_upload_data_attribut';
-                    break;
-                case 'SKTM':
-                    $dir = FCPATH . "upload/sktm";
-                    $dir_temp = FCPATH . "upload/sktm-temp";
-                    $field_db = 'kgb_terakhir';
-                    $table_db = '_upload_data_attribut';
-                    break;
-                case 'PBI':
-                    $dir = FCPATH . "upload/pbi";
-                    $dir_temp = FCPATH . "upload/pbi-temp";
-                    $field_db = 'pernyataan_24jam';
-                    $table_db = '_upload_data_attribut';
-                    break;
-                case 'LKS':
-                    $dir = FCPATH . "upload/lks";
-                    $dir_temp = FCPATH . "upload/lks-temp";
-                    $field_db = 'cuti';
-                    $table_db = '_upload_data_attribut';
-                    break;
-                default:
-                    $dir = FCPATH . "upload/dtks";
-                    $dir_temp = FCPATH . "upload/dtks-temp";
-                    $field_db = 'pangkat_terakhir';
-                    $table_db = '_upload_data_attribut';
-                    break;
-            }
-
-            $lampiran = $this->request->getFile('_file');
-            $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = $oldData['nik'] . ".pdf";
-
-            if ($lampiran->isValid() && !$lampiran->hasMoved()) {
-                $lampiran->move($dir_temp, $newNamelampiran);
-                // $data[$field_db] = $newNamelampiran;
-            } else {
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal mengupload file.";
-                return json_encode($response);
-            }
-
-            $date = date('Y-m-d H:i:s');
-
-            $oldData['updated_at'] = $date;
-            $oldData['date_approve'] = $date;
-            $oldData['admin_approve'] = $user->data->id;
-            $oldData['status_permohonan'] = 2;
-
-            $contentCreator = [
-                'author' => $user->data->fullname,
-                'title' => $oldData['jenis'] . ' (' . $oldData['nama'] . ')',
-                'subject' => $oldData['jenis'] . ' (' . $oldData['nama'] . ') - ' . $oldData['kode_permohonan'],
-                'keyword' => 'TTE, Signature, Lampung Tengah, ' . $oldData['jenis'] . ', ' . $oldData['kode_permohonan'],
-            ];
-
-            $tteUpload = new Ttelib();
-            $uploaded = $tteUpload->createUploadFile($dir_temp . '/' . $oldData['nik'] . '.pdf', $dir, $oldData['nik'] . '.pdf', $contentCreator, 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['id'] . '&choe=UTF-8');
-            // $uploaded = $tteUpload->createUploadFile($dir_pdf_tte, $dir, $newNamelampiran, $contentCreator);
-            // var_dump($uploaded);
-            // die;
-            if ($uploaded->code === 200) {
-                $oldData['lampiran_selesai'] = $oldData['nik'] . '.pdf';
-            } else {
-                unlink($dir_temp . '/' . $newNamelampiran);
-                $response = new \stdClass;
-                $response->status = 400;
-                // $response->erronya = var_dump($uploaded->message);
-                $response->message = "Kesalahan dalam mengupload file, file pdf max versi 1.5.";
-                return json_encode($response);
-            }
-
-            $this->_db->transBegin();
-            $this->_db->table('_permohonan')->where('id', $oldData['id'])->update($oldData);
-            if ($this->_db->affectedRows() > 0) {
-                // $this->_db->table('_permohonan_temp')->where('id', $oldData['id'])->delete();
-                // if ($this->_db->affectedRows() > 0) {
-                // try {
-                //     $riwayatLib = new Riwayatlib();
-                //     $riwayatLib->insert("Menolak Pendaftaran $name via Jalur Afirmasi dengan NISN : " . $nisn, "Tolak Pendaftaran Jalur Afirmasi", "tolak");
-
-                //     $saveNotifSystem = new Notificationlib();
-                //     $saveNotifSystem->send([
-                //         'judul' => "Pendaftaran Jalur Afirmasi Ditolak.",
-                //         'isi' => "Pendaftaran anda melalui jalur afirmasi ditolak dengan keterangan: $keterangan.",
-                //         'action_web' => 'peserta/riwayat/pendaftaran',
-                //         'action_app' => 'riwayat_pendaftaran_page',
-                //         'token' => $cekRegisterTemp['id'],
-                //         'send_from' => $user->data->id,
-                //         'send_to' => $cekRegisterTemp['user_id'],
-                //     ]);
-
-                //     $onesignal = new Fcmlib();
-                //     $send = $onesignal->pushNotifToUser([
-                //         'title' => "Pendaftaran Jalur Afirmasi Ditolak.",
-                //         'content' => "Pendaftaran anda melalui jalur afirmasi ditolak dengan keterangan: $keterangan.",
-                //         'send_to' => $cekRegisterTemp['user_id'],
-                //         'app_url' => 'riwayat_pendaftaran_page',
-                //     ]);
-                // } catch (\Throwable $th) {
-                // }
-                $this->_db->transCommit();
-                $response = new \stdClass;
-                $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
-                $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
-                return json_encode($response);
-                // } else {
-                //     $this->_db->transRollback();
-                //     $response = new \stdClass;
-                //     $response->status = 400;
-                //     $response->message = "Gagal menyelesaikan permohonan $nama";
-                //     return json_encode($response);
-                // }
-            } else {
-                unlink($dir_temp . '/' . $newNamelampiran);
-                $this->_db->transRollback();
-                $response = new \stdClass;
-                $response->status = 400;
-                $response->message = "Gagal menyelesaikan permohonan $nama";
-                return json_encode($response);
-            }
         }
     }
 
@@ -834,7 +571,7 @@ class Approval extends BaseController
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->redirrect = base_url('silastri/adm/layanan/antrian');
+                    $response->redirrect = base_url('silastri/peksos/layanan/antrian');
                     $response->message = "Tolak Selesai Permohonan $nama berhasil dilakukan.";
                     return json_encode($response);
                 } else {

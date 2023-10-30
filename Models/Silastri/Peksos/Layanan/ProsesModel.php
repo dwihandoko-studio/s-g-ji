@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Silastri\Adm\Layanan;
+namespace App\Models\Silastri\Peksos\Layanan;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\Model;

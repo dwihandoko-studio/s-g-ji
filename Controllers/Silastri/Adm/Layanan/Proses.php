@@ -40,7 +40,8 @@ class Proses extends BaseController
             return redirect()->to(base_url('auth'));
         }
 
-        $lists = $datamodel->get_datatables();
+        $layanans = getGrantedAccessLayanan($user->data->id);
+        $lists = $datamodel->get_datatables($layanans);
         $data = [];
         $no = $request->getPost("start");
         foreach ($lists as $list) {
@@ -63,8 +64,8 @@ class Proses extends BaseController
         }
         $output = [
             "draw" => $request->getPost('draw'),
-            "recordsTotal" => $datamodel->count_all(),
-            "recordsFiltered" => $datamodel->count_filtered(),
+            "recordsTotal" => $datamodel->count_all($layanans),
+            "recordsFiltered" => $datamodel->count_filtered($layanans),
             "data" => $data
         ];
         echo json_encode($output);
@@ -136,6 +137,50 @@ class Proses extends BaseController
             return view('silastri/adm/layanan/proses/detail-page', $data);
         } else {
             return view('404', ['error' => "Data tidak ditemukan."]);
+        }
+    }
+
+    public function getKelurahan()
+    {
+        if ($this->request->getMethod() != 'post') {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Permintaan tidak diizinkan";
+            return json_encode($response);
+        }
+
+        $rules = [
+            'id' => [
+                'rules' => 'required|trim',
+                'errors' => [
+                    'required' => 'Id tidak boleh kosong. ',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = $this->validator->getError('id');
+            return json_encode($response);
+        } else {
+            $id = htmlspecialchars($this->request->getVar('id'), true);
+
+            $kels = $this->_db->table('ref_kelurahan')->where('id_kecamatan', $id)->orderBy('kelurahan', 'ASC')->get()->getResult();
+
+            if (count($kels) > 0) {
+                $x['kels'] = $kels;
+                $response = new \stdClass;
+                $response->status = 200;
+                $response->message = "Permintaan diizinkan";
+                $response->data = view('portal/ref_kelurahan', $x);
+                return json_encode($response);
+            } else {
+                $response = new \stdClass;
+                $response->status = 400;
+                $response->message = "Data tidak ditemukan";
+                return json_encode($response);
+            }
         }
     }
 
