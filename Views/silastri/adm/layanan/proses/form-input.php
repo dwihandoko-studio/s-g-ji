@@ -11,7 +11,7 @@
                         <?php if (isset($kecamatans)) {
                             if (count($kecamatans) > 0) {
                                 foreach ($kecamatans as $key => $value) { ?>
-                                    <option value="<?= $value->id ?>"><?= $value->kecamatan ?></option>
+                                    <option value="<?= $value->id ?>" <?= ($data->kecamatan == $value->id) ? ' selected' : '' ?>><?= $value->kecamatan ?></option>
                         <?php }
                             }
                         } ?>
@@ -25,7 +25,7 @@
                         <?php if (isset($kelurahans)) {
                             if (count($kelurahans) > 0) {
                                 foreach ($kelurahans as $key => $value) { ?>
-                                    <option value="<?= $value->id ?>"><?= $value->kelurahan ?></option>
+                                    <option value="<?= $value->id ?>" <?= ($data->kelurahan == $value->id) ? ' selected' : '' ?>><?= $value->kelurahan ?></option>
                         <?php }
                             }
                         } ?>
@@ -331,46 +331,6 @@
                         'success'
                     ).then((valRes) => {
                         reloadPage(resul.redirrect);
-                        // $.ajax({
-                        //     url: "./downloadtemp",
-                        //     type: 'POST',
-                        //     data: {
-                        //         id: resul.id,
-                        //         nama: nama,
-                        //     },
-                        //     dataType: 'JSON',
-                        //     beforeSend: function() {
-                        //         $('div.modal-content-loading').block({
-                        //             message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        //         });
-                        //     },
-                        //     success: function(result) {
-                        //         $('div.modal-content-loading').unblock();
-                        //         if (result.status !== 200) {
-                        //             Swal.fire(
-                        //                 'Failed!',
-                        //                 result.message,
-                        //                 'warning'
-                        //             );
-                        //         } else {
-                        //             Swal.fire(
-                        //                 'SELAMAT!',
-                        //                 result.message,
-                        //                 'success'
-                        //             ).then((valRest) => {
-                        //                 reloadPage(result.redirrect);
-                        //             })
-                        //         }
-                        //     },
-                        //     error: function() {
-                        //         $('div.modal-content-loading').unblock();
-                        //         Swal.fire(
-                        //             'Failed!',
-                        //             "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                        //             'warning'
-                        //         );
-                        //     }
-                        // });
                     })
                 }
             },

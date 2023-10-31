@@ -175,4 +175,55 @@ class Ttelib
         $response->data = $outputName;
         return $response;
     }
+
+    public function createUploadFileGenerate($dokument, $path, $outputName, $contentCreator, $url)
+    {
+        $pdf = new CREATEPDF(); // Array sets the X, Y dimensions in mm
+        $pdf->CustomFooterText = $url;
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor($contentCreator['author'] ?? "TTE Kabupaten Lampung Tengah");
+        $pdf->SetTitle($contentCreator['title'] ?? "TTE Kabupaten Lampung Tengah");
+        $pdf->SetSubject($contentCreator['subject'] ?? "TTE Kabupaten Lampung Tengah");
+        $pdf->SetKeywords($contentCreator['keyword'] ?? "TTE Kabupaten Lampung Tengah");
+        $pdf->SetPrintHeader(false);
+        $pdf->SetPrintFooter(true);
+        try {
+            $pagecount = $pdf->setSourceFile($dokument);
+        } catch (\Throwable $th) {
+            $response = new \stdClass;
+            $response->code = 400;
+            $response->message = var_dump($th);
+            return $response;
+        }
+
+        try {
+
+            for ($pageNo = 1; $pageNo <= $pagecount; $pageNo++) {
+                $tplIdx = $pdf->importPage($pageNo);
+
+                $size = $pdf->getTemplateSize($tplIdx);
+                $pdf->AddPage($size['orientation'], array($size['width'], $size['height']));
+                $pdf->useTemplate($tplIdx);
+
+                // $pageWidth = $pdf->GetPageWidth();
+                // $imageX = $pageWidth - 90; // Mengatur posisi gambar dari kanan
+                // $imageY = $pdf->GetPageHeight() - 79; // Mengatur posisi gambar dari atas
+                // $imageWidth = 75; // Mengatur lebar gambar
+                // $imageHeight = 50; // Mengatur tinggi gambar
+                // $pdf->Image(FCPATH . "upload/my-image-tte.png", $imageX, $imageY, $imageWidth, $imageHeight);
+            }
+
+            $pdf->Output($path . "/" . $outputName, 'F');
+        } catch (\Throwable $th) {
+            $response = new \stdClass;
+            $response->code = 400;
+            $response->message = var_dump($th);
+            return $response;
+        }
+
+        $response = new \stdClass;
+        $response->code = 200;
+        $response->data = $outputName;
+        return $response;
+    }
 }

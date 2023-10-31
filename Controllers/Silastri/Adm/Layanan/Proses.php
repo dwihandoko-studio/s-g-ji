@@ -571,7 +571,22 @@ class Proses extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/layanan/proses/form-upload', $data);
+
+            switch ($oldData->layanan) {
+                case 'SKDTKS':
+                    $response->data = view('silastri/adm/layanan/proses/form-upload', $data);
+                    break;
+                case 'SKTM':
+                    $response->data = view('silastri/adm/layanan/proses/form-input', $data);
+                    break;
+                case 'PBI':
+                    $response->data = view('silastri/adm/layanan/proses/form-input', $data);
+                    break;
+
+                default:
+                    $response->data = view('silastri/adm/layanan/proses/form-upload', $data);
+                    break;
+            }
             return json_encode($response);
         }
     }

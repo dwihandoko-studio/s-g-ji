@@ -133,6 +133,24 @@ class Approval extends BaseController
 
         if ($current) {
             $data['data'] = $current;
+            switch ($current->layanan) {
+                case 'SKTM':
+                    $dirFile = 'sktm';
+                    break;
+                case 'SKDTKS':
+                    $dirFile = 'dtks';
+                    break;
+                case 'PBI':
+                    $dirFile = 'pbi';
+                    break;
+
+                default:
+                    $dirFile = 'notfound';
+                    break;
+            }
+
+            $data['file'] = $dirFile . '/' . $current->lampiran_selesai;
+            // $data['file'] = $dirFile . '/' . $current->nik . '.pdf';
             return view('silastri/peksos/layanan/approval/detail-page', $data);
         } else {
             return view('404', ['error' => "Data tidak ditemukan."]);
