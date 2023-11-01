@@ -802,7 +802,7 @@ class Proses extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->redirrect = base_url('silastri/peksos/layanan/approval');
-                $response->message = "Selesaikan Permohonan $nama berhasil dilakukan. Tinggal menunggu TTE kadis.";
+                $response->message = "Proses Permohonan Persetujuan $nama berhasil. Selanjutnya menunggu TTE Kepala Dinas.";
                 $response->id = $oldData['id'];
                 return json_encode($response);
             } else {
@@ -991,7 +991,7 @@ class Proses extends BaseController
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->redirrect = base_url('silastri/adm/layanan/approval');
-                $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
+                $response->message = "Proses Permohonan Persetujuan $nama berhasil. Selanjutnya menunggu TTE Kepala Dinas.";
                 return json_encode($response);
                 // } else {
                 //     $this->_db->transRollback();
