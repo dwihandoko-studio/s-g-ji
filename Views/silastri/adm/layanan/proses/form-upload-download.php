@@ -3,50 +3,11 @@
     <input type="hidden" id="_nama" name="_nama" value="<?= $nama ?>" />
     <div class="modal-body">
         <div class="row">
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label for="_kecamatan" class="col-form-label">Kecamatan :</label>
-                    <select class="form-control select2 kecamatan" id="_kecamatan" name="_kecamatan" style="width: 100%" onchange="changeKecamatan(this)">
-                        <option value="">&nbsp;</option>
-                        <?php if (isset($kecamatans)) {
-                            if (count($kecamatans) > 0) {
-                                foreach ($kecamatans as $key => $value) { ?>
-                                    <option value="<?= $value->id ?>"><?= $value->kecamatan ?></option>
-                        <?php }
-                            }
-                        } ?>
-                    </select>
-                    <div class="help-block _kecamatan"></div>
-                </div>
-                <div class="mb-3 select2-kelurahan-loading">
-                    <label for="_kelurahan" class="col-form-label">Kelurahan :</label>
-                    <select class="form-control select2 kelurahan" id="_kelurahan" name="_kelurahan" style="width: 100%">
-                        <option value="">&nbsp;</option>
-                        <?php if (isset($kelurahans)) {
-                            if (count($kelurahans) > 0) {
-                                foreach ($kelurahans as $key => $value) { ?>
-                                    <option value="<?= $value->id ?>"><?= $value->kelurahan ?></option>
-                        <?php }
-                            }
-                        } ?>
-                    </select>
-                    <div class="help-block _kelurahan"></div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="mb-3">
-                    <label for="_nomor_sktm" class="form-label">Nomor SKTM</label>
-                    <input type="text" class="form-control nomor_sktm" id="_nomor_sktm" name="_nomor_sktm" placeholder="Nomor SKTM..." onfocusin="inputFocus(this);">
-                    <div class="help-block _nomor_sktm"></div>
-                </div>
-                <div class="mb-3">
-                    <label for="_tgl_sktm" class="form-label">Tanggal SKTM</label>
-                    <input type="date" class="form-control tgl_sktm" id="_tgl_sktm" name="_tgl_sktm" onfocusin="inputFocus(this);">
-                    <div class="help-block _tgl_sktm"></div>
-                </div>
-            </div>
-            <!-- <div class="col-lg-12">
+            <div class="col-lg-12">
                 <div class="row">
+                    <div class="col-lg-12">
+                        <a target="_blank" href="./downloadtemp?id=<?= $id ?>" class="btn btn-primary btn-lg waves-effect waves-light">Download Dokumen Untuk Upload</a>
+                    </div>
                     <div class="col-lg-6">
                         <div class="mt-3">
                             <label for="_file" class="form-label">Upload File Dokumen yang akan di TTE: </label>
@@ -64,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
     <div class="modal-footer">
@@ -85,62 +46,6 @@
 </form>
 
 <script>
-    initSelect2("_kecamatan", ".content-detailModal");
-    initSelect2("_kelurahan", ".content-detailModal");
-
-    function changeKecamatan(event) {
-        const color = $(event).attr('name');
-        $(event).removeAttr('style');
-        $('.' + color).html('');
-
-        if (event.value !== "") {
-            $.ajax({
-                url: './getKelurahan',
-                type: 'POST',
-                data: {
-                    id: event.value,
-                },
-                dataType: 'JSON',
-                beforeSend: function() {
-                    $('.kelurahan').html("");
-                    $('div.select2-kelurahan-loading').block({
-                        message: '<i class="las la-spinner la-spin la-3x la-fw"></i><span class="sr-only">Loading...</span>'
-                    });
-                },
-                success: function(resul) {
-                    $('div.select2-kelurahan-loading').unblock();
-                    if (resul.status == 200) {
-                        $('.kelurahan').html(resul.data);
-                    } else {
-                        if (resul.status == 401) {
-                            Swal.fire(
-                                'PERINGATAN!',
-                                resul.message,
-                                'warning'
-                            ).then((valRes) => {
-                                reloadPage(resul.redirrect);
-                            })
-                        } else {
-                            Swal.fire(
-                                'PERINGATAN!!!',
-                                resul.message,
-                                'warning'
-                            );
-                        }
-                    }
-                },
-                error: function(data) {
-                    $('div.select2-kelurahan-loading').unblock();
-                    Swal.fire(
-                        'PERINGATAN!',
-                        "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                        'warning'
-                    );
-                }
-            });
-        }
-    }
-
     function loadFilePdf() {
         const inputF = document.getElementsByName('_file_lampiran')[0];
         if (inputF.files && inputF.files[0]) {
@@ -232,31 +137,23 @@
         e.preventDefault();
         const id = document.getElementsByName('_id')[0].value;
         const nama = document.getElementsByName('_nama')[0].value;
-        const kecamatan = document.getElementsByName('_kecamatan')[0].value;
-        const kelurahan = document.getElementsByName('_kelurahan')[0].value;
-        const nomor_sktm = document.getElementsByName('_nomor_sktm')[0].value;
-        const tgl_sktm = document.getElementsByName('_tgl_sktm')[0].value;
-        // const fileName = document.getElementsByName('_file')[0].value;
+        const fileName = document.getElementsByName('_file')[0].value;
 
-        // if (fileName === "" || fileName === undefined) {
-        //     Swal.fire(
-        //         'GAGAL!',
-        //         "Silahkan pilih dokumen yang akan di TTE.",
-        //         'warning'
-        //     );
-        // }
+        if (fileName === "" || fileName === undefined) {
+            Swal.fire(
+                'GAGAL!',
+                "Silahkan pilih dokumen yang akan di TTE.",
+                'warning'
+            );
+        }
 
         const formUpload = new FormData();
-        // if (fileName !== "") {
-        //     const file = document.getElementsByName('_file')[0].files[0];
-        //     formUpload.append('_file', file);
-        // }
+        if (fileName !== "") {
+            const file = document.getElementsByName('_file')[0].files[0];
+            formUpload.append('_file', file);
+        }
         formUpload.append('id', id);
         formUpload.append('nama', nama);
-        formUpload.append('kecamatan', kecamatan);
-        formUpload.append('kelurahan', kelurahan);
-        formUpload.append('nomor_sktm', nomor_sktm);
-        formUpload.append('tgl_sktm', tgl_sktm);
 
         $.ajax({
             xhr: function() {
@@ -271,7 +168,7 @@
                 }, false);
                 return xhr;
             },
-            url: "./savesktm",
+            url: "./uploadSave",
             type: 'POST',
             data: formUpload,
             contentType: false,
@@ -331,46 +228,6 @@
                         'success'
                     ).then((valRes) => {
                         reloadPage(resul.redirrect);
-                        // $.ajax({
-                        //     url: "./downloadtemp",
-                        //     type: 'POST',
-                        //     data: {
-                        //         id: resul.id,
-                        //         nama: nama,
-                        //     },
-                        //     dataType: 'JSON',
-                        //     beforeSend: function() {
-                        //         $('div.modal-content-loading').block({
-                        //             message: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>'
-                        //         });
-                        //     },
-                        //     success: function(result) {
-                        //         $('div.modal-content-loading').unblock();
-                        //         if (result.status !== 200) {
-                        //             Swal.fire(
-                        //                 'Failed!',
-                        //                 result.message,
-                        //                 'warning'
-                        //             );
-                        //         } else {
-                        //             Swal.fire(
-                        //                 'SELAMAT!',
-                        //                 result.message,
-                        //                 'success'
-                        //             ).then((valRest) => {
-                        //                 reloadPage(result.redirrect);
-                        //             })
-                        //         }
-                        //     },
-                        //     error: function() {
-                        //         $('div.modal-content-loading').unblock();
-                        //         Swal.fire(
-                        //             'Failed!',
-                        //             "Server sedang sibuk, silahkan ulangi beberapa saat lagi.",
-                        //             'warning'
-                        //         );
-                        //     }
-                        // });
                     })
                 }
             },
