@@ -856,6 +856,14 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="mt-3">
+                                <label for="_file_foto_ppks" class="form-label">Lampiran Foto PPKS : </label>
+                                <input class="form-control" type="file" id="_file_foto_ppks" name="_file_foto_ppks" onFocus="inputFocus(this);" accept="image/*" onchange="loadFile('_file_foto_ppks', 'Foto PPKS')">
+                                <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg">Files</code> and Maximum File Size <code>2 Mb</code></p>
+                                <div class="help-block _file_foto_ppks" for="_file_foto_ppks"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mt-3">
                                 <label for="_file_rumah_depan" class="form-label">Lampiran Foto Rumah Tampak Depan : </label>
                                 <input class="form-control" type="file" id="_file_rumah_depan" name="_file_rumah_depan" onFocus="inputFocus(this);" accept="image/*" onchange="loadFile('_file_rumah_depan', 'Foto Rumah Tampak Depan')">
                                 <p class="font-size-11">Format : <code data-toggle="tooltip" data-placement="bottom" title="jpg, png, jpeg">Files</code> and Maximum File Size <code>2 Mb</code></p>
