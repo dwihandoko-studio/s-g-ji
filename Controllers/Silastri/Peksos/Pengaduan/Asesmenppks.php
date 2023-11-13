@@ -2309,9 +2309,9 @@ class Asesmenppks extends BaseController
         if (count($fileLampiran) > 4) {
             $template_processor->setImageValue('RUMAH_4', array('path' => FCPATH . 'uploads/assesment/lampiran/' . $fileLampiran[4], 'width' => 100, 'height' => 100, 'ratio' => true));
         }
-        if (count($fileLampiran) > 5) {
-            $template_processor->setImageValue('ASSET', array('path' => FCPATH . 'uploads/assesment/lampiran/' . $fileLampiran[5], 'width' => 100, 'height' => 100, 'ratio' => true));
-        }
+        // if (count($fileLampiran) > 5) {
+        //     $template_processor->setImageValue('ASSET', array('path' => FCPATH . 'uploads/assesment/lampiran/' . $fileLampiran[5], 'width' => 100, 'height' => 100, 'ratio' => true));
+        // }
 
         $template_processor->setImageValue('QR_CODE_NOTA', array('path' => 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData->kode_aduan . '&choe=UTF-8', 'width' => 100, 'height' => 100, 'ratio' => false));
         $template_processor->setImageValue('QR_CODE_ASSESMENT', array('path' => 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $dataAssesment['kode_assesment'] . '&choe=UTF-8', 'width' => 100, 'height' => 100, 'ratio' => false));
