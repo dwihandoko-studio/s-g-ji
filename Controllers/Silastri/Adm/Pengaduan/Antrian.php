@@ -603,26 +603,33 @@ class Antrian extends BaseController
 
                 $this->_db->table('_pengaduan_tanggapan_spt')->insert($dataTindakLanjut);
                 if ($this->_db->affectedRows() > 0) {
-                    $riwayatLib = new Riwayatpengaduanlib();
-                    try {
-                        $riwayatLib->create($user->data->id, "Meneruskan pengaduan: " . $oldData['kode_aduan'] . ", dengan penerusan assesmen dengan SPT ke $lokasi_tujuan", "submit", "bx bx-send", "riwayat/detailpengaduan?token=" . $oldData['id'], $oldData['id']);
-                    } catch (\Throwable $th) {
-                    }
-                    // $this->_db->transCommit();
-                    // try {
-                    $m = new Merger();
-                    $dataFileGambar = file_get_contents(FCPATH . './uploads/logo-lamteng.png');;
-                    $base64 = "data:image/png;base64," . base64_encode($dataFileGambar);
-                    $dataFileBsre = file_get_contents(FCPATH . './assets/bsre.png');;
-                    $base64bsre = "data:image/png;base64," . base64_encode($dataFileBsre);
+                    $this->_db->table('_data_assesment')->insert([
+                        'id' => $oldData['id'],
+                        'jenis' => "PENGADUAN PPKS",
+                        'created_at' => $date,
+                        'status' => 0,
+                    ]);
+                    if ($this->_db->affectedRows() > 0) {
+                        $riwayatLib = new Riwayatpengaduanlib();
+                        try {
+                            $riwayatLib->create($user->data->id, "Meneruskan pengaduan: " . $oldData['kode_aduan'] . ", dengan penerusan assesmen dengan SPT ke $lokasi_tujuan", "submit", "bx bx-send", "riwayat/detailpengaduan?token=" . $oldData['id'], $oldData['id']);
+                        } catch (\Throwable $th) {
+                        }
+                        // $this->_db->transCommit();
+                        // try {
+                        $m = new Merger();
+                        $dataFileGambar = file_get_contents(FCPATH . './uploads/logo-lamteng.png');;
+                        $base64 = "data:image/png;base64," . base64_encode($dataFileGambar);
+                        $dataFileBsre = file_get_contents(FCPATH . './assets/bsre.png');;
+                        $base64bsre = "data:image/png;base64," . base64_encode($dataFileBsre);
 
-                    $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_aduan'] . '&choe=UTF-8'));
+                        $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_aduan'] . '&choe=UTF-8'));
 
-                    $html   =  '<html>
+                        $html   =  '<html>
                         <head>
                             <link href="';
-                    $html   .=              base_url('uploads/bootstrap.css');
-                    $html   .=          '" rel="stylesheet">
+                        $html   .=              base_url('uploads/bootstrap.css');
+                        $html   .=          '" rel="stylesheet">
                         </head>
                         <body>
                             <div class="container">
@@ -632,8 +639,8 @@ class Antrian extends BaseController
                                             <tr style="justify-content: center; text-align: center;">
                                                 <td width="13%">
                                                     <img class="image-responsive" width="100px" height="100px" src="';
-                    $html   .=                                      $base64;
-                    $html   .=                                  '"/>
+                        $html   .=                                      $base64;
+                        $html   .=                                  '"/>
                                                 </td>
                                                 <td width="2%">
                                                     &nbsp;&nbsp;&nbsp;
@@ -689,9 +696,9 @@ class Antrian extends BaseController
                                                         <td style="font-size: 12px;vertical-align: top;">&nbsp;</td>
                                                         <td style="font-size: 12px;vertical-align: top;">
                                                             <table border="0">';
-                    foreach ($namesSpt as $key => $value) {
-                        $pesertaDetail = getNamaSdmFromNik($value);
-                        $html .=                                '<tr style="vertical-align: top;margin-bottom: 15px;">
+                        foreach ($namesSpt as $key => $value) {
+                            $pesertaDetail = getNamaSdmFromNik($value);
+                            $html .=                                '<tr style="vertical-align: top;margin-bottom: 15px;">
                                                                     <td>' . $key + 1 . '</td>
                                                                     <td>Nama</td>
                                                                     <td>&nbsp;:&nbsp;</td>
@@ -716,8 +723,8 @@ class Antrian extends BaseController
                                                                     <td>' . ($pesertaDetail ? $pesertaDetail->jabatan : '-') . '</td>
                                                                 </tr>
                                                                 ';
-                    }
-                    $html .=                                '</table>
+                        }
+                        $html .=                                '</table>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -778,8 +785,8 @@ class Antrian extends BaseController
                                                         <br>
                                                         <span style="font-size: 12px;">&nbsp;dikeluarkan di  :  Gunung Sugih</span><br>
                                                         <span style="font-size: 12px;">&nbsp;Pada Tanggal    &nbsp;:  ';
-                    $html   .=                                          tgl_indo(date('Y-m-d'));
-                    $html   .=                                      '</span><br>
+                        $html   .=                                          tgl_indo(date('Y-m-d'));
+                        $html   .=                                      '</span><br>
                                                         <table border="0" style="padding: 0px; background-color: #fff;">
                                                             <tr>
                                                                 <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">Ditandatangani secara elektronik oleh : &nbsp;&nbsp;</td>
@@ -813,48 +820,56 @@ class Antrian extends BaseController
                         </body>
                     </html>';
 
-                    try {
-                        $dompdf = new DOMPDF();
-                        $dompdf->setPaper('F4', 'potrait');
-                        $dompdf->loadHtml($html);
-                        $dompdf->render();
-                        $m->addRaw($dompdf->output());
-                        // unset($dompdf);
+                        try {
+                            $dompdf = new DOMPDF();
+                            $dompdf->setPaper('F4', 'potrait');
+                            $dompdf->loadHtml($html);
+                            $dompdf->render();
+                            $m->addRaw($dompdf->output());
+                            // unset($dompdf);
 
-                        // $dompdf1 = new DOMPDF();
-                        // // $dompdf = new Dompdf();
-                        // $dompdf1->set_paper('F4', 'landscape');
-                        // $dompdf1->load_html($lHtml);
-                        // $dompdf1->render();
-                        // $m->addRaw($dompdf1->output());
+                            // $dompdf1 = new DOMPDF();
+                            // // $dompdf = new Dompdf();
+                            // $dompdf1->set_paper('F4', 'landscape');
+                            // $dompdf1->load_html($lHtml);
+                            // $dompdf1->render();
+                            // $m->addRaw($dompdf1->output());
 
-                        $dir = FCPATH . "upload/spt/pdf";
-                        $fileNya = $dir . '/' . $oldData['kode_aduan'] . '.pdf';
+                            $dir = FCPATH . "upload/spt/pdf";
+                            $fileNya = $dir . '/' . $oldData['kode_aduan'] . '.pdf';
 
-                        file_put_contents($fileNya, $m->merge());
+                            file_put_contents($fileNya, $m->merge());
 
-                        sleep(3);
-                        // } catch (\Throwable $th) {
-                        //     //throw $th;
-                        // }
-                        // header('Content-Type: application/pdf');
-                        // header('Content-Disposition: attachment; filename="' . basename($fileNya) . '"');
-                        // header('Content-Length: ' . filesize($fileNya));
-                        // readfile($fileNya);
+                            sleep(3);
+                            // } catch (\Throwable $th) {
+                            //     //throw $th;
+                            // }
+                            // header('Content-Type: application/pdf');
+                            // header('Content-Disposition: attachment; filename="' . basename($fileNya) . '"');
+                            // header('Content-Length: ' . filesize($fileNya));
+                            // readfile($fileNya);
 
-                        $this->_db->transCommit();
-                        $response = new \stdClass;
-                        $response->status = 200;
-                        $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
-                        $response->filenya = base_url('upload/spt/pdf') . '/' . $oldData['kode_aduan'] . '.pdf';
-                        $response->filename = $fileNya;
-                        $response->message = "Tanggapan Aduan " . $oldData['kode_aduan'] . " berhasil disimpan.";
-                        return json_encode($response);
-                    } catch (\Throwable $th) {
+                            $this->_db->transCommit();
+                            $response = new \stdClass;
+                            $response->status = 200;
+                            $response->redirrect = base_url('silastri/adm/pengaduan/antrian');
+                            $response->filenya = base_url('upload/spt/pdf') . '/' . $oldData['kode_aduan'] . '.pdf';
+                            $response->filename = $fileNya;
+                            $response->message = "Tanggapan Aduan " . $oldData['kode_aduan'] . " berhasil disimpan.";
+                            return json_encode($response);
+                        } catch (\Throwable $th) {
+                            $this->_db->transRollback();
+                            $response = new \stdClass;
+                            $response->status = 400;
+                            $response->error = var_dump($th);
+                            $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
+                            return json_encode($response);
+                        }
+                    } else {
                         $this->_db->transRollback();
                         $response = new \stdClass;
                         $response->status = 400;
-                        $response->error = var_dump($th);
+                        $response->error = "Gagal Insert Assesment";
                         $response->message = "Gagal menanggapi aduan " . $oldData['kode_aduan'];
                         return json_encode($response);
                     }

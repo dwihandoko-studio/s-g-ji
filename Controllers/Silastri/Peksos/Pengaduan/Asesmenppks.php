@@ -2139,53 +2139,68 @@ class Asesmenppks extends BaseController
             }
         }
 
-        $template_processor->setValue('TEMBUSAN', $tembusan);
-        $template_processor->setValue('NAMA_PPKS', $dataAssesment['nama_orang_assesment']);
-        $template_processor->setValue('KODE_PENGADUAN', $oldData->kode_aduan);
+        $template_processor->setValue('TEMBUSAN', $tembusan == "" || $tembusan == NULL ? "-" : $tembusan);
+        $template_processor->setValue('NAMA_PPKS', $dataAssesment['nama_orang_assesment'] == "" || $dataAssesment['nama_orang_assesment'] == NULL ? "-" : $dataAssesment['nama_orang_assesment']);
+        $template_processor->setValue('KODE_PENGADUAN', $oldData->kode_aduan ?? "-");
         $template_processor->setValue('TGL_PENGADUAN', tgl_hari_indo($oldData->created_at));
-        $template_processor->setValue('MEDIA_PENGADUAN', $oldData->media_pengaduan);
+        $template_processor->setValue('MEDIA_PENGADUAN', $oldData->media_pengaduan ?? "-");
         $template_processor->setValue('NAMA_PENGADU', ucwords($oldData->nama));
-        $template_processor->setValue('NIK_PENGADU', $oldData->nik);
-        $template_processor->setValue('NOHP_PENGADU', $oldData->nohp);
-        $template_processor->setValue('ALAMAT_PENGADU', $oldData->alamat);
+        $template_processor->setValue('NIK_PENGADU', $oldData->nik ?? "-");
+        $template_processor->setValue('NOHP_PENGADU', $oldData->nohp ?? "-");
+        $template_processor->setValue('ALAMAT_PENGADU', $oldData->alamat ?? "-");
         $template_processor->setValue('KECAMATAN_PENGADU', getNamaKecamatan($oldData->kecamatan));
         $template_processor->setValue('KELURAHAN_PENGADU', getNamaKelurahan($oldData->kelurahan));
         $template_processor->setValue('NAMA_ADUAN', ucwords($dataAssesment['nama_orang_assesment']));
-        $template_processor->setValue('NIK_ADUAN', $dataAssesment['nik_orang_assesment']);
+        $template_processor->setValue('NIK_ADUAN', $dataAssesment['nik_orang_assesment'] ?? "-");
         $template_processor->setValue('NOHP_ADUAN', '-');
-        $template_processor->setValue('ALAMAT_ADUAN', $dataAssesment['alamat_domisili_orang_assesment']);
+        $template_processor->setValue('ALAMAT_ADUAN', $dataAssesment['alamat_domisili_orang_assesment'] ?? "-");
         $template_processor->setValue('KECAMATAN_ADUAN', getNamaKecamatan($dataAssesment['kecamatan_domisili_orang_assesment']));
         $template_processor->setValue('KELURAHAN_ADUAN', getNamaKelurahan($dataAssesment['kelurahan_domisili_orang_assesment']));
         $template_processor->setValue('KATEGORI_PPKS', getNameKategoriPPKS($dataAssesment['kategori_ppks']));
 
         $kepersertaan_bansos_fix = [];
-        foreach ($kepersertaan_bansos as $key => $v) {
+        if (count($kepersertaan_bansos) > 0) {
+            foreach ($kepersertaan_bansos as $key => $v) {
+                $kepersertaan_bansos_fix[] = [
+                    'NKB' => $key + 1,
+                    'NAMA_KB' => ucwords($v['nama_anggota']),
+                    'NIK_KB' => $v['nik_anggota'],
+                    'DTKS_KB' => ucwords($v['dtks']),
+                    'PKH_KB' => ucwords($v['pkh']),
+                    'BPNT_KB' => ucwords($v['bpnt']),
+                    'PBI_KB' => ucwords($v['pbi_jk']),
+                    'RST_KB' => ucwords($v['rst']),
+                    'LAIN_KB' => ucwords($v['bansos_lain']),
+                    'KET_KB' => $v['keterangan_anggota'],
+                ];
+            }
+        } else {
             $kepersertaan_bansos_fix[] = [
-                'NKB' => $key + 1,
-                'NAMA_KB' => ucwords($v['nama_anggota']),
-                'NIK_KB' => $v['nik_anggota'],
-                'DTKS_KB' => ucwords($v['dtks']),
-                'PKH_KB' => ucwords($v['pkh']),
-                'BPNT_KB' => ucwords($v['bpnt']),
-                'PBI_KB' => ucwords($v['pbi_jk']),
-                'RST_KB' => ucwords($v['rst']),
-                'LAIN_KB' => ucwords($v['bansos_lain']),
-                'KET_KB' => $v['keterangan_anggota'],
+                'NKB' => "-",
+                'NAMA_KB' => "-",
+                'NIK_KB' => "-",
+                'DTKS_KB' => "-",
+                'PKH_KB' => "-",
+                'BPNT_KB' => "-",
+                'PBI_KB' => "-",
+                'RST_KB' => "-",
+                'LAIN_KB' => "-",
+                'KET_KB' => "-",
             ];
         }
         $template_processor->cloneRowAndSetValues('NKB', $kepersertaan_bansos_fix);
 
-        $template_processor->setValue('GAMBARAN_KASUS', $dataTindakLanjut['gambaran_kasus']);
-        $template_processor->setValue('DETAIL_KONDISI_FISIK_PPKS', $dataAssesment['detail_kondisi_fisik_ppks']);
-        $template_processor->setValue('KONDISI_PEREKONOMIAN', $dataTindakLanjut['kondisi_perekonomian_keluarga']);
-        $template_processor->setValue('PERMASALAHAN', $dataTindakLanjut['permasalahan']);
-        $template_processor->setValue('IDENTIFIKASI_KEBUTUHAN', $dataTindakLanjut['identifikasi_kebutuhan']);
-        $template_processor->setValue('INTERVENSI_YANG_TELAH_DILAKUKAN', $dataTindakLanjut['intervensi_telah_dilakukan']);
-        $template_processor->setValue('SARAN_TINDAK_LANJUT', $dataTindakLanjut['saran_tindaklanjut']);
+        $template_processor->setValue('GAMBARAN_KASUS', $dataTindakLanjut['gambaran_kasus'] ?? "-");
+        $template_processor->setValue('DETAIL_KONDISI_FISIK_PPKS', $dataAssesment['detail_kondisi_fisik_ppks'] ?? "-");
+        $template_processor->setValue('KONDISI_PEREKONOMIAN', $dataTindakLanjut['kondisi_perekonomian_keluarga'] ?? "-");
+        $template_processor->setValue('PERMASALAHAN', $dataTindakLanjut['permasalahan'] ?? "-");
+        $template_processor->setValue('IDENTIFIKASI_KEBUTUHAN', $dataTindakLanjut['identifikasi_kebutuhan'] ?? "-");
+        $template_processor->setValue('INTERVENSI_YANG_TELAH_DILAKUKAN', $dataTindakLanjut['intervensi_telah_dilakukan'] ?? "-");
+        $template_processor->setValue('SARAN_TINDAK_LANJUT', $dataTindakLanjut['saran_tindaklanjut'] ?? "-");
         $petugasTerlibat = "";
         $petugasTerlibat .= "1. " . ucwords($oldData->nama);
 
-        $template_processor->setValue('PETUGAS_TERLIBAT', $petugasTerlibat);
+        $template_processor->setValue('PETUGAS_TERLIBAT', $user->data->fullname);
         $template_processor->setValue('NAMA_PETUGAS_ASSESMENT', $user->data->fullname);
 
         $template_processor->setValue('NOMOR_ASSESMENT', $dataAssesment['kode_assesment']);
@@ -2208,7 +2223,7 @@ class Asesmenppks extends BaseController
         $template_processor->setValue('NO_AKTA_PPKS', $dataAssesment['akta_orang_assesment']);
         $template_processor->setValue('PENDIDIKAN_PPKS', $dataAssesment['pendidikan_terakhir_orang_assesment']);
         $template_processor->setValue('STATUS_KAWIN_PPKS', $dataAssesment['status_kawin_orang_assesment']);
-        $template_processor->setValue('DTKS_PPKS', $dataAssesment['dtks_orang_assesment']);
+        $template_processor->setValue('DTKS_PPKS', $dataAssesment['dtks_orang_assesment'] == "1" ? "Sudah" : "Belum");
 
         if (count($bansosIdentitas) > 0) {
             $bansosIdentitasFix = [];
@@ -2241,7 +2256,7 @@ class Asesmenppks extends BaseController
             $template_processor->setValue('STATUS_KAWIN_PENGAMPU', $dataAssesment['status_kawin_pengampu_assesment']);
             $template_processor->setValue('PEKERJAAN_PENGAMPU', $dataAssesment['pekerjaan_pengampu_assesment']);
             $template_processor->setValue('PENGELUARAN_PER_BULAN_PENGAMPU', $dataAssesment['pengeluaran_perbulan_pengampu_assesment']);
-            $template_processor->setValue('DTKS_PENGAMPU', $dataAssesment['dtks_pengampu_assesment']);
+            $template_processor->setValue('DTKS_PENGAMPU', $dataAssesment['dtks_pengampu_assesment'] == "1" ? "Sudah" : "Belum");
 
             if (count($bansosPengampu) > 0) {
                 $bansosPengampuFix = [];
@@ -2262,7 +2277,7 @@ class Asesmenppks extends BaseController
         $template_processor->setValue('MAKAN_E', getNameMakanEkonomi($dataAssesment['makan_ekonomi']));
         $template_processor->setValue('PAKAIAN_E', getNameKemampuanPakaianEkonomi($dataAssesment['kemampuan_pakaian_ekonomi']));
         $template_processor->setValue('TEMPAT_TINGGAL_E', getNameTempatTinggalEkonomi($dataAssesment['tempat_tinggal_ekonomi']));
-        $template_processor->setValue('TEMPAT_BERSAMA_E', $dataAssesment['tinggal_bersama_ekonomi']);
+        $template_processor->setValue('TINGGAL_BERSAMA_E', $dataAssesment['tinggal_bersama_ekonomi']);
         $template_processor->setValue('LUAS_LANTAI_E', getNameLuasLantaiEkonomi($dataAssesment['luas_lantai_ekonomi']));
         $template_processor->setValue('JENIS_LANTAI_E', getNameJenisLantaiEkonomi($dataAssesment['jenis_lantai_ekonomi']));
         $template_processor->setValue('JENIS_DINDING_E', getNameJenisDindingEkonomi($dataAssesment['jenis_dinding_ekonomi']));

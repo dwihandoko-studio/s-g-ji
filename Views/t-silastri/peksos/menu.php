@@ -35,7 +35,24 @@
                                 <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "ditolak") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/ditolak') ?>" key="t-pengaduan-ditolak">Ditolak</a></li>
                         <?php }
                         } ?>
-                        <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "asesmenppks") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/asesmenppks') ?>" key="t-pengaduan-asesmenppks">Assesment PPKS</a></li>
+                        <!-- <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "pengaduan" && $uri->getSegment(4) == "asesmenppks") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/pengaduan/asesmenppks') ?>" key="t-pengaduan-asesmenppks">Assesment PPKS</a></li> -->
+                    </ul>
+                </li>
+                <li <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "assesment") ? ' class="mm-active"' : '' ?>>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "assesment") ? ' mm-active' : '' ?>">
+                        <i class="bx bx-package"></i>
+                        <span key="t-assesments">Assesment</span>
+                    </a>
+                    <ul class="sub-menu  <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "assesment") ? ' mm-collapse mm-active' : '' ?>" aria-expanded="false">
+                        <?php //if (isset($user)) {
+                        //if (getBidangNaunganMenu($user->id)) { 
+                        ?>
+                        <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "assesment" && $uri->getSegment(4) == "antrian") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/assesment/antrian') ?>" key="t-assesment-antrian">Antrian</a></li>
+                        <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "assesment" && $uri->getSegment(4) == "selesai") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/assesment/selesai') ?>" key="t-assesment-selesai">Selesai</a></li>
+                        <li><a <?= ($uri->getSegment(2) == "peksos" && $uri->getSegment(3) == "assesment" && $uri->getSegment(4) == "ditolak") ? ' class="mm-active"' : '' ?> href="<?= base_url('silastri/peksos/assesment/ditolak') ?>" key="t-assesment-ditolak">Ditolak</a></li>
+                        <?php //}
+                        //} 
+                        ?>
                     </ul>
                 </li>
 

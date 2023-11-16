@@ -1657,6 +1657,19 @@ function getDescriptionWeb()
 	return getenv('description.web.key') ?? "Unuknown";
 }
 
+function getJenisKelamin($val)
+{
+	if (!($val == "" || $val == NULL)) {
+		return "-";
+	}
+
+	if ($val == "L" || $val == "l") {
+		return "Laki-laki";
+	} else {
+		return "Perempuan";
+	}
+}
+
 function getNamaDinas($id = null)
 {
 	if ($id === NULL || $id === "") {
@@ -1904,6 +1917,25 @@ function getNameTempatTinggalEkonomi($val)
 				break;
 			case '5':
 				return 'Telantar/Menggelandang';
+				break;
+			default:
+				return $val;
+				break;
+		}
+	} catch (\Throwable $th) {
+		return $val;
+	}
+}
+
+function getTinggalBersamaEkonomi($val)
+{
+	try {
+		switch ($val) {
+			case '0':
+				return 'Lainnya';
+				break;
+			case ' ':
+				return 'Lainnya';
 				break;
 			default:
 				return $val;
