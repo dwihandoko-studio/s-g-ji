@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers\Silastri\Adm\Layanan;
+namespace App\Controllers\Silastri\Operator\Layanan;
 
 use App\Controllers\BaseController;
-use App\Models\Silastri\Adm\Layanan\ProsesModel;
+use App\Models\Silastri\Operator\Layanan\ProsesModel;
 use Config\Services;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -12,8 +12,6 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Silastri\Ttelib;
 use App\Libraries\Uuid;
-
-use PhpOffice\PhpWord\TemplateProcessor;
 
 class Proses extends BaseController
 {
@@ -75,7 +73,7 @@ class Proses extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/adm/layanan/proses/data'));
+        return redirect()->to(base_url('silastri/operator/layanan/proses/data'));
     }
 
     public function data()
@@ -93,7 +91,7 @@ class Proses extends BaseController
 
         // $data['jeniss'] = ['Surat Keterangan DTKS untuk Pengajuan PIP', 'Surat Keterangan DTKS untuk Pendaftaran PPDB', 'Surat Keterangan DTKS untuk Pengajuan PLN', 'Lainnya'];
 
-        return view('silastri/adm/layanan/proses/index', $data);
+        return view('silastri/operator/layanan/proses/index', $data);
     }
 
     public function detail()
@@ -136,7 +134,7 @@ class Proses extends BaseController
 
         if ($current) {
             $data['data'] = $current;
-            return view('silastri/adm/layanan/proses/detail-page', $data);
+            return view('silastri/operator/layanan/proses/detail-page', $data);
         } else {
             return view('404', ['error' => "Data tidak ditemukan."]);
         }
@@ -309,7 +307,7 @@ class Proses extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
+                $response->redirrect = base_url('silastri/operator/layanan/approval');
                 $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
                 return json_encode($response);
                 // } else {
@@ -427,7 +425,7 @@ class Proses extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
+                $response->redirrect = base_url('silastri/operator/layanan/approval');
                 $response->message = "Selesaikan Permohonan $nama berhasil dilakukan.";
                 return json_encode($response);
                 // } else {
@@ -503,7 +501,7 @@ class Proses extends BaseController
             $response = new \stdClass;
             $response->status = 200;
             $response->message = "Permintaan diizinkan";
-            $response->data = view('silastri/adm/layanan/proses/tolak', $data);
+            $response->data = view('silastri/operator/layanan/proses/tolak', $data);
             return json_encode($response);
         }
     }
@@ -577,26 +575,26 @@ class Proses extends BaseController
             $formsktm = $this->_db->table('_permohonan_doc')->where('id', $oldData->id)->get()->getRowObject();
 
             if ($formsktm) {
-                $response->data = view('silastri/peksos/layanan/proses/form-upload-download', $data);
+                $response->data = view('silastri/operator/layanan/proses/form-upload-download', $data);
                 return json_encode($response);
             }
 
 
             switch ($oldData->layanan) {
                 case 'SKDTKS':
-                    $response->data = view('silastri/peksos/layanan/proses/form-upload', $data);
+                    $response->data = view('silastri/operator/layanan/proses/form-upload', $data);
                     break;
                 case 'SKTM':
                     $data['kecamatans'] = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'ASC')->get()->getResult();
-                    $response->data = view('silastri/peksos/layanan/proses/form-input', $data);
+                    $response->data = view('silastri/operator/layanan/proses/form-input', $data);
                     break;
                 case 'PBI':
                     $data['kecamatans'] = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'ASC')->get()->getResult();
-                    $response->data = view('silastri/peksos/layanan/proses/form-input', $data);
+                    $response->data = view('silastri/operator/layanan/proses/form-input', $data);
                     break;
 
                 default:
-                    $response->data = view('silastri/peksos/layanan/proses/form-upload', $data);
+                    $response->data = view('silastri/operator/layanan/proses/form-upload', $data);
                     break;
             }
             return json_encode($response);
@@ -803,7 +801,7 @@ class Proses extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/peksos/layanan/approval');
+                $response->redirrect = base_url('silastri/operator/layanan/approval');
                 $response->message = "Proses Permohonan Persetujuan $nama berhasil. Selanjutnya menunggu TTE Kepala Dinas.";
                 $response->id = $oldData['id'];
                 return json_encode($response);
@@ -992,7 +990,7 @@ class Proses extends BaseController
                 $this->_db->transCommit();
                 $response = new \stdClass;
                 $response->status = 200;
-                $response->redirrect = base_url('silastri/adm/layanan/approval');
+                $response->redirrect = base_url('silastri/operator/layanan/approval');
                 $response->message = "Proses Permohonan Persetujuan $nama berhasil. Selanjutnya menunggu TTE Kepala Dinas.";
                 return json_encode($response);
                 // } else {
@@ -1120,7 +1118,7 @@ class Proses extends BaseController
                     $this->_db->transCommit();
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->redirrect = base_url('silastri/adm/layanan/antrian');
+                    $response->redirrect = base_url('silastri/operator/layanan/antrian');
                     $response->message = "Tolak Selesai Permohonan $nama berhasil dilakukan.";
                     return json_encode($response);
                 } else {
@@ -1267,7 +1265,7 @@ class Proses extends BaseController
                 if ($result->status == 200) {
                     $response = new \stdClass;
                     $response->status = 200;
-                    $response->redirrect = base_url('silastri/peksos/layanan/approval');
+                    $response->redirrect = base_url('silastri/operator/layanan/approval');
                     $response->message = "Selesaikan Permohonan $data->fullname berhasil dilakukan. Tinggal menunggu TTE kadis.";
                     $response->result = $result;
                     $response->dir = FCPATH . "upload/generate/surat/pdf/" . $data->kode_permohonan . ".pdf";
