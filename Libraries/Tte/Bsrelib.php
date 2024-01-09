@@ -268,7 +268,7 @@ class Bsrelib
                     $response->status_code = 1000;
                     $response->status = "UNAUTHORIZED";
                     $response->message = "Gagal terkoneksi dengan server BSrE";
-                    $response->er = json_decode($send_data);
+                    // $response->er = json_decode($send_data);
                     return $response;
             }
         } else {
