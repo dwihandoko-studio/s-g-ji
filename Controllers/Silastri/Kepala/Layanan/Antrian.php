@@ -298,7 +298,7 @@ class Antrian extends BaseController
             $bsreLib = new Bsrelib();
             $data = $bsreLib->signDocument($dataSend);
             $response = new \stdClass;
-            $response->status_code = $data->code;
+            $response->errn = $data;
             switch ($http_code = $data->status) {
 
                 case "SUCCESS":  # OK
