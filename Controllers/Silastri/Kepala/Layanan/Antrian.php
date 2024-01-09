@@ -571,4 +571,15 @@ class Antrian extends BaseController
             }
         }
     }
+
+    public function testing()
+    {
+        $bsreLib = new Bsrelib();
+        $data = $bsreLib->cekStatusUser("1807240511900001");
+        $response = new \stdClass;
+        $response->errn = $data;
+        $response->status = 400;
+        $response->message = $data->message;
+        return json_encode($response);
+    }
 }
