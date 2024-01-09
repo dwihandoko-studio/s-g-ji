@@ -377,7 +377,7 @@ class Bsrelib
                         ];
 
                         $this->_db->table('__log_error_bsre')->insert($datalog);
-                    } catch (Exception $a) {
+                    } catch (\Exception $a) {
                     }
 
                     $response = new \stdClass;
@@ -406,7 +406,7 @@ class Bsrelib
                         ];
 
                         $this->_db->table('__log_error_bsre')->insert($datalog);
-                    } catch (Exception $a) {
+                    } catch (\Exception $a) {
                     }
 
                     $response = new \stdClass;
@@ -434,7 +434,7 @@ class Bsrelib
                         ];
 
                         $this->_db->table('__log_error_bsre')->insert($datalog);
-                    } catch (Exception $a) {
+                    } catch (\Exception $a) {
                     }
 
                     $response = new \stdClass;
@@ -457,7 +457,7 @@ class Bsrelib
                 ];
 
                 $this->_db->table('__log_error_bsre')->insert($datalog);
-            } catch (Exception $a) {
+            } catch (\Exception $a) {
             }
 
             curl_close($add);
