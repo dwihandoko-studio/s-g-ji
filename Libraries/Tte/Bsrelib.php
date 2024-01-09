@@ -203,7 +203,7 @@ class Bsrelib
                         ];
 
                         $this->_db->table('__log_error_bsre')->insert($datalog);
-                    } catch (Exception $a) {
+                    } catch (\Exception $a) {
                     }
 
                     $response = new \stdClass;
@@ -232,7 +232,7 @@ class Bsrelib
                         ];
 
                         $this->_db->table('__log_error_bsre')->insert($datalog);
-                    } catch (Exception $a) {
+                    } catch (\Exception $a) {
                     }
 
                     $response = new \stdClass;
@@ -260,14 +260,14 @@ class Bsrelib
                         ];
 
                         $this->_db->table('__log_error_bsre')->insert($datalog);
-                    } catch (Exception $a) {
+                    } catch (\Exception $a) {
                     }
 
                     $response = new \stdClass;
                     $response->code = $info['http_code'];
                     $response->status_code = 1000;
                     $response->status = "UNAUTHORIZED";
-                    $response->message = $result->error;
+                    $response->message = "Gagal terkoneksi dengan server BSrE";
                     return $response;
             }
         } else {
@@ -283,7 +283,7 @@ class Bsrelib
                 ];
 
                 $this->_db->table('__log_error_bsre')->insert($datalog);
-            } catch (Exception $a) {
+            } catch (\Exception $a) {
             }
 
             curl_close($add);
