@@ -796,7 +796,7 @@ class Antrian extends BaseController
                                                                 <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">Ditandatangani secara elektronik oleh : &nbsp;&nbsp;</td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">Plt. Kepala Dinas Sosial</td>
+                                                                <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">Kepala Dinas Sosial</td>
                                                             </tr>
                                                             <tr>
                                                                 <td style="border: 0; padding-left: 0px; padding-right: 8px; margin: 0px;font-size: 12px;vertical-align: top;">Kabupaten Lampung Tengah</td>
