@@ -1755,6 +1755,23 @@ function getNamaSdmFromNik($nik = null)
 	return NULL;
 }
 
+function getIdPenggunaFromNik($nik = null)
+{
+	if ($nik === NULL || $nik === "") {
+		return "-";
+	}
+	$db      = \Config\Database::connect();
+
+	$data = $db->table('_profil_users_tb')
+		->select("id")
+		->where('nik', $nik)
+		->get()->getRowObject();
+	if ($data) {
+		return $data->fullname;
+	}
+	return "-";
+}
+
 function getNamaPengguna($id = null)
 {
 	if ($id === NULL || $id === "") {

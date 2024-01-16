@@ -12,6 +12,7 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
 use App\Libraries\Silastri\Riwayatpengaduanlib;
+use App\Libraries\Silastri\Notificationlib;
 use iio\libmergepdf\Merger;
 use Dompdf\Dompdf;
 
@@ -626,6 +627,7 @@ class Antrian extends BaseController
                         $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_aduan'] . '&choe=UTF-8'));
                         // $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_aduan'] . '&choe=UTF-8'));
 
+                        $userIdSpts = [];
                         $html   =  '<html>
                         <head>
                             <link href="';
@@ -699,6 +701,7 @@ class Antrian extends BaseController
                                                             <table border="0">';
                         foreach ($namesSpt as $key => $value) {
                             $pesertaDetail = getNamaSdmFromNik($value);
+                            $userIdSpts[] = getIdPenggunaFromNik($value);
                             $html .=                                '<tr style="vertical-align: top;margin-bottom: 15px;">
                                                                     <td>' . $key + 1 . '</td>
                                                                     <td>Nama</td>
@@ -849,6 +852,19 @@ class Antrian extends BaseController
                             // header('Content-Disposition: attachment; filename="' . basename($fileNya) . '"');
                             // header('Content-Length: ' . filesize($fileNya));
                             // readfile($fileNya);
+                            if (count($userIdSpts) > 0) {
+                                foreach ($userIdSpts as $i) {
+                                    if ($i == "-") {
+                                        continue;
+                                    }
+                                    try {
+                                        $notifLib = new NotificationLib();
+                                        $notifLib->create("Tugas SPT Assesment", "Anda mendapat SPT untuk mengaksesmen dengan kode " . $oldData['kode_aduan'] . ".", "success", $user->data->id, $i, base_url('silastri/peksos/assesment/antrian'));
+                                    } catch (\Throwable $th) {
+                                        //throw $th;
+                                    }
+                                }
+                            }
 
                             $this->_db->transCommit();
                             $response = new \stdClass;
