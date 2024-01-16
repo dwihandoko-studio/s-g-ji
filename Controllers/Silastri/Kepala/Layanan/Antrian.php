@@ -270,17 +270,21 @@ class Antrian extends BaseController
 
             switch ($oldData->layanan) {
                 case 'SKTM':
-                    $dirFile = 'sktm';
-                    break;
-                case 'SKDTKS':
-                    $dirFile = 'dtks';
+                    $dirFile = 'generate/surat/pdf/' . $oldData->kode_permohanan;
+                    $fName = $oldData->kode_permohanan;
                     break;
                 case 'PBI':
-                    $dirFile = 'pbi';
+                    $dirFile = 'generate/surat/pdf/' . $oldData->kode_permohanan;
+                    $fName = $oldData->kode_permohanan;
+                    break;
+                case 'SKDTKS':
+                    $dirFile = 'dtks/' . $oldData->nik;
+                    $fName = $oldData->nik;
                     break;
 
                 default:
                     $dirFile = 'notfound';
+                    $fName = $oldData->nik;
                     break;
             }
 
@@ -295,7 +299,7 @@ class Antrian extends BaseController
                 'height' => '1',
                 'reason' => $oldData->jenis . '(' . $oldData->nik . ')',
                 'location' => 'Kabupaten Lampung Tengah',
-                'file' => new \CURLFile('/var/www/public/upload/' . $dirFile . '/' . $oldData->nik . '.pdf', 'application/pdf', $oldData->nik . '.pdf'),
+                'file' => new \CURLFile('/var/www/public/upload/' . $dirFile . '.pdf', 'application/pdf', $fName . '.pdf'),
             ];
 
             $bsreLib = new Bsrelib();
