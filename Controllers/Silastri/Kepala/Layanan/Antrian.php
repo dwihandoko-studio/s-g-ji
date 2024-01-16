@@ -172,7 +172,10 @@ class Antrian extends BaseController
 
                 switch ($current->layanan) {
                     case 'SKTM':
-                        $dirFile = 'sktm';
+                        $dirFile = 'generate/surat/pdf';
+                        break;
+                    case 'PBI':
+                        $dirFile = 'generate/surat/pdf';
                         break;
                     case 'SKDTKS':
                         $dirFile = 'dtks';
@@ -183,7 +186,7 @@ class Antrian extends BaseController
                         break;
                 }
 
-                $data['file'] = $dirFile . '/' . $current->nik . '.pdf';
+                $data['file'] = $dirFile . '/' . $current->kode_permohonan . '.pdf';
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
