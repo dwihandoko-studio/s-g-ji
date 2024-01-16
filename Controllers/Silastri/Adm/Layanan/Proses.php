@@ -587,8 +587,9 @@ class Proses extends BaseController
                     $response->data = view('silastri/peksos/layanan/proses/form-upload', $data);
                     break;
                 case 'SKTM':
+
                     $data['kecamatans'] = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'ASC')->get()->getResult();
-                    $response->data = view('silastri/peksos/layanan/proses/form-input', $data);
+                    $response->data = view('silastri/peksos/layanan/proses/form-input-sktm', $data);
                     break;
                 case 'PBI':
                     $data['kecamatans'] = $this->_db->table('ref_kecamatan')->orderBy('kecamatan', 'ASC')->get()->getResult();
@@ -718,30 +719,34 @@ class Proses extends BaseController
 
             switch ($oldData['layanan']) {
                 case 'SKTM':
-                    $tujuan_rs = htmlspecialchars($this->request->getVar('tujuan_rs'), true);
-                    $tujuan_surat = htmlspecialchars($this->request->getVar('tujuan_surat'), true);
-                    $tempat_surat = htmlspecialchars($this->request->getVar('tempat_surat'), true);
+                    $tujuan_rss = $this->request->getVar('tujuan_rs');
+                    $tujuan_surats = $this->request->getVar('tujuan_surat');
+                    $tempat_surats = $this->request->getVar('tempat_surat');
 
-                    if ($tujuan_rs == "" || $tujuan_rs == NULL) {
+                    if ($tujuan_rss == "" || $tujuan_rss == NULL) {
                         $response = new \stdClass;
                         $response->status = 400;
                         $response->message = "Tujuan rs tidak boleh kosong.";
                         return json_encode($response);
                     }
 
-                    if ($tujuan_surat == "" || $tujuan_surat == NULL) {
+                    if ($tujuan_surats == "" || $tujuan_surats == NULL) {
                         $response = new \stdClass;
                         $response->status = 400;
                         $response->message = "Tujuan surat tidak boleh kosong.";
                         return json_encode($response);
                     }
 
-                    if ($tempat_surat == "" || $tempat_surat == NULL) {
+                    if ($tempat_surats == "" || $tempat_surats == NULL) {
                         $response = new \stdClass;
                         $response->status = 400;
                         $response->message = "Tujuan tempat surat tidak boleh kosong.";
                         return json_encode($response);
                     }
+
+                    $tujuan_rs = htmlspecialchars($tujuan_rss, true);
+                    $tujuan_surat = htmlspecialchars($tujuan_surats, true);
+                    $tempat_surat = htmlspecialchars($tempat_surats, true);
 
                     $data['tujuan_rs'] = $tujuan_rs;
                     $data['tujuan_surat'] = $tujuan_surat;
