@@ -1767,7 +1767,7 @@ function getIdPenggunaFromNik($nik = null)
 		->where('nik', $nik)
 		->get()->getRowObject();
 	if ($data) {
-		return $data->fullname;
+		return $data->id;
 	}
 	return "-";
 }
