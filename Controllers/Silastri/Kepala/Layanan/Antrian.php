@@ -270,12 +270,12 @@ class Antrian extends BaseController
 
             switch ($oldData->layanan) {
                 case 'SKTM':
-                    $dirFile = 'generate/surat/pdf/' . $oldData->kode_permohanan;
-                    $fName = $oldData->kode_permohanan;
+                    $dirFile = 'generate/surat/pdf/' . $oldData->kode_permohonan;
+                    $fName = $oldData->kode_permohonan;
                     break;
                 case 'PBI':
-                    $dirFile = 'generate/surat/pdf/' . $oldData->kode_permohanan;
-                    $fName = $oldData->kode_permohanan;
+                    $dirFile = 'generate/surat/pdf/' . $oldData->kode_permohonan;
+                    $fName = $oldData->kode_permohonan;
                     break;
                 case 'SKDTKS':
                     $dirFile = 'dtks/' . $oldData->nik;

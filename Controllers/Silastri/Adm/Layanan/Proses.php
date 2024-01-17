@@ -1358,7 +1358,7 @@ class Proses extends BaseController
                 $template_processor->setValue('KELURAHAN_PENGUSUL', $data->nama_kelurahan);
                 $template_processor->setValue('KECAMATAN_PENGUSUL', $data->nama_kecamatan);
                 $template_processor->setValue('TGL_KELUAR', tgl_indo(date('Y-m-d')));
-                $template_processor->setValue('JABATAN_TTD', "Plt. Kepala Dinas Sosial");
+                $template_processor->setValue('JABATAN_TTD', "Kepala Dinas Sosial");
                 $template_processor->setValue('NAMA_KABUPATEN', "Kabupaten Lampung Tengah");
                 $template_processor->setValue('NAMA_TTD', "ARI NUGRAHA MUKTI,S.STP.,M.M.");
                 $template_processor->setValue('NIP_TTD', "NIP. 19860720 200501 1 004");
