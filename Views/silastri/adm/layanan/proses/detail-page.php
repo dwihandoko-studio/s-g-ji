@@ -190,13 +190,13 @@
     function actionApproveUpload(e) {
         const nama = '<?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>';
         Swal.fire({
-            title: 'Apakah anda yakin ingin melanjutkan proses ke upload TTE dokumen hasil permohonan layanan ini?',
-            text: "Upload TTE hasil permohonan layanan : <?= $data->layanan ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
+            title: 'Apakah anda yakin ingin melanjutkan proses permohonan layanan ini?',
+            text: "Lanjutkan proses permohonan layanan : <?= $data->layanan ?> - dari : <?= str_replace('&#039;', "`", str_replace("'", "`", $data->nama)) ?>",
             showCancelButton: true,
             icon: 'question',
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Upload!'
+            confirmButtonText: 'Ya, Lanjutkan!'
         }).then((result) => {
             if (result.value) {
                 $.ajax({
@@ -221,7 +221,7 @@
                                 'warning'
                             );
                         } else {
-                            $('#content-detailModalLabel').html('UPLOAD TTE HASIL PERMOHONAN LAYANAN <?= $data->layanan ?> dari ' + nama);
+                            $('#content-detailModalLabel').html('PROSES PERMOHONAN LAYANAN <?= $data->layanan ?> dari ' + nama);
                             $('.contentBodyModal').html(resul.data);
                             $('.content-detailModal').modal({
                                 backdrop: 'static',
