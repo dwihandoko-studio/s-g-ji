@@ -63,6 +63,11 @@
                     <input type="text" class="form-control _tujuan_rs" id="_tujuan_rs" name="_tujuan_rs" placeholder="Tujuan Rumah Sakit..." onfocusin="inputFocus(this);">
                     <div class="help-block _tujuan_rs"></div>
                 </div>
+                <div class="mb-3">
+                    <label for="_perihal_surat" class="form-label">Perihal Surat</label>
+                    <input type="text" class="form-control perihal_surat" id="_perihal_surat" name="_perihal_surat" placeholder="Perihal surat..." onfocusin="inputFocus(this);">
+                    <div class="help-block _perihal_surat"></div>
+                </div>
             </div>
             <!-- <div class="col-lg-12">
                 <div class="row">
@@ -258,6 +263,7 @@
         const tujuan_surat_sktm = document.getElementsByName('_tujuan_surat_sktm')[0].value;
         const tujuan_tempat_sktm = document.getElementsByName('_tujuan_tempat_sktm')[0].value;
         const tujuan_rs = document.getElementsByName('_tujuan_rs')[0].value;
+        const perihal_surat = document.getElementsByName('_perihal_surat')[0].value;
         // const fileName = document.getElementsByName('_file')[0].value;
 
         // if (fileName === "" || fileName === undefined) {
@@ -282,6 +288,7 @@
         formUpload.append('tujuan_surat', tujuan_surat_sktm);
         formUpload.append('tempat_surat', tujuan_tempat_sktm);
         formUpload.append('tujuan_rs', tujuan_rs);
+        formUpload.append('perihal_surat', perihal_surat);
 
         $.ajax({
             xhr: function() {

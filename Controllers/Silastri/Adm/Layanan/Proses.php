@@ -722,6 +722,7 @@ class Proses extends BaseController
                     $tujuan_rss = $this->request->getVar('tujuan_rs');
                     $tujuan_surats = $this->request->getVar('tujuan_surat');
                     $tempat_surats = $this->request->getVar('tempat_surat');
+                    $perihal_surats = $this->request->getVar('perihal_surat');
 
                     if ($tujuan_rss == "" || $tujuan_rss == NULL) {
                         $response = new \stdClass;
@@ -744,13 +745,22 @@ class Proses extends BaseController
                         return json_encode($response);
                     }
 
+                    if ($perihal_surats == "" || $perihal_surats == NULL) {
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = "Perihal surat tidak boleh kosong.";
+                        return json_encode($response);
+                    }
+
                     $tujuan_rs = htmlspecialchars($tujuan_rss, true);
                     $tujuan_surat = htmlspecialchars($tujuan_surats, true);
                     $tempat_surat = htmlspecialchars($tempat_surats, true);
+                    $perihal_surat = htmlspecialchars($perihal_surats, true);
 
                     $data['tujuan_rs'] = $tujuan_rs;
                     $data['tujuan_surat'] = $tujuan_surat;
                     $data['tempat_surat'] = $tempat_surat;
+                    $data['perihal_surat'] = $perihal_surat;
                     $data['template'] = "sktm.docx";
                     $dir = FCPATH . "upload/sktm";
                     break;
@@ -1220,7 +1230,7 @@ class Proses extends BaseController
     private function _download($id)
     {
         $data = $this->_db->table('_permohonan a')
-            ->select("b.*, a.id as id_permohonan, a.kode_permohonan, a.layanan, a.jenis, c.template, c.no_surat, c.nomor_sktm, c.tgl_sktm, c.tujuan_rs, c.tujuan_surat, c.tempat_surat, d.kecamatan as nama_kecamatan_sktm, e.kelurahan as nama_kelurahan_sktm, f.kecamatan as nama_kecamatan, g.kelurahan as nama_kelurahan")
+            ->select("b.*, a.id as id_permohonan, a.kode_permohonan, a.layanan, a.jenis, c.template, c.no_surat, c.nomor_sktm, c.tgl_sktm, c.tujuan_rs, c.tujuan_surat, c.tempat_surat, c.perihal_surat, d.kecamatan as nama_kecamatan_sktm, e.kelurahan as nama_kelurahan_sktm, f.kecamatan as nama_kecamatan, g.kelurahan as nama_kelurahan")
             ->join('_permohonan_doc c', 'a.id = c.id')
             ->join('_profil_users_tb b', 'a.user_id = b.id')
             ->join('ref_kecamatan d', 'c.kecamatan = d.id', 'LEFT')
@@ -1236,7 +1246,7 @@ class Proses extends BaseController
                     $file = FCPATH . "upload/template/$data->template";
                     $template_processor = new TemplateProcessor($file);
                     $template_processor->setValue('NOMOR_SURAT', "008/E-LS.$data->no_surat/D.a.VII/2023");
-                    $template_processor->setValue('PERIHAL', str_replace("SKTM ", "", $data->nama_kelurahan_sktm));
+                    $template_processor->setValue('PERIHAL', $data->perihal_surat);
                     $template_processor->setValue('KELURAHAN_SKTM', $data->nama_kelurahan_sktm);
                     $template_processor->setValue('KECAMATAN_SKTM', $data->nama_kecamatan_sktm);
                     $template_processor->setValue('NOMOR_SKTM', $data->nomor_sktm);
@@ -1255,8 +1265,8 @@ class Proses extends BaseController
                     $template_processor->setValue('KELURAHAN_PENGUSUL', $data->nama_kelurahan);
                     $template_processor->setValue('KECAMATAN_PENGUSUL', $data->nama_kecamatan);
                     $template_processor->setValue('TGL_KELUAR', tgl_indo(date('Y-m-d')));
-                    $template_processor->setValue('JABATAN_TTD', "Kepala Dinas Sosial");
-                    $template_processor->setValue('NAMA_KABUPATEN', "Kabupaten Lampung Tengah");
+                    $template_processor->setValue('JABATAN_TTD', "KEPALA DINAS SOSIAL");
+                    $template_processor->setValue('NAMA_KABUPATEN', "KABUPATEN LAMPUNG TENGAH");
                     $template_processor->setValue('NAMA_TTD', "ARI NUGRAHA MUKTI,S.STP.,M.M.");
                     $template_processor->setValue('PANGKAT_TTD', "Pembina (IV/a)");
                     $template_processor->setValue('NIP_TTD', "NIP. 19860720 200501 1 004");
