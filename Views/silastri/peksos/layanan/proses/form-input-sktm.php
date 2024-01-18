@@ -35,33 +35,38 @@
             </div>
             <div class="col-lg-6">
                 <div class="mb-3">
-                    <label for="_nomor_sktm" class="form-label">Nomor SKTM</label>
+                    <label for="_nomor_sktm" class="form-label">Nomor SKTM Kampung</label>
                     <input type="text" class="form-control nomor_sktm" id="_nomor_sktm" name="_nomor_sktm" placeholder="Nomor SKTM..." onfocusin="inputFocus(this);">
                     <div class="help-block _nomor_sktm"></div>
                 </div>
                 <div class="mb-3">
-                    <label for="_tgl_sktm" class="form-label">Tanggal SKTM</label>
+                    <label for="_tgl_sktm" class="form-label">Tanggal SKTM Kampung</label>
                     <input type="date" class="form-control tgl_sktm" id="_tgl_sktm" name="_tgl_sktm" onfocusin="inputFocus(this);">
                     <div class="help-block _tgl_sktm"></div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="mb-3">
-                    <label for="_tujuan_surat_sktm" class="form-label">Tujuan Surat SKTM</label>
-                    <input type="text" class="form-control tujuan_surat_sktm" id="_tujuan_surat_sktm" name="_tujuan_surat_sktm" placeholder="Tujuan surat SKTM..." onfocusin="inputFocus(this);">
+                    <label for="_tujuan_surat_sktm" class="form-label">Tujuan Surat</label>
+                    <input type="text" class="form-control tujuan_surat_sktm" id="_tujuan_surat_sktm" name="_tujuan_surat_sktm" placeholder="Nama subjek tujuan surat..." onfocusin="inputFocus(this);">
                     <div class="help-block _tujuan_surat_sktm"></div>
                 </div>
                 <div class="mb-3">
-                    <label for="_tujuan_tempat_sktm" class="form-label">Tujuan Tempat SKTM</label>
-                    <input type="text" class="form-control tujuan_tempat_sktm" id="_tujuan_tempat_sktm" name="_tujuan_tempat_sktm" placeholder="Tujuan tempat SKTM..." onfocusin="inputFocus(this);">
+                    <label for="_tujuan_tempat_sktm" class="form-label">Tujuan Tempat</label>
+                    <input type="text" class="form-control tujuan_tempat_sktm" id="_tujuan_tempat_sktm" name="_tujuan_tempat_sktm" placeholder="Tempat subjek surat yang dituju..." onfocusin="inputFocus(this);">
                     <div class="help-block _tujuan_tempat_sktm"></div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="mb-3">
                     <label for="_tujuan_rs" class="form-label">Tujuan Rumah Sakit</label>
-                    <input type="text" class="form-control _tujuan_rs" id="_tujuan_rs" name="_tujuan_rs" placeholder="Tujuan Rumah Sakit..." onfocusin="inputFocus(this);">
+                    <input type="text" class="form-control _tujuan_rs" id="_tujuan_rs" name="_tujuan_rs" placeholder="Nama Rumah Sakit yang dituju..." onfocusin="inputFocus(this);">
                     <div class="help-block _tujuan_rs"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="_perihal_surat" class="form-label">Perihal Surat</label>
+                    <input type="text" class="form-control perihal_surat" id="_perihal_surat" name="_perihal_surat" placeholder="Perihal surat..." onfocusin="inputFocus(this);">
+                    <div class="help-block _perihal_surat"></div>
                 </div>
             </div>
             <!-- <div class="col-lg-12">
@@ -258,6 +263,7 @@
         const tujuan_surat_sktm = document.getElementsByName('_tujuan_surat_sktm')[0].value;
         const tujuan_tempat_sktm = document.getElementsByName('_tujuan_tempat_sktm')[0].value;
         const tujuan_rs = document.getElementsByName('_tujuan_rs')[0].value;
+        const perihal_surat = document.getElementsByName('_perihal_surat')[0].value;
         // const fileName = document.getElementsByName('_file')[0].value;
 
         // if (fileName === "" || fileName === undefined) {
@@ -282,6 +288,7 @@
         formUpload.append('tujuan_surat', tujuan_surat_sktm);
         formUpload.append('tempat_surat', tujuan_tempat_sktm);
         formUpload.append('tujuan_rs', tujuan_rs);
+        formUpload.append('perihal_surat', perihal_surat);
 
         $.ajax({
             xhr: function() {

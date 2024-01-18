@@ -722,6 +722,7 @@ class Proses extends BaseController
                     $tujuan_rss = $this->request->getVar('tujuan_rs');
                     $tujuan_surats = $this->request->getVar('tujuan_surat');
                     $tempat_surats = $this->request->getVar('tempat_surat');
+                    $perihal_surats = $this->request->getVar('perihal_surat');
 
                     if ($tujuan_rss == "" || $tujuan_rss == NULL) {
                         $response = new \stdClass;
@@ -744,13 +745,22 @@ class Proses extends BaseController
                         return json_encode($response);
                     }
 
+                    if ($perihal_surats == "" || $perihal_surats == NULL) {
+                        $response = new \stdClass;
+                        $response->status = 400;
+                        $response->message = "Perihal surat tidak boleh kosong.";
+                        return json_encode($response);
+                    }
+
                     $tujuan_rs = htmlspecialchars($tujuan_rss, true);
                     $tujuan_surat = htmlspecialchars($tujuan_surats, true);
                     $tempat_surat = htmlspecialchars($tempat_surats, true);
+                    $perihal_surat = htmlspecialchars($perihal_surats, true);
 
                     $data['tujuan_rs'] = $tujuan_rs;
                     $data['tujuan_surat'] = $tujuan_surat;
                     $data['tempat_surat'] = $tempat_surat;
+                    $data['perihal_surat'] = $perihal_surat;
                     $data['template'] = "sktm.docx";
                     $dir = FCPATH . "upload/sktm";
                     break;
