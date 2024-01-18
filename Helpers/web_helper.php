@@ -1657,7 +1657,8 @@ function getDescriptionWeb()
 	return getenv('description.web.key') ?? "Unuknown";
 }
 
-function getJenisSubLayanan($layanan, $jenis) {
+function getJenisSubLayanan($layanan, $jenis)
+{
 	if ($layanan == "SKTM") {
 		switch ($jenis) {
 			case '0':
@@ -1666,13 +1667,13 @@ function getJenisSubLayanan($layanan, $jenis) {
 			case 0:
 				return "SKTM Rekomendasi Keringanan Biaya Pengobatan Rumah Sakit";
 				break;
-			
+
 			default:
 				return $jenis;
 				break;
 		}
 	} else {
-		return $jenis
+		return $jenis;
 	}
 }
 

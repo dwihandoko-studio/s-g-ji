@@ -70,7 +70,7 @@ class Antrian extends BaseController
             $row[] = $list->nik;
             $row[] = str_replace('&#039;', "`", str_replace("'", "`", $list->nama));
             $row[] = $list->kk;
-            $row[] = $list->jenis;
+            $row[] = getJenisSubLayanan($list->layanan, $list->jenis);
 
             $data[] = $row;
         }
