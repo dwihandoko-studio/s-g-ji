@@ -28,7 +28,7 @@
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Jenis:</label>
-                <textarea rows="3" class="form-control" readonly><?= $data->jenis ?></textarea>
+                <textarea rows="3" class="form-control" readonly><?= getJenisSubLayanan($data->layanan, $data->jenis) ?></textarea>
             </div>
             <div class="col-lg-6">
                 <label class="col-form-label">Layanan:</label>
