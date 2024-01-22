@@ -263,7 +263,8 @@ class Proses extends BaseController
             $dir_temp = FCPATH . "upload/dtks-temp/";
 
             $tteUpload = new Ttelib();
-            $uploaded = $tteUpload->createUploadFile($dir_temp . $oldData['nik'] . '.pdf', $dir, $oldData['nik'] . '.pdf', $contentCreator, 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['id'] . '&choe=UTF-8');
+            // $uploaded = $tteUpload->createUploadFile($dir_temp . $oldData['nik'] . '.pdf', $dir, $oldData['nik'] . '.pdf', $contentCreator, 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['id'] . '&choe=UTF-8');
+            $uploaded = $tteUpload->createUploadFile($dir_temp . $oldData['nik'] . '.pdf', $dir, $oldData['nik'] . '.pdf', $contentCreator, 'http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_permohonan']);
             // $uploaded = $tteUpload->createUploadFile($dir_pdf_tte, $dir, $newNamelampiran, $contentCreator);
             // var_dump($uploaded);
             // die;
@@ -811,7 +812,8 @@ class Proses extends BaseController
                 try {
 
                     $tteUpload = new Ttelib();
-                    $uploaded = $tteUpload->createUploadFileGenerate($generateFile->dir, $dir, $generateFile->filename, $contentCreator, 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['id']);
+                    // $uploaded = $tteUpload->createUploadFileGenerate($generateFile->dir, $dir, $generateFile->filename, $contentCreator, 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['id']);
+                    $uploaded = $tteUpload->createUploadFileGenerate($generateFile->dir, $dir, $generateFile->filename, $contentCreator, 'http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_permohonan']);
                     // $uploaded = $tteUpload->createUploadFile($dir_pdf_tte, $dir, $newNamelampiran, $contentCreator);
                     // var_dump($uploaded);
                     // die;
@@ -988,7 +990,8 @@ class Proses extends BaseController
             ];
 
             $tteUpload = new Ttelib();
-            $uploaded = $tteUpload->createUploadFile($dir_temp . '/' . $oldData['nik'] . '.pdf', $dir, $oldData['nik'] . '.pdf', $contentCreator, 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['id'] . '&choe=UTF-8');
+            // $uploaded = $tteUpload->createUploadFile($dir_temp . '/' . $oldData['nik'] . '.pdf', $dir, $oldData['nik'] . '.pdf', $contentCreator, 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['id'] . '&choe=UTF-8');
+            $uploaded = $tteUpload->createUploadFile($dir_temp . '/' . $oldData['nik'] . '.pdf', $dir, $oldData['nik'] . '.pdf', $contentCreator, 'http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_permohonan']);
             // $uploaded = $tteUpload->createUploadFile($dir_pdf_tte, $dir, $newNamelampiran, $contentCreator);
             // var_dump($uploaded);
             // die;
@@ -1274,6 +1277,7 @@ class Proses extends BaseController
                     $template_processor->setValue('NIP_TTD', "NIP. 19860720 200501 1 004");
 
                     // $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.lampungtengahkab.go.id/verifiqrcodev?token=' . $ptks[0]->kode_verifikasi . '&choe=UTF-8', 'width' => 100, 'height' => 100, 'ratio' => false));
+                    $template_processor->setImageValue('BARCODE', array('path' => 'http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcodev?token=' . $data->kode_permohonan, 'width' => 100, 'height' => 100, 'ratio' => false));
 
                     $filed = FCPATH . "upload/generate/surat/word/" . $data->kode_permohonan . ".docx";
 
@@ -1376,6 +1380,7 @@ class Proses extends BaseController
                 $template_processor->setValue('NIP_TTD', "NIP. 19860720 200501 1 004");
 
                 // $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.lampungtengahkab.go.id/verifiqrcodev?token=' . $ptks[0]->kode_verifikasi . '&choe=UTF-8', 'width' => 100, 'height' => 100, 'ratio' => false));
+                $template_processor->setImageValue('BARCODE', array('path' => 'http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcodev?token=' . $data->kode_permohonan, 'width' => 100, 'height' => 100, 'ratio' => false));
 
                 $filed = FCPATH . "upload/generate/surat/word/" . $data->kode_permohonan . ".docx";
 

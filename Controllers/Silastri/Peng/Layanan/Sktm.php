@@ -380,7 +380,7 @@ class Sktm extends BaseController
                 'id' => $uuidLib->v4(),
                 'kode_permohonan' => $kodeUsulan,
                 'kelurahan' => $user->data->kelurahan,
-                'ttd' => 'kakam',
+                'ttd' => 'kadis',
                 'nik' => $user->data->nik,
                 'nama' => $user->data->fullname,
                 'user_id' => $user->data->id,

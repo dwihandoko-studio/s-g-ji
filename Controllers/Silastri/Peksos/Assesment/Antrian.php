@@ -2467,8 +2467,10 @@ class Antrian extends BaseController
         //     $template_processor->setImageValue('ASSET', array('path' => FCPATH . 'uploads/assesment/lampiran/' . $fileLampiran[5], 'width' => 100, 'height' => 100, 'ratio' => true));
         // }
 
-        $template_processor->setImageValue('QR_CODE_NOTA', array('path' => 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData->kode . '&choe=UTF-8', 'width' => 100, 'height' => 100, 'ratio' => false));
-        $template_processor->setImageValue('QR_CODE_ASSESMENT', array('path' => 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $dataAssesment['kode_assesment'] . '&choe=UTF-8', 'width' => 100, 'height' => 100, 'ratio' => false));
+        $template_processor->setImageValue('QR_CODE_NOTA', array('path' => 'http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData->kode, 'width' => 100, 'height' => 100, 'ratio' => false));
+        // $template_processor->setImageValue('QR_CODE_NOTA', array('path' => 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData->kode_aduan, 'width' => 100, 'height' => 100, 'ratio' => false));
+        $template_processor->setImageValue('QR_CODE_ASSESMENT', array('path' => 'http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $dataAssesment['kode_assesment'], 'width' => 100, 'height' => 100, 'ratio' => false));
+        // $template_processor->setImageValue('QR_CODE_ASSESMENT', array('path' => 'https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $dataAssesment['kode_assesment'] . '&choe=UTF-8', 'width' => 100, 'height' => 100, 'ratio' => false));
 
         $filed = FCPATH . "upload/generate/surat/word/" . $dataAssesment['kode_assesment'] . ".docx";
 

@@ -1159,7 +1159,8 @@ class Antrian extends BaseController
                     $dataFileGambar = file_get_contents(FCPATH . './uploads/logo-lamteng.png');;
                     $base64 = "data:image/png;base64," . base64_encode($dataFileGambar);
 
-                    $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_aduan'] . '&choe=UTF-8'));
+                    // $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_aduan'] . '&choe=UTF-8'));
+                    $qrCode = "data:image/png;base64," . base64_encode(file_get_contents('http://192.168.33.16:8020/generate?data=https://layanan.dinsos.lampungtengahkab.go.id/verifiqrcode?token=' . $oldData['kode_aduan']));
 
                     $html   =  '<html>
                         <head>
