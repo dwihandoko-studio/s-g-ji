@@ -1323,7 +1323,7 @@ class Proses extends BaseController
                         if ($result->status == 200) {
                             $response = new \stdClass;
                             $response->status = 200;
-                            $response->redirrect = base_url('silastri/peksos/layanan/approval');
+                            $response->redirrect = base_url('silastri/adm/layanan/approval');
                             $response->message = "Selesaikan Permohonan $data->fullname berhasil dilakukan. Tinggal menunggu TTE kadis.";
                             $response->result = $result;
                             $response->dir = FCPATH . "upload/generate/surat/pdf/" . $data->kode_permohonan . ".pdf";
@@ -1374,9 +1374,10 @@ class Proses extends BaseController
                 $template_processor->setValue('KELURAHAN_PENGUSUL', $data->nama_kelurahan);
                 $template_processor->setValue('KECAMATAN_PENGUSUL', $data->nama_kecamatan);
                 $template_processor->setValue('TGL_KELUAR', tgl_indo(date('Y-m-d')));
-                $template_processor->setValue('JABATAN_TTD', "Kepala Dinas Sosial");
-                $template_processor->setValue('NAMA_KABUPATEN', "Kabupaten Lampung Tengah");
+                $template_processor->setValue('JABATAN_TTD', "KEPALA DINAS SOSIAL");
+                $template_processor->setValue('NAMA_KABUPATEN', "KABUPATEN LAMPUNG TENGAH");
                 $template_processor->setValue('NAMA_TTD', "ARI NUGRAHA MUKTI,S.STP.,M.M.");
+                $template_processor->setValue('PANGKAT_TTD', "Pembina (IV/a)");
                 $template_processor->setValue('NIP_TTD', "NIP. 19860720 200501 1 004");
 
                 // $template_processor->setImageValue('BARCODE', array('path' => 'https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=layanan.disdikbud.lampungtengahkab.go.id/verifiqrcodev?token=' . $ptks[0]->kode_verifikasi . '&choe=UTF-8', 'width' => 100, 'height' => 100, 'ratio' => false));
@@ -1426,7 +1427,7 @@ class Proses extends BaseController
                     if ($result->status == 200) {
                         $response = new \stdClass;
                         $response->status = 200;
-                        $response->redirrect = base_url('silastri/peksos/layanan/approval');
+                        $response->redirrect = base_url('silastri/adm/layanan/approval');
                         $response->message = "Selesaikan Permohonan $data->fullname berhasil dilakukan. Tinggal menunggu TTE kadis.";
                         $response->result = $result;
                         $response->dir = FCPATH . "upload/generate/surat/pdf/" . $data->kode_permohonan . ".pdf";
