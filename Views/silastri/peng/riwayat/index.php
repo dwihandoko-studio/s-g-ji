@@ -26,7 +26,7 @@
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title mb-4">Data Riwayat Permohonan</h4>
+                        <h4 class="card-title mb-4">Data Riwayat Permohonan</h4> 
                         <div data-simplebar="init" style="max-height: 420px;">
                             <div class="simplebar-wrapper" style="margin: 0px;">
                                 <div class="simplebar-height-auto-observer-wrapper">

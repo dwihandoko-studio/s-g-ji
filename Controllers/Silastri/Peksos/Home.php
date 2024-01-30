@@ -19,6 +19,74 @@ class Home extends BaseController
         $this->_helpLib = new Helplib();
     }
 
+    public function getAllPengaduan()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            session()->destroy();
+            delete_cookie('jwt');
+            return redirect()->to(base_url('auth'));
+        }
+
+        $datas = $this->_db->table('riwayat_pengaduan a')
+            // ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.fullname, b.profile_picture as image_user")
+            // ->join('_profil_users_tb b', 'a.send_from = b.id', 'LEFT')
+            ->where('a.user_id', $user->data->id)
+            ->limit(5)
+            ->orderBy('a.created_at', 'DESC')
+            ->get()->getResult();
+
+        if (count($datas) > 0) {
+            $x['datas'] = $datas;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "success";
+            $response->data = $datas;
+            return json_encode($response);
+        } else {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Belum ada riwayat.";
+            $response->data = [];
+            return json_encode($response);
+        }
+    }
+
+    public function getAllPermohonan()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            session()->destroy();
+            delete_cookie('jwt');
+            return redirect()->to(base_url('auth'));
+        }
+
+        $datas = $this->_db->table('riwayat_permohonan a')
+            // ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.fullname, b.profile_picture as image_user")
+            // ->join('_profil_users_tb b', 'a.send_from = b.id', 'LEFT')
+            ->where('a.user_id', $user->data->id)
+            ->limit(5)
+            ->orderBy('a.created_at', 'DESC')
+            ->get()->getResult();
+
+        if (count($datas) > 0) {
+            $x['datas'] = $datas;
+            $response = new \stdClass;
+            $response->status = 200;
+            $response->message = "success";
+            $response->data = $datas;
+            return json_encode($response);
+        } else {
+            $response = new \stdClass;
+            $response->status = 400;
+            $response->message = "Belum ada riwayat.";
+            $response->data = [];
+            return json_encode($response);
+        }
+    }
+
     public function index()
     {
         return redirect()->to(base_url('silastri/peksos/home/data'));
