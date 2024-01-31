@@ -38,9 +38,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body border-top py-3">
+                    <!-- <div class="card-body border-top py-3">
                         <p class="mb-0"> <span class="badge badge-soft-success me-1"><i class="bx bx-trending-up align-bottom me-1"></i> 18.89%</span> Increase last month</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-lg-4">
@@ -49,7 +49,7 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">Permohonan Layanan</p>
-                                <h4 class="mb-0 statistik-jumlah-permohonan-layanan">0</h4>
+                                <h4 class="mb-0 statistik-jumlah-permohonan-layanan"><i class="fa fa-spinner fa-spin"></i></h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -57,9 +57,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body border-top py-3">
+                    <!-- <div class="card-body border-top py-3">
                         <p class="mb-0"> <span class="badge badge-soft-success me-1"><i class="bx bx-trending-up align-bottom me-1"></i> 24.07%</span> Increase last month</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-lg-4">
@@ -68,7 +68,7 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">Permohonan Pengaduan</p>
-                                <h4 class="mb-0 statistik-jumlah-permohonan-pengaduan">0</h4>
+                                <h4 class="mb-0 statistik-jumlah-permohonan-pengaduan"><i class="fa fa-spinner fa-spin"></i></h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -76,9 +76,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body border-top py-3">
+                    <!-- <div class="card-body border-top py-3">
                         <p class="mb-0"> <span class="badge badge-soft-danger me-1"><i class="bx bx-trending-down align-bottom me-1"></i> 20.63%</span> Decrease last month</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
