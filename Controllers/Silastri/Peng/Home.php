@@ -110,6 +110,7 @@ class Home extends BaseController
                 SELECT COUNT(*) FROM _permohonan_temp WHERE user_id = ?
                 UNION ALL
                 SELECT COUNT(*) FROM _pengaduan WHERE user_id = ?
+                UNION ALL
                 SELECT COUNT(*) FROM _pengaduan_tolak WHERE user_id = ?
             ) AS subquery",
             [$userId, $userId, $userId, $userId, $userId]
