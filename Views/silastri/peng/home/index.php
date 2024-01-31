@@ -21,10 +21,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex">
-                    <h4 class="card-title mb-4 flex-grow-1">STATISTIK PERMOHONAN</h4>
+                    <h4 class="card-title mb-4 flex-grow-1">STATISTIK</h4>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
