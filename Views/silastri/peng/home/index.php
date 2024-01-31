@@ -48,7 +48,7 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">Permohonan Layanan</p>
+                                <p class="text-muted fw-medium">Submit Layanan</p>
                                 <h4 class="mb-0 statistik-jumlah-permohonan-layanan"><i class="fa fa-spinner fa-spin"></i></h4>
                             </div>
 
@@ -67,7 +67,7 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">Permohonan Pengaduan</p>
+                                <p class="text-muted fw-medium">Submit Pengaduan</p>
                                 <h4 class="mb-0 statistik-jumlah-permohonan-pengaduan"><i class="fa fa-spinner fa-spin"></i></h4>
                             </div>
 
