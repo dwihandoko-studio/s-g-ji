@@ -21,16 +21,16 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex">
-                    <h4 class="card-title mb-4 flex-grow-1">STATISTIK</h4>
+                    <h4 class="card-title mb-4 flex-grow-1">STATISTIK PERMOHONAN</h4>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">Jumlah Permohonan</p>
-                                <h4 class="mb-0">0</h4>
+                                <h4 class="mb-0 statistik-jumlah-permohonan"><i class="fa fa-spinner fa-spin"></i></h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -43,13 +43,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">Permohonan Selesai</p>
-                                <h4 class="mb-0">0</h4>
+                                <p class="text-muted fw-medium">Permohonan Layanan</p>
+                                <h4 class="mb-0 statistik-jumlah-permohonan-layanan">0</h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -62,13 +62,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">Total Rejected</p>
-                                <h4 class="mb-0">0</h4>
+                                <p class="text-muted fw-medium">Permohonan Pengaduan</p>
+                                <h4 class="mb-0 statistik-jumlah-permohonan-pengaduan">0</h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -219,6 +219,61 @@
 <script src="<?= base_url() ?>/assets/libs/jquery-countdown/jquery.countdown.min.js"></script>
 <script src="<?= base_url() ?>/assets/js/pages/coming-soon.init.js"></script>
 <script>
+    function loadStatistik() {
+        $.ajax({
+            url: "./getAllStatistik",
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(resul) {
+                console.log(resul);
+                if (resul.status !== 200) {
+                    // if (resul.status === 401) {
+                    //     Swal.fire(
+                    //         'PERINGATAN!',
+                    //         resul.message,
+                    //         'warning'
+                    //     ).then((valRes) => {
+                    //         reloadPage();
+                    //     });
+                    // } else {
+                    //     // Swal.fire(
+                    //     //     'PERINGATAN!',
+                    //     //     resul.message,
+                    //     //     'warning'
+                    //     // );
+                    // }
+                } else {
+                    // const ulPengaduan = document.querySelector('.datas-permohonan');
+                    // for (let index = 0; index < resul.data.length; index++) {
+                    //     ulPengaduan.appendChild('<li class="event-list">' +
+                    //         '<div class="event-timeline-dot">' +
+                    //         '<i class="' + resul.data[index].icon + ' font-size-18"></i>' +
+                    //         '</div>' +
+                    //         '<div class="d-flex">' +
+                    //         '<div class="flex-shrink-0 me-3">' +
+                    //         '<div class="avatar-xs">' +
+                    //         '<div class="avatar-title bg-primary text-primary bg-soft rounded-circle">' +
+                    //         '<i class="bx bx-revision font-size-14"></i>' +
+                    //         '</div>' +
+                    //         '</div>' +
+                    //         '</div>' +
+                    //         '<div class="flex-grow-1">' +
+                    //         '<div>' +
+                    //         resul.data[index].keterangan +
+                    //         '<p class="text-muted mb-0">' + getTimeAgo(resul.data[index].created_at) + '</p>' +
+                    //         '</div>' +
+                    //         '</div>' +
+                    //         '</div>' +
+                    //         '</li>');
+                    // }
+                }
+            },
+            error: function(e) {
+                console.log(e);
+            }
+        });
+    }
+
     function loadAllPengaduan() {
         $.ajax({
             url: "./getAllPengaduan",
@@ -359,6 +414,7 @@
     $(document).ready(function() {
         loadAllPengaduan();
         loadAllPermohonan();
+        loadStatistik();
 
         // $("#timeline-carousel").owlCarousel({
         //     items: 1,

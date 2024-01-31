@@ -87,6 +87,52 @@ class Home extends BaseController
         }
     }
 
+    public function getAllStatistik()
+    {
+        $Profilelib = new Profilelib();
+        $user = $Profilelib->user();
+        if ($user->status != 200) {
+            session()->destroy();
+            delete_cookie('jwt');
+            return redirect()->to(base_url('auth'));
+        }
+
+        $userId = 'c0790cbb-1567-48fa-8949-fb5037866118';
+        // $userId = $user->data->id;
+
+        $queryJumlahAll = $this->_db->query("SELECT SUM(total_count) AS overall_count
+        FROM (
+            SELECT COUNT(*) AS total_count FROM _permohonan WHERE user_id = '$userId'
+            UNION ALL
+            SELECT COUNT(*) FROM _permohonan_tolak WHERE user_id = '$userId'
+            UNION ALL
+            SELECT COUNT(*) FROM _permohonan_temp WHERE user_id = '$userId'
+        ) AS subquery;");
+        $jumlahAll = $queryJumlahAll->row();
+        var_dump($jumlahAll->overall_count);
+        // ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.fullname, b.profile_picture as image_user")
+        // ->join('_profil_users_tb b', 'a.send_from = b.id', 'LEFT')
+        // ->where('a.user_id', $user->data->id)
+        // ->limit(5)
+        // ->orderBy('a.created_at', 'DESC')
+        // ->get()->getResult();
+
+        // if (count($datas) > 0) {
+        //     $x['datas'] = $datas;
+        //     $response = new \stdClass;
+        //     $response->status = 200;
+        //     $response->message = "success";
+        //     $response->data = $datas;
+        //     return json_encode($response);
+        // } else {
+        //     $response = new \stdClass;
+        //     $response->status = 400;
+        //     $response->message = "Belum ada riwayat.";
+        //     $response->data = [];
+        //     return json_encode($response);
+        // }
+    }
+
     public function index()
     {
         return redirect()->to(base_url('silastri/peng/home/data'));
