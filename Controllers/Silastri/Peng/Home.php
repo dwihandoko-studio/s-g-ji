@@ -100,23 +100,55 @@ class Home extends BaseController
         $userId = 'c0790cbb-1567-48fa-8949-fb5037866118';
         // $userId = $user->data->id;
 
-        $queryJumlahAll = $this->_db->query(
-            "SELECT SUM(total_count) AS overall_count
-            FROM (
-                SELECT COUNT(*) AS total_count FROM _permohonan WHERE user_id = ?
-                UNION ALL
-                SELECT COUNT(*) FROM _permohonan_tolak WHERE user_id = ?
-                UNION ALL
-                SELECT COUNT(*) FROM _permohonan_temp WHERE user_id = ?
-                UNION ALL
-                SELECT COUNT(*) FROM _pengaduan WHERE user_id = ?
-                UNION ALL
-                SELECT COUNT(*) FROM _pengaduan_tolak WHERE user_id = ?
-            ) AS subquery",
-            [$userId, $userId, $userId, $userId, $userId]
-        );
+        $queryJumlahAll = $this->_db->query("SELECT 
+        (SELECT COUNT(*) FROM _permohonan WHERE user_id = ?) +
+        (SELECT COUNT(*) FROM _permohonan_tolak WHERE user_id = ?) +
+        (SELECT COUNT(*) FROM _permohonan_temp WHERE user_id = ?) +
+        (SELECT COUNT(*) FROM _pengaduan WHERE user_id = ?) +
+        (SELECT COUNT(*) FROM _pengaduan_tolak WHERE user_id = ?) AS jumlah_permohonan, 
+        (SELECT COUNT(*) FROM _permohonan WHERE user_id = ?) +
+        (SELECT COUNT(*) FROM _permohonan_tolak WHERE user_id = ?) +
+        (SELECT COUNT(*) FROM _permohonan_temp WHERE user_id = ?) AS jumlah_permohonan_layanan,
+        (SELECT COUNT(*) FROM _pengaduan WHERE user_id = ?) +
+        (SELECT COUNT(*) FROM _pengaduan_tolak WHERE user_id = ?) AS jumlah_permohonan_pengaduan", [$userId, $userId, $userId, $userId, $userId, $userId, $userId, $userId, $userId, $userId]);
+        // $queryJumlahAll = $this->_db->query(
+        //     "SELECT SUM(total_count) AS overall_count
+        //     FROM (
+        //         SELECT COUNT(*) AS total_count FROM _permohonan WHERE user_id = ?
+        //         UNION ALL
+        //         SELECT COUNT(*) FROM _permohonan_tolak WHERE user_id = ?
+        //         UNION ALL
+        //         SELECT COUNT(*) FROM _permohonan_temp WHERE user_id = ?
+        //         UNION ALL
+        //         SELECT COUNT(*) FROM _pengaduan WHERE user_id = ?
+        //         UNION ALL
+        //         SELECT COUNT(*) FROM _pengaduan_tolak WHERE user_id = ?
+        //     ) AS subquery",
+        //     [$userId, $userId, $userId, $userId, $userId]
+        // );
         $jumlahAll = $queryJumlahAll->getRow();
-        var_dump($jumlahAll->overall_count);
+        // $queryJumlahPermohonan = $this->_db->query(
+        //     "SELECT SUM(total_count) AS overall_count
+        //     FROM (
+        //         SELECT COUNT(*) AS total_count FROM _permohonan WHERE user_id = ?
+        //         UNION ALL
+        //         SELECT COUNT(*) FROM _permohonan_tolak WHERE user_id = ?
+        //         UNION ALL
+        //         SELECT COUNT(*) FROM _permohonan_temp WHERE user_id = ?
+        //         UNION ALL
+        //         SELECT COUNT(*) FROM _pengaduan WHERE user_id = ?
+        //         UNION ALL
+        //         SELECT COUNT(*) FROM _pengaduan_tolak WHERE user_id = ?
+        //     ) AS subquery",
+        //     [$userId, $userId, $userId, $userId, $userId]
+        // );
+        // $jumlahPermohonan = $queryJumlahPermohonan->getRow();
+        $datas = [
+            'jumlah_permohonan' => $jumlahAll->jumlah_permohonan,
+            'jumlah_permohonan_layanan' => $jumlahAll->jumlah_permohonan_layanan,
+            'jumlah_permohonan_pengaduan' => $jumlahAll->jumlah_permohonan_pengaduan,
+        ];
+        var_dump($datas);
         // ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.fullname, b.profile_picture as image_user")
         // ->join('_profil_users_tb b', 'a.send_from = b.id', 'LEFT')
         // ->where('a.user_id', $user->data->id)
