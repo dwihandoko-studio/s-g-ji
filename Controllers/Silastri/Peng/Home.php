@@ -148,7 +148,7 @@ class Home extends BaseController
             'jumlah_permohonan_layanan' => $jumlahAll->jumlah_permohonan_layanan,
             'jumlah_permohonan_pengaduan' => $jumlahAll->jumlah_permohonan_pengaduan,
         ];
-        var_dump($datas);
+        // var_dump($datas);
         // ->select("a.*, (SELECT count(*) FROM _notification_tb WHERE send_to = '$id' AND (readed = 0)) as jumlah, b.fullname, b.profile_picture as image_user")
         // ->join('_profil_users_tb b', 'a.send_from = b.id', 'LEFT')
         // ->where('a.user_id', $user->data->id)
@@ -158,11 +158,11 @@ class Home extends BaseController
 
         // if (count($datas) > 0) {
         //     $x['datas'] = $datas;
-        //     $response = new \stdClass;
-        //     $response->status = 200;
-        //     $response->message = "success";
-        //     $response->data = $datas;
-        //     return json_encode($response);
+        $response = new \stdClass;
+        $response->status = 200;
+        $response->message = "success";
+        $response->data = $datas;
+        return json_encode($response);
         // } else {
         //     $response = new \stdClass;
         //     $response->status = 400;
