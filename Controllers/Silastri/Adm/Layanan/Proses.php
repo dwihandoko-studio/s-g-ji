@@ -963,7 +963,7 @@ class Proses extends BaseController
 
             $lampiran = $this->request->getFile('_file');
             $filesNamelampiran = $lampiran->getName();
-            $newNamelampiran = $oldData['nik'] . ".pdf";
+            $newNamelampiran = $oldData['kode_permohonan'] . ".pdf";
 
             if ($lampiran->isValid() && !$lampiran->hasMoved()) {
                 $lampiran->move($dir_temp, $newNamelampiran);
@@ -996,7 +996,7 @@ class Proses extends BaseController
             // var_dump($uploaded);
             // die;
             if ($uploaded->code === 200) {
-                $oldData['lampiran_selesai'] = $oldData['nik'] . '.pdf';
+                $oldData['lampiran_selesai'] = $oldData['kode_permohonan'] . '.pdf';
             } else {
                 unlink($dir_temp . '/' . $newNamelampiran);
                 $response = new \stdClass;

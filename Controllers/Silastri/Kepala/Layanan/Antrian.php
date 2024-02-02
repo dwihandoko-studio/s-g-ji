@@ -173,20 +173,25 @@ class Antrian extends BaseController
                 switch ($current->layanan) {
                     case 'SKTM':
                         $dirFile = 'generate/surat/pdf';
+                        $data['file'] = $dirFile . '/' . $current->kode_permohonan . '.pdf';
                         break;
                     case 'PBI':
                         $dirFile = 'generate/surat/pdf';
+                        $data['file'] = $dirFile . '/' . $current->kode_permohonan . '.pdf';
                         break;
                     case 'SKDTKS':
                         $dirFile = 'dtks';
+                        $data['file'] = $dirFile . '/' . $current->kode_permohonan . '.pdf';
+                        // $data['file'] = $dirFile . '/' . $current->nik . '.pdf';
                         break;
 
                     default:
                         $dirFile = 'notfound';
+                        $data['file'] = $dirFile . '/' . $current->kode_permohonan . '.pdf';
                         break;
                 }
 
-                $data['file'] = $dirFile . '/' . $current->kode_permohonan . '.pdf';
+                // $data['file'] = $dirFile . '/' . $current->kode_permohonan . '.pdf';
                 $response = new \stdClass;
                 $response->status = 200;
                 $response->message = "Permintaan diizinkan";
