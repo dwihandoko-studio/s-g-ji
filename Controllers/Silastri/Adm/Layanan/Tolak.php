@@ -12,7 +12,7 @@ use App\Libraries\Apilib;
 use App\Libraries\Helplib;
 use App\Libraries\Uuid;
 
-class Tolak extends BaseController
+class Ditolak extends BaseController
 {
     var $folderImage = 'masterdata';
     private $_db;
@@ -85,7 +85,7 @@ class Tolak extends BaseController
 
     public function index()
     {
-        return redirect()->to(base_url('silastri/adm/layanan/tolak/data'));
+        return redirect()->to(base_url('silastri/adm/layanan/ditolak/data'));
     }
 
     public function data()
@@ -165,7 +165,7 @@ class Tolak extends BaseController
                 ->join('_profil_users_tb b', 'b.id = a.user_id')
                 ->join('ref_kecamatan c', 'c.id = b.kecamatan')
                 ->join('ref_kelurahan d', 'd.id = b.kelurahan')
-                ->where(['a.id' => $id, 'a.status_permohonan' => 0])->get()->getRowObject();
+                ->where(['a.id' => $id])->get()->getRowObject();
 
             if ($current) {
                 $data['data'] = $current;
