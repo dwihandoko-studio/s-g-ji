@@ -34,58 +34,58 @@ class Filterauth implements FilterInterface
                         $uriMain = $uri->getSegment(1);
                         if ($uriMain === "" || $uriMain === "home" || $uriMain === "auth" || $uriMain === "portal" || $uriMain === "profil") {
                         } else {
-                            if ($uriMain === "silastri") {
-                                $uriLevel = $uri->getSegment(2);
+                            if ($uriMain === "su") {
+                                $uriLevel = $uri->getSegment(1);
                                 $mtLib = new Mtlib();
                                 if ($mtLib->get()) {
                                     if (!$mtLib->getAccess($userId)) {
                                         if ($uriLevel !== "maintenance") {
-                                            return redirect()->to(base_url('silastri/maintenance'));
+                                            return redirect()->to(base_url('maintenance'));
                                         }
                                     } else {
 
                                         if ($level == 1) { //SuperAdmin
 
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('silastri/su/home'));
+                                                return redirect()->to(base_url('su/home'));
                                             }
                                             if ($uriLevel != "su") {
-                                                return redirect()->to(base_url('silastri/su/home'));
+                                                return redirect()->to(base_url('su/home'));
                                             }
                                         } else if ($level == 2) { //Peng
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('silastri/peng/home'));
+                                                return redirect()->to(base_url('peng/home'));
                                             }
                                             if ($uriLevel != "peng") {
-                                                return redirect()->to(base_url('silastri/peng/home'));
+                                                return redirect()->to(base_url('peng/home'));
                                             }
                                         } else if ($level == 3) { //Adm
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('silastri/adm/home'));
+                                                return redirect()->to(base_url('adm/home'));
                                             }
                                             if ($uriLevel != "adm") {
-                                                return redirect()->to(base_url('silastri/adm/home'));
+                                                return redirect()->to(base_url('adm/home'));
                                             }
                                         } else if ($level == 4) { //Kepala
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('silastri/kepala/home'));
+                                                return redirect()->to(base_url('kepala/home'));
                                             }
                                             if ($uriLevel != "adm") {
-                                                return redirect()->to(base_url('silastri/kepala/home'));
+                                                return redirect()->to(base_url('kepala/home'));
                                             }
                                         } else if ($level == 5) { //Operator
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('silastri/operator/home'));
+                                                return redirect()->to(base_url('operator/home'));
                                             }
                                             if ($uriLevel != "operator") {
-                                                return redirect()->to(base_url('silastri/operator/home'));
+                                                return redirect()->to(base_url('operator/home'));
                                             }
                                         } else if ($level == 6) { //Operator
                                             if ($uriLevel === "" || $uriLevel === "index") {
-                                                return redirect()->to(base_url('silastri/peksos/home'));
+                                                return redirect()->to(base_url('peksos/home'));
                                             }
                                             if ($uriLevel != "peksos") {
-                                                return redirect()->to(base_url('silastri/peksos/home'));
+                                                return redirect()->to(base_url('peksos/home'));
                                             }
                                         } else {
                                             return redirect()->to(base_url('portal'));
@@ -96,10 +96,10 @@ class Filterauth implements FilterInterface
                                     if ($level == 1) { //SuperAdmin
 
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('silastri/su/home'));
+                                            return redirect()->to(base_url('su/home'));
                                         }
                                         if ($uriLevel != "su") {
-                                            return redirect()->to(base_url('silastri/su/home'));
+                                            return redirect()->to(base_url('su/home'));
                                         }
                                         // else {
                                         //     var_dump($uriLevel);
@@ -144,10 +144,10 @@ class Filterauth implements FilterInterface
                                         // }
                                     } else if ($level == 2) { //Admin
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('silastri/peng/home'));
+                                            return redirect()->to(base_url('peng/home'));
                                         }
                                         if ($uriLevel != "peng") {
-                                            return redirect()->to(base_url('silastri/peng/home'));
+                                            return redirect()->to(base_url('peng/home'));
                                         }
                                         // if ($uriMain != "b") {
                                         //     return redirect()->to(base_url('b/home'));
@@ -192,10 +192,10 @@ class Filterauth implements FilterInterface
                                         // }
                                     } else if ($level == 3) { //Kecamatan
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('silastri/adm/home'));
+                                            return redirect()->to(base_url('adm/home'));
                                         }
                                         if ($uriLevel != "adm") {
-                                            return redirect()->to(base_url('silastri/adm/home'));
+                                            return redirect()->to(base_url('adm/home'));
                                         }
                                         // else {
                                         //     $uriMainMenu = $uri->getSegment(3);
@@ -233,10 +233,10 @@ class Filterauth implements FilterInterface
                                         // }
                                     } else if ($level == 4) { //Kepala
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('silastri/kepala/home'));
+                                            return redirect()->to(base_url('kepala/home'));
                                         }
                                         if ($uriLevel != "kepala") {
-                                            return redirect()->to(base_url('silastri/kepala/home'));
+                                            return redirect()->to(base_url('kepala/home'));
                                         }
                                         // else {
                                         //     $uriMainMenu = $uri->getSegment(3);
@@ -274,10 +274,10 @@ class Filterauth implements FilterInterface
                                         // }
                                     } else if ($level == 5) { //Operator
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('silastri/operator/home'));
+                                            return redirect()->to(base_url('operator/home'));
                                         }
                                         if ($uriLevel != "operator") {
-                                            return redirect()->to(base_url('silastri/operator/home'));
+                                            return redirect()->to(base_url('operator/home'));
                                         }
                                         // else {
                                         //     $uriMainMenu = $uri->getSegment(3);
@@ -315,10 +315,10 @@ class Filterauth implements FilterInterface
                                         // }
                                     } else if ($level == 6) { //Peksos
                                         if ($uriLevel === "" || $uriLevel === "index") {
-                                            return redirect()->to(base_url('silastri/peksos/home'));
+                                            return redirect()->to(base_url('peksos/home'));
                                         }
                                         if ($uriLevel != "peksos") {
-                                            return redirect()->to(base_url('silastri/peksos/home'));
+                                            return redirect()->to(base_url('peksos/home'));
                                         }
                                         // else {
                                         //     $uriMainMenu = $uri->getSegment(3);

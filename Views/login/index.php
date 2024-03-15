@@ -5,19 +5,19 @@
     <meta charset="utf-8" />
     <title><?= isset($title) ? $title : "Administrator" ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" name="description" />
+    <meta content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" name="description" />
     <meta content="handokowae.my.id" name="author" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="keywords" content="portal, layanan, portal layanan, portal layanan dinsos, dinsos, disdik, lampung, lampung tengah lampung tengah, dinas sosial, dinas Sosial lampung tengah, kabupaten lampung tengah">
+    <meta name="keywords" content="portal, layanan, portal layanan, portal layanan dinsos, dinsos, disdik, lampung, lampung tengah lampung tengah, dinas Pendidikan dan Kebudayaan, dinas Pendidikan dan Kebudayaan lampung tengah, kabupaten lampung tengah">
 
-    <meta property="og:title" content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" />
+    <meta property="og:title" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
     <meta property="og:url" content="<?= base_url() ?>" />
     <meta property="og:image" content="<?= base_url('favicon/android-icon-192x192.png'); ?>" />
-    <meta property="og:description" content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" />
+    <meta property="og:description" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
 
-    <meta itemprop="name" content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" />
-    <meta itemprop="description" content="Portal Layanan Resmi Dinas Sosial Kab. Lampung Tengah" />
+    <meta itemprop="name" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
+    <meta itemprop="description" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
     <meta itemprop="image" content="<?= base_url('favicon/android-icon-192x192.png'); ?>" />
 
     <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url('favicon/apple-icon-57x57.png'); ?>">
@@ -63,7 +63,7 @@
                                         <div class="col-lg-7">
                                             <div class="text-center">
 
-                                                <!-- <h4 class="mb-3"><i class="bx bxs-quote-alt-left text-primary h1 align-middle me-3"></i><span class="text-primary">Dinas Sosial </span>Kabupaten Lampung Tengah</h4> -->
+                                                <!-- <h4 class="mb-3"><i class="bx bxs-quote-alt-left text-primary h1 align-middle me-3"></i><span class="text-primary">Dinas Pendidikan dan Kebudayaan </span>Kabupaten Lampung Tengah</h4> -->
 
                                                 <div dir="ltr">
                                                     <div class="owl-carousel owl-theme auth-review-carousel" id="auth-review-carousel">
@@ -72,7 +72,7 @@
                                                                 <p class="font-size-16 mb-4">" <b>Sinergitas melayani</b>, memberikan yang tebaik untuk masyarakat menuju <b>Lampung Tengah Berjaya.</b> "</p>
 
                                                                 <div>
-                                                                    <h4 class="font-size-16 text-primary">Dinas Sosial</h4>
+                                                                    <h4 class="font-size-16 text-primary">Dinas Pendidikan dan Kebudayaan</h4>
                                                                     <p class="font-size-14 mb-0">Kabupaten Lampung Tengah</p>
                                                                 </div>
                                                             </div>
@@ -183,7 +183,7 @@
                                 <div class="mt-4 mt-md-5 text-center">
                                     <p class="mb-0">© <script>
                                             document.write(new Date().getFullYear())
-                                        </script> Dinsos Kab. Lampung Tengah. Supported <i class="mdi mdi-heart text-danger"></i> by <a href="https://kntechline.id">KNTechline</a></p>
+                                        </script> Disdikbud Kab. Lampung Tengah. Supported <i class="mdi mdi-heart text-danger"></i> by <a href="https://kntechline.id">KNTechline</a></p>
                                 </div>
                             </div>
 

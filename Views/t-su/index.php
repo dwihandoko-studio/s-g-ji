@@ -5,19 +5,19 @@
     <meta charset="utf-8" />
     <title><?= isset($title) ? $title : "Administrator" ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" name="description" />
+    <meta content="Website Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" name="description" />
     <meta content="handokowae.my.id" name="author" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="keywords" content="portal, layanan, portal layanan, portal layanan dinsos, dinsos, disdik, lampung, lampung tengah lampung tengah, dinas Pendidikan dan Kebudayaan, dinas Pendidikan dan Kebudayaan lampung tengah, kabupaten lampung tengah">
+    <meta name="keywords" content="disdikbud, disdik, pendidikan, lampung, lampung tengah, pendidikan lampung tengah, dinas pendidikan, dinas pendidikan lampung tengah, dinas pendidikan dan kebudayaan, dinas pendidikan dan kebudayaan lampung tengah, kabupaten lampung tengah">
 
-    <meta property="og:title" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
+    <meta property="og:title" content="Website Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
     <meta property="og:url" content="<?= base_url() ?>" />
     <meta property="og:image" content="<?= base_url('favicon/android-icon-192x192.png'); ?>" />
-    <meta property="og:description" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
+    <meta property="og:description" content="Website Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
 
-    <meta itemprop="name" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
-    <meta itemprop="description" content="Portal Layanan Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
+    <meta itemprop="name" content="Website Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
+    <meta itemprop="description" content="Website Resmi Dinas Pendidikan dan Kebudayaan Kab. Lampung Tengah" />
     <meta itemprop="image" content="<?= base_url('favicon/android-icon-192x192.png'); ?>" />
 
     <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url('favicon/apple-icon-57x57.png'); ?>">
@@ -63,8 +63,8 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
 
-        <?= $this->include('templates/header'); ?>
-        <?= $this->include('templates/topbar'); ?>
+        <?= $this->include('t-su/header'); ?>
+        <?= $this->include('t-su/topbar'); ?>
 
 
 
@@ -74,7 +74,7 @@
         <div class="main-content">
             <?= $this->renderSection('content'); ?>
 
-            <?= $this->include('templates/footer'); ?>
+            <?= $this->include('t-su/footer'); ?>
         </div>
         <!-- end main content-->
 

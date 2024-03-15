@@ -49,7 +49,7 @@ class Filters extends BaseConfig
                     'profil', 'profil/*',
                     'home', 'home/*',
                     'auth', 'auth/*',
-                    'silastri', 'silastri/*',
+                    'su', 'su/*',
                     'situpeng', 'situpeng/*',
                 ]
             ],
